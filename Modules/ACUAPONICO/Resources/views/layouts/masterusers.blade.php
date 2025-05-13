@@ -29,50 +29,51 @@
         }
     </style>
     
-    <nav class="navbar navbar-expand" style="background-color: #00af1d;">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
-            <ul class="navbar-nav d-flex flex-row">
-                <li class="nav-item d-none d-sm-inline-block me-4">
-                    <a href="{{ route('login') }}" 
-                       class="nav-link text-white" 
-                       style="font-size: 20px; position: relative;">
-                        Inicio
-                    </a>
-                </li>
-                @auth
-                    @if(checkRol('acuaponico.admin'))
-                        <li class="nav-item d-none d-sm-inline-block me-4">
-                            <a href="{{ route('acuaponico.admin.welcome') }}" 
-                               class="nav-link @if(Route::is('acuaponico.admin.*')) active @endif" 
-                               style="color: white; font-size: 20px; position: relative;">
-                                Administrador
-                            </a>
-                        </li>
-                    @endif
-                    @if(checkRol('acuaponico.pasante'))
-                        <li class="nav-item d-none d-sm-inline-block me-4">
-                            <a href="{{ route('acuaponico.pasante.welcomepas') }}" 
-                               class="nav-link @if(Route::is('acuaponico.pasante.*')) active @endif" 
-                               style="color: white; font-size: 20px; position: relative;">
-                                Pasante
-                            </a>
-                        </li>
-                    @endif
-                @endauth
-            </ul>
-    
-            @auth              
-                <a href="{{ route('login') }}" class="btn text-white btn-lg" 
+<nav class="navbar navbar-expand" style="background-color: #00af1d;">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <ul class="navbar-nav d-flex flex-row">
+            <li class="nav-item d-none d-sm-inline-block me-4">
+                <a href="{{ route('login') }}" 
+                   class="nav-link text-white" 
                    style="font-size: 20px; position: relative;">
-                    Iniciar Sesión
+                    Inicio
                 </a>
+            </li>
+            @auth
+                @if(checkRol('acuaponico.admin'))
+                    <li class="nav-item d-none d-sm-inline-block me-4">
+                        <a href="{{ route('acuaponico.admin.welcome') }}" 
+                           class="nav-link @if(Route::is('acuaponico.admin.*')) active @endif" 
+                           style="color: white; font-size: 20px; position: relative;">
+                            Administrador
+                        </a>
+                    </li>
+                @endif
+                @if(checkRol('acuaponico.pasante'))
+                    <li class="nav-item d-none d-sm-inline-block me-4">
+                        <a href="{{ route('acuaponico.pasante.welcomepas') }}" 
+                           class="nav-link @if(Route::is('acuaponico.pasante.*')) active @endif" 
+                           style="color: white; font-size: 20px; position: relative;">
+                            Pasante
+                        </a>
+                    </li>
+                @endif
             @endauth
-        </div>
-    </nav>
+        </ul>
+
+        @guest              
+            <a href="{{ route('login') }}" class="btn text-white btn-lg" 
+               style="font-size: 20px; position: relative;">
+                Iniciar Sesión
+            </a>
+        @endguest
+    </div>
+</nav>
+
     
     <!-- Estilos para la animación -->
     <style>
-        .nav-link {
+         .nav-link {
             position: relative;
             color: white;
             font-size: 20px;
@@ -102,31 +103,99 @@
 <!-- Contenido principal -->
 <div class="container-fluid" style="background-image: url('{{ asset('AdminLTE/dist/img/fondoaco.jpg') }}'); 
      background-size: cover; background-attachment: fixed; background-position: center; min-height: 100vh; 
-     display: flex; align-items: center; justify-content: center;">
+     display: flex; align-items: center; justify-content: center; flex-direction: column;">
 
-    <div class="w-100" style="margin-top: -24%;">
-        <!-- Columna para el texto y la imagen -->
-        <div class="bg-white p-5 rounded shadow" style="opacity: 1; height: 80vh; width: 100%;">
-            <!-- Contenedor en fila para imagen y título -->
-            <div style="display: flex; align-items: center; gap: 20px; margin-top: 10%;">
-                <!-- Imagen -->
-                <img src="/AdminLTE/dist/img/tubosaco.jpg" alt="tubosaco" style="height: 350px; width: 400px; object-fit: 
-                cover; border-radius: 40%; margin-left: 5%; margin-top: -2%;">
+<div class="w-100">
+    <!-- Primer Contenedor Blanco -->
+    <div class="bg-white p-5 rounded shadow" style="opacity: 1; height: auto; width: 100%;">
+        <!-- Contenedor en fila para imagen y contenido -->
+        <div style="display: flex; align-items: center; gap: 50px; flex-wrap: wrap;">
+            <!-- Imagen -->
+            <div style="flex: 1; display: flex; justify-content: center;">
+                <img src="/AdminLTE/dist/img/tubosaco.jpg" alt="tubosaco" style="height: 450px; width: auto; object-fit: cover; border-radius: 20%;">
+            </div>
+            
+            <!-- Contenido textual -->
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
                 <!-- Título -->
-                <h1 style="font-family: Broadway; font-size: 40px; margin-top: -10%; margin-left: 10%;">
+                <h1 style="font-family: Broadway; font-size: 45px; margin-bottom: 20px; color: #237424;">
                     <strong>Unidad de Cultivos Acuapónica</strong>
-                        <!-- Párrafo -->
-                        <p class="text-justify" style="width: 90%; font-size: 20px; margin-top: 5%;">
-                            Una unidad acuapónica es un sistema inteligente y sostenible que combina la cría de peces 
-                            (acuicultura) con el cultivo de plantas sin suelo (hidroponía). Ambos sistemas se benefician 
-                            entre sí: los desechos de los peces fertilizan a las plantas, y estas limpian el agua que 
-                            vuelve a los peces. ¡Es un ciclo natural y eficiente!
-                        </p>
-                    </h1>
-                </div>
+                </h1>
+                
+                <!-- Párrafo -->
+                <p style="font-size: 18px; text-align: justify; color: #555; margin-bottom: 20px;">
+                    La acuaponía es una técnica revolucionaria que integra acuicultura (cría de peces) y hidroponía (cultivo de plantas sin suelo) en un sistema cerrado y autosostenible. Este tipo de unidad permite producir alimentos frescos de manera ecológica, eficiente y respetuosa con el medio ambiente.
+                </p>
+
+                <!-- Viñetas con el símbolo ➢ -->
+                <ul style="list-style: none; padding-left: 0; margin-top: 10px;">
+                    <li style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <span class="bullet-icon" style="margin-right: 10px;">➢</span>
+                        Los peces producen desechos ricos en nutrientes.
+                    </li>
+                    <li style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <span class="bullet-icon" style="margin-right: 10px;">➢</span>
+                        Estos desechos sirven de fertilizante natural para las plantas.
+                    </li>
+                    <li style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <span class="bullet-icon" style="margin-right: 10px;">➢</span>
+                        Las plantas, a su vez, purifican el agua, devolviéndola limpia a los peces.
+                    </li>
+                    <li style="display: flex; align-items: center;">
+                        <span class="bullet-icon" style="margin-right: 10px;">➢</span>
+                        El resultado es un ciclo natural y autosuficiente, que optimiza recursos y minimiza desperdicios.
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
+</div>
+
+<style>
+.bullet-icon {
+    background: linear-gradient(to right, #28a745, #6abf69); /* Gradiente de verde oscuro a verde claro */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: middle;
+}
+</style>
+
+
+
+        <!-- Nuevo Contenedor Blanco debajo -->
+        <div class="w-100" style="margin-top: 20%; padding-bottom: 20%;">
+            <div class="bg-white p-5 rounded shadow" style="opacity: 1; min-height: 300px; width: 100%;">
+                <h2 style="font-family: Broadway; font-size: 60px; margin-left: 10%; color: #159617; margin-top: 4%;">
+                    <strong>
+                        Ventajas
+                    </strong>
+                </h2>
+<!-- Viñetas con el símbolo ➱ -->
+<ul style="list-style: none; padding-left: 0; margin-top: 10px;">
+    <li style="display: flex; align-items: center; margin-bottom: 10px; font-size: 25px;">
+        <span class="bullet-icon" style="margin-right: 10px; font-size: 35px;">➱</span>
+        Los peces producen desechos ricos en nutrientes.
+    </li>
+</ul>
+
+<style>
+.bullet-icon {
+    background: linear-gradient(to right, #28a745, #6abf69); /* Gradiente de verde oscuro a verde claro */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; /* Hace que el texto use el gradiente */
+    display: inline-block;
+    vertical-align: middle;
+}
+</style>
+
+            </div>
+        </div>
+</div>
+
 
 
 
