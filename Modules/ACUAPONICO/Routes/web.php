@@ -13,14 +13,14 @@
 |
 */
 
-Route::middleware(['lang'])->group(function(){
-    Route::prefix('acuaponico')->group(function() {
-         Route::get('/index', 'ACUAPONICOController@index')->name('cefa.acuaponico.index');
-         Route::get('/admin/welcome', 'ACUAPONICOController@admin')->name('acuaponico.admin.welcome');
-         Route::get('/pasante/welcomepas', 'ACUAPONICOController@pasante')->name('acuaponico.pasante.welcomepas');
-
-   });
-   Route::controller(LotController::class)->group(function () {
+Route::middleware(['lang'])->group(function () {
+    Route::prefix('acuaponico')->group(function () {
+        Route::get('/index', 'ACUAPONICOController@index')->name('cefa.acuaponico.index');
+        Route::get('/admin/welcome', 'ACUAPONICOController@admin')->name('acuaponico.admin.welcome');
+        Route::get('/pasante/welcomepas', 'ACUAPONICOController@pasante')->name('acuaponico.pasante.welcomepas');
+    });
+});
+Route::controller(LotController::class)->group(function () {
     Route::get('/pasante/pasante/index', 'index')->name('acuaponico.pasante.pasante.index');
     Route::post('/pasante/pasante/store', 'store')->name('acuaponico.pasante.pasante.storeLot');
     Route::put('/pasante/pasante/update/{id}', 'update')->name('acuaponico.pasante.pasante.updateLot');
@@ -38,4 +38,12 @@ Route::controller(CategoryController::class)->group(function () {
     Route::delete('/pasante/categoria/eliminarCategory/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyCategory');
 });
 
+// rutas  para las especies
+Route::controller(SpeciesAquaponicController::class)->group(function () {
+    Route::get('/pasante/lista/especies', 'index')->name('acuaponico.pasante.pasante.indexspecies');
+    Route::get('/pasante/crear/create', 'create')->name('acuaponico.pasante.pasante.creatspecies');
+    Route::post('/pasante/espcies/store', 'store')->name('acuaponico.pasante.pasante.storespecies');
+    Route::put('/pasante/especie/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatespecies');
+    Route::delete('/pasante/especie/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyspecies');
 });
+
