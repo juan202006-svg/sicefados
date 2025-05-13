@@ -5,8 +5,9 @@ namespace Modules\ACUAPONICO\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\ACUAPONICO\Entities\Lot;
 
-class ACUAPONICOController extends Controller
+class LotController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,22 +15,14 @@ class ACUAPONICOController extends Controller
      */
     public function index()
     {
-        return view('acuaponico::index');
-    }
-    public function welcome()
-    {
-        return view('acuaponico::welcome');
-    }
-    public function admin()
-    {
-        return view('acuaponico::welcome');
-    }
-    public function pasante()
-    {
-        return view('acuaponico::welcomepas');
+        $lots = Lot::get();
+        return view('acuaponico::pasante.index')->with(['lots' => $lots]);
+        
     }
 
 
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -38,6 +31,7 @@ class ACUAPONICOController extends Controller
     public function create()
     {
         return view('acuaponico::create');
+
     }
 
     /**
@@ -47,8 +41,24 @@ class ACUAPONICOController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'date' => 'required|date',
+            'name' => 'required|string',
+            'capacity' => 'required|numeric',
+            'state' => 'required|in:disponible,ocupado,no disponible',
+        ]);
+    
+        $lot = new Lot();
+        $lot->date = $request->date;
+        $lot->name = $request->name;
+        $lot->capacity = $request->capacity;
+        $lot->state = $request->state;
+        $lot->save();
+    
+        return redirect()->back()->with('success', 'Lote generado correctamente.');
     }
+    
+    
 
     /**
      * Show the specified resource.
@@ -78,10 +88,14 @@ class ACUAPONICOController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $lot = Lot::findOrFail($id);
+        $lot->update($request->all());
+        return redirect()->route('acuaponico.pasante.pasante.index')->with('success', 'Lote actualizado correctamente.');
     }
-
-
+    
+    
+    
+    
 
     /**
      * Remove the specified resource from storage.
@@ -90,6 +104,9 @@ class ACUAPONICOController extends Controller
      */
     public function destroy($id)
     {
-        return;
+        $lot = Lot::findOrFail($id);
+        $lot->delete();
+
+        return redirect()->back()->with('success', 'Lote eliminado correctamente.');
     }
 }

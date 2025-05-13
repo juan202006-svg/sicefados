@@ -1,5 +1,7 @@
 <?php
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +13,29 @@
 |
 */
 
-Route::prefix('acuaponico')->group(function() {
-    Route::get('/', 'ACUAPONICOController@index');
+Route::middleware(['lang'])->group(function(){
+    Route::prefix('acuaponico')->group(function() {
+         Route::get('/index', 'ACUAPONICOController@index')->name('cefa.acuaponico.index');
+         Route::get('/admin/welcome', 'ACUAPONICOController@admin')->name('acuaponico.admin.welcome');
+         Route::get('/pasante/welcomepas', 'ACUAPONICOController@pasante')->name('acuaponico.pasante.welcomepas');
+
+   });
+   Route::controller(LotController::class)->group(function () {
+    Route::get('/pasante/pasante/index', 'index')->name('acuaponico.pasante.pasante.index');
+    Route::post('/pasante/pasante/store', 'store')->name('acuaponico.pasante.pasante.storeLot');
+    Route::put('/pasante/pasante/update/{id}', 'update')->name('acuaponico.pasante.pasante.updateLot');
+    Route::delete('/pasante/pasante/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyLot');
+});
+
+
+// rutas de las categorias
+
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('/pasante/pasante/categoria', 'index')->name('acuaponico.pasante.pasante.categoria');
+    Route::post('/pasante/pasante/categoria/store', 'store')->name('acuaponico.pasante.pasante.storeCategory');
+    Route::get('/pasante/categoria/create', 'create')->name('acuaponico.pasante.pasante.createCategory');
+    Route::put('/pasante/pasante/updateCategory/{id}', 'update')->name('acuaponico.pasante.pasante.updateCategory');
+    Route::delete('/pasante/categoria/eliminarCategory/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyCategory');
+});
+
 });
