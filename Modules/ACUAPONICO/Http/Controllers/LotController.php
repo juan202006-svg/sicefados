@@ -41,12 +41,7 @@ class LotController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'date' => 'required|date',
-            'name' => 'required|string',
-            'capacity' => 'required|numeric',
-            'state' => 'required|in:disponible,ocupado,no disponible',
-        ]);
+        
     
         $lot = new Lot();
         $lot->date = $request->date;

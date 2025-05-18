@@ -10,6 +10,7 @@ class Lot extends Model
     use HasFactory;
 
     protected $fillable = ['date', 'name', 'capacity', 'state'];
+    protected $table = 'lots';
     
     protected static function newFactory()
     {

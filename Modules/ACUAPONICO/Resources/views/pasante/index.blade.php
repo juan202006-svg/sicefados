@@ -140,7 +140,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Fecha:</label>
-                        <input type="date" name="date" class="form-control" required>
+                        <input type="date" name="date" class="form-control" id= "date"   required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Nombre:</label>
@@ -148,7 +148,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Capacidad:</label>
-                        <input type="number" name="capacity" class="form-control" required>
+                        <input type="number" name="capacity" class="form-control"  required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Estado:</label>
@@ -167,5 +167,12 @@
         </form>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var dateInput = document.getElementById('date');
+        var currentDate = new Date().toISOString().split('T')[0];
+        dateInput.value = currentDate;
+    });
+</script>
 
 @endsection

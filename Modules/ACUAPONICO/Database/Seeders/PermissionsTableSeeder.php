@@ -93,6 +93,17 @@ class PermissionsTableSeeder extends Seeder
         ]);
         $permissions_pasante[] = $permission->id; // Almacenar permiso para rol
 
+         $permission = Permission::updateOrCreate(['slug' => 'acuaponico.pasante.pasante.createLot'], [ // Registro o actualización de permiso
+            'name' => 'Crear lote',
+            'description' => 'Crear lote',
+            'description_english' => 'Create lot',
+            'app_id' => $app->id
+        ]);
+        $permissions_pasante[] = $permission->id; // Almacenar permiso para rol
+
+
+
+
         $permission = Permission::updateOrCreate(['slug' => 'acuaponico.pasante.pasante.updateLot'], [ // Registro o actualización de permiso
             'name' => 'Actualizar lote',
             'description' => 'Actualizar lote',
@@ -148,7 +159,51 @@ class PermissionsTableSeeder extends Seeder
         $permissions_pasante[] = $permission->id; // Almacenar permiso para rol
 
 
-        //crear el rol del pasante
+        // lista  de Permisos para la gestion de especies
+        //vista de lista de especies
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.pasante.pasante.indexspecies'], [ // Registro o actualización de permiso
+            'name' => 'Acceso lista de especies',
+            'description' => 'Vista de especies',
+            'description_english' => 'Access to the list of species',
+            'app_id' => $app->id
+        ]);
+        $permissions_pasante[] = $permission->id;
+
+        //crear especie
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.pasante.pasante.creatspecies'], [ // Registro o actualización de permiso
+            'name' => 'Crear especie',
+            'description' => 'Crear especie',
+            'description_english' => 'Create species',
+            'app_id' => $app->id
+        ]);
+        $permissions_pasante[] = $permission->id; // Almacenar permiso para rol
+
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.pasante.pasante.storespecies'], [ // Registro o actualización de permiso
+            'name' => 'Guardar especie',
+            'description' => 'Guardar especie',
+            'description_english' => 'Save species',
+            'app_id' => $app->id
+        ]);
+        $permissions_pasante[] = $permission->id; // Almacenar permiso para rol
+
+        //actualizar especie
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.pasante.pasante.updatespecies'], [ // Registro o actualización de permiso
+            'name' => 'Actualizar especie',
+            'description' => 'Actualizar especie',
+            'description_english' => 'Update species',
+            'app_id' => $app->id
+        ]);
+        $permissions_pasante[] = $permission->id; // Almacenar permiso para rol
+
+        //eliminar especie
+
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.pasante.pasante.destroyspecies'], [ // Registro o actualización de permiso
+            'name' => 'Eliminar especie',
+            'description' => 'Eliminar especie',
+            'description_english' => 'Delete species',
+            'app_id' => $app->id
+        ]);
+        $permissions_pasante[] = $permission->id; // Almacenar permiso para rol
 
         // Consulta de ROLES
 
