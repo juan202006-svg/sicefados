@@ -13,7 +13,7 @@ class CreateSpeciesAquaponicsTable extends Migration
      */
     public function up()
     {
-        Schema::create('speciesacuaponics', function (Blueprint $table) {
+        Schema::create('speciesaquaponics', function (Blueprint $table) {
             $table->id(); 
             $table->date('date');
             $table->unsignedBigInteger('category_id');
@@ -24,8 +24,7 @@ class CreateSpeciesAquaponicsTable extends Migration
 
             $table->foreign('category_id')
                   ->references('id')
-                  ->on('categories')
-                  ->onDelete('cascade');
+                  ->on('categories');
 
             $table->timestamps(); 
         });
@@ -38,6 +37,6 @@ class CreateSpeciesAquaponicsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('speciesacuaponics');
+        Schema::dropIfExists('speciesaquaponics');
     }
 }

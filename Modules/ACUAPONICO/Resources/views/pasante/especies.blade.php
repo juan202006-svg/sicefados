@@ -2,11 +2,13 @@
 
 @section('content2')
 <div class="content-wrapper p-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3">Gestión de especies</h1>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregar">
-            <i class="bi bi-plus-circle"></i> Nueva Especie
-        </button>
+    <div class="w-180 border-bottom mb-4 pb-2" style="border-bottom: 2px solid #ccc; margin-left: -28%;">
+        <div class="d-flex justify-content-between align-items-center" style="padding: 0 2rem;">
+            <h1 class="h3">Gestión de Categorías</h1>
+            <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregar">
+                <i class="bi bi-plus-circle"></i> Agregar especie
+            </a>
+        </div>
     </div>
 
     <div class="table-responsive">
@@ -52,120 +54,88 @@
                             data-id="{{ $especie->id }}"
                             data-bs-toggle="modal"
                             data-bs-target="#eliminar">
+                            <i class="bi bi-trash"></i>
                             Eliminar
                         </button>
                     </td>
-
                 </tr>
                 @endforeach
             </tbody>
         </table>
-        <!-- Inicio de modal de editar-->
-        <div class="modal fade bg-white" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updatespecies', 0) }}" method="POST">
-                        @csrf
-                        @method('put')
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editarLabel">Editar Especies</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <!-- Inicio de modal de editar-->
+    <div class="modal fade " id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updatespecies', 0) }}" method="POST">
+                    @csrf
+                    @method('put')
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarLabel">Editar Especies</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="edit-id">
+                        <div class="mb-3">
+                            <label for="edit-fecha" class="form-label"> Fecha:</label>
+                            <input type="date" class="form-control" id="edit-date" name="date">
                         </div>
-                        <div class="modal-body">
-                            <input type="hidden" name="id" id="edit-id">
-                            <div class="mb-3">
-                                <label for="edit-fecha" class="form-label"> Fecha:</label>
-                                <input type="date" class="form-control" id="edit-date" name="date">
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit-category_id" class="form-label">Categoría:</label>
-                                <select class="form-control" id="edit-category_id" name="category_id" required>
-                                    <option value="">Seleccione una categoría</option>
-                                    @foreach ($categorias as $categoria)
-                                    <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit-nombre" class="form-label"> Nombre Cientifico: </label>
-                                <input type="text" class="form-control" id="edit-scientific_name" name="scientific_name">
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit-nombre" class="form-label"> Nombre Comun: </label>
-                                <input type="text" class="form-control" id="edit-common_name" name="common_name">
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit-nombre" class="form-label"> Ciclo de Vida: </label>
-                                <input type="text" class="form-control" id="edit-life_cycle" name="life_cycle">
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit-nombre" class="form-label"> Temperatura Optima C°: </label>
-                                <input type="number" class="form-control" id="edit-optimal_temperature" name="optimal_temperature">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-primary"> Guardar Cambios</button>
-                            </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!--termina modal de editar-->
-        <!--Inicia modal de eliminar-->
-        <div class="modal fade bg-white" id="eliminar" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form id="formEliminar" action="" method="post">
-                        @csrf
-                        @method('delete')
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="eliminarLabel">Confirmar Eliminacion</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="mb-3">
+                            <label for="edit-category_id" class="form-label">Categoría:</label>
+                            <select class="form-control" id="edit-category_id" name="category_id" required>
+                                <option value="">Seleccione una categoría</option>
+                                @foreach ($categorias as $categoria)
+                                <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="modal-body">
-                            <p>¿Estas seguro de que quieres eliminar esta especie?</p>
+                        <div class="mb-3">
+                            <label for="edit-nombre" class="form-label"> Nombre Cientifico: </label>
+                            <input type="text" class="form-control" id="edit-scientific_name" name="scientific_name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-nombre" class="form-label"> Nombre Comun: </label>
+                            <input type="text" class="form-control" id="edit-common_name" name="common_name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-nombre" class="form-label"> Ciclo de Vida: </label>
+                            <input type="text" class="form-control" id="edit-life_cycle" name="life_cycle">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-nombre" class="form-label"> Temperatura Optima C°: </label>
+                            <input type="number" class="form-control" id="edit-optimal_temperature" name="optimal_temperature">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                            <button type="submit" class="btn btn-primary"> Guardar Cambios</button>
                         </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
-<!--script del modal editar-->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.editbtn').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                document.getElementById('formEditar').action = `/pasante/especie/update/${id}`;
-                document.getElementById('edit-id').value = id;
-                document.getElementById('edit-date').value = this.getAttribute('data-date');
-                document.getElementById('edit-category_id').value = this.getAttribute('data-category_id');
-                document.getElementById('edit-scientific_name').value = this.getAttribute('data-scientific_name');
-                document.getElementById('edit-common_name').value = this.getAttribute('data-common_name');
-                document.getElementById('edit-life_cycle').value = this.getAttribute('data-life_cycle');
-                document.getElementById('edit-optimal_temperature').value = this.getAttribute('data-optimal_temperature');
-            });
-
-        });
-    });
-</script>
-<!--script del modal de eliminar-->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.deletbtn').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                document.getElementById('formEliminar').action = `/pasante/especie/destroy/${id}`;
-            });
-        });
-    });
-</script>
-</div>
+    <!--termina modal de editar-->
+    <!--Inicia modal de eliminar-->
+    <div class="modal fade" id="eliminar" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formEliminar" method="POST" action="">
+                    @csrf
+                    @method('delete')
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eliminarLabel">Confirmar Eliminación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Estás seguro de que quieres eliminar esta especie?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- Modal Agregar -->
 <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
@@ -223,6 +193,40 @@
         dateInput.value = currentDate;
     });
 </script>
+<!--script del modal editar-->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.editbtn').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                document.getElementById('formEditar').action = `/pasante/especie/update/${id}`;
+                document.getElementById('edit-id').value = id;
+                document.getElementById('edit-date').value = this.getAttribute('data-date');
+                document.getElementById('edit-category_id').value = this.getAttribute('data-category_id');
+                document.getElementById('edit-scientific_name').value = this.getAttribute('data-scientific_name');
+                document.getElementById('edit-common_name').value = this.getAttribute('data-common_name');
+                document.getElementById('edit-life_cycle').value = this.getAttribute('data-life_cycle');
+                document.getElementById('edit-optimal_temperature').value = this.getAttribute('data-optimal_temperature');
+            });
+
+        });
+    });
+</script>
+<!-- Script Modal Eliminar -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.deletbtn');
+        const formEliminar = document.getElementById('formEliminar');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                formEliminar.action = `/pasante/especie/destroy/${id}`;
+            });
+        });
+    });
+</script>
+
 <!-- Bootstrap 5 JS y Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
@@ -253,4 +257,5 @@
         });
     });
 </script>
+
 @endsection

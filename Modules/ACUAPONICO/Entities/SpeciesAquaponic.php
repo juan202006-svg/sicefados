@@ -10,7 +10,7 @@ class speciesAquaponic extends Model
     use HasFactory;
 
     protected $fillable = ['date', 'category_id', 'scientific_name', 'common_name', 'life_cycle', 'optimal_temperature'];
-    protected $table = 'speciesacuaponics';
+    protected $table = 'speciesaquaponics';
 
     public function category()
     {

@@ -197,7 +197,13 @@
              <li class="nav-item">
                 <a href="{{ route('acuaponico.pasante.pasante.indexspecies') }}" class="nav-link" id="gestionCategorias">
                     <i class="nav-icon fas fa-th"></i>
-                    <p>Gestión de Categorias</p>
+                    <p>Gestión de Especies</p>
+                </a>
+            </li> 
+             <li class="nav-item">
+                <a href="{{ route('acuaponico.pasante.pasante.crops') }}" class="nav-link" id="gestionCategorias">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>Gestión de Cultivos</p>
                 </a>
             </li> 
         </ul>

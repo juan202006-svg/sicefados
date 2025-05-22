@@ -3,60 +3,58 @@
 @section('content2')
 <div class="content-wrapper p-4">
     <!-- Encabezado con línea de lado a lado -->
-<div class="w-180 border-bottom mb-4 pb-2" style="border-bottom: 2px solid #ccc; margin-left: -28%;" >
-    <div class="d-flex justify-content-between align-items-center" style="padding: 0 2rem;">
-        <h1 class="h3">Gestión de Categorías</h1>
-        <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregar">
-            <i class="bi bi-plus-circle"></i> Agregar Categoría
-        </a>
+    <div class="w-180 border-bottom mb-4 pb-2" style="border-bottom: 2px solid #ccc; margin-left: -28%;">
+        <div class="d-flex justify-content-between align-items-center" style="padding: 0 2rem;">
+            <h1 class="h3">Gestión de Categorías</h1>
+            <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregar">
+                <i class="bi bi-plus-circle"></i> Agregar Categoría
+            </a>
+        </div>
     </div>
-</div>
 
-<div class="table-responsive border rounded" style="margin-left: -17%; border: 1px solid #ccc; margin-right: 2%;">
-    <div class="bg-light px-3 py-2 border-bottom" style="font-weight: bold;">
-        Listado de Categorías
+    <div class="table-responsive border rounded" style="margin-left: -17%; border: 1px solid #ccc; margin-right: 2%;">
+        <div class="bg-light px-3 py-2 border-bottom" style="font-weight: bold;">
+            Listado de Categorías
+        </div>
+        <table class="table table-bordered table-striped datatable mb-0">
+            <thead class="table-success text-center">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                @foreach ($categorias as $item)
+                <tr>
+                    <td>{{ $item->id }}</td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->date }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm editbtn"
+                            data-id="{{ $item->id }}"
+                            data-date="{{ $item->date }}"
+                            data-name="{{ $item->name }}"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editar">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm deletbtn"
+                            data-id="{{ $item->id }}"
+                            data-bs-toggle="modal"
+                            data-bs-target="#eliminar">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </button>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
-    <table class="table table-bordered table-striped datatable mb-0">
-        <thead class="table-success text-center">
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Fecha</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody class="text-center">
-            @foreach ($categorias as $item)
-            <tr>
-                <td>{{ $item->id }}</td>
-                <td>{{ $item->name }}</td>
-                <td>{{ $item->date }}</td>
-                <td>
-                    <button type="button" class="btn btn-primary btn-sm editbtn"
-                        data-id="{{ $item->id }}"
-                        data-date="{{ $item->date }}"
-                        data-name="{{ $item->name }}"
-                        data-bs-toggle="modal"
-                        data-bs-target="#editar">
-                        <i class="bi bi-pencil-square"></i> Editar
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm deletbtn"
-                        data-id="{{ $item->id }}"
-                        data-bs-toggle="modal"
-                        data-bs-target="#eliminar">
-                        <i class="bi bi-trash"></i> Eliminar
-                    </button>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-
-    
 
     <!-- Modal Editar -->
-    <div class="modal fade bg-white" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
+    <div class="modal fade " id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updateCategory', 0) }}" method="POST">
@@ -87,7 +85,7 @@
     </div>
 
     <!-- Modal Eliminar -->
-    <div class="modal fade bg-white" id="eliminar" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
+    <div class="modal fade " id="eliminar" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form id="formEliminar" action="" method="post">
@@ -123,7 +121,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="fecha" class="form-label">Fecha</label>
-                        <input type="date" name="date" class="form-control" required>
+                        <input type="date" name="date" class="form-control"  id="date"required>
                     </div>
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre de la Categoría</label>
@@ -153,7 +151,7 @@
 
 <!-- Inicializar DataTable -->
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('.datatable').DataTable({
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
@@ -164,9 +162,9 @@
 
 <!-- Script Modal Editar -->
 <script>
-    document.addEventListener('DOMContentLoaded', function(){
+    document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.editbtn').forEach(button => {
-            button.addEventListener('click', function(){
+            button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
                 document.getElementById('formEditar').action = `/pasante/pasante/updateCategory/${id}`;
                 document.getElementById('edit-id').value = id;
@@ -179,14 +177,20 @@
 
 <!-- Script Modal Eliminar -->
 <script>
-    document.addEventListener('DOMContentLoaded', function(){
+    document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.deletbtn').forEach(button => {
-            button.addEventListener('click', function(){
+            button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
                 document.getElementById('formEliminar').action = `/pasante/categoria/eliminarCategory/${id}`;
             });
         });
     });
 </script>
-
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var dateInput = document.getElementById('date');
+        var currentDate = new Date().toISOString().split('T')[0];
+        dateInput.value = currentDate;
+    });
+</script>
 @endsection

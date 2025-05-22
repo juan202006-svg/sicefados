@@ -27,8 +27,6 @@ Route::controller(LotController::class)->group(function () {
     Route::put('/pasante/pasante/update/{id}', 'update')->name('acuaponico.pasante.pasante.updateLot');
     Route::delete('/pasante/pasante/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyLot');
 });
-
-
 // rutas de las categorias
 
 Route::controller(CategoryController::class)->group(function () {
@@ -48,3 +46,11 @@ Route::controller(SpeciesAquaponicController::class)->group(function () {
     Route::delete('/pasante/especie/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyspecies');
 });
 
+// rutas para los cultivos}
+Route::controller(CropAquaponicController::class)->group(function () {
+    Route::get('/pasante/cultivo/lista', 'index')->name('acuaponico.pasante.pasante.crops');
+    Route::get('/pasante/cultivo/create', 'create')->name('acuaponico.pasante.pasante.createcrops');
+    Route::post('/pasante/cultivo/store', 'store')->name('acuaponico.pasante.pasante.storecrops');
+    //Route::put('/pasante/cultivo/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatecrops');
+    //Route::delete('/pasante/cultivo/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroycrops');
+});
