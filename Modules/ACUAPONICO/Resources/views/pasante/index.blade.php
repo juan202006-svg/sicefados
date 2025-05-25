@@ -38,7 +38,7 @@
                 <table class="table table-bordered table-hover align-middle text-center">
                     <thead style="background-color: #e6f4ea;">
                         <tr>
-                            <th>#</th>
+                            <th>Codigo</th>
                             <th>Fecha</th>
                             <th>Nombre</th>
                             <th>Capacidad</th>
@@ -47,9 +47,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php $n = 1; @endphp
                         @foreach ($lots as $lot)
                         <tr>
-                            <td>{{ $lot->id }}</td>
+                            <td>{{ $n++ }}</td>
                             <td>{{ $lot->date }}</td>
                             <td>{{ $lot->name }}</td>
                             <td>{{ $lot->capacity }}</td>
@@ -96,7 +97,6 @@
                                                 <label class="form-label">Estado:</label>
                                                 <select name="state" class="form-select" required>
                                                     <option value="disponible" {{ $lot->state == 'disponible' ? 'selected' : '' }}>Disponible</option>
-                                                    <option value="ocupado" {{ $lot->state == 'ocupado' ? 'selected' : '' }}>Ocupado</option>
                                                     <option value="no disponible" {{ $lot->state == 'no disponible' ? 'selected' : '' }}>No disponible</option>
                                                 </select>
                                             </div>
@@ -154,8 +154,6 @@
                         <label class="form-label">Estado:</label>
                         <select name="state" class="form-select" required>
                             <option value="disponible">Disponible</option>
-                            <option value="ocupado">Ocupado</option>
-                            <option value="no disponible">No disponible</option>
                         </select>
                     </div>
                 </div>
