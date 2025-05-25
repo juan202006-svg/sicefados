@@ -19,16 +19,17 @@
         <table class="table table-bordered table-striped datatable mb-0">
             <thead class="table-success text-center">
                 <tr>
-                    <th>ID</th>
+                    <th>Codigo</th>
                     <th>Nombre</th>
                     <th>Fecha</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody class="text-center">
+                @php $n = 1; @endphp
                 @foreach ($categorias as $item)
                 <tr>
-                    <td>{{ $item->id }}</td>
+                    <td>{{ $n++}}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->date }}</td>
                     <td>
@@ -121,7 +122,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="fecha" class="form-label">Fecha</label>
-                        <input type="date" name="date" class="form-control"  id="date"required>
+                        <input type="date" name="date" class="form-control" id="date" required>
                     </div>
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre de la Categoría</label>
