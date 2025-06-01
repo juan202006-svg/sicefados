@@ -206,6 +206,12 @@
                     <p>Gestión de Cultivos</p>
                 </a>
             </li> 
+            <li class="nav-item">
+                <a href="{{ route('acuaponico.pasante.pasante.indextracking') }}" class="nav-link" id="gestionCategorias">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>Seguimientos</p>
+                </a>
+            </li> 
         </ul>
     </nav>
 

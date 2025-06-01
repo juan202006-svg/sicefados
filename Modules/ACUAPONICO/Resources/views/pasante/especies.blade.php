@@ -1,138 +1,138 @@
 @extends ('acuaponico::layouts.masterpa')
 
 @section('content2')
-<div class="content-wrapper p-4">
-    <div class="w-180 border-bottom mb-4 pb-2" style="border-bottom: 2px solid #ccc; margin-left: -28%;">
-        <div class="d-flex justify-content-between align-items-center" style="padding: 0 2rem;">
-            <h1 class="h3">Gestión de Categorías</h1>
-            <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregar">
-                <i class="bi bi-plus-circle"></i> Agregar especie
-            </a>
+<h1 class="fw-bold mb-4">Gestión de Especies</h1>
+<div class="container mt-4">
+    <div class="card shadow-sm border-0">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="mb-0 fw-semibold">Lista de Cultivos</h5>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregar">
+                <i class="bi bi-plus-circle"></i> Nuevo Cultivo
+            </button>
         </div>
-    </div>
+        <div class="table-responsive">
+            <table id="tabla-especies" class="table table-hover table-bordered align-middle text-center">
+                <thead style="background-color: #f8f9fa;">
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Fecha</th>
+                        <th>Categoria</th>
+                        <th>Nombre Cientifico</th>
+                        <th>Nombre Comun</th>
+                        <th>Ciclo vida</th>
+                        <th>Temperatura optima C°</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $n = 1; @endphp
+                    @foreach ($especies as $especie)
+                    <tr>
+                        <td class="text-center">{{ $n++ }}</td>
+                        <td class="text-center">{{ $especie->date }}</td>
+                        <td class="text-center">{{ $especie->category->name }}</td>
+                        <td class="text-center">{{ $especie->scientific_name }}</td>
+                        <td class="text-center">{{ $especie->common_name }}</td>
+                        <td class="text-center">{{ $especie->life_cycle }}</td>
+                        <td class="text-center">{{ $especie->optimal_temperature }}</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-success btn-sm editbtn"
+                                data-id="{{ $especie->id }}"
+                                data-date="{{ $especie->date }}"
+                                data-category_id="{{ $especie->category_id }}"
+                                data-scientific_name="{{ $especie->scientific_name }}"
+                                data-common_name="{{ $especie->common_name }}"
+                                data-life_cycle="{{ $especie->life_cycle }}"
+                                data-optimal_temperature="{{ $especie->optimal_temperature }}"
 
-    <div class="table-responsive">
-        <table id="tabla-especies" class="table table-hover table-bordered align-middle">
-            <thead class="table-dark text-center">
-                <tr>
-                    <th>Codigo</th>
-                    <th>Fecha</th>
-                    <th>Categoria</th>
-                    <th>Nombre Cientifico</th>
-                    <th>Nombre Comun</th>
-                    <th>Ciclo vida</th>
-                    <th>Temperatura optima C°</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php $n = 1; @endphp
-                @foreach ($especies as $especie)
-                <tr>
-                    <td class="text-center">{{ $n++ }}</td>
-                    <td class="text-center">{{ $especie->date }}</td>
-                    <td class="text-center">{{ $especie->category->name }}</td>
-                    <td class="text-center">{{ $especie->scientific_name }}</td>
-                    <td class="text-center">{{ $especie->common_name }}</td>
-                    <td class="text-center">{{ $especie->life_cycle }}</td>
-                    <td class="text-center">{{ $especie->optimal_temperature }}</td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-success btn-sm editbtn"
-                            data-id="{{ $especie->id }}"
-                            data-date="{{ $especie->date }}"
-                            data-category_id="{{ $especie->category_id }}"
-                            data-scientific_name="{{ $especie->scientific_name }}"
-                            data-common_name="{{ $especie->common_name }}"
-                            data-life_cycle="{{ $especie->life_cycle }}"
-                            data-optimal_temperature="{{ $especie->optimal_temperature }}"
-
-                            data-bs-toggle="modal"
-                            data-bs-target="#editar">
-                            Editar
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm deletbtn"
-                            data-id="{{ $especie->id }}"
-                            data-bs-toggle="modal"
-                            data-bs-target="#eliminar">
-                            <i class="bi bi-trash"></i>
-                            Eliminar
-                        </button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-    <!-- Inicio de modal de editar-->
-    <div class="modal fade " id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updatespecies', 0) }}" method="POST">
-                    @csrf
-                    @method('put')
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editarLabel">Editar Especies</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" name="id" id="edit-id">
-                        <div class="mb-3">
-                            <label for="edit-fecha" class="form-label"> Fecha:</label>
-                            <input type="date" class="form-control" id="edit-date" name="date">
+                                data-bs-toggle="modal"
+                                data-bs-target="#editar">
+                                Editar
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm deletbtn"
+                                data-id="{{ $especie->id }}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#eliminar">
+                                <i class="bi bi-trash"></i>
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <!-- Inicio de modal de editar-->
+        <div class="modal fade " id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updatespecies', 0) }}" method="POST">
+                        @csrf
+                        @method('put')
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editarLabel">Editar Especies</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="mb-3">
-                            <label for="edit-category_id" class="form-label">Categoría:</label>
-                            <select class="form-control" id="edit-category_id" name="category_id" required>
-                                <option value="">Seleccione una categoría</option>
-                                @foreach ($categorias as $categoria)
-                                <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
-                                @endforeach
-                            </select>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" id="edit-id">
+                            <div class="mb-3">
+                                <label for="edit-fecha" class="form-label"> Fecha:</label>
+                                <input type="date" class="form-control" id="edit-date" name="date">
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-category_id" class="form-label">Categoría:</label>
+                                <select class="form-control" id="edit-category_id" name="category_id" required>
+                                    <option value="">Seleccione una categoría</option>
+                                    @foreach ($categorias as $categoria)
+                                    <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-nombre" class="form-label"> Nombre Cientifico: </label>
+                                <input type="text" class="form-control" id="edit-scientific_name" name="scientific_name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-nombre" class="form-label"> Nombre Comun: </label>
+                                <input type="text" class="form-control" id="edit-common_name" name="common_name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-nombre" class="form-label"> Ciclo de Vida: </label>
+                                <input type="text" class="form-control" id="edit-life_cycle" name="life_cycle">
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-nombre" class="form-label"> Temperatura Optima C°: </label>
+                                <input type="number" class="form-control" id="edit-optimal_temperature" name="optimal_temperature">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary"> Guardar Cambios</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--termina modal de editar-->
+        <!--Inicia modal de eliminar-->
+        <div class="modal fade" id="eliminar" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="formEliminar" method="POST" action="">
+                        @csrf
+                        @method('delete')
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="eliminarLabel">Confirmar Eliminación</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                         </div>
-                        <div class="mb-3">
-                            <label for="edit-nombre" class="form-label"> Nombre Cientifico: </label>
-                            <input type="text" class="form-control" id="edit-scientific_name" name="scientific_name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-nombre" class="form-label"> Nombre Comun: </label>
-                            <input type="text" class="form-control" id="edit-common_name" name="common_name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-nombre" class="form-label"> Ciclo de Vida: </label>
-                            <input type="text" class="form-control" id="edit-life_cycle" name="life_cycle">
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-nombre" class="form-label"> Temperatura Optima C°: </label>
-                            <input type="number" class="form-control" id="edit-optimal_temperature" name="optimal_temperature">
+                        <div class="modal-body">
+                            <p>¿Estás seguro de que quieres eliminar esta especie?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary"> Guardar Cambios</button>
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
                         </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--termina modal de editar-->
-    <!--Inicia modal de eliminar-->
-    <div class="modal fade" id="eliminar" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="formEliminar" method="POST" action="">
-                    @csrf
-                    @method('delete')
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="eliminarLabel">Confirmar Eliminación</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>¿Estás seguro de que quieres eliminar esta especie?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -240,7 +240,7 @@
 
 <!-- Inicializar DataTable -->
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#tabla-especies').DataTable({
             "language": {
                 "lengthMenu": "Mostrar _MENU_ registros por página",

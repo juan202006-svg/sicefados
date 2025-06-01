@@ -160,7 +160,6 @@
                         <select name="species_id" class="form-control" required>
                             <option value="">Seleccione una especie</option>
                             @foreach ($especies as $especie)
-
                             <option value="{{ $especie->id }}">{{ $especie->common_name }}</option>
                             @endforeach
                         </select>

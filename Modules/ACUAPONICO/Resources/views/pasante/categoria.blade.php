@@ -1,78 +1,106 @@
-@extends ('acuaponico::layouts.masterpa')
+@extends('acuaponico::layouts.masterpa')
 
 @section('content2')
-<div class="content-wrapper p-4">
+<div class="content mt-4">
     <!-- Encabezado con línea de lado a lado -->
-    <div class="w-180 border-bottom mb-4 pb-2" style="border-bottom: 2px solid #ccc; margin-left: -28%;">
-        <div class="d-flex justify-content-between align-items-center" style="padding: 0 2rem;">
-            <h1 class="h3">Gestión de Categorías</h1>
-            <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregar">
+    <div class="w-100 border-bottom mb-4 pb-2" style="border-bottom: 2px solid #ccc;">
+        <div class="d-flex justify-content-between align-items-center" style="padding: 0 1rem;">
+            <h1 class="h3 fw-bold mb-0">Gestión de Categorías</h1>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregar">
                 <i class="bi bi-plus-circle"></i> Agregar Categoría
-            </a>
+            </button>
         </div>
     </div>
 
-    <div class="table-responsive border rounded" style="margin-left: -17%; border: 1px solid #ccc; margin-right: 2%;">
-        <div class="bg-light px-3 py-2 border-bottom" style="font-weight: bold;">
-            Listado de Categorías
+    <div class="card shadow-sm border-0">
+        <div class="table-responsive">
+            <table id="tabla-categorias" class="table table-hover table-bordered align-middle text-center">
+                <thead style="background-color: #f8f9fa;">
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Fecha</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $n = 1; @endphp
+                    @foreach ($categorias as $item)
+                    <tr>
+                        <td class="text-center">{{ $n++ }}</td>
+                        <td class="text-center">{{ $item->name }}</td>
+                        <td class="text-center">{{ $item->date }}</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-success btn-sm editbtn"
+                                data-id="{{ $item->id }}"
+                                data-date="{{ $item->date }}"
+                                data-name="{{ $item->name }}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editar">
+                                Editar
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm deletbtn"
+                                data-id="{{ $item->id }}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#eliminar">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-        <table class="table table-bordered table-striped datatable mb-0">
-            <thead class="table-success text-center">
-                <tr>
-                    <th>Codigo</th>
-                    <th>Nombre</th>
-                    <th>Fecha</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody class="text-center">
-                @php $n = 1; @endphp
-                @foreach ($categorias as $item)
-                <tr>
-                    <td>{{ $n++}}</td>
-                    <td>{{ $item->name }}</td>
-                    <td>{{ $item->date }}</td>
-                    <td>
-                        <button type="button" class="btn btn-primary btn-sm editbtn"
-                            data-id="{{ $item->id }}"
-                            data-date="{{ $item->date }}"
-                            data-name="{{ $item->name }}"
-                            data-bs-toggle="modal"
-                            data-bs-target="#editar">
-                            <i class="bi bi-pencil-square"></i> Editar
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm deletbtn"
-                            data-id="{{ $item->id }}"
-                            data-bs-toggle="modal"
-                            data-bs-target="#eliminar">
-                            <i class="bi bi-trash"></i> Eliminar
-                        </button>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+    </div>
+
+    <!-- Modal Agregar -->
+    <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="{{ route('acuaponico.pasante.pasante.storeCategory') }}" method="POST">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title" id="agregarLabel">Agregar Nueva Categoría</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Fecha:</label>
+                            <input type="date" name="date" class="form-control" id="date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre de la Categoría:</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- Modal Editar -->
-    <div class="modal fade " id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
+    <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updateCategory', 0) }}" method="POST">
                     @csrf
                     @method('put')
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editarLabel">Editar Categorías</h5>
+                        <h5 class="modal-title" id="editarLabel">Editar Categoría</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" id="edit-id">
                         <div class="mb-3">
-                            <label for="edit-fecha" class="form-label">Fecha:</label>
+                            <label for="edit-date" class="form-label">Fecha:</label>
                             <input type="date" class="form-control" id="edit-date" name="date">
                         </div>
                         <div class="mb-3">
-                            <label for="edit-nombre" class="form-label">Nombre:</label>
+                            <label for="edit-name" class="form-label">Nombre:</label>
                             <input type="text" class="form-control" id="edit-name" name="name">
                         </div>
                     </div>
@@ -86,10 +114,10 @@
     </div>
 
     <!-- Modal Eliminar -->
-    <div class="modal fade " id="eliminar" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
+    <div class="modal fade" id="eliminar" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="formEliminar" action="" method="post">
+                <form id="formEliminar" method="POST" action="">
                     @csrf
                     @method('delete')
                     <div class="modal-header">
@@ -109,53 +137,33 @@
     </div>
 </div>
 
-<!-- Modal Agregar -->
-<div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form action="{{ route('acuaponico.pasante.pasante.storeCategory') }}" method="POST">
-            @csrf
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="agregarLabel">Agregar Nueva Categoría</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="fecha" class="form-label">Fecha</label>
-                        <input type="date" name="date" class="form-control" id="date" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre de la Categoría</label>
-                        <input type="text" name="name" class="form-control" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
 <!-- Bootstrap 5 JS y Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 
 <!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
-<!-- jQuery (requerido por DataTables) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+<!-- DataTables JS y dependencias -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 <!-- Inicializar DataTable -->
 <script>
     $(document).ready(function() {
-        $('.datatable').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+        $('#tabla-categorias').DataTable({
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                "search": "Buscar:",
+                "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
             }
         });
     });
@@ -167,7 +175,7 @@
         document.querySelectorAll('.editbtn').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
-                document.getElementById('formEditar').action = `/pasante/pasante/updateCategory/${id}`;
+                document.getElementById('formEditar').action = `/pasante/categoria/update/${id}`;
                 document.getElementById('edit-id').value = id;
                 document.getElementById('edit-date').value = this.getAttribute('data-date');
                 document.getElementById('edit-name').value = this.getAttribute('data-name');
@@ -179,14 +187,18 @@
 <!-- Script Modal Eliminar -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.deletbtn').forEach(button => {
+        const deleteButtons = document.querySelectorAll('.deletbtn');
+        const formEliminar = document.getElementById('formEliminar');
+
+        deleteButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
-                document.getElementById('formEliminar').action = `/pasante/categoria/eliminarCategory/${id}`;
+                formEliminar.action = `/pasante/categoria/destoy/${id}`;
             });
         });
     });
 </script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var dateInput = document.getElementById('date');
@@ -194,4 +206,14 @@
         dateInput.value = currentDate;
     });
 </script>
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Éxito',
+        text: 'se ha realizado la acción correctamente.',
+    });
+</script>
+@endif
+
 @endsection

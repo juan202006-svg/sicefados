@@ -1,128 +1,65 @@
 @extends('acuaponico::layouts.masterpa')
 
-@section('content')
+@section('content2')
 
-<!-- Bootstrap CSS (Ensure this is included in your layout or here) -->
+<!-- Bootstrap CSS (Asegúrate de que esté incluido en el layout o aquí) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Bootstrap Bundle con Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <h1 class="fw-bold mb-4">Gestión de Lotes</h1>
 
-<div class="container mt-4">
+<div class="content mt-4">
     <div class="card shadow-sm border-0">
-        <div class="card-header bg-light d-flex justify-content-between align-items-center">
-            <h4 class="mb-0">Listado de Lotes</h4>
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createLot">Agregar Lote</button>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="mb-0 fw-semibold">Lista de Lotes</h5>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createLot">
+                <i class="bi bi-plus-circle"></i> Agregar Lote
+            </button>
         </div>
-        <div class="card-body">
-            <!-- Search and Show Entries -->
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="d-flex align-items-center">
-                    <label for="show-entries" class="me-2">Mostrar</label>
-                    <select id="show-entries" class="form-select form-select-sm" style="width: auto;">
-                        <option value="10" selected>10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                    <span class="ms-2">registros</span>
-                </div>
-                <div>
-                    <input type="text" class="form-control form-control-sm" placeholder="Buscar:" style="width: 200px;">
-                </div>
-            </div>
-
-            <!-- Table -->
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover align-middle text-center">
-                    <thead style="background-color: #e6f4ea;">
-                        <tr>
-                            <th>Codigo</th>
-                            <th>Fecha</th>
-                            <th>Nombre</th>
-                            <th>Capacidad</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php $n = 1; @endphp
-                        @foreach ($lots as $lot)
-                        <tr>
-                            <td>{{ $n++ }}</td>
-                            <td>{{ $lot->date }}</td>
-                            <td>{{ $lot->name }}</td>
-                            <td>{{ $lot->capacity }}</td>
-                            <td>
-                                <span class="badge bg-{{ $lot->state == 'disponible' ? 'success' : ($lot->state == 'ocupado' ? 'warning' : 'secondary') }}">
-                                    {{ ucfirst($lot->state) }}
-                                </span>
-                            </td>
-                            <td>
-                                <button class="btn btn-sm btn-primary me-1" data-bs-toggle="modal" data-bs-target="#updateLot{{ $lot->id }}">Editar</button>
-                                <form action="{{ route('acuaponico.pasante.pasante.destroyLot', $lot->id) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este lote?')">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
-
-                        <!-- Modal de edición -->
-                        <div class="modal fade" id="updateLot{{ $lot->id }}" tabindex="-1" aria-labelledby="updateLotLabel{{ $lot->id }}" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <form action="{{ route('acuaponico.pasante.pasante.updateLot', $lot->id) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="modal-content">
-                                        <div class="modal-header bg-primary text-white">
-                                            <h5 class="modal-title" id="updateLotLabel{{ $lot->id }}">Editar Lote</h5>
-                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="mb-3">
-                                                <label class="form-label">Fecha:</label>
-                                                <input type="date" name="date" value="{{ $lot->date }}" class="form-control" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Nombre:</label>
-                                                <input type="text" name="name" value="{{ $lot->name }}" class="form-control" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Capacidad:</label>
-                                                <input type="number" name="capacity" value="{{ $lot->capacity }}" class="form-control" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Estado:</label>
-                                                <select name="state" class="form-select" required>
-                                                    <option value="disponible" {{ $lot->state == 'disponible' ? 'selected' : '' }}>Disponible</option>
-                                                    <option value="no disponible" {{ $lot->state == 'no disponible' ? 'selected' : '' }}>No disponible</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                            <button type="submit" class="btn btn-primary">Actualizar</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Pagination -->
-            <div class="d-flex justify-content-between align-items-center mt-3">
-                <div>Mostrando 1 a 3 de 3 registros</div>
-                <div>
-                    <button class="btn btn-outline-primary btn-sm me-1" disabled>Anterior</button>
-                    <button class="btn btn-primary btn-sm me-1">1</button>
-                    <button class="btn btn-outline-primary btn-sm">Siguiente</button>
-                </div>
-            </div>
+        <div class="table-responsive">
+            <table id="lotesTable" class="table table-hover table-bordered align-middle text-center" style="width:100%">
+                <thead style="background-color: #f8f9fa;">
+                    <tr>
+                        <th>Código</th>
+                        <th>Fecha</th>
+                        <th>Nombre</th>
+                        <th>Capacidad</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $n = 1; @endphp
+                    @foreach ($lots as $lot)
+                    <tr>
+                        <td class="text-center">{{ $n++ }}</td>
+                        <td class="text-center">{{ $lot->date }}</td>
+                        <td class="text-center">{{ $lot->name }}</td>
+                        <td class="text-center">{{ $lot->capacity }}</td>
+                        <td class="text-center">{{$lot->state }} </td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-success btn-sm editbtn"
+                                data-id="{{ $lot->id }}"
+                                data-date="{{ $lot->date }}"
+                                data-name="{{ $lot->name }}"
+                                data-capacity="{{ $lot->capacity }}"
+                                data-state="{{ $lot->state }}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#updateLot">
+                                Editar
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm deletbtn"
+                                data-id="{{ $lot->id }}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#eliminar">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -133,43 +70,171 @@
         <form action="{{ route('acuaponico.pasante.pasante.storeLot') }}" method="POST">
             @csrf
             <div class="modal-content">
-                <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title" id="createLotLabel">Agregar Lote</h5>
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="createLotLabel">Nuevo Lote</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Fecha:</label>
-                        <input type="date" name="date" class="form-control" id= "date"   required>
+                        <label for="date" class="form-label">Fecha:</label>
+                        <input type="date" name="date" class="form-control" id="date" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Nombre:</label>
+                        <label for="name" class="form-label">Nombre:</label>
                         <input type="text" name="name" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Capacidad:</label>
-                        <input type="number" name="capacity" class="form-control"  required>
+                        <label for="capacity" class="form-label">Capacidad:</label>
+                        <input type="number" name="capacity" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Estado:</label>
+                        <label for="state" class="form-label">Estado:</label>
                         <select name="state" class="form-select" required>
                             <option value="disponible">Disponible</option>
+                            <option value="ocupado">Ocupado</option>
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
+
+<!-- Modal de edición -->
+<div class="modal fade" id="updateLot" tabindex="-1" aria-labelledby="updateLotLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updateLot', 0) }}" method="POST">
+                @csrf
+                @method('put')
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateLotLabel">Editar Lote</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="edit-id">
+                    <div class="mb-3">
+                        <label for="edit-date" class="form-label">Fecha:</label>
+                        <input type="date" class="form-control" id="edit-date" name="date">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-name" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="edit-name" name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-capacity" class="form-label">Capacidad:</label>
+                        <input type="number" class="form-control" id="edit-capacity" name="capacity">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-state" class="form-label">Estado:</label>
+                        <select class="form-control" id="edit-state" name="state" required>
+                            <option value="">Seleccione un estado</option>
+                            <option value="disponible">Disponible</option>
+                            <option value="ocupado">Ocupado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de eliminar -->
+<div class="modal fade" id="eliminar" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="formEliminar" method="POST" action="">
+                @csrf
+                @method('delete')
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eliminarLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro de que quieres eliminar este lote?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var dateInput = document.getElementById('date');
         var currentDate = new Date().toISOString().split('T')[0];
         dateInput.value = currentDate;
+    });
+</script>
+
+<!-- Script del modal editar -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.editbtn').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                document.getElementById('formEditar').action = `/pasante/lote/update/${id}`;
+                document.getElementById('edit-id').value = id;
+                document.getElementById('edit-date').value = this.getAttribute('data-date');
+                document.getElementById('edit-name').value = this.getAttribute('data-name');
+                document.getElementById('edit-capacity').value = this.getAttribute('data-capacity');
+                document.getElementById('edit-state').value = this.getAttribute('data-state');
+            });
+        });
+    });
+</script>
+
+<!-- Script Modal Eliminar -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.deletbtn');
+        const formEliminar = document.getElementById('formEliminar');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                formEliminar.action = `/pasante/lote/destroy/${id}`;
+            });
+        });
+    });
+</script>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+<!-- DataTables JS y dependencias -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- Inicializar DataTable -->
+<script>
+    $(document).ready(function() {
+        $('#lotesTable').DataTable({
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                "search": "Buscar:",
+                "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
+        });
     });
 </script>
 
