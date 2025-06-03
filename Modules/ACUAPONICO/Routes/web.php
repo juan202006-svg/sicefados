@@ -63,3 +63,11 @@ Route::controller(TrackingController::class)->group(function () {
     Route::put('/pasante/seguimiento/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatetracking');
     Route::delete('/pasante/seguimiento/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroytracking');
 });
+
+// rutas para los seguimientos de peces
+Route::controller(TrackingFishController::class)->group(function () {
+    Route::get('/pasante/seguimientoPez/peces', 'index')->name('acuaponico.pasante.pasante.indextrakingfish');
+    Route::post('/pasante/seguimientoPez/store', 'store')->name('acuaponico.pasante.pasante.storetrackingfish');
+    Route::put('/pasante/seguimientoPez/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatetrackingfish');
+    Route::delete('/pasante/seguimientoPez/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroytrackingfish');
+});

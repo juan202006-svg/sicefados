@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\CropAquaponic;
 use Modules\ACUAPONICO\Entities\Tracking;
-use Modules\AGROCEFA\Entities\Crop;
 
 class TrackingController extends Controller
 {
@@ -51,6 +50,11 @@ class TrackingController extends Controller
         $sequimientos->days_elapsed = $days_elapsed;
         $sequimientos->notes = $notes;
         $sequimientos->save();
+
+        $cultivo = CropAquaponic::findOrFail($request->crop_id);
+        // Cambiar el estado del cultivo a 'en seguimiento'
+        $cultivo->status = 'Seguimiento';
+        $cultivo->save();
 
         return redirect()->back()->with('success', 'Especie generada correctamente.');
         return view('acuaponico::pasante.seguimiento');

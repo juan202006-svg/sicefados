@@ -20,7 +20,7 @@
                         <th>Fecha</th>
                         <th>Cultivo</th>
                         <th>Tiempo dias</th>
-                        <th>Descripcion</th>
+                        <th>Novedades</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -84,7 +84,7 @@
                                 <input type="number" class="form-control" id="edit-days_elapsed" name="days_elapsed">
                             </div>
                             <div class="mb-3">
-                                <label for="edit-notes" class="form-label"> Descropcion: </label>
+                                <label for="edit-notes" class="form-label"> Novedad: </label>
                                 <textarea class="form-control" name="notes" id="edit-notes"></textarea>
                             </div>
                             <div class="modal-footer">
@@ -143,7 +143,7 @@
                         <input type="number" name="days_elapsed" class="form-control" id="days_elapsed" required>
                     </div>
                     <div class="mb-3">
-                        <label for="notes" class="form-label">Descripcion:</label>
+                        <label for="notes" class="form-label">Novedad:</label>
                         <textarea name="notes" class="form-control" id="notes" required></textarea>
                     </div>
                     <div class="modal-footer">
@@ -251,8 +251,4 @@ document.getElementById('crop_id').addEventListener('change', function () {
     }
 });
 </script>
-
-
-
-
 @endsection

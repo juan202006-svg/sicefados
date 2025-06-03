@@ -49,11 +49,8 @@
                                 data-bs-target="#updateLot">
                                 Editar
                             </button>
-                            <button type="button" class="btn btn-danger btn-sm deletbtn"
-                                data-id="{{ $lot->id }}"
-                                data-bs-toggle="modal"
-                                data-bs-target="#eliminar">
-                                <i class="bi bi-trash"></i> Eliminar
+                           <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $lot->id }}">
+                                Eliminar
                             </button>
                         </td>
                     </tr>
@@ -154,17 +151,7 @@
             <form id="formEliminar" method="POST" action="">
                 @csrf
                 @method('delete')
-                <div class="modal-header">
-                    <h5 class="modal-title" id="eliminarLabel">Confirmar Eliminación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <p>¿Estás seguro de que quieres eliminar este lote?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                </div>
+
             </form>
         </div>
     </div>
@@ -194,21 +181,31 @@
         });
     });
 </script>
-
-<!-- Script Modal Eliminar -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const deleteButtons = document.querySelectorAll('.deletbtn');
-        const formEliminar = document.getElementById('formEliminar');
-
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                formEliminar.action = `/pasante/lote/destroy/${id}`;
+    document.querySelectorAll('.btnEliminar').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formEliminar = document.getElementById('formEliminar');
+                    formEliminar.action = `/pasante/lote/destroy/${id}`;
+                    formEliminar.submit();
+                }
             });
         });
     });
 </script>
+
+
 
 <!-- DataTables CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
