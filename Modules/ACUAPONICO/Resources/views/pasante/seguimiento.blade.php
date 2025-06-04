@@ -1,55 +1,50 @@
-@extends ('acuaponico::layouts.masterpa')
+@extends('acuaponico::layouts.masterpa')
 
 @section('content2')
-<h1 class="fw-bold mb-4">Gestión de Especies</h1>
-<div class="container mt-4">
+
+
+<h1 class="fw-bold mb-4">Gestión de Seguimientos</h1>
+<div class="content mt-4">
     <div class="card shadow-sm border-0">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h5 class="mb-0 fw-semibold">Lista de Cultivos</h5>
+            <h5 class="mb-0 fw-semibold">Lista de Seguimientos</h5>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregar">
-                <i class="bi bi-plus-circle"></i> Nueva Especie
+                <i class="bi bi-plus-circle"></i> Nuevo seguimiento
             </button>
         </div>
         <div class="table-responsive">
-            <table id="tabla-especies" class="table table-hover table-bordered align-middle text-center">
+            <table id="tabla-cultivos" class="table table-hover table-bordered align-middle text-center">
                 <thead style="background-color: #f8f9fa;">
                     <tr>
                         <th>Codigo</th>
                         <th>Fecha</th>
-                        <th>Categoria</th>
-                        <th>Nombre Cientifico</th>
-                        <th>Nombre Comun</th>
-                        <th>Ciclo vida</th>
-                        <th>Temperatura optima C°</th>
+                        <th>Cultivo</th>
+                        <th>Tiempo dias</th>
+                        <th>Novedades</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php $n = 1; @endphp
-                    @foreach ($especies as $especie)
+                    @foreach ($seguimientos as $seguimiento)
                     <tr>
                         <td class="text-center">{{ $n++ }}</td>
-                        <td class="text-center">{{ $especie->date }}</td>
-                        <td class="text-center">{{ $especie->category->name }}</td>
-                        <td class="text-center">{{ $especie->scientific_name }}</td>
-                        <td class="text-center">{{ $especie->common_name }}</td>
-                        <td class="text-center">{{ $especie->life_cycle }}</td>
-                        <td class="text-center">{{ $especie->optimal_temperature }}</td>
+                        <td class="text-center">{{ $seguimiento->date }}</td>
+                        <td class="text-center">{{ $seguimiento->crops->species->common_name }}</td>
+                        <td class="text-center">{{ $seguimiento->days_elapsed }}</td>
+                        <td class="text-center">{{ $seguimiento->notes }}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-success btn-sm editbtn"
-                                data-id="{{ $especie->id }}"
-                                data-date="{{ $especie->date }}"
-                                data-category_id="{{ $especie->category_id }}"
-                                data-scientific_name="{{ $especie->scientific_name }}"
-                                data-common_name="{{ $especie->common_name }}"
-                                data-life_cycle="{{ $especie->life_cycle }}"
-                                data-optimal_temperature="{{ $especie->optimal_temperature }}"
-
+                                data-id="{{ $seguimiento->id }}"
+                                data-date="{{ $seguimiento->date }}"
+                                data-crop_id="{{ $seguimiento->crop_id }}"
+                                data-days_elapsed="{{ $seguimiento->days_elapsed }}"
+                                data-notes="{{ $seguimiento->notes }}"
                                 data-bs-toggle="modal"
                                 data-bs-target="#editar">
                                 Editar
                             </button>
-                            <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $especie->id }}">
+                            <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $seguimiento->id }}">
                                 Eliminar
                             </button>
                         </td>
@@ -62,43 +57,35 @@
         <div class="modal fade " id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updatespecies', 0) }}" method="POST">
+                    <form id="formEditar" action="{{route ('acuaponico.pasante.pasante.updatetracking',0)}}" method="POST">
                         @csrf
                         @method('put')
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editarLabel">Editar Especies</h5>
+                            <h5 class="modal-title" id="editarLabel">Editar Seguimiento</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="id" id="edit-id">
                             <div class="mb-3">
-                                <label for="edit-fecha" class="form-label"> Fecha:</label>
+                                <label for="edit-date" class="form-label"> Fecha:</label>
                                 <input type="date" class="form-control" id="edit-date" name="date">
                             </div>
                             <div class="mb-3">
-                                <label for="edit-category_id" class="form-label">Categoría:</label>
-                                <select class="form-control" id="edit-category_id" name="category_id" required>
-                                    <option value="">Seleccione una categoría</option>
-                                    @foreach ($categorias as $categoria)
-                                    <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
+                                <label for="edit-crop_id" class="form-label">Cultivo:</label>
+                                <select class="form-control" id="edit-crop_id" name="crop_id" required>
+                                    <option value="">Seleccione un cultivo</option>
+                                    @foreach ($cultivos as $cultivo)
+                                    <option value="{{ $cultivo->id }}">{{ $cultivo->species->common_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="edit-nombre" class="form-label"> Nombre Cientifico: </label>
-                                <input type="text" class="form-control" id="edit-scientific_name" name="scientific_name">
+                                <label for="edit-days_elapsed" class="form-label"> Tiempo en dias: </label>
+                                <input type="number" class="form-control" id="edit-days_elapsed" name="days_elapsed">
                             </div>
                             <div class="mb-3">
-                                <label for="edit-nombre" class="form-label"> Nombre Comun: </label>
-                                <input type="text" class="form-control" id="edit-common_name" name="common_name">
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit-nombre" class="form-label"> Ciclo de Vida: </label>
-                                <input type="text" class="form-control" id="edit-life_cycle" name="life_cycle">
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit-nombre" class="form-label"> Temperatura Optima C°: </label>
-                                <input type="number" class="form-control" id="edit-optimal_temperature" name="optimal_temperature">
+                                <label for="edit-notes" class="form-label"> Novedad: </label>
+                                <textarea class="form-control" name="notes" id="edit-notes"></textarea>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -116,6 +103,7 @@
                     <form id="formEliminar" method="POST" action="">
                         @csrf
                         @method('delete')
+
                     </form>
                 </div>
             </div>
@@ -125,49 +113,44 @@
 <!-- Modal Agregar -->
 <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="{{ route('acuaponico.pasante.pasante.storespecies') }}" method="POST">
+        <form action="{{route ('acuaponico.pasante.pasante.storetracking') }}" method="POST">
             @csrf
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="agregarLabel">Agregar Nueva Especie</h5>
+                    <h5 class="modal-title" id="agregarLabel">Nuevo Seguimiento</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="date" class="form-label">Fecha</label>
+                        <label for="date" class="form-label">Fecha:</label>
                         <input type="date" name="date" class="form-control" id="date" equired>
                     </div>
-                    <div class="form-group">
-                        <label for="categoty_id">Categoria:</label>
-                        <select name="category_id" class="form-control" required>
-                            <option value="">Seleccione una categoria</option>
-                            @foreach ($categorias as $categoria)
-                            <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
+                    <div class="mb-3">
+                        <label for="crop_id">Cultivo:</label>
+                        <select name="crop_id" id="crop_id" class="form-control" required>
+                            <option value="">Seleccione un cultivo</option>
+                            @foreach ($cultivos as $cultivo)
+                            <option
+                                value="{{ $cultivo->id }}"
+                                data-date="{{ $cultivo->date }}">
+                                {{ $cultivo->species->common_name }} 
+                            </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="scientific_name" class="form-label">Nombre Cientifico: </label>
-                        <input type="text" name="scientific_name" class="form-control" required>
+                        <label for="days_elapsed" class="form-label">Tiempo en dias:</label>
+                        <input type="number" name="days_elapsed" class="form-control" id="days_elapsed" required>
                     </div>
                     <div class="mb-3">
-                        <label for="common_name" class="form-label">Nombre Comun: </label>
-                        <input type="text" name="common_name" class="form-control" required>
+                        <label for="notes" class="form-label">Novedad:</label>
+                        <textarea name="notes" class="form-control" id="notes" required></textarea>
                     </div>
-                    <div class="mb-3">
-                        <label for="ciclo_vida" class="form-label">Ciclo de Vida: </label>
-                        <input type="text" name="life_cycle" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="temperatura_optima" class="form-label">Temperatura Optima C°: </label>
-                        <input type="number" name="optimal_temperature" class="form-control" required>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </div>
         </form>
     </div>
 </div>
@@ -184,20 +167,16 @@
         document.querySelectorAll('.editbtn').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
-                document.getElementById('formEditar').action = `/pasante/especie/update/${id}`;
+                document.getElementById('formEditar').action = `/pasante/seguimiento/update/${id}`;
                 document.getElementById('edit-id').value = id;
                 document.getElementById('edit-date').value = this.getAttribute('data-date');
-                document.getElementById('edit-category_id').value = this.getAttribute('data-category_id');
-                document.getElementById('edit-scientific_name').value = this.getAttribute('data-scientific_name');
-                document.getElementById('edit-common_name').value = this.getAttribute('data-common_name');
-                document.getElementById('edit-life_cycle').value = this.getAttribute('data-life_cycle');
-                document.getElementById('edit-optimal_temperature').value = this.getAttribute('data-optimal_temperature');
+                document.getElementById('edit-crop_id').value = this.getAttribute('data-crop_id');
+                document.getElementById('edit-days_elapsed').value = this.getAttribute('data-days_elapsed');
+                document.getElementById('edit-notes').value = this.getAttribute('data-notes');
             });
-
         });
     });
 </script>
-<!-- Script Modal Eliminar -->
 <script>
     document.querySelectorAll('.btnEliminar').forEach(button => {
         button.addEventListener('click', function() {
@@ -214,7 +193,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     const formEliminar = document.getElementById('formEliminar');
-                    formEliminar.action = `/pasante/especie/destroy/${id}`;
+                    formEliminar.action = `/pasante/seguimiento/destroy/${id}`;
                     formEliminar.submit();
                 }
             });
@@ -236,7 +215,7 @@
 <!-- Inicializar DataTable -->
 <script>
     $(document).ready(function() {
-        $('#tabla-especies').DataTable({
+        $('#tabla-cultivos').DataTable({
             "language": {
                 "lengthMenu": "Mostrar _MENU_ registros por página",
                 "zeroRecords": "No se encontraron resultados",
@@ -253,4 +232,23 @@
     });
 </script>
 
+<script>
+document.getElementById('crop_id').addEventListener('change', function () {
+    const selectedOption = this.options[this.selectedIndex];
+    const fechaCultivo = selectedOption.getAttribute('data-date');
+
+    if (fechaCultivo) {
+        const fechaInicio = new Date(fechaCultivo);
+        const fechaHoy = new Date();
+
+        const diffTiempo = fechaHoy - fechaInicio;
+        const diffDias = Math.floor(diffTiempo / (1000 * 60 * 60 * 24));
+
+        // Asignar al campo
+        document.getElementById('days_elapsed').value = diffDias;
+    } else {
+        document.getElementById('days_elapsed').value = '';
+    }
+});
+</script>
 @endsection

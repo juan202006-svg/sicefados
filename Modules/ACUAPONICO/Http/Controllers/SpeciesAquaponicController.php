@@ -37,7 +37,7 @@ class SpeciesAquaponicController extends Controller
      */
     public function store(Request $request)
     {
-         $date = $request->date;
+        $date = $request->date;
         $category_id = $request->category_id;
         $scientific_name = $request->scientific_name;
         $common_name = $request->common_name;

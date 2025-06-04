@@ -84,6 +84,7 @@ class CategoryController extends Controller
     
         return redirect()->back()->with('success', 'Categoria generada correctamente.');
         return view('acuaponico::pasante.categoria');
+        
     }
 
     /**
