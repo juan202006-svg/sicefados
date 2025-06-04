@@ -56,7 +56,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-                <a href="{{ route('acuaponico.admin.admin.usuarios') }}" class="nav-link" id="gestionUsuarios">
+                <a href="" class="nav-link" id="gestionUsuarios">
                     <i class="nav-icon fas fa-th"></i>
                     <p>Gestión de Categorias</p>
                 </a>
@@ -70,14 +70,9 @@
 
 
   <!-- Main content -->
-    <div class="content">
-         @yield('content')
-    </div>
-
-
-    <div class="wrapper">
-
-    </div>
+        <div class="content-wrapper">
+            @yield('content')
+        </div>
 
 
 <!-- jQuery -->

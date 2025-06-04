@@ -36,6 +36,17 @@ class PermissionsTableSeeder extends Seeder
         ]);
         $permissions_admin[] = $permission->id; // Almacenar permiso para rol
 
+        // Vista de configuración (pasante)
+        //vista de Usuarios
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.usuarios'], [ // Registro o actualización de permiso
+            'name' => 'Acceso lista de usuarios',
+            'description' => 'Vista de usuarios',
+            'description_english' => 'Access to the list of users',
+            'app_id' => $app->id
+        ]);
+
+        $permissions_admin[] = $permission->id;
+
 
         // Consulta de ROLES
         $rol_admin = Role::where('slug', 'acuaponico.admin')->first(); // Rol Administrador

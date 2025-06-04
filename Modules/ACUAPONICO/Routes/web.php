@@ -20,6 +20,13 @@ Route::middleware(['lang'])->group(function () {
         Route::get('/pasante/welcomepas', 'ACUAPONICOController@pasante')->name('acuaponico.pasante.welcomepas');
     });
 });
+
+
+/*oute::controller(UsuarioController::class)->group(function () {
+    Route::get('/admin/usuarios', 'index')->name('acuaponico.admin.admin.usuarios');
+});*/
+
+
 Route::controller(LotController::class)->group(function () {
     Route::get('/pasante/pasante/index', 'index')->name('acuaponico.pasante.pasante.index');
     Route::get('/pasante/pasante/create', 'cerate')->name('acuaponico.pasante.pasante.cerateLot');
@@ -54,3 +61,4 @@ Route::controller(CropAquaponicController::class)->group(function () {
     //Route::put('/pasante/cultivo/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatecrops');
     //Route::delete('/pasante/cultivo/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroycrops');
 });
+
