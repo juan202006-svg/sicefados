@@ -1,13 +1,14 @@
 @extends('acuaponico::layouts.masterpa')
 
+
 @section('content2')
 
 
-<h1 class="fw-bold mb-4">Seguimiento Peces</h1>
+<h1 class="fw-bold mb-4">Seguimiento Plantas</h1>
 <div class="content mt-4">
     <div class="card shadow-sm border-0">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h5 class="mb-0 fw-semibold">Lista de Seguimientos</h5>
+            <h5 class="mb-0 fw-semibold">Lista de Seguimientos Plantas</h5>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregar">
                 <i class="bi bi-plus-circle"></i> Nuevo seguimiento
             </button>
@@ -19,34 +20,34 @@
                         <th>Codigo</th>
                         <th>Fecha</th>
                         <th>Cultivo</th>
-                        <th>N° Peces</th>
-                        <th>Peso(gr)</th>
-                        <th>Biomasa(gr)</th>
-                        <th>Ganancia de peso(gr)</th>
+                        <th>N° Plantas</th>
+                        <th>Altura(cm)</th>
+                        <th>Crecimiento</th>
+                        <th>Rendimiento(%)</th>
                         <th>Mortalidad</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php $n = 1; @endphp
-                    @foreach ($seguimientoPez as $sp)
+                    @foreach ($seguimientoPlanta as $sp)
                     <tr>
                         <td class="text-center">{{ $n++ }}</td>
                         <td class="text-center">{{ $sp->Tracking->date }}</td>
                         <td class="text-center">{{ $sp->Tracking->crops->species->common_name }}</td>
-                        <td class="text-center">{{ $sp->fish_count }}</td>
-                        <td class="text-center">{{ $sp->weight_gr }}</td>
-                        <td class="text-center">{{ $sp->biomass_gr }}</td>
-                        <td class="text-center">{{ $sp->weight_gain_gr }}</td>
+                        <td class="text-center">{{ $sp->plant_count }}</td>
+                        <td class="text-center">{{ $sp->height_cm }}</td>
+                        <td class="text-center">{{ $sp->growth }}</td>
+                        <td class="text-center">{{ $sp->comparison_percentage }}</td>
                         <td class="text-center">{{ $sp->mortality }}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-success btn-sm editbtn"
                                 data-id="{{ $sp->id }}"
                                 data-tracking_id="{{ $sp->tracking_id }}"
-                                data-fish_count="{{ $sp->fish_count }}"
-                                data-weight_gr="{{ $sp->weight_gr }}"
-                                data-biomass_gr="{{ $sp->biomass_gr }}"
-                                data-weight_gain_gr="{{ $sp->weight_gain_gr }}"
+                                data-plant_count="{{ $sp->plant_count }}"
+                                data-height_cm="{{ $sp->height_cm }}"
+                                data-growth="{{ $sp->growth }}"
+                                data-comparison_percentage="{{ $sp->comparison_percentage }}"
                                 data-mortality="{{ $sp->mortality }}"
                                 data-bs-toggle="modal"
                                 data-bs-target="#editar">
@@ -65,17 +66,17 @@
         <div class="modal fade " id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="formEditar" action="{{route('acuaponico.pasante.pasante.updatetrackingfish', 0)}}" method="POST">
+                    <form id="formEditar" action="" method="POST">
                         @csrf
                         @method('put')
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editarLabel">Editar Seguimiento Peces</h5>
+                            <h5 class="modal-title" id="editarLabel">Editar Seguimiento Plantas</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="id" id="edit-id">
                             <div class="mb-3">
-                                <label for="edit-tracking_id" class="form-label">Cultivo seguimineto:</label>
+                                <label for="edit-tracking_id" class="form-label">Cultivo seguimiento:</label>
                                 <select class="form-control" id="edit-tracking_id" name="tracking_id" required>
                                     <option value="">Seleccione un seguimiento</option>
                                     @foreach ($seguimientos as $seguimiento)
@@ -86,20 +87,20 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="edit-fish_count" class="form-label"> N° Peces: </label>
-                                <input type="number" class="form-control" id="edit-fish_count" name="fish_count">
+                                <label for="edit-plant_count" class="form-label"> N° Plantas: </label>
+                                <input type="number" class="form-control" id="edit-plant_count" name="plant_count">
                             </div>
                             <div class="mb-3">
-                                <label for="edit-weight_gr" class="form-label"> Peso (gr): </label>
-                                <input type="number" class="form-control" name="weight_gr" id="edit-weight_gr"></input>
+                                <label for="edit-height_cm" class="form-label"> Altura (cm): </label>
+                                <input type="number" class="form-control" name="height_cm" id="edit-height_cm"></input>
                             </div>
                             <div class="mb-3">
-                                <label for="edit-biomass_gr" class="form-label"> Biomasa (gr): </label>
-                                <input type="number" class="form-control" name="biomass_gr" id="edit-biomass_gr"></input>
+                                <label for="edit-growth" class="form-label"> Crecimiento: </label>
+                                <input type="number" class="form-control" name="growth" id="edit-growth"></input>
                             </div>
                             <div class="mb-3">
-                                <label for="edit-weight_gain_gr" class="form-label"> Ganacia de peso(gr): </label>
-                                <input type="number" class="form-control" name="weight_gain_gr" id="edit-weight_gain_gr"></input>
+                                <label for="edit-comparison_percentage" class="form-label"> Rendimiento (%): </label>
+                                <input type="number" class="form-control" name="comparison_percentage" id="edit-comparison_percentage"></input>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-mortality" class="form-label"> Mortalidad: </label>
@@ -131,11 +132,11 @@
 <!-- Modal Agregar -->
 <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="{{route ('acuaponico.pasante.pasante.storetrackingfish') }}" method="POST">
+        <form action="{{route('acuaponico.pasante.pasante.storetrackingplant') }}" method="POST">
             @csrf
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="agregarLabel">Nuevo Seguimiento peces</h5>
+                    <h5 class="modal-title" id="agregarLabel">Nuevo Seguimiento plantas</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
@@ -151,20 +152,20 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="fish_count" class="form-label">N° Peces:</label>
-                        <input type="number" name="fish_count" class="form-control" id="fish_count" required>
+                        <label for="plant_count" class="form-label">N° Plantas:</label>
+                        <input type="number" name="plant_count" class="form-control" id="plant_count" required>
                     </div>
                     <div class="mb-3">
-                        <label for="weight_gr" class="form-label">Peso (gr):</label>
-                        <input type="number" name="weight_gr" class="form-control" id="weight_gr" required>
+                        <label for="height_cm" class="form-label">Altura (cm):</label>
+                        <input type="number" name="height_cm" class="form-control" id="height_cm" required>
                     </div>
                     <div class="mb-3">
-                        <label for="biomass_gr" class="form-label">Biomasa (gr):</label>
-                        <input type="number" name="biomass_gr" class="form-control" id="biomass_gr" required>
+                        <label for="growth" class="form-label">Crecimiento:</label>
+                        <input type="number" name="growth" class="form-control" id="growth" required>
                     </div>
                     <div class="mb-3">
-                        <label for="weight_gain_gr" class="form-label">Ganancia de peso (gr):</label>
-                        <input type="number" name="weight_gain_gr" class="form-control" id="weight_gain_gr" required>
+                        <label for="comparison_percentage" class="form-label">Rendimiento (%):</label>
+                        <input type="number" name="comparison_percentage" class="form-control" id="comparison_percentage" required>
                     </div>
                     <div class="mb-3">
                         <label for="mortality" class="form-label">Mortalidad:</label>
@@ -192,13 +193,13 @@
         document.querySelectorAll('.editbtn').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
-                document.getElementById('formEditar').action = `/pasante/seguimientoPez/update/${id}`;
+                document.getElementById('formEditar').action = `/pasante/seguimientoPlanta/update/${id}`;
                 document.getElementById('edit-id').value = id;
                 document.getElementById('edit-tracking_id').value = this.getAttribute('data-tracking_id');
-                document.getElementById('edit-fish_count').value = this.getAttribute('data-fish_count');
-                document.getElementById('edit-weight_gr').value = this.getAttribute('data-weight_gr');
-                document.getElementById('edit-biomass_gr').value = this.getAttribute('data-biomass_gr');
-                document.getElementById('edit-weight_gain_gr').value = this.getAttribute('data-weight_gain_gr');
+                document.getElementById('edit-plant_count').value = this.getAttribute('data-plant_count');
+                document.getElementById('edit-height_cm').value = this.getAttribute('data-height_cm');
+                document.getElementById('edit-growth').value = this.getAttribute('data-growth');
+                document.getElementById('edit-comparison_percentage').value = this.getAttribute('data-comparison_percentage');
                 document.getElementById('edit-mortality').value = this.getAttribute('data-mortality');
             });
         });
@@ -220,7 +221,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     const formEliminar = document.getElementById('formEliminar');
-                    formEliminar.action = `/pasante/seguimientoPez/destroy/${id}`;
+                    formEliminar.action = `/pasante/seguimientoPlanta/destroy/${id}`;
                     formEliminar.submit();
                 }
             });
@@ -288,4 +289,15 @@
     });
 </script>
 @endif
+@if (session('error'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '{{ session("error") }}',
+        confirmButtonColor: '#d33',
+    });
+</script>
+@endif
+
 @endsection

@@ -135,7 +135,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="date" class="form-label">Fecha</label>
-                        <input type="date" name="date" class="form-control" id="date" equired>
+                        <input type="date" name="date" class="form-control" id="date" readonly>
                     </div>
                     <div class="form-group">
                         <label for="categoty_id">Categoria:</label>
@@ -252,5 +252,24 @@
         });
     });
 </script>
-
+@if (session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Éxito',
+        text: '{{ session("success") }}',
+        confirmButtonColor: '#3085d6',
+    });
+</script>
+@endif
+@if (session('error'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '{{ session("error") }}',
+        confirmButtonColor: '#d33',
+    });
+</script>
+@endif
 @endsection

@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/adminlte.min.css') }}">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/select2/css/select2.min.css') }}">
 
     <script src="{{ asset('jscriptjs') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -109,7 +111,7 @@
 
                 <!-- Enlace a Home -->
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="" class="nav-link text-white">Home</a>
+                    <a href="{{ route ('cefa.acuaponico.index')}}" class="nav-link text-white">Home</a>
                 </li>
             </ul>
 
@@ -218,6 +220,12 @@
                     <p>Seguimiento Peces</p>
                 </a>
             </li> 
+                 <li class="nav-item">
+                <a href="{{ route('acuaponico.pasante.pasante.indextrackingplant') }}" class="nav-link" id="gestionCategorias">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>Seguimiento Plantas</p>
+                </a>
+            </li> 
         </ul>
     </nav>
 
@@ -234,6 +242,8 @@
         <script src="{{ asset('AdminLTE-/plugins/raphael/raphael.min.js') }}"></script>
         <script src="{{ asset('AdminLTE/plugins/jquery-mapael/jquery.mapael.min.js') }}"></script>
         <script src="{{ asset('AdminLTE/plugins/jquery-mapael/maps/usa_states.min.js') }}"></script>
+        <script src="{{ asset('AdminLTE/plugins/jquery.min.js') }}"></script>
+        <script src="{{ asset('AdminLTE/plugins/js/select2.full.min.js') }}"></script>
         <script src="{{ asset('AdminLTE/plugins/chart.js/Chart.min.js') }}"></script>
         <script src="{{ asset('AdminLTE/dist/js/demo.js') }}"></script>
         <script src="{{ asset('AdminLTE/dist/js/pages/dashboard2.js') }}"></script>

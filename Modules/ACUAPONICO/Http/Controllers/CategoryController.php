@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\Category;
+use Illuminate\Database\QueryException;
 
 class CategoryController extends Controller
 {
@@ -94,10 +95,17 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
-        $category->delete();
-        return redirect()->route('acuaponico.pasante.pasante.categoria')->with('success', 'Categoría eliminada correctamente');
+       try {
+            $category = Category::findOrFail($id);
+            $category->delete();
 
-        return view('acuaponico::pasante.categoria');
+            return redirect()->back()->with('success', 'Categoria eliminado correctamente.');
+        } catch (QueryException $e) {
+            if ($e->getCode() == '23000') { 
+                return redirect()->back()->with('error', 'No se puede eliminar esta categoria porque está relacionada con otro registro.');
+            }
+
+            return redirect()->back()->with('error', 'Ocurrió un error al intentar eliminar la categoria.');
+        }
     }
 }
