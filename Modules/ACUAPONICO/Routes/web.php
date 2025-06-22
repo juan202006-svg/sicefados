@@ -20,6 +20,10 @@ Route::middleware(['lang'])->group(function () {
         Route::get('/pasante/welcomepas', 'ACUAPONICOController@pasante')->name('acuaponico.pasante.welcomepas');
     });
 });
+
+
+
+
 Route::controller(LotController::class)->group(function () {
     Route::get('/pasante/pasante/index', 'index')->name('acuaponico.pasante.pasante.index');
     Route::get('/pasante/pasante/create', 'cerate')->name('acuaponico.pasante.pasante.cerateLot');
@@ -55,6 +59,9 @@ Route::controller(CropAquaponicController::class)->group(function () {
     Route::delete('/pasante/cultivo/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroycrops');
 });
 
+
+
+
 // rutas para los seguimientos
 Route::controller(TrackingController::class)->group(function () {
     Route::get('/pasante/seguimiento/lista', 'index')->name('acuaponico.pasante.pasante.indextracking');
@@ -71,8 +78,9 @@ Route::controller(TrackingFishController::class)->group(function () {
     Route::put('/pasante/seguimientoPez/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatetrackingfish');
     Route::delete('/pasante/seguimientoPez/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroytrackingfish');
 });
+
 // rutas para los seguimientos de plantas
-Route::controller(TrackingPlantController::class)->group(function () {
+Route::controller(TrackingPlantController::class)->group(function () { 
     Route::get('/pasante/seguimientoPlanta/plantas', 'index')->name('acuaponico.pasante.pasante.indextrackingplant');
     Route::post('/pasante/seguimientoPlanta/store', 'store')->name('acuaponico.pasante.pasante.storetrackingplant');
     Route::put('/pasante/seguimientoPlanta/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatetrackingplant');
