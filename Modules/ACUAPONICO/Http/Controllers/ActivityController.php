@@ -7,16 +7,22 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\SICA\Entities\Activity;
 use Modules\ACUAPONICO\Entities\ActivityAquaponic;
-
+use Modules\ACUAPONICO\Entities\UserAquaponic;
 
 class ActivityController extends Controller
 {
 
     public function index()
     {
-        $activities = ActivityAquaponic::with('user')->where()->get();
+        $activities = ActivityAquaponic::with('user')->where('enviada', false)->get();
+        $users = UserAquaponic::all();
+        return view('acuaponico::admin.actividades', compact('activities', 'users'));
+    }
 
-        return view('acuaponico::admin.actividades', compact('activities'));
+    public function enviados()
+    {
+        $activities = ActivityAquaponic::with('user')->where('enviada', true)->get();
+        return view('', compact('activities'));
     }
 
 
@@ -25,21 +31,15 @@ class ActivityController extends Controller
         return view('acuaponico::create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
+
     public function store(Request $request)
     {
-        //
+        ActivityAquaponic::create($request->all());
+
+        return redirect()->back()->with('success', 'Actividad creada correctamente');
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
+
     public function show($id)
     {
         return view('acuaponico::show');
@@ -55,24 +55,28 @@ class ActivityController extends Controller
         return view('acuaponico::edit');
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
+
     public function update(Request $request, $id)
     {
-        //
+        $activity = ActivityAquaponic::findOrFail($id);
+        $activity->update($request->all());
+
+        return redirect()->back()->with('success', 'Actividad actualizada');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
+
     public function destroy($id)
     {
-        //
+        ActivityAquaponic::destroy($id);
+
+        return redirect()->back()->with('success', 'Actividad eliminada');
+    }
+
+    public function enviar($id)
+    {
+        $activity = ActivityAquaponic::findOrFail($id);
+        $activity->update(['enviada' => true]);
+
+        return redirect()->back()->with('success', 'Actividad enviada');
     }
 }

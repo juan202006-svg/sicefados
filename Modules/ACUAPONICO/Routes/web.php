@@ -31,6 +31,13 @@ Route::controller(ProductionController::class)->group(function () {
 // vista de actividades
 Route::controller(ActivityController::class)->group(function () {
     Route::get('/admin/actividades', 'index')->name('acuaponico.admin.admin.actividades');
+    Route::get('/admin/actividades/enviadas', 'enviados')->name('acuaponico.pasante.pasante.indexactivity');
+    
+    
+    Route::post('/admin/actividades/store', 'store')->name('acuaponico.admin.admin.store');
+    Route::put('/admin/actividades/update/{id}', 'update')->name('acuaponico.admin.admin.update');
+    Route::delete('/admin/actividades/destroy/{id}', 'destroy')->name('acuaponico.admin.admin.destroy');
+    Route::put('/admin/actividades/send/{id}', 'enviar')->name('acuaponico.admin.admin.send');
 });
 
 
@@ -60,7 +67,7 @@ Route::controller(SpeciesAquaponicController::class)->group(function () {
     Route::delete('/pasante/especie/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyspecies');
 });
 
-// rutas para los cultivos}
+// rutas para los cultivos
 Route::controller(CropAquaponicController::class)->group(function () {
     Route::get('/pasante/cultivo/lista', 'index')->name('acuaponico.pasante.pasante.crops');
     Route::get('/pasante/cultivo/create', 'create')->name('acuaponico.pasante.pasante.createcrops');
