@@ -2,6 +2,6 @@
 
 @section('content')
 <h1>
-    hola
+    hol
 </h1>
 @endsection

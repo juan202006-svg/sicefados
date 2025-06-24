@@ -2,16 +2,8 @@
 
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
+
 
 Route::middleware(['lang'])->group(function () {
     Route::prefix('acuaponico')->group(function () {
@@ -21,7 +13,19 @@ Route::middleware(['lang'])->group(function () {
     });
 });
 
+Route::controller(UserAquaponicController::class)->group(function () {
+    Route::get('/admin/usuarios', 'index')->name('acuaponico.admin.admin.usuarios');
+    Route::post('/admin/usuarios/store', 'store')->name('acuaponico.admin.admin.storeUsuarios');
+    Route::put('/admin/usuarios/update/{id}', 'update')->name('acuaponico.admin.admin.updateUsuarios');
+    Route::get('/admin/usuarios/edit/{id}', 'edit')->name('acuaponico.admin.admin.editUsuarios');
+    Route::delete('/admin/usuarios/destroy/{id}', 'destroy')->name('acuaponico.admin.admin.destroyUsuarios');
+});
 
+
+//vista de produccion admin
+Route::controller(ProductionController::class)->group(function () {
+    Route::get('/admin/produccion', 'index')->name('acuaponico.admin.admin.produccion');
+    Route::get('/admin/cultivos', 'index')->name('acuaponico.admin.admin.cultivos');});
 
 
 Route::controller(LotController::class)->group(function () {
@@ -79,3 +83,8 @@ Route::controller(TrackingFishController::class)->group(function () {
     Route::delete('/pasante/seguimientoPez/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroytrackingfish');
 });
 
+
+
+Route::get('/masterusers', function () {
+    return view('acuaponico.layouts.masterusers');
+})->name('acuaponico.layouts.masterusers');

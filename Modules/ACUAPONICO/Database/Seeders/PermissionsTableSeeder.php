@@ -27,6 +27,15 @@ class PermissionsTableSeeder extends Seeder
 
         //permiso para el Rol de administrador
 
+        //registro de home
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.layouts.masterusers'], [ // Registro o actualización de permiso
+            'name' => 'Acceso a la página de inicio',
+            'description' => 'Acceso a la página de inicio',
+            'description_english' => 'Access to the home page',
+            'app_id' => $app->id
+        ]);
+        $permissions_admin[] = $permission->id; // Almacenar permiso para rol
+
         // Vista de configuración (Administrador)
         $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.welcome'], [ // Registro o actualización de permiso
             'name' => 'Acceso al Rol de Administrador',
@@ -36,7 +45,7 @@ class PermissionsTableSeeder extends Seeder
         ]);
         $permissions_admin[] = $permission->id; // Almacenar permiso para rol
 
-        // Vista de configuración (pasante)
+        // Vista de configuración (administrador)
         //vista de Usuarios
         $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.usuarios'], [ // Registro o actualización de permiso
             'name' => 'Acceso lista de usuarios',
@@ -46,6 +55,45 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         $permissions_admin[] = $permission->id;
+
+        //crear Usuario
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.storeUsuarios'], [ // Registro o actualización de permiso
+            'name' => 'Crear usuarios',
+            'description' => 'Crear usuarios',
+            'description_english' => 'Create users',
+            'app_id' => $app->id
+        ]);
+        $permissions_admin[] = $permission->id;
+
+        //editar Usuario
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.updateUsuarios'], [ // Registro o actualización de permiso
+            'name' => 'Actualizar usuarios',
+            'description' => 'Actualizar usuarios',
+            'description_english' => 'Update users',
+            'app_id' => $app->id
+        ]);
+        $permissions_admin[] = $permission->id; // Almacenar permiso para rol
+
+        //acceso a la vista de produccion
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.produccion'], [ // Registro o actualización de permiso
+            'name' => 'Acceso lista de produccion',
+            'description' => 'Vista de produccion',
+            'description_english' => 'Access to the list of production',
+            'app_id' => $app->id
+        ]);
+        $permissions_admin[] = $permission->id; // Almacenar permiso para rol
+
+        //permiso para editar produccion    
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.destroyProduccion'], [ // Registro o actualización de permiso
+            'name' => 'Eliminar produccion',
+            'description' => 'Eliminar produccion',
+            'description_english' => 'Delete production',
+            'app_id' => $app->id
+        ]);
+
+        $permissions_admin[] = $permission->id; // Almacenar permiso para rol
+
+
 
 
         // Consulta de ROLES

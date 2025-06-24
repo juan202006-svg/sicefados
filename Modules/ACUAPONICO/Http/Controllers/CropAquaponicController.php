@@ -16,8 +16,9 @@ class CropAquaponicController extends Controller
         $especies = SpeciesAquaponic::all();
         $cultivos = CropAquaponic::with(['species', 'lot'])->get();
         $lotes = Lot::where('state', 'disponible')->get();
+        $lotes = Lot::all();
 
-        return view('acuaponico::pasante.cultivos', compact('especies', 'lotes', 'cultivos'));
+        return view('acuaponico::pasante.cultivos', compact('especies', 'lotes'));
     }
 
     public function create()
@@ -71,7 +72,6 @@ class CropAquaponicController extends Controller
         $request->validate([
             'date' => 'required|date',
             'lot_id' => 'required|exists:lots,id',
-            'species_id' => 'required|exists:species_aquaponics,id',
             'quantity' => 'required|integer|min:1',
             'status' => 'required|string',
         ]);
