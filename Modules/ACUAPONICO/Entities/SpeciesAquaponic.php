@@ -11,7 +11,7 @@ class speciesAquaponic extends Model
 
     protected $fillable = ['date', 'category_id', 'scientific_name', 'common_name', 'life_cycle', 'optimal_temperature'];
     protected $table = 'speciesaquaponics';
-
+    
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');

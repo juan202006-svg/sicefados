@@ -19,6 +19,7 @@ class CropAquaponic extends Model
     {
         return $this->belongsTo(Lot::class, 'lot_id');
     }
+    
 
     
     protected static function newFactory()

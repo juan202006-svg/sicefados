@@ -2,7 +2,6 @@
 
 namespace Modules\ACUAPONICO\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\Lot;
@@ -16,11 +15,18 @@ class CropAquaponicController extends Controller
     {
         $especies = SpeciesAquaponic::all();
         $cultivos = CropAquaponic::with(['species', 'lot'])->get();
+
         $lotesDisponibles = Lot::where('state', 'disponible')->get(); // solo para agregar
         $lotesTodos = Lot::select('id', 'name', 'state')->get(); // para editar
 
 
         return view('acuaponico::pasante.cultivos', compact('especies', 'lotesDisponibles', 'cultivos', 'lotesTodos'));
+
+        $lotes = Lot::where('state', 'disponible')->get();
+        $lotes = Lot::all();
+
+        return view('acuaponico::pasante.cultivos', compact('especies', 'lotes'));
+
     }
 
     public function create()
@@ -61,6 +67,15 @@ class CropAquaponicController extends Controller
 
     public function update(Request $request, $id)
     {
+
+
+        $request->validate([
+            'date' => 'required|date',
+            'lot_id' => 'required|exists:lots,id',
+            'quantity' => 'required|integer|min:1',
+            'status' => 'required|string',
+        ]);
+
 
         $cultivo = CropAquaponic::findOrFail($id);
 
