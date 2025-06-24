@@ -109,10 +109,16 @@ Route::controller(TrackingPlantController::class)->group(function () {
     Route::post('/pasante/seguimientoPlanta/store', 'store')->name('acuaponico.pasante.pasante.storetrackingplant');
     Route::put('/pasante/seguimientoPlanta/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatetrackingplant');
     Route::delete('/pasante/seguimientoPlanta/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroytrackingplant');
-
     Route::get('/pasante/seguimientoPlanta/prevdata/{tracking_id}', 'obtenerDatosAnteriores')->name('acuaponico.pasante.pasante.prevdatatrackingplant');
 });
 
+// rutas para las cosechas
+Route::controller(HarvestAquaponicController::class)->group(function () {
+    Route::get('/pasante/cosecha/lista', 'index')->name('acuaponico.pasante.pasante.indexharvest');
+    Route::post('/pasante/cosecha/store', 'store')->name('acuaponico.pasante.pasante.storeharvest');
+    Route::put('/pasante/cosecha/update/{id}', 'update')->name('acuaponico.pasante.pasante.updateharvest');
+    Route::delete('/pasante/cosecha/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyharvest');
+});
 
 // rutas para el control de actividades
 Route::controller(ActivityControlController::class)->group(function () {

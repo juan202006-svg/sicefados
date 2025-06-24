@@ -234,7 +234,7 @@
                     </div>
 
                     <!-- Imagen central -->
-                    <div class="w-100 text-center my-4" style="">
+                    <div class="w-100 text-center my-4" >
                         <img src="{{ asset('AdminLTE/dist/img/acoun.png') }}" class="imagen-central"
                             style="margin-left: -50%; margin-top: -10%;">
                     </div>

@@ -226,6 +226,12 @@
                                 <p>Seguimiento Plantas</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route ('acuaponico.pasante.pasante.indexharvest')}}" class="nav-link" id="gestionCategorias">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>Gestion  de  Cosechas</p>
+                            </a>
+                        </li>
                          <li class="nav-item">
                             <a href="{{ route('acuaponico.pasante.pasante.indexactivity') }}" class="nav-link" id="gestionCategorias">
                                 <i class="nav-icon fas fa-th"></i>
