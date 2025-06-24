@@ -3,7 +3,7 @@ namespace Modules\ACUAPONICO\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Modules\ACUAPONICO\Entities\ProductiveUnit;
-
+use Modules\SICA\Entities\Activity;
 
 class UserAquaponic extends Model
 {
@@ -18,9 +18,15 @@ class UserAquaponic extends Model
     ];
 
     public function productiveUnit()
-{
-    return $this->belongsTo(ProductiveUnit::class, 'productive_unit_id');
-}
+    {
+        return $this->belongsTo(ProductiveUnit::class, 'productive_unit_id');
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(ActivityAquaponic::class, 'user_id');
+    }
+
 
 }
 

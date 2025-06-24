@@ -25,7 +25,13 @@ Route::controller(UserAquaponicController::class)->group(function () {
 //vista de produccion admin
 Route::controller(ProductionController::class)->group(function () {
     Route::get('/admin/produccion', 'index')->name('acuaponico.admin.admin.produccion');
-    Route::get('/admin/cultivos', 'index')->name('acuaponico.admin.admin.cultivos');});
+    Route::get('/admin/cultivos', 'index')->name('acuaponico.admin.admin.cultivos');
+});
+ 
+// vista de actividades
+Route::controller(ActivityController::class)->group(function () {
+    Route::get('/admin/actividades', 'index')->name('acuaponico.admin.admin.actividades');
+});
 
 
 Route::controller(LotController::class)->group(function () {
@@ -84,7 +90,15 @@ Route::controller(TrackingFishController::class)->group(function () {
 });
 
 
-
 Route::get('/masterusers', function () {
     return view('acuaponico.layouts.masterusers');
 })->name('acuaponico.layouts.masterusers');
+
+// rutas para los seguimientos de plantas
+Route::controller(TrackingPlantController::class)->group(function () { 
+    Route::get('/pasante/seguimientoPlanta/plantas', 'index')->name('acuaponico.pasante.pasante.indextrackingplant');
+    Route::post('/pasante/seguimientoPlanta/store', 'store')->name('acuaponico.pasante.pasante.storetrackingplant');
+    Route::put('/pasante/seguimientoPlanta/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatetrackingplant');
+    Route::delete('/pasante/seguimientoPlanta/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroytrackingplant');
+});
+

@@ -41,7 +41,6 @@
                         <td class="text-center">
                             <button type="button" class="btn btn-success btn-sm editbtn"
                                 data-id="{{ $lot->id }}"
-                                data-date="{{ $lot->date }}"
                                 data-name="{{ $lot->name }}"
                                 data-capacity="{{ $lot->capacity }}"
                                 data-state="{{ $lot->state }}"
@@ -49,7 +48,7 @@
                                 data-bs-target="#updateLot">
                                 Editar
                             </button>
-                           <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $lot->id }}">
+                            <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $lot->id }}">
                                 Eliminar
                             </button>
                         </td>
@@ -74,7 +73,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="date" class="form-label">Fecha:</label>
-                        <input type="date" name="date" class="form-control" id="date" required>
+                        <input type="date" name="date" class="form-control" id="date" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">Nombre:</label>
@@ -88,7 +87,7 @@
                         <label for="state" class="form-label">Estado:</label>
                         <select name="state" class="form-select" required>
                             <option value="disponible">Disponible</option>
-                            <option value="ocupado">Ocupado</option>
+
                         </select>
                     </div>
                 </div>
@@ -115,10 +114,6 @@
                 <div class="modal-body">
                     <input type="hidden" name="id" id="edit-id">
                     <div class="mb-3">
-                        <label for="edit-date" class="form-label">Fecha:</label>
-                        <input type="date" class="form-control" id="edit-date" name="date">
-                    </div>
-                    <div class="mb-3">
                         <label for="edit-name" class="form-label">Nombre:</label>
                         <input type="text" class="form-control" id="edit-name" name="name">
                     </div>
@@ -129,9 +124,8 @@
                     <div class="mb-3">
                         <label for="edit-state" class="form-label">Estado:</label>
                         <select class="form-control" id="edit-state" name="state" required>
-                            <option value="">Seleccione un estado</option>
                             <option value="disponible">Disponible</option>
-                            <option value="ocupado">Ocupado</option>
+                            <option value="no disponible">No Disponible</option>
                         </select>
                     </div>
                 </div>
@@ -171,12 +165,27 @@
         document.querySelectorAll('.editbtn').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
+                const name = this.getAttribute('data-name');
+                const capacity = this.getAttribute('data-capacity');
+                const state = this.getAttribute('data-state'); 
+
                 document.getElementById('formEditar').action = `/pasante/lote/update/${id}`;
                 document.getElementById('edit-id').value = id;
-                document.getElementById('edit-date').value = this.getAttribute('data-date');
-                document.getElementById('edit-name').value = this.getAttribute('data-name');
-                document.getElementById('edit-capacity').value = this.getAttribute('data-capacity');
-                document.getElementById('edit-state').value = this.getAttribute('data-state');
+                document.getElementById('edit-name').value = name;
+                document.getElementById('edit-capacity').value = capacity;
+
+                const estadoSelect = document.getElementById('edit-state');
+
+                if (state.toLowerCase() === "ocupado") {
+                    estadoSelect.innerHTML = '<option value="ocupado" selected>Ocupado</option>';
+                    estadoSelect.setAttribute('disabled', 'disabled');
+                } else {
+                    estadoSelect.removeAttribute('disabled');
+                    estadoSelect.innerHTML = `
+                    <option value="disponible" ${state === 'disponible' ? 'selected' : ''}>Disponible</option>
+                    <option value="no disponible" ${state === 'no disponible' ? 'selected' : ''}>No Disponible</option>
+                `;
+                }
             });
         });
     });
@@ -234,5 +243,27 @@
         });
     });
 </script>
+Scripct de swealer para lo de lotes
+@if (session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Éxito',
+        text: '{{ session("success") }}',
+        confirmButtonColor: '#3085d6',
+    });
+</script>
+@endif
+
+@if (session('error'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '{{ session("error") }}',
+        confirmButtonColor: '#d33',
+    });
+</script>
+@endif
 
 @endsection

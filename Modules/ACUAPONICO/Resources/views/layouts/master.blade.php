@@ -110,6 +110,12 @@
                     <i class="nav-icon fas fa-th"></i>
                     <p>Producción</p>
                 </a>
+            </li>
+            <li class="nav-item">
+                <a href=" {{ route('acuaponico.admin.admin.actividades')}}" class="nav-link" id="produccion">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>Actividades</p>
+                </a>
             </li> 
         </ul>
       </nav>
@@ -123,6 +129,7 @@
         <div class="content-wrapper pt-0 mt-0" style="margin-top: 0 !important; padding-top: 0 !important;">
             @yield('content')
             @yield('content2')
+            @yield('content3')
         </div>
 
 
