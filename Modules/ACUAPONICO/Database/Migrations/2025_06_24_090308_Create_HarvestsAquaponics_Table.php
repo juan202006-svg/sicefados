@@ -19,7 +19,9 @@ class CreateHarvestsAquaponicsTable extends Migration
             $table->unsignedBigInteger('crop_id');
             $table->foreign('crop_id')->references('id')->on('cropsaquaponics');
             $table->integer('quantity');
+            $table->string('unit');
             $table->integer('mortality');
+            $table->string('destination');
             $table->text('notes')->nullable();
             $table->timestamps();
         });

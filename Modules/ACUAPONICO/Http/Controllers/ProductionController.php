@@ -2,15 +2,13 @@
 
 namespace Modules\ACUAPONICO\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\Category;
 use Modules\ACUAPONICO\Entities\Lot;
 use Modules\ACUAPONICO\Entities\speciesAquaponic;
-use Modules\ACUAPONICO\Entities\CategoryAquaponic;
 use Modules\ACUAPONICO\Entities\CropAquaponic;
-use Modules\AGROCEFA\Entities\Crop;
+
 
 class ProductionController extends Controller
 {
