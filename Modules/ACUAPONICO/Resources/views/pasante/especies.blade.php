@@ -171,11 +171,18 @@
         </form>
     </div>
 </div>
+<!-- Script para establecer la fecha actual en el campo de fecha  -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var dateInput = document.getElementById('date');
-        var currentDate = new Date().toISOString().split('T')[0];
-        dateInput.value = currentDate;
+        const dateInput = document.getElementById('date');
+        const today = new Date();
+
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+
+        const localDate = `${year}-${month}-${day}`;
+        dateInput.value = localDate;
     });
 </script>
 <!--script del modal editar-->

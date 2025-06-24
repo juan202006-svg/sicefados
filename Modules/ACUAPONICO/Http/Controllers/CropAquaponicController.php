@@ -16,9 +16,11 @@ class CropAquaponicController extends Controller
     {
         $especies = SpeciesAquaponic::all();
         $cultivos = CropAquaponic::with(['species', 'lot'])->get();
-        $lotes = Lot::where('state', 'disponible')->get();
+        $lotesDisponibles = Lot::where('state', 'disponible')->get(); // solo para agregar
+        $lotesTodos = Lot::select('id', 'name', 'state')->get(); // para editar
 
-        return view('acuaponico::pasante.cultivos', compact('especies', 'lotes', 'cultivos'));
+
+        return view('acuaponico::pasante.cultivos', compact('especies', 'lotesDisponibles', 'cultivos', 'lotesTodos'));
     }
 
     public function create()
@@ -59,19 +61,12 @@ class CropAquaponicController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'date' => 'required|date',
-            'lot_id' => 'required|exists:lots,id',
-            'species_id' => 'required|exists:species_aquaponics,id',
-            'quantity' => 'required|integer|min:1',
-            'status' => 'required|string',
-        ]);
 
         $cultivo = CropAquaponic::findOrFail($id);
 
         $lot = Lot::findOrFail($request->lot_id);
 
-        
+
         $cantidadActualSinEste = CropAquaponic::where('lot_id', $lot->id)
             ->where('id', '!=', $cultivo->id)
             ->sum('quantity');
@@ -86,7 +81,7 @@ class CropAquaponicController extends Controller
 
         $loteAnteriorId = $cultivo->lot_id;
 
-   
+
         $cultivo->date = $request->input('date');
         $cultivo->lot_id = $request->input('lot_id');
         $cultivo->species_id = $request->input('species_id');
@@ -127,12 +122,11 @@ class CropAquaponicController extends Controller
 
             return redirect()->back()->with('success', 'Cultivo eliminado correctamente.');
         } catch (QueryException $e) {
-            if ($e->getCode() == '23000') { 
+            if ($e->getCode() == '23000') {
                 return redirect()->back()->with('error', 'No se puede eliminar este cultivo porque está relacionado con otro registro.');
             }
 
             return redirect()->back()->with('error', 'Ocurrió un error al intentar eliminar la el cultivo.');
         }
-
     }
 }

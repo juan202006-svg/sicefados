@@ -151,11 +151,18 @@
     </div>
 </div>
 
+<!-- Script para establecer la fecha actual en el campo de fecha  -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var dateInput = document.getElementById('date');
-        var currentDate = new Date().toISOString().split('T')[0];
-        dateInput.value = currentDate;
+        const dateInput = document.getElementById('date');
+        const today = new Date();
+
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Mes empieza desde 0
+        const day = String(today.getDate()).padStart(2, '0');
+
+        const localDate = `${year}-${month}-${day}`;
+        dateInput.value = localDate;
     });
 </script>
 
@@ -167,7 +174,7 @@
                 const id = this.getAttribute('data-id');
                 const name = this.getAttribute('data-name');
                 const capacity = this.getAttribute('data-capacity');
-                const state = this.getAttribute('data-state'); 
+                const state = this.getAttribute('data-state');
 
                 document.getElementById('formEditar').action = `/pasante/lote/update/${id}`;
                 document.getElementById('edit-id').value = id;
@@ -243,7 +250,6 @@
         });
     });
 </script>
-Scripct de swealer para lo de lotes
 @if (session('success'))
 <script>
     Swal.fire({

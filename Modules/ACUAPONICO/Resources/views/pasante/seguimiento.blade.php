@@ -81,7 +81,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="edit-days_elapsed" class="form-label"> Tiempo en dias: </label>
-                                <input type="number" class="form-control" id="edit-days_elapsed" name="days_elapsed">
+                                <input type="number" class="form-control" id="edit-days_elapsed" name="days_elapsed" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-notes" class="form-label"> Novedad: </label>
@@ -133,14 +133,14 @@
                             <option
                                 value="{{ $cultivo->id }}"
                                 data-date="{{ $cultivo->date }}">
-                                {{ $cultivo->species->common_name }} 
+                                {{ $cultivo->species->common_name }}
                             </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="days_elapsed" class="form-label">Tiempo en dias:</label>
-                        <input type="number" name="days_elapsed" class="form-control" id="days_elapsed" required>
+                        <input type="number" name="days_elapsed" class="form-control" id="days_elapsed" required readonly>
                     </div>
                     <div class="mb-3">
                         <label for="notes" class="form-label">Novedad:</label>
@@ -154,11 +154,18 @@
         </form>
     </div>
 </div>
+<!-- Script para establecer la fecha actual en el campo de fecha  -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var dateInput = document.getElementById('date');
-        var currentDate = new Date().toISOString().split('T')[0];
-        dateInput.value = currentDate;
+        const dateInput = document.getElementById('date');
+        const today = new Date();
+
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Mes empieza desde 0
+        const day = String(today.getDate()).padStart(2, '0');
+
+        const localDate = `${year}-${month}-${day}`;
+        dateInput.value = localDate;
     });
 </script>
 <!--script del modal editar-->
@@ -233,23 +240,23 @@
 </script>
 
 <script>
-document.getElementById('crop_id').addEventListener('change', function () {
-    const selectedOption = this.options[this.selectedIndex];
-    const fechaCultivo = selectedOption.getAttribute('data-date');
+    document.getElementById('crop_id').addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const fechaCultivo = selectedOption.getAttribute('data-date');
 
-    if (fechaCultivo) {
-        const fechaInicio = new Date(fechaCultivo);
-        const fechaHoy = new Date();
+        if (fechaCultivo) {
+            const fechaInicio = new Date(fechaCultivo);
+            const fechaHoy = new Date();
 
-        const diffTiempo = fechaHoy - fechaInicio;
-        const diffDias = Math.floor(diffTiempo / (1000 * 60 * 60 * 24));
+            const diffTiempo = fechaHoy - fechaInicio;
+            const diffDias = Math.floor(diffTiempo / (1000 * 60 * 60 * 24));
 
-        // Asignar al campo
-        document.getElementById('days_elapsed').value = diffDias;
-    } else {
-        document.getElementById('days_elapsed').value = '';
-    }
-});
+            // Asignar al campo
+            document.getElementById('days_elapsed').value = diffDias;
+        } else {
+            document.getElementById('days_elapsed').value = '';
+        }
+    });
 </script>
 
 @if (session('success'))

@@ -62,7 +62,7 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="date" class="form-label">Fecha:</label>
-                                <input type="date" name="date" class="form-control" id="date" required>
+                                <input type="date" name="date" class="form-control" id="date" required readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nombre de la Categoría:</label>
@@ -93,7 +93,7 @@
                             <input type="hidden" name="id" id="edit-id">
                             <div class="mb-3">
                                 <label for="edit-date" class="form-label">Fecha:</label>
-                                <input type="date" class="form-control" id="edit-date" name="date">
+                                <input type="date" class="form-control" id="edit-date" name="date" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-name" class="form-label">Nombre:</label>
@@ -195,11 +195,18 @@
         </script>
 
 
+        <!-- Script para establecer la fecha actual en el campo de fecha  -->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                var dateInput = document.getElementById('date');
-                var currentDate = new Date().toISOString().split('T')[0];
-                dateInput.value = currentDate;
+                const dateInput = document.getElementById('date');
+                const today = new Date();
+
+                const year = today.getFullYear();
+                const month = String(today.getMonth() + 1).padStart(2, '0'); // Mes empieza desde 0
+                const day = String(today.getDate()).padStart(2, '0');
+
+                const localDate = `${year}-${month}-${day}`;
+                dateInput.value = localDate;
             });
         </script>
         @if (session('success'))

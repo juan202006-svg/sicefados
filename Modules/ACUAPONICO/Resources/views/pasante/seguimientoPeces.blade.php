@@ -35,9 +35,9 @@
                         <td class="text-center">{{ $sp->Tracking->date }}</td>
                         <td class="text-center">{{ $sp->Tracking->crops->species->common_name }}</td>
                         <td class="text-center">{{ $sp->fish_count }}</td>
-                        <td class="text-center">{{ $sp->weight_gr }}</td>
-                        <td class="text-center">{{ $sp->biomass_gr }}</td>
-                        <td class="text-center">{{ $sp->weight_gain_gr }}</td>
+                        <td class="text-center">{{ $sp->weight_gr }}gr</td>
+                        <td class="text-center">{{ $sp->biomass_gr }}gr</td>
+                        <td class="text-center">{{ $sp->weight_gain_gr }}gr</td>
                         <td class="text-center">{{ $sp->mortality }}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-success btn-sm editbtn"
@@ -79,7 +79,9 @@
                                 <select class="form-control" id="edit-tracking_id" name="tracking_id" required>
                                     <option value="">Seleccione un seguimiento</option>
                                     @foreach ($seguimientos as $seguimiento)
-                                    <option value="{{ $seguimiento->id }}">
+                                    <option value="{{ $seguimiento->id }}"
+                                        data-peces="{{ optional($seguimiento->latestFishTracking)->fish_count ?? $seguimiento->crops->quantity }}"
+                                        data-peso="{{ optional($seguimiento->latestFishTracking)->weight_gr ?? 0 }}">
                                         {{ $seguimiento->crops->species->common_name }} - {{ $seguimiento->date }}
                                     </option>
                                     @endforeach
@@ -87,23 +89,25 @@
                             </div>
                             <div class="mb-3">
                                 <label for="edit-fish_count" class="form-label"> N° Peces: </label>
-                                <input type="number" class="form-control" id="edit-fish_count" name="fish_count">
+                                <input type="number" class="form-control" name="fish_count" id="edit-fish_count" required>
+                                <div class="invalid-feedback" id="edit-error-peces"></div>
+
                             </div>
                             <div class="mb-3">
                                 <label for="edit-weight_gr" class="form-label"> Peso (gr): </label>
-                                <input type="number" class="form-control" name="weight_gr" id="edit-weight_gr"></input>
+                                <input type="number" class="form-control" name="weight_gr" id="edit-weight_gr" required>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-biomass_gr" class="form-label"> Biomasa (gr): </label>
-                                <input type="number" class="form-control" name="biomass_gr" id="edit-biomass_gr"></input>
+                                <input type="number" class="form-control" name="biomass_gr" id="edit-biomass_gr" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-weight_gain_gr" class="form-label"> Ganacia de peso(gr): </label>
-                                <input type="number" class="form-control" name="weight_gain_gr" id="edit-weight_gain_gr"></input>
+                                <input type="number" class="form-control" name="weight_gain_gr" id="edit-weight_gain_gr" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-mortality" class="form-label"> Mortalidad: </label>
-                                <input type="number" class="form-control" name="mortality" id="edit-mortality"></input>
+                                <input type="number" class="form-control" name="mortality" id="edit-mortality" readonly>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -144,7 +148,9 @@
                         <select name="tracking_id" id="tracking_id" class="form-control" required>
                             <option value="">Seleccione un seguimiento</option>
                             @foreach ($seguimientos as $seguimiento)
-                            <option value="{{ $seguimiento->id }}">
+                            <option value="{{ $seguimiento->id }}"
+                                data-peces="{{ optional($seguimiento->latestFishTracking)->fish_count ?? $seguimiento->crops->quantity }}"
+                                data-peso="{{ optional($seguimiento->latestFishTracking)->weight_gr ?? 0 }}">
                                 {{ $seguimiento->crops->species->common_name }} - {{ $seguimiento->date }}
                             </option>
                             @endforeach
@@ -153,22 +159,23 @@
                     <div class="mb-3">
                         <label for="fish_count" class="form-label">N° Peces:</label>
                         <input type="number" name="fish_count" class="form-control" id="fish_count" required>
+                        <div class="invalid-feedback" id="error-peces"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="weight_gr" class="form-label">Peso (gr):</label>
+                        <label for="weight_gr" class="form-label">Peso Promedio (gr):</label>
                         <input type="number" name="weight_gr" class="form-control" id="weight_gr" required>
                     </div>
                     <div class="mb-3">
                         <label for="biomass_gr" class="form-label">Biomasa (gr):</label>
-                        <input type="number" name="biomass_gr" class="form-control" id="biomass_gr" required>
+                        <input type="number" name="biomass_gr" class="form-control" id="biomass_gr" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="weight_gain_gr" class="form-label">Ganancia de peso (gr):</label>
-                        <input type="number" name="weight_gain_gr" class="form-control" id="weight_gain_gr" required>
+                        <input type="number" name="weight_gain_gr" class="form-control" id="weight_gain_gr" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="mortality" class="form-label">Mortalidad:</label>
-                        <input type="number" name="mortality" class="form-control" id="mortality" required>
+                        <input type="number" name="mortality" class="form-control" id="mortality" readonly>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -179,31 +186,133 @@
         </form>
     </div>
 </div>
+<!-- Script para calcular biomasa, ganancia de peso y mortalidad  a la hora de agregar-->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var dateInput = document.getElementById('date');
-        var currentDate = new Date().toISOString().split('T')[0];
-        dateInput.value = currentDate;
+    let pecesPrevios = 0;
+    let pesoPrevio = 0;
+
+    document.getElementById('tracking_id').addEventListener('change', function() {
+        const trackingId = this.value;
+
+        if (trackingId) {
+            fetch(`/pasante/seguimientoPez/prevdata/${trackingId}`)
+                .then(response => response.json())
+                .then(data => {
+                    pecesPrevios = parseInt(data.peces) || 0;
+                    pesoPrevio = parseFloat(data.peso) || 0;
+                    calcularCampos();
+                });
+        }
     });
+
+    document.getElementById('fish_count').addEventListener('input', calcularCampos);
+    document.getElementById('weight_gr').addEventListener('input', calcularCampos);
+
+    function calcularCampos() {
+        const pecesActuales = parseInt(document.getElementById('fish_count').value) || 0;
+        const pesoActual = parseFloat(document.getElementById('weight_gr').value) || 0;
+
+        const inputPeces = document.getElementById('fish_count');
+        const errorMsg = document.getElementById('error-peces');
+
+        if (pecesActuales > pecesPrevios) {
+            inputPeces.classList.add('is-invalid');
+            errorMsg.innerText = `No puede ingresar más peces (${pecesActuales}) que los registrados anteriormente (${pecesPrevios}).`;
+        } else {
+            inputPeces.classList.remove('is-invalid');
+            errorMsg.innerText = '';
+        }
+
+        document.getElementById('biomass_gr').value = (pesoActual * pecesActuales).toFixed(2);
+        document.getElementById('weight_gain_gr').value = (pesoActual - pesoPrevio).toFixed(2);
+        document.getElementById('mortality').value = (pecesPrevios - pecesActuales > 0 ? pecesPrevios - pecesActuales : 0);
+    }
 </script>
-<!--script del modal editar-->
+<!-- Script combinado para modal de editar seguimiento de peces -->
 <script>
+    let editPecesPrevios = 0;
+    let editPesoPrevio = 0;
+
     document.addEventListener('DOMContentLoaded', function() {
+        // Al hacer clic en el botón de editar
         document.querySelectorAll('.editbtn').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
                 document.getElementById('formEditar').action = `/pasante/seguimientoPez/update/${id}`;
                 document.getElementById('edit-id').value = id;
-                document.getElementById('edit-tracking_id').value = this.getAttribute('data-tracking_id');
+
+                // Cargar valores al formulario
+                const trackingId = this.getAttribute('data-tracking_id');
+                document.getElementById('edit-tracking_id').value = trackingId;
                 document.getElementById('edit-fish_count').value = this.getAttribute('data-fish_count');
                 document.getElementById('edit-weight_gr').value = this.getAttribute('data-weight_gr');
                 document.getElementById('edit-biomass_gr').value = this.getAttribute('data-biomass_gr');
                 document.getElementById('edit-weight_gain_gr').value = this.getAttribute('data-weight_gain_gr');
                 document.getElementById('edit-mortality').value = this.getAttribute('data-mortality');
+
+                // Disparar evento change para que cargue los datos previos
+                document.getElementById('edit-tracking_id').dispatchEvent(new Event('change'));
             });
         });
+
+        // Evento al cambiar el seguimiento (tracking)
+        document.getElementById('edit-tracking_id').addEventListener('change', function() {
+            const trackingId = this.value;
+
+            if (trackingId) {
+                fetch(`/pasante/seguimientoPez/prevdata/${trackingId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        editPecesPrevios = parseInt(data.peces) || 0;
+                        editPesoPrevio = parseFloat(data.peso) || 0;
+                        calcularCamposEdit();
+                    });
+            }
+        });
+
+        // Eventos al cambiar cantidad de peces o peso
+        document.getElementById('edit-fish_count').addEventListener('input', calcularCamposEdit);
+        document.getElementById('edit-weight_gr').addEventListener('input', calcularCamposEdit);
+
+        // Función para calcular campos derivados
+        function calcularCamposEdit() {
+            const pecesActuales = parseInt(document.getElementById('edit-fish_count').value) || 0;
+            const pesoActual = parseFloat(document.getElementById('edit-weight_gr').value) || 0;
+
+            const inputPeces = document.getElementById('edit-fish_count');
+            const errorMsg = document.getElementById('edit-error-peces');
+
+            if (pecesActuales > editPecesPrevios) {
+                inputPeces.classList.add('is-invalid');
+                errorMsg.innerText = `No puede ingresar más peces (${pecesActuales}) que los registrados anteriormente (${editPesoPrevio}).`;
+            } else {
+                inputPeces.classList.remove('is-invalid');
+                errorMsg.innerText = '';
+            }
+
+            document.getElementById('edit-biomass_gr').value = (pesoActual * pecesActuales).toFixed(2);
+            document.getElementById('edit-weight_gain_gr').value = (pesoActual - editPesoPrevio).toFixed(2);
+            document.getElementById('edit-mortality').value = (editPecesPrevios - pecesActuales > 0 ? editPecesPrevios - pecesActuales : 0);
+        }
     });
 </script>
+
+<!-- Script para establecer la fecha actual en el campo de fecha  -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateInput = document.getElementById('date');
+        const today = new Date();
+
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Mes empieza desde 0
+        const day = String(today.getDate()).padStart(2, '0');
+
+        const localDate = `${year}-${month}-${day}`;
+        dateInput.value = localDate;
+    });
+</script>
+
+<!-- Script para eliminar seguimiento -->
 <script>
     document.querySelectorAll('.btnEliminar').forEach(button => {
         button.addEventListener('click', function() {
@@ -258,7 +367,7 @@
         });
     });
 </script>
-
+<!-- Script para calcular los días transcurridos desde la fecha del cultivo -->
 <script>
     document.getElementById('crop_id').addEventListener('change', function() {
         const selectedOption = this.options[this.selectedIndex];
@@ -288,4 +397,6 @@
     });
 </script>
 @endif
+
+
 @endsection

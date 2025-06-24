@@ -77,6 +77,8 @@ Route::controller(TrackingFishController::class)->group(function () {
     Route::post('/pasante/seguimientoPez/store', 'store')->name('acuaponico.pasante.pasante.storetrackingfish');
     Route::put('/pasante/seguimientoPez/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatetrackingfish');
     Route::delete('/pasante/seguimientoPez/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroytrackingfish');
+    Route::get('/pasante/seguimientoPez/prevdata/{id}', 'getPreviousFishData')->name('seguimientopez.prevdata');
+
 });
 
 // rutas para los seguimientos de plantas
@@ -85,4 +87,12 @@ Route::controller(TrackingPlantController::class)->group(function () {
     Route::post('/pasante/seguimientoPlanta/store', 'store')->name('acuaponico.pasante.pasante.storetrackingplant');
     Route::put('/pasante/seguimientoPlanta/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatetrackingplant');
     Route::delete('/pasante/seguimientoPlanta/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroytrackingplant');
+    Route::get('/pasante/seguimientoPlanta/prevdata/{tracking_id}', 'obtenerDatosAnteriores')->name('acuaponico.pasante.pasante.prevdatatrackingplant');
+});
+
+
+// rutas para el control de actividades
+Route::controller(ActivityControlController::class)->group(function () {
+    Route::get('/pasante/actividad/lista', 'index')->name('acuaponico.pasante.pasante.indexactivity');
+
 });

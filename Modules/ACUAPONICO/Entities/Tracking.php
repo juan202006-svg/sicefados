@@ -12,11 +12,15 @@ class Tracking extends Model
     protected $fillable = ['date', 'crop_id', 'days_elapsed', 'notes'];
     protected $table = 'trackings';
 
-     public function crops()
+    public function crops()
     {
         return $this->belongsTo(CropAquaponic::class, 'crop_id');
     }
-    
+    public function latestFishTracking()
+    {
+        return $this->hasOne(\Modules\ACUAPONICO\Entities\TrackingFish::class)->latestOfMany();
+    }
+
     protected static function newFactory()
     {
         return \Modules\ACUAPONICO\Database\factories\TrackingFactory::new();

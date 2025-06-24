@@ -182,52 +182,58 @@
             <!-- Sidebar (SIEMPRE visible) -->
             <div class="sidebar">
 
-    <nav class="mt-5">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item">
-                <a href="{{ route('acuaponico.pasante.pasante.index') }}" class="nav-link" id="gestionLotes">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>Gestión de Lotes</p>
-                </a>
-            </li>   
-            <li class="nav-item">
-                <a href="{{ route('acuaponico.pasante.pasante.categoria') }}" class="nav-link" id="gestionCategorias">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>Gestión de Categorias</p>
-                </a>
-            </li> 
-             <li class="nav-item">
-                <a href="{{ route('acuaponico.pasante.pasante.indexspecies') }}" class="nav-link" id="gestionCategorias">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>Gestión de Especies</p>
-                </a>
-            </li> 
-             <li class="nav-item">
-                <a href="{{ route('acuaponico.pasante.pasante.crops') }}" class="nav-link" id="gestionCategorias">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>Gestión de Cultivos</p>
-                </a>
-            </li> 
-            <li class="nav-item">
-                <a href="{{ route('acuaponico.pasante.pasante.indextracking') }}" class="nav-link" id="gestionCategorias">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>Seguimientos</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('acuaponico.pasante.pasante.indextrakingfish') }}" class="nav-link" id="gestionCategorias">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>Seguimiento Peces</p>
-                </a>
-            </li> 
-                 <li class="nav-item">
-                <a href="{{ route('acuaponico.pasante.pasante.indextrackingplant') }}" class="nav-link" id="gestionCategorias">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>Seguimiento Plantas</p>
-                </a>
-            </li> 
-        </ul>
-    </nav>
+                <nav class="mt-5">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="{{ route('acuaponico.pasante.pasante.index') }}" class="nav-link" id="gestionLotes">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>Gestión de Lotes</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('acuaponico.pasante.pasante.categoria') }}" class="nav-link" id="gestionCategorias">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>Gestión de Categorias</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('acuaponico.pasante.pasante.indexspecies') }}" class="nav-link" id="gestionCategorias">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>Gestión de Especies</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('acuaponico.pasante.pasante.crops') }}" class="nav-link" id="gestionCategorias">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>Gestión de Cultivos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('acuaponico.pasante.pasante.indextracking') }}" class="nav-link" id="gestionCategorias">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>Seguimientos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('acuaponico.pasante.pasante.indextrakingfish') }}" class="nav-link" id="gestionCategorias">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>Seguimiento Peces</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('acuaponico.pasante.pasante.indextrackingplant') }}" class="nav-link" id="gestionCategorias">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>Seguimiento Plantas</p>
+                            </a>
+                        </li>
+                         <li class="nav-item">
+                            <a href="{{ route('acuaponico.pasante.pasante.indexactivity') }}" class="nav-link" id="gestionCategorias">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p> Avtividades</p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
 
 
             </div>

@@ -13,7 +13,7 @@
         </div>
         <div class="table-responsive">
             <div class="card-body">
-                <table id="tabla-especies" class="table table-hover table-bordered align-middle text-center">
+                <table id="tabla-cultivo" class="table table-hover table-bordered align-middle text-center">
                     <thead style="background-color: #f8f9fa;">
                         <tr>
                             <th>Codigo</th>
@@ -72,7 +72,7 @@
                                     <input type="hidden" name="id" id="edit-id">
                                     <div class="mb-3">
                                         <label for="edit-fecha" class="form-label"> Fecha:</label>
-                                        <input type="date" class="form-control" id="edit-date" name="date">
+                                        <input type="date" class="form-control" id="edit-date" name="date" readonly>
                                     </div>
                                     <div class="mb-3">
                                         <label for="edit-species_id" class="form-label">Especie:</label>
@@ -87,8 +87,10 @@
                                         <label for="edit-lot_id" class="form-label">Lote:</label>
                                         <select id="edit-lot_id" class="form-control" name="lot_id" required>
                                             <option value="">Seleccione un Lote</option>
-                                            @foreach ($lotes as $lote)
-                                            <option value="{{ $lote->id }}">{{ $lote->name }}</option>
+                                            @foreach ($lotesTodos  as $lote)
+                                            <option value="{{ $lote->id }}" data-state="{{ $lote->state }}">
+                                                {{ $lote->name }}{{ $lote->id == $cultivo->lot_id ? ' ( actual )' : '' }}
+                                            </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -144,13 +146,13 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="date" class="form-label">Fecha</label>
-                        <input type="date" name="date" class="form-control" id="date" required>
+                        <input type="date" name="date" class="form-control" id="date" readonly>
                     </div>
                     <div class="form-group">
                         <label for="lot_id">Lote:</label>
                         <select name="lot_id" class="form-control" required>
                             <option value="">Seleccione un Lote</option>
-                            @foreach ($lotes as $lote)
+                            @foreach ($lotesDisponibles as $lote)
                             <option value="{{ $lote->id }}">{{ $lote->name }}</option>
                             @endforeach
                         </select>
@@ -183,28 +185,52 @@
         </form>
     </div>
 </div>
+<!-- Script para establecer la fecha actual en el campo de fecha  -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var dateInput = document.getElementById('date');
-        var currentDate = new Date().toISOString().split('T')[0];
-        dateInput.value = currentDate;
+        const dateInput = document.getElementById('date');
+        const today = new Date();
+
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Mes empieza desde 0
+        const day = String(today.getDate()).padStart(2, '0');
+
+        const localDate = `${year}-${month}-${day}`;
+        dateInput.value = localDate;
     });
 </script>
+
 <!--script del modal editar-->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.editbtn').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
+                const loteIdActual = this.getAttribute('data-lot_id');
+
                 document.getElementById('formEditar').action = `/pasante/cultivo/update/${id}`;
                 document.getElementById('edit-id').value = id;
                 document.getElementById('edit-date').value = this.getAttribute('data-date');
                 document.getElementById('edit-species_id').value = this.getAttribute('data-species_id');
-                document.getElementById('edit-lot_id').value = this.getAttribute('data-lot_id');
                 document.getElementById('edit-quantity').value = this.getAttribute('data-quantity');
                 document.getElementById('edit-status').value = this.getAttribute('data-status');
-            });
 
+                const lotSelect = document.getElementById('edit-lot_id');
+                const options = lotSelect.querySelectorAll('option');
+
+                options.forEach(option => {
+                    const loteState = option.getAttribute('data-state');
+                    const loteId = option.value;
+
+                    if (loteId === "" || loteId === loteIdActual || loteState === "disponible") {
+                        option.hidden = false;
+                    } else {
+                        option.hidden = true;
+                    }
+                });
+
+                lotSelect.value = loteIdActual;
+            });
         });
     });
 </script>
@@ -249,13 +275,13 @@
 <!-- Inicializar DataTable -->
 <script>
     $(document).ready(function() {
-        $('#tabla-especies').DataTable({
+        $('#tabla-cultivo').DataTable({
             "language": {
-                "lengthMenu": "Mostrar MENU registros por página",
+                "lengthMenu": "Mostrar _MENU_ registros por página",
                 "zeroRecords": "No se encontraron resultados",
-                "info": "Mostrando página PAGE de PAGES",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
                 "infoEmpty": "No hay registros disponibles",
-                "infoFiltered": "(filtrado de MAX registros totales)",
+                "infoFiltered": "(filtrado de _MAX_ registros totales)",
                 "search": "Buscar:",
                 "paginate": {
                     "next": "Siguiente",

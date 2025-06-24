@@ -36,9 +36,9 @@
                         <td class="text-center">{{ $sp->Tracking->date }}</td>
                         <td class="text-center">{{ $sp->Tracking->crops->species->common_name }}</td>
                         <td class="text-center">{{ $sp->plant_count }}</td>
-                        <td class="text-center">{{ $sp->height_cm }}</td>
-                        <td class="text-center">{{ $sp->growth }}</td>
-                        <td class="text-center">{{ $sp->comparison_percentage }}</td>
+                        <td class="text-center">{{ $sp->height_cm }}cm</td>
+                        <td class="text-center">{{ $sp->growth }}cm</td>
+                        <td class="text-center">{{ $sp->comparison_percentage }}%</td>
                         <td class="text-center">{{ $sp->mortality }}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-success btn-sm editbtn"
@@ -88,28 +88,28 @@
                             </div>
                             <div class="mb-3">
                                 <label for="edit-plant_count" class="form-label"> N° Plantas: </label>
-                                <input type="number" class="form-control" id="edit-plant_count" name="plant_count">
+                                <input type="number" class="form-control" id="edit-plant_count" name="plant_count" required>
+                                <div class="invalid-feedback" id="error-plantas-edit"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-height_cm" class="form-label"> Altura (cm): </label>
-                                <input type="number" class="form-control" name="height_cm" id="edit-height_cm"></input>
+                                <input type="number" class="form-control" name="height_cm" id="edit-height_cm" required>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-growth" class="form-label"> Crecimiento: </label>
-                                <input type="number" class="form-control" name="growth" id="edit-growth"></input>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit-comparison_percentage" class="form-label"> Rendimiento (%): </label>
-                                <input type="number" class="form-control" name="comparison_percentage" id="edit-comparison_percentage"></input>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit-mortality" class="form-label"> Mortalidad: </label>
-                                <input type="number" class="form-control" name="mortality" id="edit-mortality"></input>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-primary"> Guardar Cambios</button>
-                            </div>
+                                <input type="number" class="form-control" name="growth" id="edit-growth" readonly>
+                                <div class="mb-3">
+                                    <label for="edit-comparison_percentage" class="form-label"> Rendimiento (%): </label>
+                                    <input type="number" class="form-control" name="comparison_percentage" id="edit-comparison_percentage" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edit-mortality" class="form-label"> Mortalidad: </label>
+                                    <input type="number" class="form-control" name="mortality" id="edit-mortality" readonly>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary"> Guardar Cambios</button>
+                                </div>
                     </form>
                 </div>
             </div>
@@ -154,6 +154,7 @@
                     <div class="mb-3">
                         <label for="plant_count" class="form-label">N° Plantas:</label>
                         <input type="number" name="plant_count" class="form-control" id="plant_count" required>
+                        <div class="invalid-feedback" id="error-plantas"></div>
                     </div>
                     <div class="mb-3">
                         <label for="height_cm" class="form-label">Altura (cm):</label>
@@ -161,15 +162,15 @@
                     </div>
                     <div class="mb-3">
                         <label for="growth" class="form-label">Crecimiento:</label>
-                        <input type="number" name="growth" class="form-control" id="growth" required>
+                        <input type="number" name="growth" class="form-control" id="growth" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="comparison_percentage" class="form-label">Rendimiento (%):</label>
-                        <input type="number" name="comparison_percentage" class="form-control" id="comparison_percentage" required>
+                        <input type="number" name="comparison_percentage" class="form-control" id="comparison_percentage" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="mortality" class="form-label">Mortalidad:</label>
-                        <input type="number" name="mortality" class="form-control" id="mortality" required>
+                        <input type="number" name="mortality" class="form-control" id="mortality" readonly>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -180,11 +181,18 @@
         </form>
     </div>
 </div>
+<!-- Script para establecer la fecha actual en el campo de fecha  -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var dateInput = document.getElementById('date');
-        var currentDate = new Date().toISOString().split('T')[0];
-        dateInput.value = currentDate;
+        const dateInput = document.getElementById('date');
+        const today = new Date();
+
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Mes empieza desde 0
+        const day = String(today.getDate()).padStart(2, '0');
+
+        const localDate = `${year}-${month}-${day}`;
+        dateInput.value = localDate;
     });
 </script>
 <!--script del modal editar-->
@@ -299,5 +307,113 @@
     });
 </script>
 @endif
+<script>
+    // Agregar
+    let plantasPrevias = 0;
+    let alturaPrevia = 0;
+
+    document.getElementById('tracking_id').addEventListener('change', function() {
+        const trackingId = this.value;
+        if (trackingId) {
+            fetch(`/pasante/seguimientoPlanta/prevdata/${trackingId}`)
+                .then(res => res.json())
+                .then(data => {
+                    plantasPrevias = parseInt(data.plantas) || 0;
+                    alturaPrevia = parseFloat(data.altura) || 0;
+                    calcularAgregar();
+                });
+        }
+    });
+
+    document.getElementById('plant_count').addEventListener('input', calcularAgregar);
+    document.getElementById('height_cm').addEventListener('input', calcularAgregar);
+
+    function calcularAgregar() {
+        const actuales = parseInt(document.getElementById('plant_count').value) || 0;
+        const alturaActual = parseFloat(document.getElementById('height_cm').value) || 0;
+
+        // Calcular y mostrar valores
+        document.getElementById('growth').value = (alturaActual - alturaPrevia).toFixed(2);
+        document.getElementById('comparison_percentage').value = (alturaPrevia > 0 ? (alturaActual / alturaPrevia * 100).toFixed(2) : 0);
+        document.getElementById('mortality').value = (plantasPrevias - actuales > 0 ? plantasPrevias - actuales : 0);
+
+        // Validar número de plantas
+        const input = document.getElementById('plant_count');
+        const error = document.getElementById('error-plantas');
+
+        if (actuales > plantasPrevias) {
+            input.classList.add('is-invalid');
+            input.classList.remove('is-valid');
+            error.innerText = `No puede ingresar más plantas (${actuales}) que las registradas anteriormente (${plantasPrevias}).`;
+        } else {
+            input.classList.remove('is-invalid');
+            input.classList.add('is-valid');
+            error.innerText = '';
+        }
+    }
+
+
+    // Editar
+    let editPlantasPrevias = 0;
+    let editAlturaPrevia = 0;
+
+    document.getElementById('edit-tracking_id').addEventListener('change', function() {
+        const trackingId = this.value;
+        if (trackingId) {
+            fetch(`/pasante/seguimientoPlanta/prevdata/${trackingId}`)
+                .then(res => res.json())
+                .then(data => {
+                    editPlantasPrevias = parseInt(data.plantas) || 0;
+                    editAlturaPrevia = parseFloat(data.altura) || 0;
+                    calcularEditar();
+                });
+        }
+    });
+
+    document.getElementById('edit-plant_count').addEventListener('input', calcularEditar);
+    document.getElementById('edit-height_cm').addEventListener('input', calcularEditar);
+
+    function calcularEditar() {
+        const actuales = parseInt(document.getElementById('edit-plant_count').value) || 0;
+        const alturaActual = parseFloat(document.getElementById('edit-height_cm').value) || 0;
+
+        // Calcular y mostrar valores
+        document.getElementById('edit-growth').value = (alturaActual - editAlturaPrevia).toFixed(2);
+        document.getElementById('edit-comparison_percentage').value = (editAlturaPrevia > 0 ? (alturaActual / editAlturaPrevia * 100).toFixed(2) : 0);
+        document.getElementById('edit-mortality').value = (editPlantasPrevias - actuales > 0 ? editPlantasPrevias - actuales : 0);
+
+        // Validar número de plantas
+        const input = document.getElementById('edit-plant_count');
+        const error = document.getElementById('error-plantas-edit');
+
+        if (actuales > editPlantasPrevias) {
+            input.classList.add('is-invalid');
+            input.classList.remove('is-valid');
+            error.innerText = `No puede ingresar más plantas (${actuales}) que las registradas anteriormente (${editPlantasPrevias}).`;
+        } else {
+            input.classList.remove('is-invalid');
+            input.classList.add('is-valid');
+            error.innerText = '';
+        }
+    }
+
+
+    // Al abrir el modal editar, cargar los valores previos automáticamente
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.editbtn').forEach(button => {
+            button.addEventListener('click', function() {
+                const trackingId = this.getAttribute('data-tracking_id');
+                fetch(`/pasante/seguimientoPlanta/prevdata/${trackingId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        editPlantasPrevias = parseInt(data.plantas) || 0;
+                        editAlturaPrevia = parseFloat(data.altura) || 0;
+                        calcularEditar();
+                    });
+            });
+        });
+    });
+</script>
+
 
 @endsection
