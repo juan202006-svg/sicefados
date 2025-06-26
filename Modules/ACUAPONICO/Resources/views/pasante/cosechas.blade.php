@@ -65,7 +65,7 @@
         <div class="modal fade " id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="formEditar" action="" method="POST">
+                    <form id="formEditar" action="{{route('acuaponico.pasante.pasante.updateharvest',0) }}" method="POST">
                         @csrf
                         @method('put')
                         <div class="modal-header">
@@ -83,13 +83,14 @@
                                 <select class="form-control" id="edit-crop_id" name="crop_id" required>
                                     <option value="">Seleccione un cultivo</option>
                                     @foreach ($cultivos as $cultivo)
-                                    <option value="{{ $cultivo->id }}">{{ $cultivo->species->common_name }}</option>
+                                    <option value="{{ $cultivo->id }}" data-quantity="{{ $cultivo->quantity }}">{{ $cultivo->species->common_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-quantity" class="form-label"> Cantidad: </label>
                                 <input type="number" class="form-control" id="edit-quantity" name="quantity" required>
+                                <div class="invalid-feedback" id="edit-error-peces" style="display:none;"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-unit" class="form-label"> Unidad de medida: </label>
@@ -101,7 +102,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="edit-mortality" class="form-label"> Mortandad: </label>
-                                <input type="number" class="form-control" id="edit-mortality" name="mortality" required>
+                                <input type="number" class="form-control" id="edit-mortality" name="mortality" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-notes" class="form-label"> Novedad: </label>
@@ -151,7 +152,7 @@
                             <option value="">Seleccione un cultivo</option>
                             @foreach ($cultivos as $cultivo)
                             <option
-                                value="{{ $cultivo->id }}">
+                                value="{{ $cultivo->id }}" data-quantity="{{ $cultivo->quantity }}">
                                 {{ $cultivo->species->common_name }}
                             </option>
                             @endforeach
@@ -160,6 +161,7 @@
                     <div class="mb-3">
                         <label for="quantity" class="form-label"> Cantidad:</label>
                         <input type="number" name="quantity" class="form-control" id="quantity" required >
+                        <div class="invalid-feedback" id="error-peces" style="display:none;"></div>
                     </div>
                     <div class="mb-3">
                         <label for="unit" class="form-label"> Unidad de medida:</label>
@@ -171,7 +173,7 @@
                     </div>  
                     <div class="mb-3">
                         <label for="mortality" class="form-label"> Mortandad:</label>
-                        <input type="number" name="mortality" class="form-control" id="mortality" required>
+                        <input type="number" name="mortality" class="form-control" id="mortality" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="notes" class="form-label">Novedad:</label>
@@ -218,6 +220,55 @@
         });
     });
 </script>
+<!-- validar la cantidad de peces en lacosecha y la parte de la mortalidad a lahora de agregar-->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Todos los cultivos con su cantidad
+    const cultivos = @json($cultivos);
+
+    function validarCantidad(inputId, errorId, selectId, mortalidadId) {
+        const input = document.getElementById(inputId);
+        const select = document.getElementById(selectId);
+        const errorDiv = document.getElementById(errorId);
+        const mortalidadInput = document.getElementById(mortalidadId);
+
+        function checkCantidad() {
+            const cultivoId = select.value;
+            const cultivo = cultivos.find(c => c.id == cultivoId);
+            const cantidadCultivo = cultivo ? parseInt(cultivo.quantity) : 0;
+            const cantidadCosecha = parseInt(input.value);
+
+            if (isNaN(cantidadCosecha) || cantidadCosecha < 0) {
+                input.classList.remove('is-invalid');
+                errorDiv.style.display = 'none';
+                if (mortalidadInput) mortalidadInput.value = '';
+                return;
+            }
+
+            if (cantidadCosecha > cantidadCultivo) {
+                input.classList.add('is-invalid');
+                errorDiv.style.display = 'block';
+                errorDiv.textContent = `No puedes ingresar más de ${cantidadCultivo} peces.`;
+                if (mortalidadInput) mortalidadInput.value = '';
+            } else {
+                input.classList.remove('is-invalid');
+                errorDiv.style.display = 'none';
+                if (mortalidadInput) {
+                    mortalidadInput.value = cantidadCultivo - cantidadCosecha;
+                }
+            }
+        }
+
+        input.addEventListener('input', checkCantidad);
+        select.addEventListener('change', checkCantidad);
+    }
+
+    // Aplica validación al formulario de agregar y editar
+    validarCantidad('quantity', 'error-peces', 'crop_id', 'mortality');
+    validarCantidad('edit-quantity', 'edit-error-peces', 'edit-crop_id', 'edit-mortality');
+});
+</script>
+
 <script>
     document.querySelectorAll('.btnEliminar').forEach(button => {
         button.addEventListener('click', function() {

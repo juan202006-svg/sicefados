@@ -15,7 +15,7 @@ class TrackingController extends Controller
     public function index()
 
     {
-        $cultivos = CropAquaponic::with('species')->get();
+        $cultivos = CropAquaponic::with('species') ->where('status', 'Cultivado') ->get();
         $seguimientos = Tracking::with('crops.species')->get();
         return view('acuaponico::pasante.seguimiento', compact('seguimientos', 'cultivos')); 
     }

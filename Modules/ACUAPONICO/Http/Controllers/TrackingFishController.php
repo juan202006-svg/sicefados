@@ -19,7 +19,7 @@ class TrackingFishController extends Controller
         $seguimientos = Tracking::whereHas('crops.species.category', function ($query) {
             $query->where('name', 'Pez');
         })
-            ->with(['crops.species', 'latestFishTracking']) // cargamos el último seguimiento de peces
+            ->with(['crops.species', 'latestFishTracking']) // Asegúrate de tener una relación 'latestFishTracking' definida en el modelo Tracking
             ->get();
 
         return view('acuaponico::.pasante.seguimientoPeces', compact('seguimientoPez', 'seguimientos'));

@@ -12,7 +12,7 @@ class HarvestAquaponicController extends Controller
     
     public function index()
     {
-        $cultivos = CropAquaponic::with('species')->get();
+        $cultivos = CropAquaponic::with('species')->where('status','Seguimiento')->get();
         $cosechas = HarvestAquaponic::with('crops.species')->get();
         return view('acuaponico::pasante.cosechas', compact('cultivos', 'cosechas'));
     }
@@ -28,6 +28,11 @@ class HarvestAquaponicController extends Controller
         $cosecha->mortality = $request->mortality;
         $cosecha->notes = $request->notes;
         $cosecha->save();
+
+         $cultivo = CropAquaponic::findOrFail($request->crop_id);
+        // Cambiar el estado del cultivo a 'en seguimiento'
+        $cultivo->status = 'Cosechado';
+        $cultivo->save();
 
        return redirect()->back()->with('success', 'Cosecha registrada correctamente.');
 
