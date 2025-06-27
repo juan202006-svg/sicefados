@@ -150,7 +150,16 @@
                 style="font-size: 20px; position: relative;">
                 Iniciar Sesión
             </a>
+            @else
+             <!-- Botón de cerrar sesión -->
+                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn btn-link nav-link" style="color: white;">
+                        <i class="fas fa-sign-out-alt" style="color: white"></i>
+                    </button>
+                </form>
             @endguest
+        
         </div>
     </nav>
 
@@ -234,7 +243,7 @@
                     </div>
 
                     <!-- Imagen central -->
-                    <div class="w-100 text-center my-4" >
+                    <div class="w-100 text-center my-4">
                         <img src="{{ asset('AdminLTE/dist/img/acoun.png') }}" class="imagen-central"
                             style="margin-left: -50%; margin-top: -10%;">
                     </div>

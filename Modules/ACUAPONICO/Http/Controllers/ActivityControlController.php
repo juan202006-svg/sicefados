@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\ActivityAquaponic;
+use Modules\ACUAPONICO\Entities\ActivityControl;
 
 class ActivityControlController extends Controller
 {
@@ -17,27 +18,41 @@ class ActivityControlController extends Controller
     {
         $activities = ActivityAquaponic::with('user')->where('enviada', true)->get();
 
-        return view('acuaponico::pasante.controlactividad', compact('activities'));
+        $evidencias = ActivityControl::with('activity')->get();
+
+        return view('acuaponico::pasante.controlactividad', compact('activities', 'evidencias'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
-    {
-        return view('acuaponico::create');
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
     public function store(Request $request)
     {
-        //
+        $evidencePath = null;
+
+        if ($request->hasFile('evidence')) {
+            // 1. Subir archivo al disco 'public'
+            $evidencePath = $request->file('evidence')->store('evidencias', 'public');
+
+            // 2. Obtener ruta absoluta del archivo
+            $fullPath = storage_path('app/public/' . $evidencePath);
+
+            // 3. Asignar permisos 0644
+            if (file_exists($fullPath)) {
+                chmod($fullPath, 0644);
+            }
+        }
+
+        // Guardar el registro en la base de datos
+        $controlActividad = new ActivityControl();
+        $controlActividad->activity_id = $request->activity_id;
+        $controlActividad->date = $request->date;
+        $controlActividad->news = $request->news;
+        $controlActividad->evidence = $evidencePath;
+        $controlActividad->save();
+
+        return redirect()->back()->with('success', 'Evidencia registrada exitosamente.');
     }
+
+
 
     /**
      * Show the specified resource.

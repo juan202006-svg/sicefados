@@ -52,7 +52,7 @@
                         {{-- Unidad Productiva --}}
                         <div class="col-md-6 mb-3">
                             <label for="productive_unit_id" class="form-label">Unidad Productiva</label>
-                            <select name="productive_unit_id" class="form-select form-select-lg" required>
+                            <select name="productive_unit_id" class="form-select form-select-lg" >
                                 <option value="">-- Seleccione --</option>
                                 @foreach($unidades as $unidad)
                                     <option value="{{ $unidad->id }}">{{ $unidad->name }}</option>

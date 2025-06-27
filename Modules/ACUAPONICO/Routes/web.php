@@ -27,13 +27,13 @@ Route::controller(ProductionController::class)->group(function () {
     Route::get('/admin/produccion', 'index')->name('acuaponico.admin.admin.produccion');
     Route::get('/admin/cultivos', 'index')->name('acuaponico.admin.admin.cultivos');
 });
- 
+
 // vista de actividades
 Route::controller(ActivityController::class)->group(function () {
     Route::get('/admin/actividades', 'index')->name('acuaponico.admin.admin.actividades');
     Route::get('/admin/actividades/enviadas', 'enviados')->name('acuaponico.pasante.pasante.indexactivity');
-    
-    
+
+
     Route::post('/admin/actividades/store', 'store')->name('acuaponico.admin.admin.store');
     Route::put('/admin/actividades/update/{id}', 'update')->name('acuaponico.admin.admin.update');
     Route::delete('/admin/actividades/destroy/{id}', 'destroy')->name('acuaponico.admin.admin.destroy');
@@ -95,7 +95,6 @@ Route::controller(TrackingFishController::class)->group(function () {
     Route::put('/pasante/seguimientoPez/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatetrackingfish');
     Route::delete('/pasante/seguimientoPez/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroytrackingfish');
     Route::get('/pasante/seguimientoPez/prevdata/{id}', 'getPreviousFishData')->name('seguimientopez.prevdata');
-
 });
 
 
@@ -104,7 +103,7 @@ Route::get('/masterusers', function () {
 })->name('acuaponico.layouts.masterusers');
 
 // rutas para los seguimientos de plantas
-Route::controller(TrackingPlantController::class)->group(function () { 
+Route::controller(TrackingPlantController::class)->group(function () {
     Route::get('/pasante/seguimientoPlanta/plantas', 'index')->name('acuaponico.pasante.pasante.indextrackingplant');
     Route::post('/pasante/seguimientoPlanta/store', 'store')->name('acuaponico.pasante.pasante.storetrackingplant');
     Route::put('/pasante/seguimientoPlanta/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatetrackingplant');
@@ -123,8 +122,5 @@ Route::controller(HarvestAquaponicController::class)->group(function () {
 // rutas para el control de actividades
 Route::controller(ActivityControlController::class)->group(function () {
     Route::get('/pasante/actividad/lista', 'index')->name('acuaponico.pasante.pasante.indexactivity');
-
+    Route::post('/pasante/controlactividad/store', 'store')->name('acuaponico.pasante.pasante.storecontrolactivity');
 });
-
-
-

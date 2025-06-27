@@ -235,7 +235,7 @@
                          <li class="nav-item">
                             <a href="{{ route('acuaponico.pasante.pasante.indexactivity') }}" class="nav-link" id="gestionCategorias">
                                 <i class="nav-icon fas fa-th"></i>
-                                <p> Avtividades</p>
+                                <p> Control de  Avtividades</p>
                             </a>
                         </li>
                     </ul>
