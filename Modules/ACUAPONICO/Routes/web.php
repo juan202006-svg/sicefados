@@ -32,12 +32,12 @@ Route::controller(ProductionController::class)->group(function () {
 Route::controller(ActivityController::class)->group(function () {
     Route::get('/admin/actividades', 'index')->name('acuaponico.admin.admin.actividades');
     Route::get('/admin/actividades/enviadas', 'enviados')->name('acuaponico.pasante.pasante.indexactivity');
-
-
     Route::post('/admin/actividades/store', 'store')->name('acuaponico.admin.admin.store');
     Route::put('/admin/actividades/update/{id}', 'update')->name('acuaponico.admin.admin.update');
     Route::delete('/admin/actividades/destroy/{id}', 'destroy')->name('acuaponico.admin.admin.destroy');
     Route::put('/admin/actividades/send/{id}', 'enviar')->name('acuaponico.admin.admin.send');
+    Route::get('/evidencia/{id}/descargar', 'descargarEvidencia')->name('evidencia.descargar');
+    Route::get('/evidencia/{id}/ver', 'verEvidencia')->name('evidencia.ver');
 });
 
 
@@ -125,6 +125,5 @@ Route::controller(ActivityControlController::class)->group(function () {
     Route::post('/pasante/controlactividad/store', 'store')->name('acuaponico.pasante.pasante.storecontrolactivity');
     Route::put('/pasante/controlactividad/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatecontrolactivity');
     Route::delete('/pasante/controlactividad/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroycontrolactivity');
-    Route::get('/evidencia/{id}/descargar', 'descargarEvidencia')->name('evidencia.descargar');
     Route::get('/evidencia/{id}/ver', 'verEvidencia')->name('evidencia.ver');
 });

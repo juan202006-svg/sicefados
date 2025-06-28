@@ -11,8 +11,13 @@ class ActivityAquaponic extends Model
 
     protected $table = 'activities_aquaponics';
 
-    protected $fillable = ['activity_name','date', 'start_date', 'end_date', 'user_id', 'description', 'state', 'enviada'
+    protected $fillable = ['activity_name','date', 'start_date', 'end_date', 'user_id', 'description', 'activity_status', 'enviada'
     ];
+
+     public function activity()
+    {
+        return $this->belongsTo(UserAquaponic::class, 'activity_id');
+    }
     
     public function user()
     {

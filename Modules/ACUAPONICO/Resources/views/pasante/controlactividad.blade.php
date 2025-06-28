@@ -60,7 +60,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label>Subir Evidencia (PDF):</label>
-                                            <input type="file" name="evidence" class="form-control" accept="application/pdf" >
+                                            <input type="file" name="evidence" class="form-control" accept="application/pdf">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -82,11 +82,6 @@
 
 <div class="container mt-5">
     <h3 class="text-center mb-4">Evidencias Registradas</h3>
-
-    @if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
     <div class="card shadow-sm border-0">
         <div class="table-responsive">
             <table id="tabla-evidencia" class="table table-hover table-bordered align-middle text-center">
@@ -117,24 +112,23 @@
                         </td>
                         <td>
                             @if($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence))
-                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#verPdfModal{{ $evidencia->id }}">
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#verPdfModal{{ $evidencia->id }}">
                                 <i class="bi bi-eye"></i>
                                 ver PDF
                             </button>
-                            <a href="{{ route('evidencia.descargar', $evidencia->id) }}" class="btn btn-sm btn-outline-success">
-                                <i class="bi bi-download"></i> Descargar PDF
-                            </a>
                             @endif
 
                             <!-- Botón editar -->
-                            <button class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editarModal{{ $evidencia->id }}">
+                            <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editarModal{{ $evidencia->id }}">
                                 <i class="bi bi-pencil"></i> Editar
                             </button>
 
                             <!-- Botón eliminar -->
-                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal{{ $evidencia->id }}">
+                            <button class="btn btn-sm btn-danger btnEliminar" data-url="{{ route('acuaponico.pasante.pasante.destroycontrolactivity', $evidencia->id) }}">
                                 <i class="bi bi-trash"></i> Eliminar
                             </button>
+
+
                         </td>
                     </tr>
 
@@ -160,7 +154,7 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="modal-content">
-                                    <div class="modal-header bg-warning">
+                                    <div class="modal-header bg-primary">
                                         <h5 class="modal-title text-white">Editar Evidencia</h5>
                                         <button class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
@@ -179,30 +173,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn btn-warning">Guardar Cambios</button>
-                                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <!-- Modal Eliminar -->
-                    <div class="modal fade" id="eliminarModal{{ $evidencia->id }}" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <form action="{{ route('acuaponico.pasante.pasante.destroycontrolactivity', $evidencia->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <div class="modal-content">
-                                    <div class="modal-header bg-danger text-white">
-                                        <h5 class="modal-title">¿Eliminar Evidencia?</h5>
-                                        <button class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ¿Estás seguro de eliminar esta evidencia?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-danger">Eliminar</button>
+                                        <button class="btn btn-success">Guardar Cambios</button>
                                         <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                     </div>
                                 </div>
@@ -215,6 +186,12 @@
         </div>
     </div>
 </div>
+<!-- Modal Eliminar -->
+<form id="formEliminar" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+</form>
+
 
 <!-- Scripts -->
 <script>
@@ -289,6 +266,32 @@
         });
     });
 </script>
+
+<script>
+    document.querySelectorAll('.btnEliminar').forEach(button => {
+        button.addEventListener('click', function() {
+            const url = this.getAttribute('data-url');
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡Esta acción eliminará la evidencia!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const form = document.getElementById('formEliminar');
+                    form.action = url;
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @endsection

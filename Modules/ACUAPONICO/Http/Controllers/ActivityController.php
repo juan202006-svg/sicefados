@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\ActivityAquaponic;
 use Modules\ACUAPONICO\Entities\UserAquaponic;
+use Modules\ACUAPONICO\Entities\ActivityControl;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ActivityController extends Controller
 {
@@ -15,7 +18,8 @@ class ActivityController extends Controller
     {
         $activities = ActivityAquaponic::with('user')->where('enviada', false)->get();
         $users = UserAquaponic::all();
-        return view('acuaponico::admin.actividades', compact('activities', 'users'));
+        $evidenciasAdmin = ActivityControl::with('activity')->get();
+        return view('acuaponico::admin.actividades', compact('activities', 'users', 'evidenciasAdmin'));
     }
 
     public function enviados()
@@ -23,6 +27,7 @@ class ActivityController extends Controller
         $activities = ActivityAquaponic::with('user')->where('enviada', true)->get();
         return view('', compact('activities'));
     }
+
 
 
     public function create()
@@ -77,5 +82,34 @@ class ActivityController extends Controller
         $activity->update(['enviada' => true]);
 
         return redirect()->back()->with('success', 'Actividad enviada');
+    }
+
+
+    public function descargarEvidencia($id)
+    {
+        $evidencia = ActivityControl::with('activity')->findOrFail($id);
+
+        if ($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence)) {
+            // Nombre personalizado: ejemplo "evidencia-filtro-de-agua-25.pdf"
+            $nombreActividad = Str::slug($evidencia->activity->activity_name); // elimina espacios y caracteres raros
+            $nombreArchivo = '(SA)🐟 evidencia-' . $nombreActividad . '-' . $evidencia->id . '.pdf';
+
+            return Storage::disk('public')->download($evidencia->evidence, $nombreArchivo);
+        } else {
+            abort(404, 'Archivo no encontrado');
+        }
+    }
+
+    public function verEvidencia($id)
+    {
+        $evidencia = ActivityControl::findOrFail($id);
+
+        if ($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence)) {
+            $file = Storage::disk('public')->get($evidencia->evidence);
+            return response($file, 200)
+                ->header('Content-Type', 'application/pdf');
+        } else {
+            abort(404, 'Archivo no encontrado');
+        }
     }
 }

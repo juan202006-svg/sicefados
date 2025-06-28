@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 
 
+
 class ActivityControlController extends Controller
 {
     /**
@@ -26,6 +27,10 @@ class ActivityControlController extends Controller
         return view('acuaponico::pasante.controlactividad', compact('activities', 'evidencias'));
     }
 
+
+    
+
+    
 
     public function store(Request $request)
     {
@@ -52,21 +57,16 @@ class ActivityControlController extends Controller
         $controlActividad->evidence = $evidencePath;
         $controlActividad->save();
 
+         $actividad = ActivityAquaponic::findOrFail($request->activity_id);
+        $actividad->activity_status = 'Completada';
+        $actividad->save();
+
+
         return redirect()->back()->with('success', 'Evidencia registrada exitosamente.');
     }
 
 
 
-public function descargarEvidencia($id)
-{
-    $evidencia = ActivityControl::findOrFail($id);
-
-    if ($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence)) {
-        return Storage::disk('public')->download($evidencia->evidence);
-    } else {
-        abort(404, 'Archivo no encontrado');
-    }
-}
 
 public function verEvidencia($id)
 {
@@ -109,14 +109,25 @@ public function destroy($id)
 {
     $evidencia = ActivityControl::findOrFail($id);
 
+    // Obtener la actividad relacionada
+    $actividad = ActivityAquaponic::find($evidencia->activity_id);
+
+
+
     // Elimina archivo físico si existe
     if ($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence)) {
         Storage::disk('public')->delete($evidencia->evidence);
     }
 
     $evidencia->delete();
+    // Cambiar estado a "Pendiente" si existe la actividad
+    if ($actividad) {
+        $actividad->activity_status = 'Pendiente';
+        $actividad->save();
+    }
 
     return redirect()->back()->with('success', 'Evidencia eliminada correctamente.');
 }
 
 }
+
