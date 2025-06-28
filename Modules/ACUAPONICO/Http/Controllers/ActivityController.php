@@ -5,7 +5,6 @@ namespace Modules\ACUAPONICO\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\SICA\Entities\Activity;
 use Modules\ACUAPONICO\Entities\ActivityAquaponic;
 use Modules\ACUAPONICO\Entities\UserAquaponic;
 

@@ -123,4 +123,8 @@ Route::controller(HarvestAquaponicController::class)->group(function () {
 Route::controller(ActivityControlController::class)->group(function () {
     Route::get('/pasante/actividad/lista', 'index')->name('acuaponico.pasante.pasante.indexactivity');
     Route::post('/pasante/controlactividad/store', 'store')->name('acuaponico.pasante.pasante.storecontrolactivity');
+    Route::put('/pasante/controlactividad/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatecontrolactivity');
+    Route::delete('/pasante/controlactividad/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroycontrolactivity');
+    Route::get('/evidencia/{id}/descargar', 'descargarEvidencia')->name('evidencia.descargar');
+    Route::get('/evidencia/{id}/ver', 'verEvidencia')->name('evidencia.ver');
 });

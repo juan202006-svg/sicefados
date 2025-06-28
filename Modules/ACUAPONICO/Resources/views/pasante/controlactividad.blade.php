@@ -2,85 +2,84 @@
 
 @section('content2')
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Actividades Resividas</h2>
-    <a href="{{ route('acuaponico.pasante.pasante.indexactivity') }}"> </a>
+    <h2 class="text-center mb-4">Actividades Recibidas</h2>
+    <div class="card shadow-sm border-0">
+        <div class="table-responsive">
+            <table id="tabla-actividad" class="table table-hover table-bordered align-middle text-center">
+                <thead style="background-color: #f8f9fa;">
+                    <tr>
+                        <th>#</th>
+                        <th>Actividad</th>
+                        <th>Aprendiz</th>
+                        <th>Fecha</th>
+                        <th>Descripción</th>
+                        <th>Evidencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $n = 1; @endphp
+                    @foreach($activities as $activity)
+                    <tr>
+                        <td>{{ $n++ }}</td>
+                        <td>{{ $activity->activity_name}}</td>
+                        <td>{{ $activity->user->first_name }} {{ $activity->user->last_name }}</td>
+                        <td>{{ $activity->date }}</td>
+                        <td>{{ $activity->description }}</td>
+                        <td>
+                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#agregar{{ $activity->id }}">
+                                <i class="bi bi-plus-circle"></i> + Evidencia
+                            </button>
+                        </td>
+                    </tr>
 
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Apprentice</th>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Evidencia</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($activities as $index => $activity)
-            <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $activity->user->first_name }} {{ $activity->user->last_name }}</td>
-                <td>{{ $activity->date }}</td>
-                <td>{{ $activity->description }}</td>
-                <td>
-                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#agregar{{ $activity->id }}">
-                        <i class="bi bi-plus-circle"></i> + Evidencia
-                    </button>
-                </td>
-            </tr>
+                    <!-- Modal Agregar Evidencia -->
+                    <div class="modal fade" id="agregar{{ $activity->id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <form action="{{ route('acuaponico.pasante.pasante.storecontrolactivity') }}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="activity_id" value="{{ $activity->id }}">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-primary text-white">
+                                        <h5 class="modal-title">Agregar Evidencia</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label>Actividad:</label>
+                                            <input type="text" class="form-control" value="{{ $activity->activity_name }}" readonly>
+                                        </div>
 
-            <!-- Modal único por actividad -->
-            <div class="modal fade" id="agregar{{ $activity->id }}" tabindex="-1" aria-labelledby="agregarLabel{{ $activity->id }}" aria-hidden="true">**
-                <div class="modal-dialog">
-                    <form action="{{ route('acuaponico.pasante.pasante.storecontrolactivity') }}" method="post" enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                            <label>Fecha:</label>
+                                            <input type="date" name="date" class="form-control date-input" readonly>
+                                        </div>
 
-                        @csrf
-                        <input type="hidden" name="activity_id" value="{{ $activity->id }}">
-                        <div class="modal-content">
-                            <div class="modal-header bg-primary text-white">
-                                <h5 class="modal-title" id="agregarLabel{{ $activity->id }}">Agregar Evidencia</h5>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <label class="form-label">Fecha:</label>
-                                    <input type="date" name="date" class="form-control" id="date" readonly>
+                                        <div class="mb-3">
+                                            <label>Novedades:</label>
+                                            <textarea name="news" class="form-control"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Subir Evidencia (PDF):</label>
+                                            <input type="file" name="evidence" class="form-control" accept="application/pdf" >
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button class="btn btn-primary" type="submit">Guardar</button>
+                                    </div>
                                 </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Actividad:</label>
-                                    <input type="text" class="form-control" value="{{ $activity->description }}" readonly>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Novedades:</label>
-                                    <textarea name="news" class="form-control"></textarea>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Subir Evidencia (solo PDF):</label>
-                                    <input type="file" name="evidence" class="form-control" accept="application/pdf" required>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                            </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </tbody>
-    </table>
+                    </div>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-@endforeach
 
-@php
-    use Illuminate\Support\Facades\Storage;
-@endphp
 
-<!-- lista de las evidencias  -->
+
 <div class="container mt-5">
     <h3 class="text-center mb-4">Evidencias Registradas</h3>
 
@@ -88,84 +87,208 @@
     <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>#</th>
-                <th>Fecha</th>
-                <th>Descripción Actividad</th>
-                <th>Novedades</th>
-                <th>Archivo</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($evidencias as $index => $evidencia)
-            <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $evidencia->date }}</td>
-                <td>{{ $evidencia->activity->description ?? 'Sin descripción' }}</td>
-                <td>{{ $evidencia->news }}</td>
-                <td>
-                    @if($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence))
-                        <span class="text-success">PDF Subido</span>
-                    @else
-                        <span class="text-danger">No disponible</span>
-                    @endif
-                </td>
-                <td>
-                    @if($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence))
-                        <!-- Botón para ver PDF -->
-                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#verPdfModal{{ $evidencia->id }}">
-                            <i class="bi bi-eye"></i> Ver
-                        </button>
+    <div class="card shadow-sm border-0">
+        <div class="table-responsive">
+            <table id="tabla-evidencia" class="table table-hover table-bordered align-middle text-center">
+                <thead style="background-color: #f8f9fa;">
+                    <tr>
+                        <th>#</th>
+                        <th>Actividad</th>
+                        <th>Fecha</th>
+                        <th>Novedades</th>
+                        <th>Archivo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $n = 1; @endphp
+                    @foreach($evidencias as $evidencia)
+                    <tr>
+                        <td>{{ $n++ }}</td>
+                        <td>{{ $evidencia->activity->activity_name  }}</td>
+                        <td>{{ $evidencia->date }}</td>
+                        <td>{{ $evidencia->news }}</td>
+                        <td>
+                            @if($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence))
+                            <span class="text-success">PDF Subido</span>
+                            @else
+                            <span class="text-danger">No disponible</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence))
+                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#verPdfModal{{ $evidencia->id }}">
+                                <i class="bi bi-eye"></i>
+                                ver PDF
+                            </button>
+                            <a href="{{ route('evidencia.descargar', $evidencia->id) }}" class="btn btn-sm btn-outline-success">
+                                <i class="bi bi-download"></i> Descargar PDF
+                            </a>
+                            @endif
 
-                        <!-- Botón para descargar PDF -->
-                        <a href="{{ asset('storage/' . $evidencia->evidence) }}" download class="btn btn-sm btn-outline-success">
-                            <i class="bi bi-download"></i> Descargar
-                        </a>
+                            <!-- Botón editar -->
+                            <button class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editarModal{{ $evidencia->id }}">
+                                <i class="bi bi-pencil"></i> Editar
+                            </button>
 
-                        <!-- Modal para visualizar el PDF -->
-                        <div class="modal fade" id="verPdfModal{{ $evidencia->id }}" tabindex="-1" aria-labelledby="verPdfLabel{{ $evidencia->id }}" aria-hidden="true">
-                            <div class="modal-dialog modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="verPdfLabel{{ $evidencia->id }}">Evidencia PDF</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <iframe src="{{ asset('storage/' . $evidencia->evidence) }}" frameborder="0" width="100%" height="600px"></iframe>
-                                    </div>
+                            <!-- Botón eliminar -->
+                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal{{ $evidencia->id }}">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </button>
+                        </td>
+                    </tr>
+
+                    <!-- Modal Ver PDF -->
+                    <div class="modal fade" id="verPdfModal{{ $evidencia->id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Evidencia PDF</h5>
+                                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <iframe src="{{ route('evidencia.ver', $evidencia->id) }}" width="100%" height="600px"></iframe>
                                 </div>
                             </div>
                         </div>
-                    @else
-                        <span class="text-muted">Sin archivo</span>
-                    @endif
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+                    </div>
+
+                    <!-- Modal Editar -->
+                    <div class="modal fade" id="editarModal{{ $evidencia->id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <form action="{{ route('acuaponico.pasante.pasante.updatecontrolactivity', $evidencia->id) }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <div class="modal-content">
+                                    <div class="modal-header bg-warning">
+                                        <h5 class="modal-title text-white">Editar Evidencia</h5>
+                                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label>Fecha:</label>
+                                            <input type="date" name="date" class="form-control" value="{{ $evidencia->date }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Novedades:</label>
+                                            <textarea name="news" class="form-control">{{ $evidencia->news }}</textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Actualizar PDF:</label>
+                                            <input type="file" name="evidence" class="form-control" accept="application/pdf">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-warning">Guardar Cambios</button>
+                                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Modal Eliminar -->
+                    <div class="modal fade" id="eliminarModal{{ $evidencia->id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <form action="{{ route('acuaponico.pasante.pasante.destroycontrolactivity', $evidencia->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <div class="modal-content">
+                                    <div class="modal-header bg-danger text-white">
+                                        <h5 class="modal-title">¿Eliminar Evidencia?</h5>
+                                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ¿Estás seguro de eliminar esta evidencia?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-danger">Eliminar</button>
+                                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
-
-
-<!-- Script para establecer la fecha actual en el campo de fecha  -->
+<!-- Scripts -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const dateInput = document.getElementById('date');
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const day = String(today.getDate()).padStart(2, '0');
-
-        const localDate = `${year}-${month}-${day}`;
-        dateInput.value = localDate;
+    document.addEventListener('DOMContentLoaded', () => {
+        const inputs = document.querySelectorAll('.date-input');
+        const today = new Date().toISOString().slice(0, 10);
+        inputs.forEach(input => input.value = today);
     });
 </script>
 
+@if (session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Éxito',
+        text: '{{ session("success") }}',
+    });
+</script>
+@endif
+
+@if (session('error'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '{{ session("error") }}',
+    });
+</script>
+@endif
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+<!-- DataTables JS y dependencias -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- Inicializar DataTable -->
+<script>
+    $(document).ready(function() {
+        $('#tabla-actividad').DataTable({
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                "search": "Buscar:",
+                "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
+        });
+
+
+        $('#tabla-evidencia').DataTable({
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                "search": "Buscar:",
+                "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @endsection

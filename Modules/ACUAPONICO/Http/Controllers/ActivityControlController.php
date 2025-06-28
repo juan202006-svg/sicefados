@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\ActivityAquaponic;
 use Modules\ACUAPONICO\Entities\ActivityControl;
+use Illuminate\Support\Facades\Storage;
+
+
 
 class ActivityControlController extends Controller
 {
@@ -54,44 +57,66 @@ class ActivityControlController extends Controller
 
 
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('acuaponico::show');
+public function descargarEvidencia($id)
+{
+    $evidencia = ActivityControl::findOrFail($id);
+
+    if ($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence)) {
+        return Storage::disk('public')->download($evidencia->evidence);
+    } else {
+        abort(404, 'Archivo no encontrado');
+    }
+}
+
+public function verEvidencia($id)
+{
+    $evidencia = ActivityControl::findOrFail($id);
+
+    if ($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence)) {
+        $file = Storage::disk('public')->get($evidencia->evidence);
+        return response($file, 200)
+            ->header('Content-Type', 'application/pdf');
+    } else {
+        abort(404, 'Archivo no encontrado');
+    }
+}
+
+
+public function update(Request $request, $id)
+{
+    $evidencia = ActivityControl::findOrFail($id);
+    $evidencia->date = $request->date;
+    $evidencia->news = $request->news;
+
+    // Si se carga un nuevo archivo, se reemplaza
+    if ($request->hasFile('evidence')) {
+        // Elimina archivo anterior si existe
+        if ($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence)) {
+            Storage::disk('public')->delete($evidencia->evidence);
+        }
+
+        // Sube nuevo archivo
+        $path = $request->file('evidence')->store('evidencias', 'public');
+        $evidencia->evidence = $path;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('acuaponico::edit');
+    $evidencia->save();
+
+    return redirect()->back()->with('success', 'Evidencia actualizada correctamente.');
+}
+
+public function destroy($id)
+{
+    $evidencia = ActivityControl::findOrFail($id);
+
+    // Elimina archivo físico si existe
+    if ($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence)) {
+        Storage::disk('public')->delete($evidencia->evidence);
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    $evidencia->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    return redirect()->back()->with('success', 'Evidencia eliminada correctamente.');
+}
+
 }

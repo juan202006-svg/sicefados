@@ -11,8 +11,7 @@ class ActivityAquaponic extends Model
 
     protected $table = 'activities_aquaponics';
 
-    protected $fillable = [
-        'date', 'start_date', 'end_date', 'user_id', 'description', 'state', 'enviada'
+    protected $fillable = ['activity_name','date', 'start_date', 'end_date', 'user_id', 'description', 'state', 'enviada'
     ];
     
     public function user()

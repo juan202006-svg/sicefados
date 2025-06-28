@@ -10,6 +10,11 @@
     <form action="{{ route('acuaponico.admin.admin.store') }}" method="POST">
         @csrf
         <div class="row">
+             <div class="col-md-2">
+                <label>Nombre de la actividad:</label>
+                <input type="text" name="activity_name" class="form-control" required>
+            </div>
+
             <div class="col-md-3">
                 <label>Apprentice:</label>
                 <select name="user_id" class="form-control" required>
@@ -20,7 +25,7 @@
             </div>
             <div class="col-md-2">
                 <label>Date:</label>
-                <input type="date" name="date" class="form-control" required>
+                <input type="date" name="date" id="date" class="form-control" readonly>
             </div>
             <div class="col-md-2">
                 <label>Start Date:</label>
@@ -35,12 +40,9 @@
                 <input type="text" name="description" class="form-control" required>
             </div>
             <div class="col-md-3 mt-2">
-                <label>Status:</label>
+                <label>Estado :</label>
                 <select name="activity_status" class="form-control">
-                    <option value="pending">Pending</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="completed">Completed</option>
-                    <option value="cancelled">Cancelled</option>
+                    <option value="Pendiente">Pendiente</option>
                 </select>
             </div>
             <div class="col-md-12 mt-3">
@@ -57,19 +59,22 @@
             <thead class="thead-dark">
                 <tr>
                     <th>#</th>
-                    <th>Apprentice Name</th>
-                    <th>Date</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Description</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>Nombre actividad</th>
+                    <th>Nombre Aprendiz</th>
+                    <th>Fecha</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Descripcion</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($activities as $index => $activity)
+                @php $n = 1; @endphp
+                @forelse ($activities as  $activity)
                     <tr>
-                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $n++ }}</td>
+                        <td>{{ $activity->activity_name }}</td>
                         <td>{{ $activity->user->first_name }} {{ $activity->user->last_name }}</td>
                         <td>{{ $activity->date }}</td>
                         <td>{{ $activity->start_date }}</td>
@@ -77,10 +82,8 @@
                         <td>{{ $activity->description }}</td>
                         <td>
                             <span class="badge 
-                                @if($activity->activity_status == 'pending') badge-warning
-                                @elseif($activity->activity_status == 'in_progress') badge-info
-                                @elseif($activity->activity_status == 'completed') badge-success
-                                @elseif($activity->activity_status == 'cancelled') badge-danger
+                                @if($activity->activity_status == 'Pendiente')  badge-danger
+                                @elseif($activity->activity_status == '') badge-success
                                 @endif
                             ">
                                 {{ ucfirst(str_replace('_', ' ', $activity->activity_status)) }}
@@ -117,6 +120,9 @@
                                         </button>
                                     </div>
                                     <div class="modal-body row">
+                                        <div class="col-md-3">
+                                            <label>Activity Name:</label>
+                                            <input type="text" name="activity_name" class="form-control" value="{{ $activity->activity_name }}" required>
                                         <div class="col-md-4">
                                             <label>Apprentice:</label>
                                             <select name="user_id" class="form-control">
@@ -146,10 +152,8 @@
                                         <div class="col-md-6 mt-2">
                                             <label>Status:</label>
                                             <select name="activity_status" class="form-control">
-                                                <option value="pending" {{ $activity->activity_status == 'pending' ? 'selected' : '' }}>Pending</option>
-                                                <option value="in_progress" {{ $activity->activity_status == 'in_progress' ? 'selected' : '' }}>In Progress</option>
-                                                <option value="completed" {{ $activity->activity_status == 'completed' ? 'selected' : '' }}>Completed</option>
-                                                <option value="cancelled" {{ $activity->activity_status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                                                <option value="Pendiente" {{ $activity->activity_status == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
+                                                <option value="Completada" {{ $activity->activity_status == 'Completada' ? 'selected' : '' }}>In Completada</option>
                                             </select>
                                         </div>
                                     </div>
@@ -170,4 +174,19 @@
         </table>
     </div>
 </div>
+
+<!-- Script para establecer la fecha actual en el campo de fecha  -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateInput = document.getElementById('date');
+        const today = new Date();
+
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+
+        const localDate = `${year}-${month}-${day}`;
+        dateInput.value = localDate;
+    });
+</script>
 @endsection

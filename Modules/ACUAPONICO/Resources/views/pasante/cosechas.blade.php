@@ -160,7 +160,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="quantity" class="form-label"> Cantidad:</label>
-                        <input type="number" name="quantity" class="form-control" id="quantity" required >
+                        <input type="number" name="quantity" class="form-control" id="quantity" required>
                         <div class="invalid-feedback" id="error-peces" style="display:none;"></div>
                     </div>
                     <div class="mb-3">
@@ -170,7 +170,7 @@
                     <div class="mb-3">
                         <label for="destination" class="form-label"> Destino:</label>
                         <input type="text" name="destination" class="form-control" id="destination" required>
-                    </div>  
+                    </div>
                     <div class="mb-3">
                         <label for="mortality" class="form-label"> Mortandad:</label>
                         <input type="number" name="mortality" class="form-control" id="mortality" readonly>
@@ -222,52 +222,50 @@
 </script>
 <!-- validar la cantidad de peces en lacosecha y la parte de la mortalidad a lahora de agregar-->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Todos los cultivos con su cantidad
-    const cultivos = @json($cultivos);
+    document.addEventListener('DOMContentLoaded', function() {
+        function validarCantidad(inputId, errorId, selectId, mortalidadId) {
+            const input = document.getElementById(inputId);
+            const select = document.getElementById(selectId);
+            const errorDiv = document.getElementById(errorId);
+            const mortalidad = document.getElementById(mortalidadId);
 
-    function validarCantidad(inputId, errorId, selectId, mortalidadId) {
-        const input = document.getElementById(inputId);
-        const select = document.getElementById(selectId);
-        const errorDiv = document.getElementById(errorId);
-        const mortalidadInput = document.getElementById(mortalidadId);
+            function calcular() {
+                const selected = select.options[select.selectedIndex];
+                const cantidadMax = parseInt(selected.getAttribute('data-quantity')) || 0;
+                const cantidad = parseInt(input.value) || 0;
 
-        function checkCantidad() {
-            const cultivoId = select.value;
-            const cultivo = cultivos.find(c => c.id == cultivoId);
-            const cantidadCultivo = cultivo ? parseInt(cultivo.quantity) : 0;
-            const cantidadCosecha = parseInt(input.value);
+                if (cantidad < 0 || isNaN(cantidad)) {
+                    input.classList.remove('is-invalid');
+                    errorDiv.style.display = 'none';
+                    if (mortalidad) mortalidad.value = '';
+                    return;
+                }
 
-            if (isNaN(cantidadCosecha) || cantidadCosecha < 0) {
-                input.classList.remove('is-invalid');
-                errorDiv.style.display = 'none';
-                if (mortalidadInput) mortalidadInput.value = '';
-                return;
-            }
-
-            if (cantidadCosecha > cantidadCultivo) {
-                input.classList.add('is-invalid');
-                errorDiv.style.display = 'block';
-                errorDiv.textContent = `No puedes ingresar más de ${cantidadCultivo} peces.`;
-                if (mortalidadInput) mortalidadInput.value = '';
-            } else {
-                input.classList.remove('is-invalid');
-                errorDiv.style.display = 'none';
-                if (mortalidadInput) {
-                    mortalidadInput.value = cantidadCultivo - cantidadCosecha;
+                if (cantidad > cantidadMax) {
+                    input.classList.add('is-invalid');
+                    errorDiv.style.display = 'block';
+                    errorDiv.textContent = `No puedes ingresar más de ${cantidadMax} peces.`;
+                    if (mortalidad) mortalidad.value = '';
+                } else {
+                    input.classList.remove('is-invalid');
+                    errorDiv.style.display = 'none';
+                    if (mortalidad) {
+                        mortalidad.value = cantidadMax - cantidad;
+                    }
                 }
             }
+
+            select.addEventListener('change', calcular);
+            input.addEventListener('input', calcular);
         }
 
-        input.addEventListener('input', checkCantidad);
-        select.addEventListener('change', checkCantidad);
-    }
-
-    // Aplica validación al formulario de agregar y editar
-    validarCantidad('quantity', 'error-peces', 'crop_id', 'mortality');
-    validarCantidad('edit-quantity', 'edit-error-peces', 'edit-crop_id', 'edit-mortality');
-});
+        // Agregar
+        validarCantidad('quantity', 'error-peces', 'crop_id', 'mortality');
+        // Editar
+        validarCantidad('edit-quantity', 'edit-error-peces', 'edit-crop_id', 'edit-mortality');
+    });
 </script>
+
 
 <script>
     document.querySelectorAll('.btnEliminar').forEach(button => {
