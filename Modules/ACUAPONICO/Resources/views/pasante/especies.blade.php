@@ -34,7 +34,7 @@
                         <td class="text-center">{{ $especie->scientific_name }}</td>
                         <td class="text-center">{{ $especie->common_name }}</td>
                         <td class="text-center">{{ $especie->life_cycle }}</td>
-                        <td class="text-center">{{ $especie->optimal_temperature }}</td>
+                        <td class="text-center">{{ $especie->optimal_temperature }}°C</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-success btn-sm editbtn"
                                 data-id="{{ $especie->id }}"

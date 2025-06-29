@@ -9,19 +9,20 @@ class CropAquaponic extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['date', 'species_id', 'lot_id', 'quantity', 'status'];
+    protected $fillable = ['date', 'species_id', 'quantity', 'status'];
     protected $table = 'cropsaquaponics';
+    
     public function species()
     {
         return $this->belongsTo(SpeciesAquaponic::class, 'species_id');
     }
-    public function lot()
+    public function lotes()
     {
-        return $this->belongsTo(Lot::class, 'lot_id');
+        return $this->belongsToMany(Lot::class, 'crop_lot');
     }
-    
 
-    
+
+
     protected static function newFactory()
     {
         return \Modules\ACUAPONICO\Database\factories\CropAquaponicFactory::new();

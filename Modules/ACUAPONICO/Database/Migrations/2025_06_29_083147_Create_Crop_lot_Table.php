@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLotsTable extends Migration
+class CreateCropLotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateLotsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lots', function (Blueprint $table) {
+        Schema::create('crop_lot', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->string('name');
-            $table->integer('capacity');
-            $table->enum('state', ['disponible', 'ocupado', 'no disponible'])->default('disponible');
+            $table->foreignId('crop_aquaponic_id')->constrained('cropsaquaponics')->onDelete('cascade');
+            $table->foreignId('lot_id')->constrained('lots')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateLotsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lots');
+        Schema::dropIfExists('crop_lot');
     }
 }

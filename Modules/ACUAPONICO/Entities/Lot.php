@@ -12,6 +12,11 @@ class Lot extends Model
     protected $fillable = ['date', 'name', 'capacity', 'state'];
     protected $table = 'lots';
     
+    public function cultivos()
+{
+    return $this->belongsToMany(CropAquaponic::class, 'crop_lot');
+}
+
     protected static function newFactory()
     {
         return \Modules\ACUAPONICO\Database\factories\LotFactory::new();

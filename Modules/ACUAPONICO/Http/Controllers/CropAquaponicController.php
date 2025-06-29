@@ -14,19 +14,12 @@ class CropAquaponicController extends Controller
     public function index()
     {
         $especies = SpeciesAquaponic::all();
-        $cultivos = CropAquaponic::with(['species', 'lot'])->get();
+        $cultivos = CropAquaponic::with(['species', 'lotes'])->get(); // Cambiado a 'lotes'
 
-        $lotesDisponibles = Lot::where('state', 'disponible')->get(); // solo para agregar
-        $lotesTodos = Lot::select('id', 'name', 'state')->get(); // para editar
-
+        $lotesDisponibles = Lot::where('state', 'disponible')->get(); // para agregar
+        $lotesTodos = Lot::select('id', 'name', 'state')->get();       // para editar
 
         return view('acuaponico::pasante.cultivos', compact('especies', 'lotesDisponibles', 'cultivos', 'lotesTodos'));
-
-        $lotes = Lot::where('state', 'disponible')->get();
-        $lotes = Lot::all();
-
-        return view('acuaponico::pasante.cultivos', compact('especies', 'lotes'));
-
     }
 
     public function create()
@@ -37,30 +30,38 @@ class CropAquaponicController extends Controller
     public function store(Request $request)
     {
 
-        $lot = Lot::findOrFail($request->lot_id);
+        $lotIds = $request->lot_ids;
 
-        // Calcular la cantidad ya cultivada en el lote
-        $cantidadActual = CropAquaponic::where('lot_id', $lot->id)->sum('quantity');
+        // Validación de capacidad por lote
+        foreach ($lotIds as $lotId) {
+            $lot = Lot::findOrFail($lotId);
+            $cantidadActual = CropAquaponic::whereHas('lotes', function ($q) use ($lotId) {
+                $q->where('lot_id', $lotId);
+            })->sum('quantity');
 
-        $cantidadNueva = $request->quantity;
-
-        if (($cantidadActual + $cantidadNueva) > $lot->capacity) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', "La cantidad excede la capacidad del lote. Capacidad disponible: " . ($lot->capacity - $cantidadActual));
+            if (($cantidadActual + $request->quantity) > $lot->capacity) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', "La cantidad excede la capacidad del lote '{$lot->name}'. Capacidad disponible: " . ($lot->capacity - $cantidadActual));
+            }
         }
 
         $cultivo = new CropAquaponic();
         $cultivo->date = $request->date;
-        $cultivo->lot_id = $request->lot_id;
         $cultivo->species_id = $request->species_id;
         $cultivo->quantity = $request->quantity;
         $cultivo->status = $request->status;
         $cultivo->save();
 
-        // Cambiar el estado del lote
-        $lot->state = 'ocupado';
-        $lot->save();
+        // Asocia los lotes
+        $cultivo->lotes()->attach($lotIds);
+
+        // Marcar como ocupados
+        foreach ($lotIds as $lotId) {
+            $lote = Lot::find($lotId);
+            $lote->state = 'ocupado';
+            $lote->save();
+        }
 
         return redirect()->back()->with('success', 'Cultivo agregado correctamente.');
     }
@@ -68,57 +69,45 @@ class CropAquaponicController extends Controller
     public function update(Request $request, $id)
     {
 
-
-        $request->validate([
-            'date' => 'required|date',
-            'lot_id' => 'required|exists:lots,id',
-            'quantity' => 'required|integer|min:1',
-            'status' => 'required|string',
-        ]);
-
-
         $cultivo = CropAquaponic::findOrFail($id);
+        $lotIds = $request->lot_ids;
 
-        $lot = Lot::findOrFail($request->lot_id);
+        // Validar capacidades nuevamente
+        foreach ($lotIds as $lotId) {
+            $lot = Lot::findOrFail($lotId);
+            $cantidadActual = CropAquaponic::whereHas('lotes', function ($q) use ($lotId, $id) {
+                $q->where('lot_id', $lotId);
+            })->where('id', '!=', $id)->sum('quantity');
 
-
-        $cantidadActualSinEste = CropAquaponic::where('lot_id', $lot->id)
-            ->where('id', '!=', $cultivo->id)
-            ->sum('quantity');
-
-        $cantidadNueva = $request->quantity;
-
-        if (($cantidadActualSinEste + $cantidadNueva) > $lot->capacity) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', "La cantidad excede la capacidad del lote. Capacidad disponible: " . ($lot->capacity - $cantidadActualSinEste));
+            if (($cantidadActual + $request->quantity) > $lot->capacity) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', "La cantidad excede la capacidad del lote '{$lot->name}'. Capacidad disponible: " . ($lot->capacity - $cantidadActual));
+            }
         }
 
-        $loteAnteriorId = $cultivo->lot_id;
+        // Actualizar cultivo
+        $cultivo->update([
+            'date' => $request->date,
+            'species_id' => $request->species_id,
+            'quantity' => $request->quantity,
+            'status' => $request->status,
+        ]);
 
+        // Obtener lotes anteriores y marcar disponibles
+        foreach ($cultivo->lotes as $loteAnterior) {
+            $loteAnterior->state = 'disponible';
+            $loteAnterior->save();
+        }
 
-        $cultivo->date = $request->input('date');
-        $cultivo->lot_id = $request->input('lot_id');
-        $cultivo->species_id = $request->input('species_id');
-        $cultivo->quantity = $request->input('quantity');
-        $cultivo->status = $request->input('status');
-        $cultivo->save();
+        // Sincronizar nuevos lotes
+        $cultivo->lotes()->sync($lotIds);
 
-        // Si cambió el lote, actualizar estados
-        if ($loteAnteriorId != $cultivo->lot_id) {
-            // Lote anterior ahora está disponible
-            $loteAnterior = Lot::find($loteAnteriorId);
-            if ($loteAnterior) {
-                $loteAnterior->state = 'disponible';
-                $loteAnterior->save();
-            }
-
-            // Lote nuevo ahora está ocupado
-            $loteNuevo = Lot::find($cultivo->lot_id);
-            if ($loteNuevo) {
-                $loteNuevo->state = 'ocupado';
-                $loteNuevo->save();
-            }
+        // Marcar nuevos lotes como ocupados
+        foreach ($lotIds as $lotId) {
+            $lote = Lot::find($lotId);
+            $lote->state = 'ocupado';
+            $lote->save();
         }
 
         return redirect()->back()->with('success', 'Cultivo actualizado correctamente.');
@@ -128,12 +117,16 @@ class CropAquaponicController extends Controller
     {
         try {
             $cultivo = CropAquaponic::findOrFail($id);
-            $cultivo->delete();
 
-            // Cambiar el estado del lote a disponible
-            $lote = Lot::find($cultivo->lot_id);
-            $lote->state = 'disponible';
-            $lote->save();
+            // Marcar los lotes como disponibles
+            foreach ($cultivo->lotes as $lote) {
+                $lote->state = 'disponible';
+                $lote->save();
+            }
+
+            // Eliminar relación pivote y cultivo
+            $cultivo->lotes()->detach();
+            $cultivo->delete();
 
             return redirect()->back()->with('success', 'Cultivo eliminado correctamente.');
         } catch (QueryException $e) {
@@ -141,7 +134,7 @@ class CropAquaponicController extends Controller
                 return redirect()->back()->with('error', 'No se puede eliminar este cultivo porque está relacionado con otro registro.');
             }
 
-            return redirect()->back()->with('error', 'Ocurrió un error al intentar eliminar la el cultivo.');
+            return redirect()->back()->with('error', 'Ocurrió un error al intentar eliminar el cultivo.');
         }
     }
 }

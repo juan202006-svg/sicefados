@@ -17,13 +17,10 @@ class CreateCropsAquaponicsTable extends Migration
             $table->id(); 
             $table->date('date');
             $table->unsignedBigInteger('species_id');
-            $table->unsignedBigInteger('lot_id');
             $table->integer('quantity');
             $table->enum('status', ['Cultivado', 'Seguimiento', 'Cosechado'])->default('Cultivado');
             
-           
             $table->foreign('species_id')->references('id')->on('speciesaquaponics');
-            $table->foreign('lot_id')->references('id')->on('lots');
             $table->timestamps(); 
         });
     }

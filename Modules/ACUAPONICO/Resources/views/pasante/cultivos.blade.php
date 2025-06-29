@@ -32,7 +32,11 @@
                             <td class="text-center">{{ $n++ }}</td>
                             <td class="text-center">{{ $cultivo->date }}</td>
                             <td class="text-center">{{ $cultivo->species->common_name }}</td>
-                            <td class="text-center">{{ $cultivo->lot->name }}</td>
+                            <td class="text-center">
+                                @foreach ($cultivo->lotes as $lote)
+                                <span class="badge bg-info">{{ $lote->name }}</span>
+                                @endforeach
+                            </td>
                             <td class="text-center">{{ $cultivo->quantity }}</td>
                             <td class="text-center">{{ $cultivo->status }}</td>
                             <td class="text-center">
@@ -40,7 +44,7 @@
                                     data-id="{{ $cultivo->id }}"
                                     data-date="{{ $cultivo->date }}"
                                     data-species_id="{{ $cultivo->species_id }}"
-                                    data-lot_id="{{ $cultivo->lot_id }}"
+                                    data-lot_ids="{{ $cultivo->lotes->pluck('id')->implode(',') }}"
                                     data-quantity="{{ $cultivo->quantity }}"
                                     data-status="{{ $cultivo->status }}"
                                     data-bs-toggle="modal"
@@ -84,15 +88,15 @@
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="edit-lot_id" class="form-label">Lote:</label>
-                                        <select id="edit-lot_id" class="form-control" name="lot_id" required>
-                                            <option value="">Seleccione un Lote</option>
-                                            @foreach ($lotesTodos  as $lote)
+                                        <label for="edit-lot_ids" class="form-label">Lotes:</label>
+                                        <select id="edit-lot_ids" class="form-control" name="lot_ids[]" multiple required>
+                                            @foreach ($lotesTodos as $lote)
                                             <option value="{{ $lote->id }}" data-state="{{ $lote->state }}">
-                                                {{ $lote->name }}{{ $lote->id == $cultivo->lot_id ? ' ( actual )' : '' }}
+                                                {{ $lote->name }}
                                             </option>
                                             @endforeach
                                         </select>
+                                        <small class="form-text text-muted">Puede seleccionar más de un lote con Ctrl (Windows) o Cmd (Mac)</small>
                                     </div>
                                     <div class="mb-3">
                                         <label for="edit-quantity" class="form-label"> cantidad a cultivar: </label>
@@ -149,13 +153,13 @@
                         <input type="date" name="date" class="form-control" id="date" readonly>
                     </div>
                     <div class="form-group">
-                        <label for="lot_id">Lote:</label>
-                        <select name="lot_id" class="form-control" required>
-                            <option value="">Seleccione un Lote</option>
+                        <label for="lot_ids">Lotes:</label>
+                        <select name="lot_ids[]" class="form-control" multiple required>
                             @foreach ($lotesDisponibles as $lote)
                             <option value="{{ $lote->id }}">{{ $lote->name }}</option>
                             @endforeach
                         </select>
+                        <small class="form-text text-muted">Puede seleccionar más de un lote con Ctrl (Windows) o Cmd (Mac)</small>
                     </div>
                     <div class="form-group">
                         <label for="species_id">Especie:</label>
@@ -200,40 +204,42 @@
     });
 </script>
 
-<!--script del modal editar-->
+<!-<!-- script del modal editar -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.editbtn').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const id = this.getAttribute('data-id');
-                const loteIdActual = this.getAttribute('data-lot_id');
+                const loteIds = this.getAttribute('data-lot_ids').split(',');
+                const form = document.getElementById('formEditar');
 
-                document.getElementById('formEditar').action = `/pasante/cultivo/update/${id}`;
+                // Asignar ruta de actualización
+                form.action = `/pasante/cultivo/update/${id}`;
+
+                // Asignar valores a campos
                 document.getElementById('edit-id').value = id;
                 document.getElementById('edit-date').value = this.getAttribute('data-date');
                 document.getElementById('edit-species_id').value = this.getAttribute('data-species_id');
                 document.getElementById('edit-quantity').value = this.getAttribute('data-quantity');
                 document.getElementById('edit-status').value = this.getAttribute('data-status');
 
-                const lotSelect = document.getElementById('edit-lot_id');
+                // Selección múltiple de lotes
+                const lotSelect = document.getElementById('edit-lot_ids');
                 const options = lotSelect.querySelectorAll('option');
 
+                // Limpiar y configurar opciones
                 options.forEach(option => {
                     const loteState = option.getAttribute('data-state');
                     const loteId = option.value;
 
-                    if (loteId === "" || loteId === loteIdActual || loteState === "disponible") {
-                        option.hidden = false;
-                    } else {
-                        option.hidden = true;
-                    }
+                    option.hidden = !(loteIds.includes(loteId) || loteState === 'disponible');
+                    option.selected = loteIds.includes(loteId);
                 });
-
-                lotSelect.value = loteIdActual;
             });
         });
     });
 </script>
+
 <!--script del modal de eliminar-->
 <script>
     document.querySelectorAll('.btnEliminar').forEach(button => {
