@@ -11,15 +11,18 @@ class CropAquaponic extends Model
 
     protected $fillable = ['date', 'species_id', 'quantity', 'status'];
     protected $table = 'cropsaquaponics';
-    
+
     public function species()
     {
         return $this->belongsTo(SpeciesAquaponic::class, 'species_id');
     }
     public function lotes()
     {
-        return $this->belongsToMany(Lot::class, 'crop_lot');
+        return $this->belongsToMany(Lot::class, 'crop_lot', 'crop_aquaponic_id', 'lot_id')
+            ->withPivot('planted_quantity') 
+            ->withTimestamps();;
     }
+
 
 
 

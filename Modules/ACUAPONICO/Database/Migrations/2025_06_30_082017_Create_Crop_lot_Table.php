@@ -17,6 +17,7 @@ class CreateCropLotTable extends Migration
             $table->id();
             $table->foreignId('crop_aquaponic_id')->constrained('cropsaquaponics')->onDelete('cascade');
             $table->foreignId('lot_id')->constrained('lots')->onDelete('cascade');
+            $table->integer('planted_quantity')->default(0);
             $table->timestamps();
         });
     }

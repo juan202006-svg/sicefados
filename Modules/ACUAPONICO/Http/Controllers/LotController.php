@@ -2,43 +2,36 @@
 
 namespace Modules\ACUAPONICO\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\Lot;
 use Illuminate\Database\QueryException;
 use Modules\ACUAPONICO\Entities\CropAquaponic;
 
-
 class LotController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * @return Renderable
+     * Muestra todos los lotes junto con sus cultivos relacionados.
      */
     public function index()
     {
-        $lots = Lot::get();
+        $lots = Lot::with('cultivos')->get();
         return view('acuaponico::pasante.index')->with(['lots' => $lots]);
     }
 
-
-
-
+    /**
+     * Muestra el formulario de creación (no usado actualmente).
+     */
     public function create()
     {
         return view('acuaponico::create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
+     * Guarda un nuevo lote.
      */
     public function store(Request $request)
     {
-
-
         $lot = new Lot();
         $lot->date = $request->date;
         $lot->name = $request->name;
@@ -46,26 +39,27 @@ class LotController extends Controller
         $lot->state = $request->state;
         $lot->save();
 
+        // Actualiza el estado en base a la capacidad y ocupación actual (que es 0)
+        $lot->actualizarEstadoAutomatico();
+
         return redirect()->back()->with('success', 'Lote generado correctamente.');
     }
 
-
-
-
+    /**
+     * Actualiza un lote existente.
+     */
     public function update(Request $request, $id)
     {
-        $lot = Lot::findOrFail($id);
+        $lot = Lot::with('cultivos')->findOrFail($id);
 
-        // Calcular la cantidad ya ocupada por cultivos en este lote
-        $cantidadOcupada = CropAquaponic::where('lot_id', $lot->id)->sum('quantity');
+        // Calcular cantidad ocupada por cultivos en este lote (desde la tabla pivote)
+        $cantidadOcupada = $lot->cultivos->sum('pivot.planted_quantity');
 
-        // Si el nuevo valor de capacidad es menor que lo ya ocupado, bloquear la actualización
+        // Validar que la nueva capacidad no sea menor que lo ya ocupado
         if ($request->capacity < $cantidadOcupada) {
-            $cultivo = CropAquaponic::with('species')
-                ->where('lot_id', $lot->id)->first();
-
-            $nombreEspecie = $cultivo?->species?->common_name ;
-            $fechaCultivo = $cultivo?->date;
+            $cultivo = $lot->cultivos()->with('species')->first();
+            $nombreEspecie = $cultivo?->species?->common_name ?? 'cultivo';
+            $fechaCultivo = $cultivo?->date ?? 'desconocida';
 
             return redirect()->back()
                 ->withInput()
@@ -74,14 +68,18 @@ class LotController extends Controller
                     $nombreEspecie . ' registrado el ' . $fechaCultivo . '.');
         }
 
-        // Si pasa la validación, actualizar normalmente
+        // Actualizar datos del lote
         $lot->update($request->all());
 
-        return redirect()->route('acuaponico.pasante.pasante.index')
-            ->with('success', 'Lote actualizado correctamente.');
+        // Recalcular automáticamente su estado
+        $lot->actualizarEstadoAutomatico();
+
+        return redirect()->route('acuaponico.pasante.pasante.index')->with('success', 'Lote actualizado correctamente.');
     }
 
-
+    /**
+     * Elimina un lote si no tiene restricciones de clave foránea.
+     */
     public function destroy($id)
     {
         try {
@@ -90,7 +88,7 @@ class LotController extends Controller
 
             return redirect()->back()->with('success', 'Lote eliminado correctamente.');
         } catch (QueryException $e) {
-            if ($e->getCode() == '23000') { 
+            if ($e->getCode() == '23000') {
                 return redirect()->back()->with('error', 'No se puede eliminar el lote porque está relacionado con otro registro.');
             }
 

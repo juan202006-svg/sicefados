@@ -25,6 +25,8 @@
                         <th>Fecha</th>
                         <th>Nombre</th>
                         <th>Capacidad</th>
+                        <th>Ocupado</th>
+                        <th>Disponible</th>
                         <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
@@ -37,13 +39,22 @@
                         <td class="text-center">{{ $lot->date }}</td>
                         <td class="text-center">{{ $lot->name }}</td>
                         <td class="text-center">{{ $lot->capacity }}</td>
-                        <td class="text-center">{{$lot->state }} </td>
+                        <td class="text-center">{{ $lot->ocupado }}</td>
+                        <td class="text-center">
+                            @if($lot->disponible > 0)
+                            <span class="badge bg-success">{{ $lot->disponible }}</span>
+                            @else
+                            <span class="badge bg-danger">0</span>
+                            @endif
+                        </td>
+                        <td class="text-center">{{ $lot->state }}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-success btn-sm editbtn"
                                 data-id="{{ $lot->id }}"
                                 data-name="{{ $lot->name }}"
                                 data-capacity="{{ $lot->capacity }}"
                                 data-state="{{ $lot->state }}"
+                                data-ocupado="{{ $lot->ocupado }}"
                                 data-bs-toggle="modal"
                                 data-bs-target="#updateLot">
                                 Editar
@@ -120,7 +131,9 @@
                     <div class="mb-3">
                         <label for="edit-capacity" class="form-label">Capacidad:</label>
                         <input type="number" class="form-control" id="edit-capacity" name="capacity">
+                        <div class="invalid-feedback" id="error-capacidad-lote"></div>
                     </div>
+
                     <div class="mb-3">
                         <label for="edit-state" class="form-label">Estado:</label>
                         <select class="form-control" id="edit-state" name="state" required>
@@ -169,34 +182,80 @@
 <!-- Script del modal editar -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const formEdit = document.getElementById('formEditar');
+        const inputCapacity = document.getElementById('edit-capacity');
+        const errorDiv = document.getElementById('error-capacidad-lote');
+
+        let capacidadOcupada = 0;
+
+        // Validación en vivo
+        inputCapacity.addEventListener('input', function() {
+            const nuevaCapacidad = Number(inputCapacity.value);
+
+            if (nuevaCapacidad < capacidadOcupada) {
+                inputCapacity.classList.add('is-invalid');
+                errorDiv.innerText = `No puedes asignar una capacidad menor a la cantidad ya ocupada (${capacidadOcupada} unidades).`;
+            } else {
+                inputCapacity.classList.remove('is-invalid');
+                errorDiv.innerText = '';
+            }
+        });
+
+        // Botón Editar
         document.querySelectorAll('.editbtn').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
                 const name = this.getAttribute('data-name');
                 const capacity = this.getAttribute('data-capacity');
                 const state = this.getAttribute('data-state');
+                capacidadOcupada = Number(this.getAttribute('data-ocupado')) || 0;
 
-                document.getElementById('formEditar').action = `/pasante/lote/update/${id}`;
+                // Rellenar formulario
+                formEdit.action = `/pasante/lote/update/${id}`;
                 document.getElementById('edit-id').value = id;
                 document.getElementById('edit-name').value = name;
-                document.getElementById('edit-capacity').value = capacity;
+                inputCapacity.value = capacity;
 
+                // Validar si ya es menor (para activar el borde rojo al abrir)
+                if (Number(capacity) < capacidadOcupada) {
+                    inputCapacity.classList.add('is-invalid');
+                    errorDiv.innerText = `No puedes asignar una capacidad menor a la cantidad ya ocupada (${capacidadOcupada} unidades).`;
+                } else {
+                    inputCapacity.classList.remove('is-invalid');
+                    errorDiv.innerText = '';
+                }
+
+                // Estado
                 const estadoSelect = document.getElementById('edit-state');
-
                 if (state.toLowerCase() === "ocupado") {
                     estadoSelect.innerHTML = '<option value="ocupado" selected>Ocupado</option>';
                     estadoSelect.setAttribute('disabled', 'disabled');
                 } else {
                     estadoSelect.removeAttribute('disabled');
                     estadoSelect.innerHTML = `
-                    <option value="disponible" ${state === 'disponible' ? 'selected' : ''}>Disponible</option>
-                    <option value="no disponible" ${state === 'no disponible' ? 'selected' : ''}>No Disponible</option>
-                `;
+                        <option value="disponible" ${state === 'disponible' ? 'selected' : ''}>Disponible</option>
+                        <option value="no disponible" ${state === 'no disponible' ? 'selected' : ''}>No Disponible</option>
+                    `;
                 }
             });
         });
+
+        // Validación al enviar
+        formEdit.addEventListener('submit', function(e) {
+            const nuevaCapacidad = Number(inputCapacity.value);
+            if (nuevaCapacidad < capacidadOcupada) {
+                e.preventDefault();
+                inputCapacity.classList.add('is-invalid');
+                errorDiv.innerText = `No puedes asignar una capacidad menor a la cantidad ya ocupada (${capacidadOcupada} unidades).`;
+            }
+        });
     });
 </script>
+
+
+
+
+
 <script>
     document.querySelectorAll('.btnEliminar').forEach(button => {
         button.addEventListener('click', function() {

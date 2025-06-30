@@ -34,9 +34,12 @@
                             <td class="text-center">{{ $cultivo->species->common_name }}</td>
                             <td class="text-center">
                                 @foreach ($cultivo->lotes as $lote)
-                                <span class="badge bg-info">{{ $lote->name }}</span>
+                                <span class="badge bg-info">
+                                    {{ $lote->name }} ({{ $lote->pivot->planted_quantity }})
+                                </span>
                                 @endforeach
                             </td>
+
                             <td class="text-center">{{ $cultivo->quantity }}</td>
                             <td class="text-center">{{ $cultivo->status }}</td>
                             <td class="text-center">
@@ -47,6 +50,9 @@
                                     data-lot_ids="{{ $cultivo->lotes->pluck('id')->implode(',') }}"
                                     data-quantity="{{ $cultivo->quantity }}"
                                     data-status="{{ $cultivo->status }}"
+                                    @foreach($cultivo->lotes as $lote)
+                                    data-lot_asignado_{{ $lote->id }}="{{ $lote->pivot->planted_quantity }}"
+                                    @endforeach
                                     data-bs-toggle="modal"
                                     data-bs-target="#editar">
                                     Editar
@@ -91,7 +97,7 @@
                                         <label for="edit-lot_ids" class="form-label">Lotes:</label>
                                         <select id="edit-lot_ids" class="form-control" name="lot_ids[]" multiple required>
                                             @foreach ($lotesTodos as $lote)
-                                            <option value="{{ $lote->id }}" data-state="{{ $lote->state }}">
+                                            <option value="{{ $lote->id }}" data-state="{{ $lote->state }}" data-capacidad="{{ $lote->capacity }}" data-ocupado="{{ $lote->ocupado }}">
                                                 {{ $lote->name }}
                                             </option>
                                             @endforeach
@@ -101,6 +107,7 @@
                                     <div class="mb-3">
                                         <label for="edit-quantity" class="form-label"> cantidad a cultivar: </label>
                                         <input type="number" class="form-control" id="edit-quantity" name="quantity">
+                                        <div class="invalid-feedback" id="error-cantidad-edit"></div>
                                     </div>
 
                                     <div class="mb-3">
@@ -154,9 +161,11 @@
                     </div>
                     <div class="form-group">
                         <label for="lot_ids">Lotes:</label>
-                        <select name="lot_ids[]" class="form-control" multiple required>
+                        <select id="lot_ids" name="lot_ids[]" class="form-control" multiple required>
                             @foreach ($lotesDisponibles as $lote)
-                            <option value="{{ $lote->id }}">{{ $lote->name }}</option>
+                            <option value="{{ $lote->id }}" data-capacidad="{{ $lote->capacity }}" data-ocupado="{{ $lote->ocupado }}">
+                                {{ $lote->name }}
+                            </option>
                             @endforeach
                         </select>
                         <small class="form-text text-muted">Puede seleccionar más de un lote con Ctrl (Windows) o Cmd (Mac)</small>
@@ -172,7 +181,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Cantidad a cultivar: </label>
-                        <input type="number" name="quantity" class="form-control" required>
+                        <input type="number" id="quantity" name="quantity" class="form-control" required>
+                        <div class="invalid-feedback" id="error-cantidad"></div>
                     </div>
                     <div class="mb-3">
                         <label for="status" class="form-label">Estado:</label>
@@ -203,39 +213,146 @@
         dateInput.value = localDate;
     });
 </script>
-
-<!-<!-- script del modal editar -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
+        const loteSelectEdit = document.getElementById('edit-lot_ids');
+        const cantidadInputEdit = document.getElementById('edit-quantity');
+        const formEdit = document.getElementById('formEditar');
+        const errorDivEdit = document.getElementById('error-cantidad-edit');
+
+        function calcularCapacidadTotalEdit() {
+            const selectedOptions = Array.from(loteSelectEdit.selectedOptions);
+            let total = 0;
+            selectedOptions.forEach(option => {
+                const capacidad = parseInt(option.getAttribute('data-capacidad')) || 0;
+                const ocupado = parseInt(option.getAttribute('data-ocupado')) || 0;
+                total += (capacidad - ocupado);
+            });
+            return total;
+        }
+
+        function validarCantidadEdit() {
+            const capacidadTotal = calcularCapacidadTotalEdit();
+            const cantidad = parseInt(cantidadInputEdit.value) || 0;
+
+            if (cantidad > capacidadTotal) {
+                cantidadInputEdit.classList.add('is-invalid');
+                errorDivEdit.innerText = `La cantidad excede la capacidad total de los lotes seleccionados (${capacidadTotal}).`;
+                return false;
+            } else {
+                cantidadInputEdit.classList.remove('is-invalid');
+                errorDivEdit.innerText = '';
+                return true;
+            }
+        }
+
+        loteSelectEdit.addEventListener('change', validarCantidadEdit);
+        cantidadInputEdit.addEventListener('input', validarCantidadEdit);
+
+        formEdit.addEventListener('submit', function(e) {
+            if (!validarCantidadEdit()) {
+                e.preventDefault();
+            }
+        });
+
         document.querySelectorAll('.editbtn').forEach(button => {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
                 const loteIds = this.getAttribute('data-lot_ids').split(',');
                 const form = document.getElementById('formEditar');
 
-                // Asignar ruta de actualización
                 form.action = `/pasante/cultivo/update/${id}`;
-
-                // Asignar valores a campos
                 document.getElementById('edit-id').value = id;
                 document.getElementById('edit-date').value = this.getAttribute('data-date');
                 document.getElementById('edit-species_id').value = this.getAttribute('data-species_id');
                 document.getElementById('edit-quantity').value = this.getAttribute('data-quantity');
                 document.getElementById('edit-status').value = this.getAttribute('data-status');
 
-                // Selección múltiple de lotes
-                const lotSelect = document.getElementById('edit-lot_ids');
-                const options = lotSelect.querySelectorAll('option');
-
-                // Limpiar y configurar opciones
+                // Mostrar solo los lotes actuales o disponibles
+                const options = loteSelectEdit.querySelectorAll('option');
                 options.forEach(option => {
-                    const loteState = option.getAttribute('data-state');
                     const loteId = option.value;
+                    const loteState = option.getAttribute('data-state');
+                    const capacidad = parseInt(option.getAttribute('data-capacidad')) || 0;
+                    const ocupado = parseInt(option.getAttribute('data-ocupado')) || 0;
 
-                    option.hidden = !(loteIds.includes(loteId) || loteState === 'disponible');
-                    option.selected = loteIds.includes(loteId);
+                    // Si este lote pertenece al cultivo, restamos su cantidad asignada actual
+                    let ocupadoAjustado = ocupado;
+                    if (loteIds.includes(loteId)) {
+                        const asignadoActual = parseInt(
+                            document.querySelector(`button[data-id='${id}']`)
+                            ?.getAttribute('data-lot_asignado_' + loteId)
+                        ) || 0;
+                        ocupadoAjustado -= asignadoActual;
+                    }
+
+                    option.setAttribute('data-ocupado', ocupadoAjustado);
+
+                    if (loteIds.includes(loteId) || loteState === 'disponible') {
+                        option.style.display = '';
+                        option.disabled = false;
+                        option.selected = loteIds.includes(loteId);
+                    } else {
+                        option.style.display = 'none'; // ocultar lote no válido
+                        option.selected = false;
+                    }
                 });
+
+                setTimeout(() => {
+                    validarCantidadEdit();
+                }, 200);
             });
+        });
+
+    });
+</script>
+
+
+
+
+<!--Script para validar la capacidad de lo lotes segun la cantidad a cultival a lahora de registrar-->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loteSelect = document.getElementById('lot_ids');
+        const cantidadInput = document.getElementById('quantity');
+        const errorDiv = document.getElementById('error-cantidad');
+        const form = loteSelect.closest('form');
+
+        let capacidadTotal = 0;
+
+        function calcularCapacidadTotal() {
+            const selectedOptions = Array.from(loteSelect.selectedOptions);
+            capacidadTotal = selectedOptions.reduce((total, option) => {
+                const capacidad = parseInt(option.getAttribute('data-capacidad')) || 0;
+                const ocupado = parseInt(option.getAttribute('data-ocupado')) || 0;
+                return total + (capacidad - ocupado);
+
+            }, 0);
+        }
+
+        function validarCantidad() {
+            calcularCapacidadTotal();
+            const cantidad = parseInt(cantidadInput.value) || 0;
+
+            if (cantidad > capacidadTotal) {
+                cantidadInput.classList.add('is-invalid');
+                errorDiv.innerText = `La cantidad excede la capacidad total de los lotes seleccionados (${capacidadTotal}).`;
+                return false;
+            } else {
+                cantidadInput.classList.remove('is-invalid');
+                errorDiv.innerText = '';
+                return true;
+            }
+        }
+
+        loteSelect.addEventListener('change', validarCantidad);
+        cantidadInput.addEventListener('input', validarCantidad);
+
+        // Validación al enviar
+        form.addEventListener('submit', function(e) {
+            if (!validarCantidad()) {
+                e.preventDefault();
+            }
         });
     });
 </script>

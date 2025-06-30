@@ -32,6 +32,6 @@ class CreateCropsAquaponicsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('crocropsaquaponicsps');
+        Schema::dropIfExists('cropsaquaponics');
     }
 }
