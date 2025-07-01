@@ -151,15 +151,15 @@
                 Iniciar Sesión
             </a>
             @else
-             <!-- Botón de cerrar sesión -->
-                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                    @csrf
-                    <button type="submit" class="btn btn-link nav-link" style="color: white;">
-                        <i class="fas fa-sign-out-alt" style="color: white"></i>
-                    </button>
-                </form>
+            <!-- Botón de cerrar sesión -->
+            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                @csrf
+                <button type="submit" class="btn btn-link nav-link" style="color: white;">
+                    <i class="fas fa-sign-out-alt" style="color: white"></i>
+                </button>
+            </form>
             @endguest
-        
+
         </div>
     </nav>
 

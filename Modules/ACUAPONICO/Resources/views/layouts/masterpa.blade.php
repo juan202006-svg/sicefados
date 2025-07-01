@@ -27,60 +27,143 @@
 
     <!-- Cambios en CSS al final del <head> -->
     <style>
-        .content-section {
-            display: none;
-        }
-
+        /* Fondo general */
         body {
-            background-color: #eafaf1;
-            /* Fondo general claro */
+            background-color: #E1F5FE;
+            color: #263238;
+            font-family: 'Source Sans Pro', sans-serif;
         }
 
+        /* Navbar */
         .main-header {
-            background-color: #5bc0de !important;
-            /* Navbar azul claro */
+            background-color: #0288D1 !important;
         }
 
+        /* Sidebar */
         .main-sidebar {
-            background-color: #3eacbb !important;
-            /* Sidebar verde azulado */
+            background-color: #01579B !important;
             color: white;
         }
 
+        .brand-link {
+            background-color: #01579B !important;
+            color: white !important;
+        }
+
+        /* Texto e iconos del menú */
         .nav-link,
         .nav-link i {
             color: white !important;
         }
 
+        /* Hover sobre enlaces */
         .nav-link:hover {
-            background-color: #6fcb9f !important;
-            /* Hover verde suave */
+            background-color: #03A9F4 !important;
             color: white !important;
         }
 
-        .brand-link {
-            background-color: #3eacbb !important;
+        /* ✅ Estilo para marcar el menú activo */
+        .nav-link.active {
+            background-color: #0288D1 !important;
+            font-weight: bold;
+            border-left: 5px solid #81D4FA;
+            /* línea decorativa */
             color: white !important;
         }
 
+        /* Footer */
         .main-footer {
-            background-color: #2f4f4f !important;
-            /* Gris oscuro elegante */
+            background-color: #455A64 !important;
             color: white;
         }
 
         .main-footer a {
-            color: #a3d9a5;
+            color: #B2EBF2;
+        }
+
+        .fondo-personalizado {
+            background-color: #eaf6fb;
+            /* Azul claro elegante */
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        #global-loader {
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #B3E5FC;
+            /* azul completo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-weight: bold;
+            font-size: 18px;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Animación de punticos */
+        .dots-loader {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .dots-loader span {
+            width: 15px;
+            height: 15px;
+            background-color: #01579B;
+            border-radius: 50%;
+            animation: bounce 1.2s infinite ease-in-out;
+        }
+
+        .dots-loader span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .dots-loader span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+                opacity: 0.3;
+            }
+
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .text-loader {
+            color: #01579B;
         }
     </style>
 
 </head>
 
 <body class="hold-transition sidebar-open layout-fixed layout-navbar-fixed layout-footer-fixed">
-    <div class="wrapper">
-        <!-- Preloader -->
-        <div class="preloader flex-column justify-content-center align-items-center">
+    <!-- Loader // carga entre modulos -->
+    <div id="global-loader">
+        <div class="dots-loader">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
+        <div class="text-loader">Cargando...</div>
+    </div>
+
+
+    <div class="wrapper">
         <style>
             .nav-link {
                 border-radius: 30px;
@@ -146,7 +229,6 @@
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
-
                 <!-- Botón de logout -->
                 <li class="nav-item">
                     <form action="{{ route('logout') }}" method="POST" style="display: inline;">
@@ -186,56 +268,57 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
                             <a href="{{ route('acuaponico.pasante.pasante.index') }}" class="nav-link" id="gestionLotes">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="fas fa-th-large"></i>
                                 <p>Gestión de Lotes</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('acuaponico.pasante.pasante.categoria') }}" class="nav-link" id="gestionCategorias">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="fas fa-tags"></i>
                                 <p>Gestión de Categorias</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('acuaponico.pasante.pasante.indexspecies') }}" class="nav-link" id="gestionCategorias">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="fas fa-dna"></i>
                                 <p>Gestión de Especies</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('acuaponico.pasante.pasante.crops') }}" class="nav-link" id="gestionCategorias">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="fas fa-seedling"></i>
                                 <p>Gestión de Cultivos</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('acuaponico.pasante.pasante.indextracking') }}" class="nav-link" id="gestionCategorias">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="fas fa-chart-line"></i>
+
                                 <p>Seguimientos</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('acuaponico.pasante.pasante.indextrakingfish') }}" class="nav-link" id="gestionCategorias">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="fas fa-fish"></i>
                                 <p>Seguimiento Peces</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('acuaponico.pasante.pasante.indextrackingplant') }}" class="nav-link" id="gestionCategorias">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="fas fa-leaf"></i>
                                 <p>Seguimiento Plantas</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route ('acuaponico.pasante.pasante.indexharvest')}}" class="nav-link" id="gestionCategorias">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>Gestion  de  Cosechas</p>
+                                <i class="fas fa-tractor"></i>
+                                <p>Gestion de Cosechas</p>
                             </a>
                         </li>
-                         <li class="nav-item">
+                        <li class="nav-item">
                             <a href="{{ route('acuaponico.pasante.pasante.indexactivity') }}" class="nav-link" id="gestionCategorias">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p> Control de  Avtividades</p>
+                                <i class="fas fa-clipboard-list"></i>
+                                <p> Control de Avtividades</p>
                             </a>
                         </li>
                     </ul>
@@ -247,7 +330,7 @@
         </aside>
 
         <!-- Content Wrapper -->
-        <div class="content-wrapper">
+        <div class="content-wrapper fondo-personalizado">
             @yield('content')
             @yield('content2')
         </div>
@@ -259,6 +342,21 @@
         <script src="{{ asset('AdminLTE/plugins/chart.js/Chart.min.js') }}"></script>
         <script src="{{ asset('AdminLTE/dist/js/demo.js') }}"></script>
         <script src="{{ asset('AdminLTE/dist/js/pages/dashboard2.js') }}"></script>
+
+
+        <script>
+            window.addEventListener('load', function() {
+                const loader = document.getElementById('global-loader');
+                if (loader) {
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.style.display = 'none', 300);
+                }
+            });
+        </script>
+
+
+
 </body>
+
 
 </html>
