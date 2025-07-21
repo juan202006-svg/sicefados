@@ -26,6 +26,7 @@ Route::controller(UserAquaponicController::class)->group(function () {
 Route::controller(ProductionController::class)->group(function () {
     Route::get('/admin/produccion', 'index')->name('acuaponico.admin.admin.produccion');
     Route::get('/admin/cultivos', 'index')->name('acuaponico.admin.admin.cultivos');
+    Route::get('/admin/producciones', 'index')->name('acuaponico.admin.admin.producciones');
 });
 
 // vista de actividades

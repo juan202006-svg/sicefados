@@ -16,19 +16,12 @@ class ProductionController extends Controller
     public function index()
     {
         $species = speciesAquaponic::all();
-        $lotes = Lot::all();
-        //paginacion de cultivos
-        $cultivos = CropAquaponic::select('id','date','species_id','lot_id','quantity')
-                ->with([
-                    'species:id,common_name', 
-                    'lot:id,name'])
-                ->paginate(10, ['*'], 'page_cultivos');
 
-        //paginacion de categorias
-        $categorias = Category::select('id', 'name', 'date')
-                ->paginate(10, ['*'], 'page_categorias');
+        if (request()->ajax()) {
+            return view('acuaponico::admin.producciones', compact('species',));
+        }
 
-        return view('acuaponico::admin.produccion', compact('species', 'lotes', 'cultivos', 'categorias'));
+        return view('acuaponico::admin.produccion', compact('species'));
     }
 
 
