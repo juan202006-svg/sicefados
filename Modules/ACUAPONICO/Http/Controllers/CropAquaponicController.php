@@ -5,17 +5,21 @@ namespace Modules\ACUAPONICO\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\Lot;
-use Modules\ACUAPONICO\Entities\SpeciesAquaponic;
-use Modules\ACUAPONICO\Entities\CropAquaponic;
+use Modules\AGROCEFA\Entities\Specie;
+use Modules\AGROCEFA\Entities\Crop;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Modules\ACUAPONICO\Entities\AquaponicSystem;
 
 class CropAquaponicController extends Controller
 {
     public function index()
     {
-        $especies = SpeciesAquaponic::all();
-        $cultivos = CropAquaponic::with(['species', 'lotes'])->get();
+        $acuaponicos = AquaponicSystem::get();
+        $especies = Specie::all();
+        $cultivos = Crop::with(['species', 'lotes', 'aquaponicSystem' ])
+            ->whereNotNull('aquaponic_system_id')
+            ->get();
 
         // Todos los lotes con capacidad y estado
         $lotesTodos = Lot::with('cultivos')->get();
@@ -31,13 +35,7 @@ class CropAquaponicController extends Controller
 
         $lotesDisponibles = $lotesTodos->where('state', 'disponible');
 
-        return view('acuaponico::pasante.cultivos', compact('especies', 'lotesDisponibles', 'cultivos', 'lotesTodos'));
-    }
-
-
-    public function create()
-    {
-        return view('acuaponico::create');
+        return view('acuaponico::pasante.cultivos', compact('especies', 'lotesDisponibles', 'cultivos', 'lotesTodos', 'acuaponicos'));
     }
 
     public function store(Request $request)
@@ -81,8 +79,9 @@ class CropAquaponicController extends Controller
             }
         }
 
-        $cultivo = new CropAquaponic();
+        $cultivo = new Crop();
         $cultivo->date = $request->date;
+        $cultivo->aquaponic_system_id = $request->aquaponic_system_id;
         $cultivo->species_id = $request->species_id;
         $cultivo->quantity = $request->quantity;
         $cultivo->status = $request->status;
@@ -100,7 +99,7 @@ class CropAquaponicController extends Controller
 
     public function update(Request $request, $id)
     {
-        $cultivo = CropAquaponic::findOrFail($id);
+        $cultivo = Crop::findOrFail($id);
         $lotIds = $request->lot_ids;
         $cantidadTotal = $request->quantity;
         $asignaciones = [];
@@ -146,9 +145,9 @@ class CropAquaponicController extends Controller
         }
 
         $cultivo->date = $request->date;
+        $cultivo->aquaponic_system_id = $request->aquaponic_system_id;
         $cultivo->species_id = $request->species_id;
         $cultivo->quantity = $request->quantity;
-        $cultivo->status = $request->status;
         $cultivo->save();
 
         $cultivo->lotes()->sync($asignaciones);
@@ -164,7 +163,7 @@ class CropAquaponicController extends Controller
     public function destroy($id)
     {
         try {
-            $cultivo = CropAquaponic::findOrFail($id);
+            $cultivo = Crop::findOrFail($id);
 
             // Guardamos los lotes afectados antes del detach
             $lotes = $cultivo->lotes;
@@ -187,6 +186,22 @@ class CropAquaponicController extends Controller
             }
 
             return redirect()->back()->with('error', 'Ocurrió un error al intentar eliminar el cultivo.');
+        }
+    }
+
+    public function getLotesPorSistema($id)
+    {
+        try {
+            $lotes = Lot::where('aquaponic_system_id', $id)
+                ->where('state', 'disponible')
+                ->get();
+
+            return response()->json($lotes);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Ocurrió un error al obtener los lotes.',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 }

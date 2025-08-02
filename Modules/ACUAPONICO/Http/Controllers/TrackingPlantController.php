@@ -7,18 +7,27 @@ use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\Tracking;
 use Modules\ACUAPONICO\Entities\TrackingPlant;
 use Illuminate\Database\QueryException;
+use Carbon\Carbon;
 
 class TrackingPlantController extends Controller
 {
     public function index()
-    {
-        $seguimientoPlanta = TrackingPlant::with('Tracking.crops.species.category')->get();
-        $seguimientos = Tracking::whereHas('crops.species.category', function ($query) {
-            $query->where('name', 'Planta');
-        })->with('crops.species')->get();
+{
+    $hoy = Carbon::now()->toDateString(); // Fecha actual
 
-        return view('acuaponico::pasante.seguimientoPlanta', compact('seguimientoPlanta', 'seguimientos'));
-    }
+    // Seguimientos de plantas registrados hoy
+    $seguimientos = Tracking::whereDate('date', $hoy)
+        ->whereHas('crops.species.category', function ($query) {
+            $query->where('name', 'Planta');
+        })
+        ->with('crops.species')
+        ->get();
+
+    // Seguimientos detallados con relaciones
+    $seguimientoPlanta = TrackingPlant::with('Tracking.crops.species.category')->get();
+
+    return view('acuaponico::pasante.seguimientoPlanta', compact('seguimientoPlanta', 'seguimientos'));
+}
 
     public function store(Request $request)
     {

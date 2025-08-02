@@ -9,7 +9,7 @@
     <div class="card shadow-sm border-0">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h5 class="mb-0 fw-semibold">Lista de Seguimientos Plantas</h5>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregar">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregar">
                 <i class="bi bi-plus-circle"></i> Nuevo seguimiento
             </button>
         </div>
@@ -49,8 +49,8 @@
                                 data-growth="{{ $sp->growth }}"
                                 data-comparison_percentage="{{ $sp->comparison_percentage }}"
                                 data-mortality="{{ $sp->mortality }}"
-                                data-bs-toggle="modal"
-                                data-bs-target="#editar">
+                                data-toggle="modal"
+                                data-target="#editar">
                                 Editar
                             </button>
                             <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $sp->id }}">
@@ -71,7 +71,7 @@
                         @method('put')
                         <div class="modal-header">
                             <h5 class="modal-title" id="editarLabel">Editar Seguimiento Plantas</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="id" id="edit-id">
@@ -107,7 +107,7 @@
                                     <input type="number" class="form-control" name="mortality" id="edit-mortality" readonly>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                     <button type="submit" class="btn btn-primary"> Guardar Cambios</button>
                                 </div>
                     </form>
@@ -137,7 +137,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="agregarLabel">Nuevo Seguimiento plantas</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
@@ -174,7 +174,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
@@ -236,17 +236,6 @@
         });
     });
 </script>
-
-<!-- Bootstrap 5 JS y Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-
-<!-- DataTables JS y dependencias -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 <!-- Inicializar DataTable -->
 <script>

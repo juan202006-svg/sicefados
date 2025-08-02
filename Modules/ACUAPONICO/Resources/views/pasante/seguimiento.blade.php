@@ -8,7 +8,7 @@
     <div class="card shadow-sm border-0">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h5 class="mb-0 fw-semibold">Lista de Seguimientos</h5>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregar">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregar">
                 <i class="bi bi-plus-circle"></i> Nuevo seguimiento
             </button>
         </div>
@@ -40,8 +40,8 @@
                                 data-crop_id="{{ $seguimiento->crop_id }}"
                                 data-days_elapsed="{{ $seguimiento->days_elapsed }}"
                                 data-notes="{{ $seguimiento->notes }}"
-                                data-bs-toggle="modal"
-                                data-bs-target="#editar">
+                                data-toggle="modal"
+                                data-target="#editar">
                                 Editar
                             </button>
                             <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $seguimiento->id }}">
@@ -62,20 +62,18 @@
                         @method('put')
                         <div class="modal-header">
                             <h5 class="modal-title" id="editarLabel">Editar Seguimiento</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="id" id="edit-id">
-                            <div class="mb-3">
-                                <label for="edit-date" class="form-label"> Fecha:</label>
-                                <input type="date" class="form-control" id="edit-date" name="date">
-                            </div>
                             <div class="mb-3">
                                 <label for="edit-crop_id" class="form-label">Cultivo:</label>
                                 <select class="form-control" id="edit-crop_id" name="crop_id" required>
                                     <option value="">Seleccione un cultivo</option>
                                     @foreach ($cultivos as $cultivo)
-                                    <option value="{{ $cultivo->id }}">{{ $cultivo->species->common_name }}</option>
+                                    <option value="{{ $cultivo->id }}" data-date="{{ $cultivo->date }}">{{ $cultivo->species->common_name }} - {{
+                                        $cultivo->status }}</option>
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -88,7 +86,7 @@
                                 <textarea class="form-control" name="notes" id="edit-notes"></textarea>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                 <button type="submit" class="btn btn-primary"> Guardar Cambios</button>
                             </div>
                     </form>
@@ -118,12 +116,12 @@
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="agregarLabel">Nuevo Seguimiento</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="date" class="form-label">Fecha:</label>
-                        <input type="date" name="date" class="form-control" id="date" equired>
+                        <input type="date" name="date" class="form-control" id="date" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="crop_id">Cultivo:</label>
@@ -133,21 +131,22 @@
                             <option
                                 value="{{ $cultivo->id }}"
                                 data-date="{{ $cultivo->date }}">
-                                {{ $cultivo->species->common_name }}
+                                {{ $cultivo->species->common_name }} - {{
+                                        $cultivo->status }}
                             </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="days_elapsed" class="form-label">Tiempo en dias:</label>
-                        <input type="number" name="days_elapsed" class="form-control" id="days_elapsed" required readonly>
+                        <input type="number" name="days_elapsed" class="form-control" id="days_elapsed" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="notes" class="form-label">Novedad:</label>
                         <textarea name="notes" class="form-control" id="notes" required></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
@@ -176,12 +175,29 @@
                 const id = this.getAttribute('data-id');
                 document.getElementById('formEditar').action = `/pasante/seguimiento/update/${id}`;
                 document.getElementById('edit-id').value = id;
-                document.getElementById('edit-date').value = this.getAttribute('data-date');
                 document.getElementById('edit-crop_id').value = this.getAttribute('data-crop_id');
                 document.getElementById('edit-days_elapsed').value = this.getAttribute('data-days_elapsed');
                 document.getElementById('edit-notes').value = this.getAttribute('data-notes');
             });
         });
+    });
+</script>
+<!--script para mostrar los tiempos en dias en el campo al selecionar otro cultivo a la hora de editar-->
+<script>
+    document.getElementById('edit-crop_id').addEventListener('change', function () {
+        const selectedOption = this.options[this.selectedIndex];
+        const fechaCultivo = selectedOption.getAttribute('data-date');
+
+        if (fechaCultivo) {
+            const fechaInicio = new Date(fechaCultivo);
+            const fechaHoy = new Date();
+            const diffTiempo = fechaHoy - fechaInicio;
+            const diffDias = Math.floor(diffTiempo / (1000 * 60 * 60 * 24));
+
+            document.getElementById('edit-days_elapsed').value = diffDias;
+        } else {
+            document.getElementById('edit-days_elapsed').value = '';
+        }
     });
 </script>
 <script>
@@ -207,17 +223,6 @@
         });
     });
 </script>
-
-<!-- Bootstrap 5 JS y Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-
-<!-- DataTables JS y dependencias -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 <!-- Inicializar DataTable -->
 <script>

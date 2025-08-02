@@ -15,8 +15,8 @@ class CreateCropLotTable extends Migration
     {
         Schema::create('crop_lot', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('crop_aquaponic_id')->constrained('cropsaquaponics')->onDelete('cascade');
-            $table->foreignId('lot_id')->constrained('lots')->onDelete('cascade');
+            $table->foreignId('crop_id')->constrained('crops');
+            $table->foreignId('lot_id')->constrained('lots');
             $table->integer('planted_quantity')->default(0);
             $table->timestamps();
         });

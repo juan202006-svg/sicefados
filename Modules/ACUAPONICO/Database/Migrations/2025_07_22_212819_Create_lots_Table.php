@@ -10,11 +10,17 @@ class CreateLotsTable extends Migration
     {
         Schema::create('lots', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('aquaponic_system_id'); // Clave foránea
             $table->date('date');
             $table->string('name');
             $table->integer('capacity');
-            $table->enum('state', ['disponible', 'ocupado', 'no disponible'])->default('disponible');
+            $table->string('image')->nullable(); // Campo para imagen
+            $table->text('description')->nullable(); // Campo para descripción
+             $table->enum('state', ['disponible', 'ocupado', 'no disponible'])->default('disponible');
             $table->timestamps();
+
+            // Restricción de clave foránea
+            $table->foreign('aquaponic_system_id')->references('id')->on('aquaponic_systems');
         });
     }
 

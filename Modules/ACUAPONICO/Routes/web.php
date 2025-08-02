@@ -39,6 +39,14 @@ Route::controller(ActivityController::class)->group(function () {
     Route::get('/evidencia/{id}/descargar', 'descargarEvidencia')->name('evidencia.descargar');
     Route::get('/evidencia/{id}/ver', 'verEvidencia')->name('evidencia.ver');
 });
+// rutas de los sistemas acuaponicos
+Route::controller(AquaponicSystemController::class)->group(function () {
+    Route::get('/pasante/sistemas_acuaponicos/lista', 'index')->name('acuaponico.pasante.pasante.acuaponicoindex');
+    Route::post('/pasante/sistemas_acuaponicos/store', 'store')->name('acuaponico.pasante.pasante.acuaponicostore');
+    Route::put('/pasante/sistemas_acuaponicos/update/{id}', 'update')->name('acuaponico.pasante.pasante.acuaponicoupdate');
+    Route::delete('/pasante/sistemas_acuaponicos/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.acuaponicodestroy');
+
+});
 
 
 Route::controller(LotController::class)->group(function () {
@@ -55,7 +63,7 @@ Route::controller(CategoryController::class)->group(function () {
     Route::post('/pasante/pasante/categoria/store', 'store')->name('acuaponico.pasante.pasante.storeCategory');
     Route::get('/pasante/categoria/create', 'create')->name('acuaponico.pasante.pasante.createCategory');
     Route::put('/pasante/categoria/update/{id}', 'update')->name('acuaponico.pasante.pasante.updateCategory');
-    Route::delete('/pasante/categoria/destoy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyCategory');
+    Route::delete('/pasante/categoria/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyCategory');
 });
 
 // rutas  para las especies
@@ -74,6 +82,7 @@ Route::controller(CropAquaponicController::class)->group(function () {
     Route::post('/pasante/cultivo/store', 'store')->name('acuaponico.pasante.pasante.storecrops');
     Route::put('/pasante/cultivo/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatecrops');
     Route::delete('/pasante/cultivo/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroycrops');
+    Route::get('/pasante/cultivo/lotes-por-sistema/{id}', 'getLotesPorSistema')->name('acuaponico.pasante.pasante.lotes_por_sistema');
 });
 
 

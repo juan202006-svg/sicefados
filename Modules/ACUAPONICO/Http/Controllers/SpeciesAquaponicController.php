@@ -2,10 +2,9 @@
 
 namespace Modules\ACUAPONICO\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\ACUAPONICO\Entities\SpeciesAquaponic;
+use Modules\AGROCEFA\Entities\Specie;
 use Modules\ACUAPONICO\Entities\Category;
 use Illuminate\Database\QueryException;
 
@@ -14,42 +13,46 @@ class SpeciesAquaponicController extends Controller
 
     public function index()
     {
-        $especies = SpeciesAquaponic::with('category')->get();
+        $especies = Specie::with('category')
+            ->whereNotNull('category_id')
+            ->get();
         $categorias = Category::all();
         return view('acuaponico::pasante.especies', compact('especies', 'categorias'));
     }
 
 
 
-
     public function store(Request $request)
     {
-        $date = $request->date;
         $category_id = $request->category_id;
         $scientific_name = $request->scientific_name;
-        $common_name = $request->common_name;
-        $life_cycle = $request->life_cycle;
-        $optimal_temperature = $request->optimal_temperature;
+        $name = $request->name;
+        $description = $request->description;
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('modules/acuaponico/images/especies'), $imageName);
+            $imagePath = $imageName;
+        }
 
 
-        $species = new SpeciesAquaponic();
-        $species->date = $date;
+        $species = new Specie();
         $species->category_id = $category_id;
         $species->scientific_name = $scientific_name;
-        $species->common_name = $common_name;
-        $species->life_cycle = $life_cycle;
-        $species->optimal_temperature = $optimal_temperature;
+        $species->name = $name;
+        $species->image = $imagePath;
+        $species->description = $description;
         $species->save();
 
         return redirect()->back()->with('success', 'Especie generada correctamente.');
-        return view('acuaponico::pasante.especies');
     }
+
 
 
     public function update(Request $request, $id)
     {
-        $especies = SpeciesAquaponic::findOrFail($id);
-        $especies->date = $request->input('date');
+        $especies = Specie::findOrFail($id);
         $especies->category_id = $request->input('category_id');
         $especies->scientific_name = $request->input('scientific_name');
         $especies->common_name = $request->input('common_name');
@@ -65,7 +68,7 @@ class SpeciesAquaponicController extends Controller
     public function destroy($id)
     {
         try {
-            $especies = SpeciesAquaponic::findOrFail($id);
+            $especies = Specie::findOrFail($id);
             $especies->delete();
 
             return redirect()->back()->with('success', 'Especie eliminada correctamente.');
