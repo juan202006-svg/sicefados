@@ -35,6 +35,14 @@ Route::controller(ActivityController::class)->group(function () {
     Route::get('/evidencia/{id}/descargar', 'descargarEvidencia')->name('evidencia.descargar');
     Route::get('/evidencia/{id}/ver', 'verEvidencia')->name('evidencia.ver');
 });
+// rutas de los sistemas acuaponicos
+Route::controller(AquaponicSystemController::class)->group(function () {
+    Route::get('/pasante/sistemas_acuaponicos/lista', 'index')->name('acuaponico.pasante.pasante.acuaponicoindex');
+    Route::post('/pasante/sistemas_acuaponicos/store', 'store')->name('acuaponico.pasante.pasante.acuaponicostore');
+    Route::put('/pasante/sistemas_acuaponicos/update/{id}', 'update')->name('acuaponico.pasante.pasante.acuaponicoupdate');
+    Route::delete('/pasante/sistemas_acuaponicos/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.acuaponicodestroy');
+
+});
 
 
 Route::controller(LotController::class)->group(function () {
@@ -57,10 +65,6 @@ Route::controller(CategoryController::class)->group(function () {
     Route::get('/pasante/categoria/create', 'create')->name('acuaponico.pasante.pasante.createCategory');
     Route::put('/pasante/categoria/update/{id}', 'update')->name('acuaponico.pasante.pasante.updateCategory');
     Route::delete('/pasante/categoria/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyCategory');
-
-    //admin
-    Route::get('/admin/admin/registrocategorias', 'registroCategoria')->name('acuaponico.admin.admin.registrocategoria');
-    Route::delete('/admin/admin/registrocategoria/destroy/{id}', 'destroy')->name('acuaponico.admin.admin.destroyCategory');
 });
 
 // rutas  para las especies
@@ -85,6 +89,7 @@ Route::controller(CropAquaponicController::class)->group(function () {
 
     //admin
     Route::get('/admin/admin/registrocultivos', 'registroCultivo')->name('acuaponico.admin.admin.registrocultivo');
+    Route::get('/pasante/cultivo/lotes-por-sistema/{id}', 'getLotesPorSistema')->name('acuaponico.pasante.pasante.lotes_por_sistema');
 });
 
 

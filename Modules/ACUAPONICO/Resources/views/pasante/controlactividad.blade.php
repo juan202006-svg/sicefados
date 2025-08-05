@@ -8,7 +8,7 @@
             <table id="tabla-actividad" class="table table-hover table-bordered align-middle text-center">
                 <thead style="background-color: #f8f9fa;">
                     <tr>
-                        <th>#</th>
+                        <th>Codigo</th>
                         <th>Actividad</th>
                         <th>Aprendiz</th>
                         <th>Fecha</th>
@@ -26,7 +26,7 @@
                         <td>{{ $activity->date }}</td>
                         <td>{{ $activity->description }}</td>
                         <td>
-                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#agregar{{ $activity->id }}">
+                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#agregar{{ $activity->id }}">
                                 <i class="bi bi-plus-circle"></i> + Evidencia
                             </button>
                         </td>
@@ -41,7 +41,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary text-white">
                                         <h5 class="modal-title">Agregar Evidencia</h5>
-                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                        <button type="button" class="btn-close btn-close-white" data-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="mb-3">
@@ -64,7 +64,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                         <button class="btn btn-primary" type="submit">Guardar</button>
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
             <table id="tabla-evidencia" class="table table-hover table-bordered align-middle text-center">
                 <thead style="background-color: #f8f9fa;">
                     <tr>
-                        <th>#</th>
+                        <th>Codigo</th>
                         <th>Actividad</th>
                         <th>Fecha</th>
                         <th>Novedades</th>
@@ -112,14 +112,14 @@
                         </td>
                         <td>
                             @if($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence))
-                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#verPdfModal{{ $evidencia->id }}">
+                            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#verPdfModal{{ $evidencia->id }}">
                                 <i class="bi bi-eye"></i>
                                 ver PDF
                             </button>
                             @endif
 
                             <!-- Botón editar -->
-                            <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editarModal{{ $evidencia->id }}">
+                            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editarModal{{ $evidencia->id }}">
                                 <i class="bi bi-pencil"></i> Editar
                             </button>
 
@@ -138,7 +138,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Evidencia PDF</h5>
-                                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                                    <button class="btn-close" data-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
                                     <iframe src="{{ route('evidencia.ver', $evidencia->id) }}" width="100%" height="600px"></iframe>
@@ -156,7 +156,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary">
                                         <h5 class="modal-title text-white">Editar Evidencia</h5>
-                                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                                        <button class="btn-close" data-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="mb-3">
@@ -174,7 +174,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-success">Guardar Cambios</button>
-                                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                     </div>
                                 </div>
                             </form>
@@ -201,71 +201,31 @@
         inputs.forEach(input => input.value = today);
     });
 </script>
-
 @if (session('success'))
 <script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Éxito',
-        text: '{{ session("success") }}',
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: '{{ session("success") }}',
+            confirmButtonColor: '#3085d6',
+        });
     });
 </script>
 @endif
 
 @if (session('error'))
 <script>
-    Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: '{{ session("error") }}',
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '{{ session("error") }}',
+            confirmButtonColor: '#d33',
+        });
     });
 </script>
 @endif
-
-
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-
-<!-- DataTables JS y dependencias -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
-<!-- Inicializar DataTable -->
-<script>
-    $(document).ready(function() {
-        $('#tabla-actividad').DataTable({
-            "language": {
-                "lengthMenu": "Mostrar _MENU_ registros por página",
-                "zeroRecords": "No se encontraron resultados",
-                "info": "Mostrando página _PAGE_ de _PAGES_",
-                "infoEmpty": "No hay registros disponibles",
-                "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                "search": "Buscar:",
-                "paginate": {
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                }
-            }
-        });
-
-
-        $('#tabla-evidencia').DataTable({
-            "language": {
-                "lengthMenu": "Mostrar _MENU_ registros por página",
-                "zeroRecords": "No se encontraron resultados",
-                "info": "Mostrando página _PAGE_ de _PAGES_",
-                "infoEmpty": "No hay registros disponibles",
-                "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                "search": "Buscar:",
-                "paginate": {
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                }
-            }
-        });
-    });
-</script>
 
 <script>
     document.querySelectorAll('.btnEliminar').forEach(button => {
@@ -291,7 +251,4 @@
         });
     });
 </script>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @endsection

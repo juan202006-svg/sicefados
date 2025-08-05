@@ -5,25 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="{{ asset('images/Favicon2.png') }}" type="image/x-icon">
-    <title>Gestion de Unidad de Cultivos</title>
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="{{ asset('AdminLTE/https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback') }}">
-    <!-- Font Awesome -->
+    <title> Gestion SA || Pasante </title>
+    <link rel="icon" href="{{ asset('AdminLTE/dist/img/IconoAcuaponico.png') }}" type="image/x-icon" style="border-radius: 10px;">
+    <!-- Fuente -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+    <!-- Font Awesome (local) -->
     <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/fontawesome-free/css/all.min.css') }}">
-    <!-- Theme style -->
+
+    <!-- Bootstrap (local) -->
+    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/bootstrap/css/bootstrap.min.css') }}">
+
+    <!-- AdminLTE -->
     <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/adminlte.min.css') }}">
-    <!-- overlayScrollbars -->
+
+    <!-- OverlayScrollbars -->
     <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/select2/css/select2.min.css') }}">
 
-    <script src="{{ asset('jscriptjs') }}" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('AdminLTE/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('AdminLTE/dist/js/adminlte.min.js') }}"></script>
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+
 
     <!-- Cambios en CSS al final del <head> -->
     <style>
@@ -43,6 +52,7 @@
         .main-sidebar {
             background-color: #01579B !important;
             color: white;
+            margin-top: 58px;
         }
 
         .brand-link {
@@ -194,35 +204,11 @@
 
                 <!-- Enlace a Home -->
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ route ('cefa.acuaponico.index')}}" class="nav-link text-white">Home</a>
+                    <a href="{{ route ('cefa.acuaponico.index')}}" class="nav-link text-white">Inicio</a>
                 </li>
             </ul>
-
             <!-- Botones alineados a la derecha -->
             <ul class="navbar-nav ml-auto">
-                <!-- Icono de notificaciones -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#" role="button">
-                        <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">3</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-header">3 Notificaciones</span>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-envelope mr-2"></i> 1 nuevo mensaje
-                            <span class="float-right text-muted text-sm">3 mins</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> 2 nuevas solicitudes
-                            <span class="float-right text-muted text-sm">12 horas</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">Ver todas las notificaciones</a>
-                    </div>
-                </li>
-
                 <!-- Botón de pantalla completa -->
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
@@ -240,32 +226,30 @@
                 </li>
             </ul>
         </nav>
-        <script>
-            // Desactiva el comportamiento de abrir el sidebar al hacer hover en modo mini
-            $(document).ready(function() {
-                // Evita que se expanda con el mouse al estar en mini
-                $('[data-widget="pushmenu"]').PushMenu({
-                    autoCollapseSize: false
-                });
-            });
-        </script>
+        <aside class="main-sidebar elevation-4" style="background-color: #3eacbb; color: white; padding-top: 42px;">
+            <a href="" class="brand-link d-flex flex-column align-items-center py-3" style="text-decoration: none;">
+                <img src="{{ asset('AdminLTE/dist/img/Logo_Acuaponico.png') }}"
+                    alt="Logo Acuapónico"
+                    class="img-circle elevation-3"
+                    style="width: 90px; height: 90px; object-fit: cover;">
 
-        <aside class="main-sidebar elevation-4" style="background-color: #3eacbb; color: white; padding-top: 10px;">
-            <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link" style="display: flex; align-items: center; padding: 10px;">
-                <img src="{{ asset('AdminLTE/dist/img/logoaco.png') }}" alt="AdminLTE Logo" class="img"
-                    style="width: 100px; height: 80px; border-radius: 50%; margin-right: 10px;">
-                <span class="brand-text"
-                    style="font-size: 20px; color: white; font-weight: bold; margin-top: -55px;">Acuaponia</span>
+                <span class="brand-text mt-2"
+                    style="font-size: 18px; color: white; font-weight: bold; text-align: center;">
+                    Acuapónico
+                </span>
             </a>
-
-
 
             <!-- Sidebar (SIEMPRE visible) -->
             <div class="sidebar">
 
-                <nav class="mt-5">
+                <nav class="mt-6">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="{{ route('acuaponico.pasante.pasante.acuaponicoindex') }}" class="nav-link" id="gestionLotes">
+                                <i class="fas fa-th-large"></i>
+                                <p>sistemas Acuaponicos</p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="{{ route('acuaponico.pasante.pasante.index') }}" class="nav-link" id="gestionLotes">
                                 <i class="fas fa-th-large"></i>
@@ -291,24 +275,35 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('acuaponico.pasante.pasante.indextracking') }}" class="nav-link" id="gestionCategorias">
-                                <i class="fas fa-chart-line"></i>
+                            <a class="nav-link collapsed" data-toggle="collapse" href="#submenuSeguimiento" role="button" aria-expanded="false" aria-controls="submenuSeguimiento">
+                                <i class="fas fa-eye"></i>
+                                <p>Control Seguimientos</p>
+                                <i class="right fas fa-angle-left"></i>
+                            </a>
+                            <div class="collapse" id="submenuSeguimiento">
+                                <ul class="nav flex-column ms-3">
+                                    <li class="nav-item">
+                                        <a href="{{ route('acuaponico.pasante.pasante.indextracking') }}" class="nav-link">
+                                            <i class="fas fa-chart-line"></i>
+                                            <p>Seguimientos Generales</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('acuaponico.pasante.pasante.indextrakingfish') }}" class="nav-link">
+                                            <i class="fas fa-fish"></i>
+                                            <p>Seguimientos Peces</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('acuaponico.pasante.pasante.indextrackingplant') }}" class="nav-link">
+                                            <i class="fas fa-leaf"></i>
+                                            <p>Seguimientos Plantas</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
 
-                                <p>Seguimientos</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('acuaponico.pasante.pasante.indextrakingfish') }}" class="nav-link" id="gestionCategorias">
-                                <i class="fas fa-fish"></i>
-                                <p>Seguimiento Peces</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('acuaponico.pasante.pasante.indextrackingplant') }}" class="nav-link" id="gestionCategorias">
-                                <i class="fas fa-leaf"></i>
-                                <p>Seguimiento Plantas</p>
-                            </a>
-                        </li>
                         <li class="nav-item">
                             <a href="{{ route ('acuaponico.pasante.pasante.indexharvest')}}" class="nav-link" id="gestionCategorias">
                                 <i class="fas fa-tractor"></i>
@@ -331,19 +326,50 @@
 
         <!-- Content Wrapper -->
         <div class="content-wrapper fondo-personalizado">
-            @yield('content')
             @yield('content2')
         </div>
-        <script src="{{ asset('AdminLTE-/plugins/raphael/raphael.min.js') }}"></script>
+
+        <script src="{{ asset('AdminLTE/plugins/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('AdminLTE/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+        <!-- Bootstrap 4 -->
+
+        <!-- Bootstrap (local) -->
+        <script src="{{ asset('AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+        <!-- AdminLTE (local) -->
+        <script src="{{ asset('AdminLTE/dist/js/adminlte.min.js') }}"></script>
+
+        <!-- OverlayScrollbars -->
+        <script src="{{ asset('AdminLTE/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+
+        <!-- Select2 -->
+        <script src="{{ asset('AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
+
+        <!-- DataTables -->
+        <script src="{{ asset('AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+        <!-- JS Botones DataTables -->
+        <script src="{{ asset('AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+        <script src="{{ asset('AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('AdminLTE/plugins/jszip/jszip.min.js') }}"></script>
+        <script src="{{ asset('AdminLTE/plugins/pdfmake/pdfmake.min.js') }}"></script>
+        <script src="{{ asset('AdminLTE/plugins/pdfmake/vfs_fonts.js') }}"></script>
+        <script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+        <script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+        <!-- SweetAlert2 -->
+        <script src="{{ asset('AdminLTE/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+
+        <!-- Mapael + Raphael -->
+        <script src="{{ asset('AdminLTE/plugins/raphael/raphael.min.js') }}"></script>
         <script src="{{ asset('AdminLTE/plugins/jquery-mapael/jquery.mapael.min.js') }}"></script>
         <script src="{{ asset('AdminLTE/plugins/jquery-mapael/maps/usa_states.min.js') }}"></script>
-        <script src="{{ asset('AdminLTE/plugins/jquery.min.js') }}"></script>
-        <script src="{{ asset('AdminLTE/plugins/js/select2.full.min.js') }}"></script>
+
+        <!-- ChartJS -->
         <script src="{{ asset('AdminLTE/plugins/chart.js/Chart.min.js') }}"></script>
+
+        <!-- Scripts de AdminLTE demo -->
         <script src="{{ asset('AdminLTE/dist/js/demo.js') }}"></script>
         <script src="{{ asset('AdminLTE/dist/js/pages/dashboard2.js') }}"></script>
-
-
         <script>
             window.addEventListener('load', function() {
                 const loader = document.getElementById('global-loader');
@@ -353,9 +379,26 @@
                 }
             });
         </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const currentUrl = window.location.href;
 
+                // Si la URL contiene alguno de los módulos de seguimiento
+                if (currentUrl.includes('indextracking') || currentUrl.includes('indextrakingfish') || currentUrl.includes('indextrackingplant')) {
+                    const submenu = document.getElementById('submenuSeguimiento');
+                    const toggleBtn = document.querySelector('[data-bs-toggle="collapse"][href="#submenuSeguimiento"]');
 
+                    // Abrir el submenu manualmente
+                    submenu.classList.add('show');
 
+                    if (toggleBtn) {
+                        toggleBtn.classList.remove('collapsed');
+                        toggleBtn.setAttribute('aria-expanded', 'true');
+                    }
+                }
+            });
+        </script>
+        @yield('scripts')
 </body>
 
 

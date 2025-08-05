@@ -7,23 +7,29 @@ use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\Tracking;
 use Modules\ACUAPONICO\Entities\TrackingFish;
 use Illuminate\Database\QueryException;
+use Carbon\Carbon;
 
 class TrackingFishController extends Controller
-{
-    public function index()
-    {
-        // Trae todos los seguimientos de peces con relaciones
-        $seguimientoPez = TrackingFish::with('Tracking.crops.species.category')->get();
+{ 
 
-        // Trae todos los cultivos de peces con su último seguimiento
-        $seguimientos = Tracking::whereHas('crops.species.category', function ($query) {
+public function index()
+{
+    $hoy = Carbon::now()->toDateString(); // Obtiene la fecha actual en formato 'YYYY-MM-DD'
+
+    // Trae todos los seguimientos de peces con relaciones
+    $seguimientoPez = TrackingFish::with('Tracking.crops.species.category')->get();
+
+    // Solo seguimientos de hoy y categoría "Pez"
+    $seguimientos = Tracking::whereDate('date', $hoy)
+        ->whereHas('crops.species.category', function ($query) {
             $query->where('name', 'Pez');
         })
-            ->with(['crops.species', 'latestFishTracking']) // Asegúrate de tener una relación 'latestFishTracking' definida en el modelo Tracking
-            ->get();
+        ->with(['crops.species', 'latestFishTracking'])
+        ->get();
 
-        return view('acuaponico::.pasante.seguimientoPeces', compact('seguimientoPez', 'seguimientos'));
-    }
+    return view('acuaponico::pasante.seguimientoPeces', compact('seguimientoPez', 'seguimientos'));
+}
+
 
     public function store(Request $request)
     {

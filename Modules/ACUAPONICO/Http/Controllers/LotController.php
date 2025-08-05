@@ -6,15 +6,17 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\Lot;
 use Illuminate\Database\QueryException;
-use Modules\ACUAPONICO\Entities\CropAquaponic;
+use Modules\ACUAPONICO\Entities\AquaponicSystem;
 
 class LotController extends Controller
 {
 
     public function index()
     {
-        $lots = Lot::with('cultivos')->get();
-        return view('acuaponico::pasante.index')->with(['lots' => $lots]);
+        // Cargar lotes con sus cultivos y sistema acuapónico relacionado
+        $acuaponico = AquaponicSystem::get();
+        $lots = Lot::with(['cultivos', 'aquaponicSystem'])->get();
+        return view('acuaponico::pasante.index', compact('lots', 'acuaponico'));
     }
 
     public function showRegistroLote()
@@ -55,19 +57,35 @@ class LotController extends Controller
     }
 
         $lot = new Lot();
+        $lot->aquaponic_system_id  = $request->aquaponic_system_id;
         $lot->date = $request->date;
         $lot->name = $request->name;
         $lot->capacity = $request->capacity;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+
+            // Guardar en carpeta propia de lotes
+            $file->move(public_path('modules/acuaponico/images/lotes'), $filename);
+
+            // Guardar solo el nombre del archivo
+            $lot->image = $filename;
+        }
+
+        $lot->description = $request->description;
         $lot->state = $request->state;
         $lot->image = $imageName ? 'storage/lotes/' . $imageName : null; // Guardar ruta relativa
 
         $lot->save();
+
 
         // Actualiza el estado en base a la capacidad y ocupación actual (que es 0)
         $lot->actualizarEstadoAutomatico();
 
         return redirect()->back()->with('success', 'Lote generado correctamente.');
     }
+
 
     /**
      * Actualiza un lote existente.

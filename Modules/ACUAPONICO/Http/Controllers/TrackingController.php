@@ -11,13 +11,12 @@ use Illuminate\Database\QueryException;
 
 class TrackingController extends Controller
 {
-  
-    public function index()
 
+    public function index()
     {
         $cultivos = CropAquaponic::with('species') ->whereIn('status', ['Cultivado', 'Seguimiento']) ->get();
         $seguimientos = Tracking::with('crops.species')->get();
-        return view('acuaponico::pasante.seguimiento', compact('seguimientos', 'cultivos')); 
+        return view('acuaponico::pasante.seguimiento', compact('seguimientos', 'cultivos'));
     }
 
     public function registro()
@@ -35,11 +34,11 @@ class TrackingController extends Controller
         $crop_id = $request->crop_id;
         $days_elapsed = $request->days_elapsed;
         $notes = $request->notes;
-      
-        
-        $sequimientos = new Tracking(); 
+
+
+        $sequimientos = new Tracking();
         $sequimientos->date = $date;
-        $sequimientos->crop_id = $crop_id;  
+        $sequimientos->crop_id = $crop_id;
         $sequimientos->days_elapsed = $days_elapsed;
         $sequimientos->notes = $notes;
         $sequimientos->save();
@@ -55,9 +54,8 @@ class TrackingController extends Controller
 
     public function update(Request $request, $id)
     {
-            
+
         $seguimientos = Tracking::findOrFail($id);
-        $seguimientos->date = $request->input('date');
         $seguimientos->crop_id = $request->input('crop_id');
         $seguimientos->days_elapsed = $request->input('days_elapsed');
         $seguimientos->notes = $request->input('notes');
@@ -66,18 +64,34 @@ class TrackingController extends Controller
         return view('acuaponico::pasante.seguimiento');
     }
 
-   
+
     public function destroy($id)
     {
-       try{ $seguimientos = Tracking::findOrFail($id);
-        $seguimientos->delete();
-        return redirect()->back()->with('success', 'Seguimiento eliminado correctamente.');
-       } catch (QueryException $e) {
-            if ($e->getCode() == '23000') { 
+        try {
+            $seguimiento = Tracking::findOrFail($id);
+            $cropId = $seguimiento->crop_id;
+
+            // Contar cuántos seguimientos existen para ese cultivo
+            $totalSeguimientos = Tracking::where('crop_id', $cropId)->count();
+
+            // Eliminar el seguimiento
+            $seguimiento->delete();
+
+            // Si solo había uno (el que acabamos de eliminar), entonces cambiar estado a 'Cultivado'
+            if ($totalSeguimientos == 1) {
+                $cultivo = CropAquaponic::find($cropId);
+                if ($cultivo) {
+                    $cultivo->status = 'Cultivado';
+                    $cultivo->save();
+                }
+            }
+
+            return redirect()->back()->with('success', 'Seguimiento eliminado correctamente.');
+        } catch (QueryException $e) {
+            if ($e->getCode() == '23000') {
                 return redirect()->back()->with('error', 'No se puede eliminar este seguimiento porque está relacionado con otro registro.');
             }
             return redirect()->back()->with('error', 'Ocurrió un error al intentar eliminar el seguimiento.');
         }
-        
     }
 }

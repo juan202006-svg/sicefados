@@ -6,14 +6,14 @@
     <div class="card shadow-sm border-0">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h5 class="mb-0 fw-semibold">Lista de Categorias</h5>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregar">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregar">
                 <i class="bi bi-plus-circle"></i> Nueva categoria
             </button>
         </div>
 
         <div class="card shadow-sm border-0">
             <div class="table-responsive">
-                <table id="tabla-categorias" class="table table-hover table-bordered align-middle text-center">
+                <table id="categoriaTable" class="table table-bordered table-striped datatable text-center">
                     <thead style="background-color: #f8f9fa;">
                         <tr>
                             <th>Código</th>
@@ -34,8 +34,8 @@
                                     data-id="{{ $item->id }}"
                                     data-date="{{ $item->date }}"
                                     data-name="{{ $item->name }}"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#editar">
+                                    data-toggle="modal"
+                                    data-target="#editar">
                                     Editar
                                 </button>
                                 <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $item->id }}">
@@ -57,7 +57,7 @@
                     <div class="modal-content">
                         <div class="modal-header bg-primary text-white">
                             <h5 class="modal-title" id="agregarLabel">Agregar Nueva Categoría</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                            <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Cerrar"></button>
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
@@ -70,7 +70,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                         @method('put')
                         <div class="modal-header">
                             <h5 class="modal-title" id="editarLabel">Editar Categoría</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="id" id="edit-id">
@@ -101,7 +101,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                         </div>
                     </form>
@@ -120,114 +120,100 @@
                 </div>
             </div>
         </div>
-        <div>
-        </div>
-
-        <!-- Bootstrap 5 JS y Popper.js -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-
-        <!-- DataTables CSS -->
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-
-        <!-- DataTables JS y dependencias -->
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
-        <!-- Inicializar DataTable -->
-        <script>
-            $(document).ready(function() {
-                $('#tabla-categorias').DataTable({
-                    "language": {
-                        "lengthMenu": "Mostrar _MENU_ registros por página",
-                        "zeroRecords": "No se encontraron resultados",
-                        "info": "Mostrando página _PAGE_ de _PAGES_",
-                        "infoEmpty": "No hay registros disponibles",
-                        "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                        "search": "Buscar:",
-                        "paginate": {
-                            "next": "Siguiente",
-                            "previous": "Anterior"
-                        }
-                    }
-                });
+    </div>
+</div>
+<!-- Script Modal Editar -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.editbtn').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                document.getElementById('formEditar').action = `/pasante/categoria/update/${id}`;
+                document.getElementById('edit-id').value = id;
+                document.getElementById('edit-date').value = this.getAttribute('data-date');
+                document.getElementById('edit-name').value = this.getAttribute('data-name');
             });
-        </script>
+        });
+    });
+</script>
 
-        <!-- Script Modal Editar -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                document.querySelectorAll('.editbtn').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const id = this.getAttribute('data-id');
-                        document.getElementById('formEditar').action = `/pasante/categoria/update/${id}`;
-                        document.getElementById('edit-id').value = id;
-                        document.getElementById('edit-date').value = this.getAttribute('data-date');
-                        document.getElementById('edit-name').value = this.getAttribute('data-name');
-                    });
-                });
-            });
-        </script>
-
-        <script>
-            document.querySelectorAll('.btnEliminar').forEach(button => {
-                button.addEventListener('click', function() {
-                    const id = this.getAttribute('data-id');
-                    Swal.fire({
-                        title: '¿Estás seguro?',
-                        text: "¡No podrás revertir esto!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#d33',
-                        cancelButtonColor: '#3085d6',
-                        confirmButtonText: 'Sí, eliminar',
-                        cancelButtonText: 'Cancelar'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            const formEliminar = document.getElementById('formEliminar');
-                            formEliminar.action = `/pasante/categoria/destoy/${id}`;
-                            formEliminar.submit();
-                        }
-                    });
-                });
-            });
-        </script>
-
-
-        <!-- Script para establecer la fecha actual en el campo de fecha  -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const dateInput = document.getElementById('date');
-                const today = new Date();
-
-                const year = today.getFullYear();
-                const month = String(today.getMonth() + 1).padStart(2, '0'); // Mes empieza desde 0
-                const day = String(today.getDate()).padStart(2, '0');
-
-                const localDate = `${year}-${month}-${day}`;
-                dateInput.value = localDate;
-            });
-        </script>
-        @if (session('success'))
-        <script>
+<script>
+    document.querySelectorAll('.btnEliminar').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
             Swal.fire({
-                icon: 'success',
-                title: 'Éxito',
-                text: '{{ session("success") }}',
-                confirmButtonColor: '#3085d6',
-            });
-        </script>
-        @endif
-        @if (session('error'))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: '{{ session("error") }}',
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
                 confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formEliminar = document.getElementById('formEliminar');
+                    formEliminar.action = `/pasante/categoria/destroy/${id}`;
+                    formEliminar.submit();
+                }
             });
-        </script>
-        @endif
+        });
+    });
+</script>
 
-        @endsection
+
+<!-- Script para establecer la fecha actual en el campo de fecha  -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateInput = document.getElementById('date');
+        const today = new Date();
+
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Mes empieza desde 0
+        const day = String(today.getDate()).padStart(2, '0');
+
+        const localDate = `${year}-${month}-${day}`;
+        dateInput.value = localDate;
+    });
+</script>
+@if (session('success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: '{{ session("success") }}',
+            confirmButtonColor: '#3085d6',
+        });
+    });
+</script>
+@endif
+
+@if (session('error'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '{{ session("error") }}',
+            confirmButtonColor: '#d33',
+        });
+    });
+</script>
+@endif
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        $('#categoriaTable').DataTable({
+            responsive: false,
+            autoWidth: false,
+            language: {
+                url: "{{ asset('AdminLTE/plugins/datatables/i18n/es-ES.json') }}"
+            }
+        });
+    });
+</script>
+@endsection
+
+
+@endsection

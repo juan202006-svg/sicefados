@@ -7,7 +7,7 @@
     <div class="card shadow-sm border-0">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h5 class="mb-0 fw-semibold">Lista de Cosechas</h5>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregar">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregar">
                 <i class="bi bi-plus-circle"></i> Nueva Cosecha
             </button>
         </div>
@@ -32,7 +32,7 @@
                     <tr>
                         <td class="text-center">{{ $n++ }}</td>
                         <td class="text-center">{{ $ch->date }}</td>
-                        <td class="text-center">{{ $ch->crops->species->common_name }}</td>
+                        <td class="text-center">{{ $ch->crops->species->name }}</td>
                         <td class="text-center">{{ $ch->quantity }}</td>
                         <td class="text-center">{{ $ch->unit }}</td>
                         <td class="text-center">{{ $ch->destination }}</td>
@@ -48,8 +48,8 @@
                                 data-destination="{{ $ch->destination }}"
                                 data-mortality="{{ $ch->mortality }}"
                                 data-notes="{{ $ch->notes }}"
-                                data-bs-toggle="modal"
-                                data-bs-target="#editar">
+                                data-toggle="modal"
+                                data-target="#editar">
                                 Editar
                             </button>
                             <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $ch->id }}">
@@ -70,7 +70,7 @@
                         @method('put')
                         <div class="modal-header">
                             <h5 class="modal-title" id="editarLabel">Editar Cosecha</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="id" id="edit-id">
@@ -83,7 +83,7 @@
                                 <select class="form-control" id="edit-crop_id" name="crop_id" required>
                                     <option value="">Seleccione un cultivo</option>
                                     @foreach ($cultivos as $cultivo)
-                                    <option value="{{ $cultivo->id }}" data-quantity="{{ $cultivo->quantity }}">{{ $cultivo->species->common_name }}</option>
+                                    <option value="{{ $cultivo->id }}" data-quantity="{{ $cultivo->quantity }}">{{ $cultivo->species->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -109,7 +109,7 @@
                                 <textarea class="form-control" name="notes" id="edit-notes"></textarea>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                 <button type="submit" class="btn btn-primary"> Guardar Cambios</button>
                             </div>
                     </form>
@@ -139,7 +139,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="agregarLabel">Nueva Cosecha</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
@@ -153,7 +153,7 @@
                             @foreach ($cultivos as $cultivo)
                             <option
                                 value="{{ $cultivo->id }}" data-quantity="{{ $cultivo->quantity }}">
-                                {{ $cultivo->species->common_name }}
+                                {{ $cultivo->species->name }}
                             </option>
                             @endforeach
                         </select>
@@ -180,7 +180,7 @@
                         <textarea name="notes" class="form-control" id="notes" required></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
@@ -219,6 +219,11 @@
             });
         });
     });
+    document.getElementById('editar').addEventListener('shown.bs.modal', function() {
+        const quantityInput = document.getElementById('edit-quantity');
+        const event = new Event('input');
+        quantityInput.dispatchEvent(event);
+    });
 </script>
 <!-- validar la cantidad de peces en lacosecha y la parte de la mortalidad a lahora de agregar-->
 <script>
@@ -244,7 +249,7 @@
                 if (cantidad > cantidadMax) {
                     input.classList.add('is-invalid');
                     errorDiv.style.display = 'block';
-                    errorDiv.textContent = `No puedes ingresar más de ${cantidadMax} peces.`;
+                    errorDiv.textContent = `No puedes ingresar más de ${cantidadMax} cultivadas .`;
                     if (mortalidad) mortalidad.value = '';
                 } else {
                     input.classList.remove('is-invalid');
@@ -290,55 +295,28 @@
         });
     });
 </script>
-
-<!-- Bootstrap 5 JS y Popper.js -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-
-<!-- DataTables JS y dependencias -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
-<!-- Inicializar DataTable -->
+@if (session('success'))
 <script>
-    $(document).ready(function() {
-        $('#tabla-cultivos').DataTable({
-            "language": {
-                "lengthMenu": "Mostrar _MENU_ registros por página",
-                "zeroRecords": "No se encontraron resultados",
-                "info": "Mostrando página _PAGE_ de _PAGES_",
-                "infoEmpty": "No hay registros disponibles",
-                "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                "search": "Buscar:",
-                "paginate": {
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                }
-            }
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: '{{ session("success") }}',
+            confirmButtonColor: '#3085d6',
         });
     });
 </script>
-
-@if (session('success'))
-<script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Éxito',
-        text: '{{ session("success") }}',
-        confirmButtonColor: '#3085d6',
-    });
-</script>
 @endif
+
 @if (session('error'))
 <script>
-    Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: '{{ session("error") }}',
-        confirmButtonColor: '#d33',
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '{{ session("error") }}',
+            confirmButtonColor: '#d33',
+        });
     });
 </script>
 @endif

@@ -4,18 +4,24 @@ namespace Modules\ACUAPONICO\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\ACUAPONICO\Entities\AquaponicSystem;
+use Modules\AGROCEFA\Entities\Crop;
 
 class Lot extends Model
 {
     use HasFactory;
 
+<<<<<<< HEAD
 protected $fillable = ['date', 'name', 'capacity', 'ocupado', 'disponible', 'state', 'image'];
+=======
+    protected $fillable = [ 'aquaponic_system_id' , 'date', 'name', 'capacity', 'image', 'description', 'state'];
+>>>>>>> ae8055158991911aeef9b496fc04c0cb1cf9e67e
     protected $table = 'lots';
 
     // Relación con cultivos usando la tabla pivote crop_lot
     public function cultivos()
     {
-        return $this->belongsToMany(CropAquaponic::class, 'crop_lot', 'lot_id', 'crop_aquaponic_id')
+        return $this->belongsToMany(Crop::class, 'crop_lot', 'lot_id', 'crop_id')
             ->withPivot('planted_quantity')
             ->withTimestamps();
     }
@@ -45,6 +51,10 @@ protected $fillable = ['date', 'name', 'capacity', 'ocupado', 'disponible', 'sta
 
         $this->state = ($disponible > 0) ? 'disponible' : 'ocupado';
         $this->save();
+    }
+    public function aquaponicSystem()
+    {
+        return $this->belongsTo(AquaponicSystem::class, 'aquaponic_system_id');
     }
 
 

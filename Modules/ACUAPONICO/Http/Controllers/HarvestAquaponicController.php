@@ -9,10 +9,20 @@ use Modules\ACUAPONICO\Entities\HarvestAquaponic;
 
 class HarvestAquaponicController extends Controller
 {
-    
+
     public function index()
     {
-        $cultivos = CropAquaponic::with('species')->where('status','Seguimiento')->get();
+        // Cultivos en seguimiento
+        $cultivosSeguimiento = CropAquaponic::with('species')->where('status', 'Seguimiento')->get();
+
+        // Cultivos usados en cosechas aunque ya no estén en seguimiento
+        $cultivosUsados = HarvestAquaponic::with('crops.species')->get()
+            ->pluck('crops')
+            ->unique('id');
+
+        // Combinar ambos y eliminar duplicados
+        $cultivos = $cultivosSeguimiento->concat($cultivosUsados)->unique('id');
+
         $cosechas = HarvestAquaponic::with('crops.species')->get();
         return view('acuaponico::pasante.cosechas', compact('cultivos', 'cosechas'));
     }
@@ -29,13 +39,12 @@ class HarvestAquaponicController extends Controller
         $cosecha->notes = $request->notes;
         $cosecha->save();
 
-         $cultivo = CropAquaponic::findOrFail($request->crop_id);
+        $cultivo = CropAquaponic::findOrFail($request->crop_id);
         // Cambiar el estado del cultivo a 'en seguimiento'
         $cultivo->status = 'Cosechado';
         $cultivo->save();
 
-       return redirect()->back()->with('success', 'Cosecha registrada correctamente.');
-
+        return redirect()->back()->with('success', 'Cosecha registrada correctamente.');
     }
 
     public function update(Request $request, $id)
@@ -56,8 +65,19 @@ class HarvestAquaponicController extends Controller
     public function destroy($id)
     {
         $cosecha = HarvestAquaponic::findOrFail($id);
-            $cosecha->delete();
 
-            return redirect()->back()->with('success', 'Cosecha  eliminada correctamente.');
+        // Obtener el cultivo asociado a la cosecha
+        $cultivo = CropAquaponic::find($cosecha->crop_id);
+
+        // Eliminar la cosecha
+        $cosecha->delete();
+
+        // Si existe el cultivo, actualizar su estado a "Seguimiento"
+        if ($cultivo) {
+            $cultivo->status = 'Seguimiento';
+            $cultivo->save();
+        }
+
+        return redirect()->back()->with('success', 'Cosecha eliminada correctamente y estado del cultivo actualizado.');
     }
 }
