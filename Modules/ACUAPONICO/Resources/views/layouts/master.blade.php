@@ -13,7 +13,15 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   
 <!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+  <!-- Bootstrap 5 CSS (si no lo tienes ya) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -29,67 +37,226 @@
   @stack('styles')
   <style>
     .main-header {
-      border-bottom: none !important;
-      margin-bottom: 0 !important;
+        border-bottom: none !important;
+        margin-bottom: 0 !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 80%;
+        z-index: 1030;
     }
 
     .content-wrapper {
-      margin-top: 0 !important;
-      padding-top: 0 !important;
+        margin-top: 0 !important;
+        padding-top: 55px !important;
+        margin-left: 250px !important;
+        min-height: calc(100vh - 55px);
     }
 
     body.layout-fixed .wrapper .content-wrapper {
-      padding-top: 0 !important;
-      margin-top: 0 !important;
+        padding-top: 55px !important;
+        margin-top: 0 !important;
+        margin-left: 250px !important;
+    }
+    
+    .main-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 250px;
+        z-index: 1030;
     }
   </style>
 </head>
 
-<body class="hold-transition sidebar-mini ">
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light border-0 mb-0">
+<body class="hold-transition sidebar-mini">
+<nav class="main-header navbar navbar-expand navbar-white navbar-light shadow-sm" style="width: 83%;">
     <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ route('cefa.acuaponico.index') }}"
-          class="nav-link text-dark {{ request()->routeIs('cefa.acuaponico.index') ? 'border-bottom border-dark' : '' }}">
-          Inicio
-        </a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ route('acuaponico.admin.welcome') }}"
-          class="nav-link text-dark {{ request()->routeIs('acuaponico.admin.welcome') ? 'border-bottom border-dark' : '' }}">
-          Administrador
-        </a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ route('acuaponico.admin.admin.usuarios') }}"
-          class="nav-link text-dark {{ request()->routeIs('acuaponico.admin.admin.usuarios') ? 'border-bottom border-dark' : '' }}">
-          Usuarios
-        </a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ route('acuaponico.admin.admin.produccion') }}"
-          class="nav-link text-dark {{ request()->routeIs('acuaponico.admin.admin.produccion') ? 'border-bottom border-dark' : '' }}">
-          Produccion
-        </a>
-      </li>
-      <!-- Botón de logout -->
-      <li class="nav-item">
-        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-          @csrf
-          <button type="submit" class="btn btn-link nav-link" style="color: dark;">
-            <i class="fas fa-sign-out-alt" style="color: dark"></i>
-          </button>
-        </form>
-      </li>
+    <ul class="navbar-nav" style="margin-left: 48%;">
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ route('cefa.acuaponico.index') }}"
+               class="nav-link {{ request()->routeIs('cefa.acuaponico.index') ? 'active' : '' }}">
+                <i class="fas fa-home mr-2"></i> Inicio
+            </a>
+        </li>
+        
+        <li class="nav-item d-none d-sm-inline-block ml-2">
+            <div class="nav-divider"></div>
+        </li>
+        
+        <li class="nav-item d-none d-sm-inline-block" style="margin-left: ">
+            <a href="{{ route('acuaponico.admin.welcome') }}"
+               class="nav-link {{ request()->routeIs('acuaponico.admin.welcome') ? 'active' : '' }}">
+                <i class="fas fa-user-shield mr-2"></i> Administrador
+            </a>
+        </li>
+        
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ route('acuaponico.admin.admin.usuarios') }}"
+               class="nav-link {{ request()->routeIs('acuaponico.admin.admin.usuarios') ? 'active' : '' }}">
+                <i class="fas fa-users mr-2"></i> Usuarios
+            </a>
+        </li>
+        
+        <li class="nav-item dropdown d-none d-sm-inline-block">
+            <a href="#" class="nav-link dropdown-toggle {{ request()->routeIs('acuaponico.admin.admin.produccion*') ? 'active' : '' }}" 
+               id="produccionDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-chart-line mr-2"></i> Producción
+            </a>
+            <div class="dropdown-menu dropdown-menu-left animate slideIn" aria-labelledby="produccionDropdown">
+                <h6 class="dropdown-header text-uppercase small font-weight-bold text-muted">Registros</h6>
+                <a class="dropdown-item" href="{{ route('acuaponico.admin.admin.registrolote') }}"><i class="fas fa-clipboard-list mr-2"></i> Registro de lotes</a>
+                <a class="dropdown-item" href="{{ route('acuaponico.admin.admin.registrocategoria') }}"><i class="fas fa-tags mr-2"></i> Registro de categorías</a>
+                <a class="dropdown-item" href="{{ route('acuaponico.admin.admin.registroespecie') }}"><i class="fas fa-fish mr-2"></i> Registros de especies</a>
+                <a class="dropdown-item" href="{{ route('acuaponico.admin.admin.registrocultivo') }}"><i class="fas fa-seedling mr-2"></i> Registros de cultivos</a>
+                
+                <div class="dropdown-divider"></div>
+                
+                <h6 class="dropdown-header text-uppercase small font-weight-bold text-muted">Seguimientos</h6>
+                <a class="dropdown-item" href="#"><i class="fas fa-clipboard-check mr-2"></i> Seguimientos</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-fish mr-2"></i> Seguimientos de peces</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-leaf mr-2"></i> Seguimientos de plantas</a>
+                
+                <div class="dropdown-divider"></div>
+                
+                <a class="dropdown-item" href="#"><i class="fas fa-harvest mr-2"></i> Cosecha</a>
+            </div>
+        </li>
     </ul>
-  </nav>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-link nav-link" title="Cerrar sesión">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="d-none d-sm-inline ml-2">Salir</span>
+                </button>
+            </form>
+        </li>
+    </ul>
+</nav>
+
+<style>
+    /* Estilos base */
+    .navbar {
+        padding: 0.5rem 1rem;
+        background-color: #fff !important;
+    }
+    
+    .navbar-light .navbar-nav .nav-link {
+        color: #5a5a5a;
+        transition: all 0.2s ease;
+        padding: 0.6rem 1.2rem;
+        margin: 0 0.1rem;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        position: relative;
+    }
+    
+    /* Efecto hover */
+    .navbar-light .navbar-nav .nav-link:hover {
+        color: #007bff;
+        background-color: rgba(0, 123, 255, 0.05);
+    }
+    
+    /* Item activo */
+    .navbar-light .navbar-nav .active {
+        color: #007bff !important;
+        background-color: rgba(0, 123, 255, 0.1);
+    }
+    
+    .navbar-light .navbar-nav .active:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 20%;
+        width: 60%;
+        height: 2px;
+        background-color: #007bff;
+    }
+    
+    /* Separador entre items */
+    .nav-divider {
+        width: 1px;
+        height: 30px;
+        background-color: rgba(0, 0, 0, 0.1);
+        margin: 0 0.5rem;
+        align-self: center;
+    }
+    
+    /* Dropdown mejorado */
+    .dropdown-menu {
+        border: none;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 0.5rem 0;
+        margin-top: 5px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .dropdown-item {
+        padding: 0.5rem 1.5rem;
+        color: #495057;
+        transition: all 0.2s;
+        font-size: 0.9rem;
+    }
+    
+    .dropdown-item:hover {
+        background-color: rgba(0, 123, 255, 0.05);
+        color: #007bff;
+        padding-left: 1.75rem;
+    }
+    
+    .dropdown-header {
+        font-size: 0.75rem;
+        padding: 0.25rem 1.5rem;
+    }
+    
+    .dropdown-divider {
+        border-color: rgba(0, 0, 0, 0.05);
+        margin: 0.25rem 0;
+    }
+    
+    /* Botón de salida */
+    .navbar-light .navbar-nav .btn-link {
+        margin-left: -20%;
+        color: #5a5a5a;
+        transition: all 0.2s;
+    }
+    
+    .navbar-light .navbar-nav .btn-link:hover {
+        color: #dc3545;
+        text-decoration: none;
+    }
+    
+    /* Animación del dropdown */
+    @keyframes slideIn {
+        0% {
+            opacity: 0;
+            transform: translateY(5px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animate.slideIn {
+        animation: slideIn 0.2s ease-out;
+    }
+</style>
+
+
+
 
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar elevation-4" style="background-color: rgb(207, 237, 218); 
-                position: fixed; top: 0; left: 0; height: 100vh; width: 250px; z-index: 1030;">
+                position: fixed; top: 0; left: 0; height: 100vh; width: 250px; z-index: 1030; ">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
       <img src=" {{asset('AdminLTE/dist/img/logoaco.png') }}" style="width: 130px; ">
@@ -120,12 +287,82 @@
               <p>Gestión de Usuarios</p>
             </a>
           </li>
+
+          @php
+          $produccionRoutes = [
+              'acuaponico.admin.admin.registrolote',
+              'acuaponico.admin.admin.registrocategoria',
+              'acuaponico.admin.admin.registroespecie',
+              'acuaponico.admin.admin.registrocultivo',
+              'acuaponico.admin.admin.registroseguimiento',
+          ];
+          $isProduccionActive = collect($produccionRoutes)->contains(fn($route) => request()->routeIs($route));
+          @endphp
+
           <li class="nav-item">
-            <a href=" {{ route('acuaponico.admin.admin.produccion')}}" class="nav-link" id="produccion">
-              <i class="nav-icon fas fa-th"></i>
-              <p>Producción</p>
-            </a>
+              <a href="#submenuProduccion" 
+                class="nav-link {{ $isProduccionActive ? 'active bg-info text-white' : '' }}" 
+                data-bs-toggle="collapse" 
+                aria-expanded="{{ $isProduccionActive ? 'true' : 'false' }}">
+                  <i class="nav-icon fas fa-seedling"></i>
+                  <p>
+                      Producción
+                      <i class="right fas fa-angle-left"></i>
+                  </p>
+              </a>
+              <ul class="collapse nav flex-column ms-3 {{ $isProduccionActive ? 'show' : '' }}" id="submenuProduccion">
+                  <li class="nav-item">
+                      <a href="{{ route('acuaponico.admin.admin.registrolote') }}" 
+                        class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registrolote') ? 'active bg-info text-white' : '' }}">
+                          <i class="{{ request()->routeIs('acuaponico.admin.admin.registrolote') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                          <p>Registro de lotes</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{ route('acuaponico.admin.admin.registrocategoria') }}" 
+                        class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registrocategoria') ? 'active bg-info text-white' : '' }}">
+                          <i class="{{ request()->routeIs('acuaponico.admin.admin.registrocategoria') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                          <p>Registro de categorías</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{ route('acuaponico.admin.admin.registroespecie') }}" 
+                        class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registroespecie') ? 'active bg-info text-white' : '' }}">
+                          <i class="{{ request()->routeIs('acuaponico.admin.admin.registroespecie') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                          <p>Registros de especies</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{ route('acuaponico.admin.admin.registrocultivo') }}" 
+                        class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registrocultivo') ? 'active bg-info text-white' : '' }}">
+                          <i class="{{ request()->routeIs('acuaponico.admin.admin.registrocultivo') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                          <p>Registro de cultivos</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{ route('acuaponico.admin.admin.registroseguimiento') }}" 
+                        class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registroseguimiento') ? 'active bg-info text-white' : '' }}">
+                          <i class="{{ request()->routeIs('acuaponico.admin.admin.registroseguimiento') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                          <p>Seguimientos</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="#" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Cosecha</p>
+                      </a>
+                  </li>
+              </ul>
           </li>
+          <style>
+              .nav-link.active.bg-info {
+                  background-color: #5bc0de !important; /* azul claro */
+                  color: white !important;
+              }
+          </style>
+
+
+
           <li class="nav-item">
             <a href=" {{ route('acuaponico.admin.admin.actividades')}}" class="nav-link" id="produccion">
               <i class="nav-icon fas fa-th"></i>
@@ -140,12 +377,15 @@
   </aside>
 
 
+
   <!-- Main content -->
-  <div class="content-wrapper pt-0 mt-0" style="margin-top: 0 !important; padding-top: 0 !important;">
+  <div class="content-wrapper pt-0 mt-0" style="margin-top: 0 !important; padding-top: 55px !important; margin-left: 250px !important;">
     @yield('content')
     @yield('content2')
     @yield('content3')
-  </div>
+    @yield('content4')
+    @yield('content5')
+  </div> 
 
 
   <!-- jQuery -->
@@ -165,6 +405,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
   @stack('scripts')
+  @yield('scripts')
+
 </body>
 
 </html>

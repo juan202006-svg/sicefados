@@ -14,6 +14,7 @@ class CreateLotsTable extends Migration
             $table->string('name');
             $table->integer('capacity');
             $table->enum('state', ['disponible', 'ocupado', 'no disponible'])->default('disponible');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

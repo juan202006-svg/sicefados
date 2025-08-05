@@ -20,6 +20,15 @@ class TrackingController extends Controller
         return view('acuaponico::pasante.seguimiento', compact('seguimientos', 'cultivos')); 
     }
 
+    public function registro()
+        {
+            $cultivos = CropAquaponic::with('species')->whereIn('status', ['Cultivado', 'Seguimiento'])->get();
+            $seguimientos = Tracking::with('crops.species')->get();
+
+            return view('acuaponico::admin.registroseguimiento', compact('seguimientos', 'cultivos'));
+        }
+
+
     public function store(Request $request)
     {
         $date = $request->date;

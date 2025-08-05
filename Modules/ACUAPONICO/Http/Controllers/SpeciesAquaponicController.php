@@ -19,6 +19,13 @@ class SpeciesAquaponicController extends Controller
         return view('acuaponico::pasante.especies', compact('especies', 'categorias'));
     }
 
+    public function registroEspecies()
+    {
+        $especies = SpeciesAquaponic::with('category')->get();
+        $categorias = Category::all();
+        return view('acuaponico::admin.registroespecie', compact('especies', 'categorias'));
+    }
+
 
 
 

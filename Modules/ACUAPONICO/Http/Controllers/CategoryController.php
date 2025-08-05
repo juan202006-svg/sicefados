@@ -17,7 +17,14 @@ class CategoryController extends Controller
         return view('acuaponico::pasante.categoria', ['categorias' => $categorias]);
     }
 
+    public function registroCategoria()
+    {
+        $categorias = Category::get();
+        return view('acuaponico::admin.registrocategoria', ['categorias' => $categorias]);
+    }
+    
 
+    
     public function create()
     {
         return view('acuaponico::create');

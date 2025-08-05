@@ -74,27 +74,53 @@ class PermissionsTableSeeder extends Seeder
         ]);
         $permissions_admin[] = $permission->id; // Almacenar permiso para rol
 
-        //acceso a la vista de produccion
-        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.produccion'], [ // Registro o actualización de permiso
-            'name' => 'Acceso lista de produccion',
-            'description' => 'Vista de produccion',
-            'description_english' => 'Access to the list of production',
+        
+        //acceso a la vista de registro de lotes admin
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.registrolote'], [ // Registro o actualización de permiso
+            'name' => 'Acceso lista de registro de lotes',
+            'description' => 'Vista de registro de lotes',
+            'description_english' => 'Access batch registration list',
             'app_id' => $app->id
         ]);
         $permissions_admin[] = $permission->id; // Almacenar permiso para rol
 
-        //permiso para editar produccion    
-        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.destroyProduccion'], [ // Registro o actualización de permiso
-            'name' => 'Eliminar produccion',
-            'description' => 'Eliminar produccion',
-            'description_english' => 'Delete production',
+
+        //acceso a la vista de registro de categorias admin
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.registrocategoria'], [ //Registro o actualización de permiso
+            'name' => 'Acceso lista de registro de categorias',
+            'description' => 'Vista de registro de categorias',
+            'description_english' => 'Access to the category registration list',
             'app_id' => $app->id
         ]);
-
-        $permissions_admin[] = $permission->id; // Almacenar permiso para rol
-
+        $permission_admin[] = $permission->id;
 
 
+        //acceso a la vista de registro especies admin
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.registroespecie'], [ //Registro o actualización de permiso
+            'name' => 'Acceso lista de registro de especies',
+            'description' => 'Vista de registro de especies',
+            'description_english' => 'Access to the species registration list',
+            'app_id' => $app->id
+        ]);
+        $permission_admin[] = $permission->id;
+
+        //acceso a la vista de registro de cultivos admin
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.registrocultivo'], [ //Registro o actualización de permiso
+            'name' => 'Acceso lista de registro de cultivos',
+            'description' => 'Vista de registro de cultivos',
+            'description_english' => 'Access to the crop registration list',
+            'app_id' => $app->id
+        ]);
+        $permission_admin[] = $permission->id;
+
+        //acceso a la vista de seguimientos de peces y plantas admin
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.registroseguimiento'], [ //Registro o actualización de permiso
+            'name' => 'Acceso lista de registro de seguimientos',
+            'description' => 'Vista de registro de seguimientos',
+            'description_english' => 'Access to the tracking registration list',
+            'app_id' => $app->id
+        ]);
+        $permission_admin[] = $permission->id;
 
         // Consulta de ROLES
         $rol_admin = Role::where('slug', 'acuaponico.admin')->first(); // Rol Administrador
