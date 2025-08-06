@@ -157,6 +157,15 @@
         .text-loader {
             color: #01579B;
         }
+
+        .content-header {
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+        }
+
+        .fondo-personalizado {
+            padding-top: 0 !important;
+        }
     </style>
 
 </head>
@@ -245,6 +254,12 @@
                 <nav class="mt-6">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
+                            <a href="{{ route('acuaponico.pasante.welcomepas') }}" class="nav-link" id="gestionLotes">
+                                <i class="fas fa-th-large"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('acuaponico.pasante.pasante.acuaponicoindex') }}" class="nav-link" id="gestionLotes">
                                 <i class="fas fa-th-large"></i>
                                 <p>sistemas Acuaponicos</p>
@@ -326,8 +341,24 @@
 
         <!-- Content Wrapper -->
         <div class="content-wrapper fondo-personalizado">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-12">
+                            <ol class="breadcrumb float-sm-right m-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ route('cefa.acuaponico.index') }}">Inicio</a>
+                                </li>
+                                @stack('breadcrumbs')
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Contenido principal -->
             @yield('content2')
         </div>
+
 
         <script src="{{ asset('AdminLTE/plugins/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('AdminLTE/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
@@ -399,6 +430,23 @@
             });
         </script>
         @yield('scripts')
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const currentUrl = window.location.href;
+
+                // Selecciona todos los enlaces del sidebar
+                document.querySelectorAll('.nav-link').forEach(function(link) {
+                    const linkHref = link.href;
+
+                    // Si la URL actual contiene el href del link (y no es el "#")
+                    if (linkHref !== "#" && currentUrl.includes(linkHref)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        </script>
+
 </body>
 
 

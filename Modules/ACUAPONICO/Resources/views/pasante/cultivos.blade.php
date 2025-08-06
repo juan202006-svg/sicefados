@@ -1,6 +1,8 @@
 @extends( 'acuaponico::layouts.masterpa' )
 
-
+@push('breadcrumbs')
+<li class="breadcrumb-item active">Gestión de Cultivos</li>
+@endpush
 @section('content2')
 <h1 class="fw-bold mb-4">Gestión de Cultivos</h1>
 <div class="container mt-4">
@@ -215,126 +217,23 @@
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const loteSelectEdit = document.getElementById('edit-lot_ids');
-        const cantidadInputEdit = document.getElementById('edit-quantity');
-        const formEdit = document.getElementById('formEditar');
-        const errorDivEdit = document.getElementById('error-cantidad-edit');
-
-        function calcularCapacidadTotalEdit() {
-            const selectedOptions = Array.from(loteSelectEdit.selectedOptions);
-            let total = 0;
-            selectedOptions.forEach(option => {
-                const capacidad = parseInt(option.getAttribute('data-capacidad')) || 0;
-                const ocupado = parseInt(option.getAttribute('data-ocupado')) || 0;
-                total += (capacidad - ocupado);
-            });
-            return total;
-        }
-
-        function validarCantidadEdit() {
-            const capacidadTotal = calcularCapacidadTotalEdit();
-            const cantidad = parseInt(cantidadInputEdit.value) || 0;
-
-            if (cantidad > capacidadTotal) {
-                cantidadInputEdit.classList.add('is-invalid');
-                errorDivEdit.innerText = `La cantidad excede la capacidad total de los lotes seleccionados (${capacidadTotal}).`;
-                return false;
-            } else {
-                cantidadInputEdit.classList.remove('is-invalid');
-                errorDivEdit.innerText = '';
-                return true;
-            }
-        }
-
-        loteSelectEdit.addEventListener('change', validarCantidadEdit);
-        cantidadInputEdit.addEventListener('input', validarCantidadEdit);
-
-        formEdit.addEventListener('submit', function(e) {
-            if (!validarCantidadEdit()) {
-                e.preventDefault();
-            }
-        });
-
-        document.querySelectorAll('.editbtn').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                const loteIds = this.getAttribute('data-lot_ids').split(',');
-                const form = document.getElementById('formEditar');
-
-                form.action = `/pasante/cultivo/update/${id}`;
-                document.getElementById('edit-id').value = id;
-                document.getElementById('edit-date').value = this.getAttribute('data-date');
-                document.getElementById('edit-species_id').value = this.getAttribute('data-species_id');
-                document.getElementById('edit-quantity').value = this.getAttribute('data-quantity');
-                document.getElementById('edit-aquaponic_system_id').value = this.getAttribute('data-aquaponic_system_id');
-
-
-                // Mostrar solo los lotes actuales o disponibles
-                const options = loteSelectEdit.querySelectorAll('option');
-                options.forEach(option => {
-                    const loteId = option.value;
-                    const loteState = option.getAttribute('data-state');
-                    const capacidad = parseInt(option.getAttribute('data-capacidad')) || 0;
-                    const ocupado = parseInt(option.getAttribute('data-ocupado')) || 0;
-
-                    // Si este lote pertenece al cultivo, restamos su cantidad asignada actual
-                    let ocupadoAjustado = ocupado;
-                    if (loteIds.includes(loteId)) {
-                        const asignadoActual = parseInt(
-                            document.querySelector(`button[data-id='${id}']`)
-                            ?.getAttribute('data-lot_asignado_' + loteId)
-                        ) || 0;
-                        ocupadoAjustado -= asignadoActual;
-                    }
-
-                    option.setAttribute('data-ocupado', ocupadoAjustado);
-
-                    if (loteIds.includes(loteId) || loteState === 'disponible') {
-                        option.style.display = '';
-                        option.disabled = false;
-                        option.selected = loteIds.includes(loteId);
-                    } else {
-                        option.style.display = 'none'; // ocultar lote no válido
-                        option.selected = false;
-                    }
-                });
-
-                setTimeout(() => {
-                    validarCantidadEdit();
-                }, 200);
-            });
-        });
-
-    });
-</script>
-
-
-
-
-<!--Script para validar la capacidad de lo lotes segun la cantidad a cultival a lahora de registrar-->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
         const loteSelect = document.getElementById('lot_ids');
         const cantidadInput = document.getElementById('quantity');
         const errorDiv = document.getElementById('error-cantidad');
         const form = loteSelect.closest('form');
 
-        let capacidadTotal = 0;
-
         function calcularCapacidadTotal() {
             const selectedOptions = Array.from(loteSelect.selectedOptions);
-            capacidadTotal = selectedOptions.reduce((total, option) => {
+            return selectedOptions.reduce((total, option) => {
                 const capacidad = parseInt(option.getAttribute('data-capacidad')) || 0;
                 const ocupado = parseInt(option.getAttribute('data-ocupado')) || 0;
                 return total + (capacidad - ocupado);
-
             }, 0);
         }
 
         function validarCantidad() {
-            calcularCapacidadTotal();
+            const capacidadTotal = calcularCapacidadTotal();
             const cantidad = parseInt(cantidadInput.value) || 0;
-
             if (cantidad > capacidadTotal) {
                 cantidadInput.classList.add('is-invalid');
                 errorDiv.innerText = `La cantidad excede la capacidad total de los lotes seleccionados (${capacidadTotal}).`;
@@ -348,8 +247,6 @@
 
         loteSelect.addEventListener('change', validarCantidad);
         cantidadInput.addEventListener('input', validarCantidad);
-
-        // Validación al enviar
         form.addEventListener('submit', function(e) {
             if (!validarCantidad()) {
                 e.preventDefault();
@@ -358,6 +255,139 @@
     });
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loteSelectEdit = document.getElementById('edit-lot_ids');
+        const cantidadInputEdit = document.getElementById('edit-quantity');
+        const formEdit = document.getElementById('formEditar');
+        const errorDivEdit = document.getElementById('error-cantidad-edit');
+
+        function calcularCapacidadTotalEdit() {
+            const selectedOptions = Array.from(loteSelectEdit.selectedOptions);
+            return selectedOptions.reduce((total, option) => {
+                const capacidad = parseInt(option.getAttribute('data-capacidad')) || 0;
+                const ocupado = parseInt(option.getAttribute('data-ocupado')) || 0;
+                return total + (capacidad - ocupado);
+            }, 0);
+        }
+
+        function validarCantidadEdit() {
+            const capacidadTotal = calcularCapacidadTotalEdit();
+            const cantidad = parseInt(cantidadInputEdit.value) || 0;
+            if (cantidad > capacidadTotal) {
+                cantidadInputEdit.classList.add('is-invalid');
+                errorDivEdit.innerText = `La cantidad excede la capacidad total de los lotes seleccionados (${capacidadTotal}).`;
+                return false;
+            } else {
+                cantidadInputEdit.classList.remove('is-invalid');
+                errorDivEdit.innerText = '';
+                return true;
+            }
+        }
+
+        loteSelectEdit.addEventListener('change', validarCantidadEdit);
+        cantidadInputEdit.addEventListener('input', validarCantidadEdit);
+        formEdit.addEventListener('submit', function(e) {
+            if (!validarCantidadEdit()) {
+                e.preventDefault();
+            }
+        });
+
+        document.querySelectorAll('.editbtn').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const loteIds = this.getAttribute('data-lot_ids').split(',');
+
+                document.getElementById('edit-id').value = id;
+                document.getElementById('edit-date').value = this.getAttribute('data-date');
+                document.getElementById('edit-species_id').value = this.getAttribute('data-species_id');
+                document.getElementById('edit-quantity').value = this.getAttribute('data-quantity');
+                document.getElementById('edit-aquaponic_system_id').value = this.getAttribute('data-aquaponic_system_id');
+
+                fetch(`/pasante/cultivo/lotes-por-sistema/${this.getAttribute('data-aquaponic_system_id')}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const loteSelectEdit = document.getElementById('edit-lot_ids');
+                        loteSelectEdit.innerHTML = '';
+                        data.forEach(lote => {
+                            const option = document.createElement('option');
+                            option.value = lote.id;
+                            option.text = lote.name + ` - Disponible: ${lote.capacity - lote.ocupado}`;
+                            option.setAttribute('data-capacidad', lote.capacity);
+                            option.setAttribute('data-ocupado', lote.ocupado);
+                            option.setAttribute('data-state', 'disponible');
+                            if (loteIds.includes(String(lote.id))) option.selected = true;
+                            loteSelectEdit.appendChild(option);
+                        });
+                        setTimeout(() => {
+                            validarCantidadEdit();
+                        }, 200);
+                    });
+            });
+        });
+    });
+</script>
+
+<script>
+    document.getElementById('aquaponic_system_id').addEventListener('change', function() {
+        const sistemaId = this.value;
+        const lotesSelect = document.getElementById('lot_ids');
+        lotesSelect.innerHTML = '';
+        if (sistemaId) {
+            fetch(`/pasante/cultivo/lotes-por-sistema/${sistemaId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        lotesSelect.innerHTML = '<option disabled>No hay lotes disponibles</option>';
+                    } else {
+                        data.forEach(lote => {
+                            const option = document.createElement('option');
+                            option.value = lote.id;
+                            option.textContent = lote.name + ` - Disponible: ${lote.capacity - lote.ocupado}`;
+                            option.dataset.capacidad = lote.capacity;
+                            option.dataset.ocupado = lote.ocupado;
+                            lotesSelect.appendChild(option);
+                        });
+                    }
+                })
+                .catch(error => console.error('Error al obtener los lotes:', error));
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const editSistemaSelect = document.getElementById('edit-aquaponic_system_id');
+        const editLotesSelect = document.getElementById('edit-lot_ids');
+
+        editSistemaSelect.addEventListener('change', function() {
+            const sistemaId = this.value;
+            editLotesSelect.innerHTML = '';
+            if (sistemaId) {
+                fetch(`/pasante/cultivo/lotes-por-sistema/${sistemaId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length === 0) {
+                            editLotesSelect.innerHTML = '<option disabled>No hay lotes disponibles</option>';
+                        } else {
+                            data.forEach(lote => {
+                                const option = document.createElement('option');
+                                option.value = lote.id;
+                                option.textContent = lote.name + ` - Disponible: ${lote.capacity - lote.ocupado}`;
+                                option.dataset.capacidad = lote.capacity;
+                                option.dataset.ocupado = lote.ocupado;
+                                option.dataset.state = 'disponible';
+                                editLotesSelect.appendChild(option);
+                            });
+                            setTimeout(() => {
+                                document.getElementById('edit-quantity').dispatchEvent(new Event('input'));
+                            }, 100);
+                        }
+                    })
+                    .catch(error => console.error('Error al obtener lotes:', error));
+            }
+        });
+    });
+</script>
 <!--script del modal de eliminar-->
 <script>
     document.querySelectorAll('.btnEliminar').forEach(button => {
@@ -422,79 +452,8 @@
     });
 </script>
 @endsection
-<script>
-    document.getElementById('aquaponic_system_id').addEventListener('change', function() {
-        const sistemaId = this.value;
-        const lotesSelect = document.getElementById('lot_ids');
 
-        // Limpiar los lotes actuales
-        lotesSelect.innerHTML = '';
 
-        if (sistemaId) {
-            fetch(`/pasante/cultivo/lotes-por-sistema/${sistemaId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.length === 0) {
-                        lotesSelect.innerHTML = '<option disabled>No hay lotes disponibles</option>';
-                    } else {
-                        data.forEach(lote => {
-                            const option = document.createElement('option');
-                            option.value = lote.id;
-                            option.textContent = lote.name;
-                            option.dataset.capacidad = lote.capacity;
-                            option.dataset.ocupado = lote.ocupado; // si lo tienes
-                            lotesSelect.appendChild(option);
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error('Error al obtener los lotes:', error);
-                });
-        }
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const editSistemaSelect = document.getElementById('edit-aquaponic_system_id');
-        const editLotesSelect = document.getElementById('edit-lot_ids');
-
-        editSistemaSelect.addEventListener('change', function() {
-            const sistemaId = this.value;
-            const cultivoId = document.getElementById('edit-id').value;
-
-            editLotesSelect.innerHTML = ''; // Limpiar
-
-            if (sistemaId) {
-                fetch(`/pasante/cultivo/lotes-por-sistema/${sistemaId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.length === 0) {
-                            editLotesSelect.innerHTML = '<option disabled>No hay lotes disponibles</option>';
-                        } else {
-                            data.forEach(lote => {
-                                const option = document.createElement('option');
-                                option.value = lote.id;
-                                option.textContent = lote.name;
-                                option.dataset.capacidad = lote.capacity;
-                                option.dataset.ocupado = lote.ocupado;
-                                option.dataset.state = 'disponible';
-                                editLotesSelect.appendChild(option);
-                            });
-
-                            // Revalidar cantidad después de cambiar sistema
-                            setTimeout(() => {
-                                document.getElementById('edit-quantity').dispatchEvent(new Event('input'));
-                            }, 100);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error al obtener lotes:', error);
-                    });
-            }
-        });
-    });
-</script>
 
 
 @endsection

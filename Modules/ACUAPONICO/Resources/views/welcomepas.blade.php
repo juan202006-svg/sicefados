@@ -1,7 +1,10 @@
 @extends('acuaponico::layouts.masterpa')
 
-@section('content')
+@push('breadcrumbs')
+    <li class="breadcrumb-item active">Dashboard</li>
+@endpush
+@section('content2')
 <h1>
-    hola
+    Hola, {{ auth()->user()->name }}! Bienvenido al Dashboard de Acuaponico
 </h1>
 @endsection

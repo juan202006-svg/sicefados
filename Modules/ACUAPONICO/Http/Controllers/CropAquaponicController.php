@@ -17,7 +17,7 @@ class CropAquaponicController extends Controller
     {
         $acuaponicos = AquaponicSystem::get();
         $especies = Specie::all();
-        $cultivos = Crop::with(['species', 'lotes', 'aquaponicSystem' ])
+        $cultivos = Crop::with(['species', 'lotes', 'aquaponicSystem'])
             ->whereNotNull('aquaponic_system_id')
             ->get();
 
@@ -194,7 +194,17 @@ class CropAquaponicController extends Controller
         try {
             $lotes = Lot::where('aquaponic_system_id', $id)
                 ->where('state', 'disponible')
-                ->get();
+                ->get()
+                ->map(function ($lote) {
+                    return [
+                        'id' => $lote->id,
+                        'name' => $lote->name,
+                        'capacity' => $lote->capacity,
+                        'ocupado' => $lote->ocupado,
+                        'disponible' => $lote->disponible,
+                        'state' => $lote->state
+                    ];
+                });
 
             return response()->json($lotes);
         } catch (\Exception $e) {

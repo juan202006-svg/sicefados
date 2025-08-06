@@ -1,7 +1,9 @@
 @extends('acuaponico::layouts.masterpa')
 
+@push('breadcrumbs')
+    <li class="breadcrumb-item active">Seguimientos Peces</li>
+@endpush
 @section('content2')
-
 
 <h1 class="fw-bold mb-4">Seguimiento Peces</h1>
 <div class="content mt-4">

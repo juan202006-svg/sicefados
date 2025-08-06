@@ -2,11 +2,11 @@
 
 namespace Modules\ACUAPONICO\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\ACUAPONICO\Entities\CropAquaponic;
+use Modules\AGROCEFA\Entities\Crop;
 use Modules\ACUAPONICO\Entities\Tracking;
+use Modules\ACUAPONICO\Entities\AquaponicSystem;
 use Illuminate\Database\QueryException;
 
 class TrackingController extends Controller
@@ -15,9 +15,10 @@ class TrackingController extends Controller
     public function index()
 
     {
-        $cultivos = CropAquaponic::with('species')->whereIn('status', ['Cultivado', 'Seguimiento'])->get();
-        $seguimientos = Tracking::with('crops.species')->get();
-        return view('acuaponico::pasante.seguimiento', compact('seguimientos', 'cultivos'));
+        $acuaponicos = AquaponicSystem::get();
+        $cultivos = Crop::with('species')->whereIn('status', ['Cultivado', 'Seguimiento'])->get();
+        $seguimientos = Tracking::with('crops.species', 'crops.aquaponicSystem')->get();
+        return view('acuaponico::pasante.seguimiento', compact('seguimientos', 'cultivos', 'acuaponicos'));
     }
 
     public function store(Request $request)
@@ -30,12 +31,13 @@ class TrackingController extends Controller
 
         $sequimientos = new Tracking();
         $sequimientos->date = $date;
+        $sequimientos->aquaponic_system_id = $request->aquaponic_system_id; // Asegúrate de que este campo exista en tu formulario
         $sequimientos->crop_id = $crop_id;
         $sequimientos->days_elapsed = $days_elapsed;
         $sequimientos->notes = $notes;
         $sequimientos->save();
 
-        $cultivo = CropAquaponic::findOrFail($request->crop_id);
+        $cultivo = Crop::findOrFail($request->crop_id);
         // Cambiar el estado del cultivo a 'en seguimiento'
         $cultivo->status = 'Seguimiento';
         $cultivo->save();
@@ -48,6 +50,7 @@ class TrackingController extends Controller
     {
 
         $seguimientos = Tracking::findOrFail($id);
+        $seguimientos->aquaponic_system_id = $request->input('aquaponic_system_id');
         $seguimientos->crop_id = $request->input('crop_id');
         $seguimientos->days_elapsed = $request->input('days_elapsed');
         $seguimientos->notes = $request->input('notes');
@@ -71,7 +74,7 @@ class TrackingController extends Controller
 
             // Si solo había uno (el que acabamos de eliminar), entonces cambiar estado a 'Cultivado'
             if ($totalSeguimientos == 1) {
-                $cultivo = CropAquaponic::find($cropId);
+                $cultivo = Crop::find($cropId);
                 if ($cultivo) {
                     $cultivo->status = 'Cultivado';
                     $cultivo->save();

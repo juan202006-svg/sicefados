@@ -1,5 +1,7 @@
 @extends('acuaponico::layouts.masterpa')
-
+@push('breadcrumbs')
+    <li class="breadcrumb-item active">Control de Actividades</li>
+@endpush
 @section('content2')
 <div class="container mt-4">
     <h2 class="text-center mb-4">Actividades Recibidas</h2>

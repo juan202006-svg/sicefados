@@ -1,5 +1,7 @@
 @extends('acuaponico::layouts.masterpa')
-
+@push('breadcrumbs')
+    <li class="breadcrumb-item active">Gestión de Lotes</li>
+@endpush
 @section('content2')
 <h1 class="fw-bold mb-4">Gestión de Lotes</h1>
 
@@ -44,7 +46,13 @@
                             <span class="text-muted">Sin imagen</span>
                             @endif
                         </td>
-                        <td class="text-center"> {{ $lot->description }}</td>
+                        <td class="text-center">
+                             @if ( $lot->description )
+                            <span>{{ $lot->description }}</span>
+                            @else
+                            <span class="text-muted">Sin descripción</span>
+                            @endif
+                        </td>
                         <td class="text-center">{{ $lot->ocupado }}</td>
                         <td class="text-center">
                             @if($lot->disponible > 0)

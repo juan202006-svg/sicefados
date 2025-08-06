@@ -1,7 +1,9 @@
 @extends('acuaponico::layouts.masterpa')
 
+@push('breadcrumbs')
+    <li class="breadcrumb-item active">Seguimientos generales</li>
+@endpush
 @section('content2')
-
 
 <h1 class="fw-bold mb-4">Gestión de Seguimientos</h1>
 <div class="content mt-4">
@@ -13,10 +15,11 @@
             </button>
         </div>
         <div class="table-responsive">
-            <table id="tabla-cultivos" class="table table-hover table-bordered align-middle text-center">
+            <table id="seguimientosTable" class="table table-hover table-bordered align-middle text-center">
                 <thead style="background-color: #f8f9fa;">
                     <tr>
                         <th>Codigo</th>
+                        <th>S/acuaponico</th>
                         <th>Fecha</th>
                         <th>Cultivo</th>
                         <th>Tiempo dias</th>
@@ -29,13 +32,15 @@
                     @foreach ($seguimientos as $seguimiento)
                     <tr>
                         <td class="text-center">{{ $n++ }}</td>
+                        <td class="text-center">{{ $seguimiento->crops->aquaponicSystem->name}}</td>
                         <td class="text-center">{{ $seguimiento->date }}</td>
-                        <td class="text-center">{{ $seguimiento->crops->species->common_name }}</td>
+                        <td class="text-center">{{ $seguimiento->crops->species->name }}</td>
                         <td class="text-center">{{ $seguimiento->days_elapsed }}</td>
                         <td class="text-center">{{ $seguimiento->notes }}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-success btn-sm editbtn"
                                 data-id="{{ $seguimiento->id }}"
+                                date-aquaponic_system_id="{{ $seguimiento->aquaponic_system_id }}"
                                 data-date="{{ $seguimiento->date }}"
                                 data-crop_id="{{ $seguimiento->crop_id }}"
                                 data-days_elapsed="{{ $seguimiento->days_elapsed }}"
@@ -66,12 +71,22 @@
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="id" id="edit-id">
+                            <div class="form-group">
+                                <label for="edit-aquaponic_system_id">S/acuaponico:</label>
+                                <select id="edit-aquaponic_system_id" name="aquaponic_system_id" class="form-control" required>
+                                    <option value="">Seleccione un sistema acuapónico</option>
+                                    @foreach ($acuaponicos as $acuaponico)
+                                    <option value="{{ $acuaponico->id }}">{{ $acuaponico->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="mb-3">
                                 <label for="edit-crop_id" class="form-label">Cultivo:</label>
                                 <select class="form-control" id="edit-crop_id" name="crop_id" required>
                                     <option value="">Seleccione un cultivo</option>
                                     @foreach ($cultivos as $cultivo)
-                                    <option value="{{ $cultivo->id }}" data-date="{{ $cultivo->date }}">{{ $cultivo->species->common_name }} - {{
+                                    <option value="{{ $cultivo->id }}" data-date="{{ $cultivo->date }}"
+                                        data-system="{{ $cultivo->aquaponic_system_id }}">{{ $cultivo->species->name ?? 'no hay cultivos' }} - {{
                                         $cultivo->status }}</option>
                                     </option>
                                     @endforeach
@@ -119,6 +134,15 @@
                     <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="form-group">
+                        <label for="aquaponic_system_id">S/acuaponico:</label>
+                        <select id="aquaponic_system_id" name="aquaponic_system_id" class="form-control" required>
+                            <option value="">Seleccione un sistema acuapónico</option>
+                            @foreach ($acuaponicos as $acuaponico)
+                            <option value="{{ $acuaponico->id }}">{{ $acuaponico->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="mb-3">
                         <label for="date" class="form-label">Fecha:</label>
                         <input type="date" name="date" class="form-control" id="date" readonly>
@@ -130,14 +154,15 @@
                             @foreach ($cultivos as $cultivo)
                             <option
                                 value="{{ $cultivo->id }}"
-                                data-date="{{ $cultivo->date }}">
-                                {{ $cultivo->species->common_name }} - {{
+                                data-date="{{ $cultivo->date }}"
+                                data-system="{{ $cultivo->aquaponic_system_id }}">
+                                {{ $cultivo->species->name?? 'no hay cultivos' }} - {{
                                         $cultivo->status }}
                             </option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="mb-3">
+                    <div class=" mb-3">
                         <label for="days_elapsed" class="form-label">Tiempo en dias:</label>
                         <input type="number" name="days_elapsed" class="form-control" id="days_elapsed" readonly>
                     </div>
@@ -175,6 +200,7 @@
                 const id = this.getAttribute('data-id');
                 document.getElementById('formEditar').action = `/pasante/seguimiento/update/${id}`;
                 document.getElementById('edit-id').value = id;
+                document.getElementById('edit-aquaponic_system_id').value = this.getAttribute('date-aquaponic_system_id');
                 document.getElementById('edit-crop_id').value = this.getAttribute('data-crop_id');
                 document.getElementById('edit-days_elapsed').value = this.getAttribute('data-days_elapsed');
                 document.getElementById('edit-notes').value = this.getAttribute('data-notes');
@@ -184,7 +210,7 @@
 </script>
 <!--script para mostrar los tiempos en dias en el campo al selecionar otro cultivo a la hora de editar-->
 <script>
-    document.getElementById('edit-crop_id').addEventListener('change', function () {
+    document.getElementById('edit-crop_id').addEventListener('change', function() {
         const selectedOption = this.options[this.selectedIndex];
         const fechaCultivo = selectedOption.getAttribute('data-date');
 
@@ -224,26 +250,6 @@
     });
 </script>
 
-<!-- Inicializar DataTable -->
-<script>
-    $(document).ready(function() {
-        $('#tabla-cultivos').DataTable({
-            "language": {
-                "lengthMenu": "Mostrar _MENU_ registros por página",
-                "zeroRecords": "No se encontraron resultados",
-                "info": "Mostrando página _PAGE_ de _PAGES_",
-                "infoEmpty": "No hay registros disponibles",
-                "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                "search": "Buscar:",
-                "paginate": {
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                }
-            }
-        });
-    });
-</script>
-
 <script>
     document.getElementById('crop_id').addEventListener('change', function() {
         const selectedOption = this.options[this.selectedIndex];
@@ -264,23 +270,79 @@
     });
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function setupSystemCropDependency(systemSelectId, cropSelectId, daysInputId = null) {
+            const systemSelect = document.getElementById(systemSelectId);
+            const cropSelect = document.getElementById(cropSelectId);
+            if (!systemSelect || !cropSelect) return;
+
+            // Guardar todas las opciones al iniciar
+            const allOptions = Array.from(cropSelect.options).slice(1); // Omitir "Seleccione un cultivo"
+
+            systemSelect.addEventListener('change', function() {
+                const selectedSystemId = this.value;
+
+                cropSelect.innerHTML = '<option value="">Seleccione un cultivo</option>';
+
+                allOptions.forEach(option => {
+                    if (option.getAttribute('data-system') === selectedSystemId) {
+                        cropSelect.appendChild(option.cloneNode(true)); // importante: clonar para evitar remover de otros selects
+                    }
+                });
+
+                if (daysInputId) {
+                    const daysInput = document.getElementById(daysInputId);
+                    if (daysInput) daysInput.value = '';
+                }
+            });
+        }
+
+        // Agregar (modal nuevo)
+        setupSystemCropDependency('aquaponic_system_id', 'crop_id', 'days_elapsed');
+
+        // Editar (modal editar)
+        setupSystemCropDependency('edit-aquaponic_system_id', 'edit-crop_id', 'edit-days_elapsed');
+    });
+</script>
+
+
+
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        $('#seguimientosTable').DataTable({
+            responsive: false,
+            autoWidth: false,
+            language: {
+                url: "{{ asset('AdminLTE/plugins/datatables/i18n/es-ES.json') }}"
+            }
+        });
+    });
+</script>
+@endsection
 @if (session('success'))
 <script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Éxito',
-        text: '{{ session("success") }}',
-        confirmButtonColor: '#3085d6',
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: '{{ session("success") }}',
+            confirmButtonColor: '#3085d6',
+        });
     });
 </script>
 @endif
+
 @if (session('error'))
 <script>
-    Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: '{{ session("error") }}',
-        confirmButtonColor: '#d33',
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '{{ session("error") }}',
+            confirmButtonColor: '#d33',
+        });
     });
 </script>
 @endif

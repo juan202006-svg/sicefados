@@ -1,5 +1,7 @@
 @extends('acuaponico::layouts.masterpa')
-
+@push('breadcrumbs')
+    <li class="breadcrumb-item active">Gestión de Cosechas</li>
+@endpush
 @section('content2')
 
 <h1 class="fw-bold mb-4">Gestión de cosechas</h1>

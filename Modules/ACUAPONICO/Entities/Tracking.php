@@ -4,17 +4,18 @@ namespace Modules\ACUAPONICO\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\AGROCEFA\Entities\Crop;
 
 class Tracking extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['date', 'crop_id', 'days_elapsed', 'notes'];
+    protected $fillable = ['aquaponic_system_id','date', 'crop_id', 'days_elapsed', 'notes'];
     protected $table = 'trackings';
 
     public function crops()
     {
-        return $this->belongsTo(CropAquaponic::class, 'crop_id');
+        return $this->belongsTo(Crop::class, 'crop_id');
     }
     public function latestFishTracking()
     {

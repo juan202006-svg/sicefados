@@ -1,5 +1,7 @@
 @extends('acuaponico::layouts.masterpa')
-
+@push('breadcrumbs')
+    <li class="breadcrumb-item active">Sistemas Acuaponicos</li>
+@endpush
 @section('content2')
 
 <h1 class="fw-bold mb-4">Gestión de sistemas Acuaponicos</h1>
@@ -34,7 +36,13 @@
                         <tr>
                             <td class="text-center">{{ $n++ }}</td>
                             <td class="text-center">{{ $item->name }}</td>
-                            <td class="text-center">{{ $item->description }}</td>
+                            <td class="text-center">
+                                @if ($item->description)
+                                <span>{{ $item->description }}</span>
+                                @else
+                                <span class="text-muted">Sin descripción</span>
+                                @endif
+                            </td>
                             <td class="text-center">{{ $item->location }}</td>
                             <td class="text-center">
                                 @if ($item->image)
