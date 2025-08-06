@@ -63,7 +63,7 @@ public function index()
             'status' => 'activo',
         ]);
 
-        return redirect()->back()->with('success', 'User added successfully.');
+        return redirect()->back()->with('success', 'Usuario creado automaticamnete.');
     }
 
 

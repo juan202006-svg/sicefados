@@ -10,9 +10,7 @@ use Modules\ACUAPONICO\Entities\AquaponicSystem;
 
 class LotController extends Controller
 {
-    /**
-     * Muestra todos los lotes junto con sus cultivos relacionados.
-     */
+
     public function index()
     {
         // Cargar lotes con sus cultivos y sistema acuapónico relacionado
@@ -21,8 +19,42 @@ class LotController extends Controller
         return view('acuaponico::pasante.index', compact('lots', 'acuaponico'));
     }
 
+    public function showRegistroLote()
+    {
+        $lots = Lot::with('cultivos')->get();
+        return view('acuaponico::admin.registrolote')->with(['lots' => $lots]);
+    }
+
+    
+
+    /**
+     * Muestra el formulario de creación (no usado actualmente).
+     */
+    public function create()
+    {
+        return view('acuaponico::create');
+    }
+
+    /**
+     * Guarda un nuevo lote.
+     */
     public function store(Request $request)
     {
+
+    $request->validate([
+        'date' => 'required|date',
+        'name' => 'required|string',
+        'capacity' => 'required|integer',
+        'state' => 'required|string',
+        'image' => 'nullable|image|max:2048', 
+    ]);
+
+    $imageName = null;
+    
+    if ($request->hasFile('image')) {
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->storeAs('public/lotes', $imageName); // se guarda en storage/app/public/lotes
+    }
 
         $lot = new Lot();
         $lot->aquaponic_system_id  = $request->aquaponic_system_id;
@@ -43,6 +75,8 @@ class LotController extends Controller
 
         $lot->description = $request->description;
         $lot->state = $request->state;
+        $lot->image = $imageName ? 'storage/lotes/' . $imageName : null; // Guardar ruta relativa
+
         $lot->save();
 
 
@@ -58,9 +92,15 @@ class LotController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'capacity' => 'required|integer|min:0',
+            'state' => 'required|in:disponible,no disponible',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',        ]);
+
         $lot = Lot::with('cultivos')->findOrFail($id);
 
-        // Calcular cantidad ocupada por cultivos en este lote (desde la tabla pivote)
+        // Calcular cantidad ocupada por cultivos en este lote
         $cantidadOcupada = $lot->cultivos->sum('pivot.planted_quantity');
 
         // Validar que la nueva capacidad no sea menor que lo ya ocupado
@@ -77,13 +117,32 @@ class LotController extends Controller
         }
 
         // Actualizar datos del lote
-        $lot->update($request->all());
+        $lot->name = $request->name;
+        $lot->capacity = $request->capacity;
+        $lot->state = $request->state;
+        if ($request->hasFile('image')) {
+            // Opcional: eliminar imagen anterior si lo deseas
+            if ($lot->image && file_exists(public_path($lot->image))) {
+                unlink(public_path($lot->image));
+            }
 
-        // Recalcular automáticamente su estado
-        $lot->actualizarEstadoAutomatico();
+            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('uploads/lotes'), $imageName);
+            $lot->image = 'uploads/lotes/' . $imageName;
+        }
 
-        return redirect()->route('acuaponico.pasante.pasante.index')->with('success', 'Lote actualizado correctamente.');
+        $lot->save();
+
+        
+        // $lot->actualizarEstadoAutomatico(); // Comentar si interfiere con la selección manual
+
+        if ($request->from === 'admin') {
+            return redirect()->route('acuaponico.admin.admin.registrolote')->with('success', 'Lote actualizado correctamente.');
+        } else {
+            return redirect()->route('acuaponico.pasante.pasante.index')->with('success', 'Lote actualizado correctamente.');
+        }
     }
+
 
     /**
      * Elimina un lote si no tiene restricciones de clave foránea.

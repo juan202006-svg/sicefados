@@ -11,7 +11,11 @@ class Lot extends Model
 {
     use HasFactory;
 
+<<<<<<< HEAD
+protected $fillable = ['date', 'name', 'capacity', 'ocupado', 'disponible', 'state', 'image'];
+=======
     protected $fillable = [ 'aquaponic_system_id' , 'date', 'name', 'capacity', 'image', 'description', 'state'];
+>>>>>>> ae8055158991911aeef9b496fc04c0cb1cf9e67e
     protected $table = 'lots';
 
     // Relación con cultivos usando la tabla pivote crop_lot

@@ -35,6 +35,35 @@ class CropAquaponicController extends Controller
 
         $lotesDisponibles = $lotesTodos->where('state', 'disponible');
 
+        return view('acuaponico::pasante.cultivos', compact('especies', 'lotesDisponibles', 'cultivos', 'lotesTodos'));
+    }
+
+    public function registroCultivo()
+    {
+        $especies = SpeciesAquaponic::all();
+        $cultivos = CropAquaponic::with(['species', 'lotes'])->get();
+
+        // Todos los lotes con capacidad y estado
+        $lotesTodos = Lot::with('cultivos')->get();
+
+        // Agregamos manualmente la ocupación de cada cultivo en cada lote
+        foreach ($lotesTodos as $lote) {
+            $ocupaciones = [];
+            foreach ($lote->cultivos as $cultivo) {
+                $ocupaciones[$cultivo->id] = $cultivo->pivot->planted_quantity;
+            }
+            $lote->ocupaciones = $ocupaciones;
+        }
+
+        $lotesDisponibles = $lotesTodos->where('state', 'disponible');
+
+        return view('acuaponico::admin.registrocultivo', compact('especies', 'lotesDisponibles', 'cultivos', 'lotesTodos'));
+    }
+
+
+    public function create()
+    {
+        return view('acuaponico::create');
         return view('acuaponico::pasante.cultivos', compact('especies', 'lotesDisponibles', 'cultivos', 'lotesTodos', 'acuaponicos'));
     }
 

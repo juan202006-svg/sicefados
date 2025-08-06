@@ -28,6 +28,10 @@ class ACUAPONICOServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+            // Publicar los assets de CSS/JS del módulo en public/
+            $this->publishes([
+                module_path($this->moduleName, 'Resources/assets') => public_path('modules/acuaponico'),
+            ], 'public');
     }
 
     /**
