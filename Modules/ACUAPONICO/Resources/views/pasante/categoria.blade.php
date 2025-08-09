@@ -1,6 +1,6 @@
 @extends('acuaponico::layouts.masterpa')
 @push('breadcrumbs')
-    <li class="breadcrumb-item active">Gestión de Categorias</li>
+<li class="breadcrumb-item active">Gestión de Categorias</li>
 @endpush
 @section('content2')
 <h1 class="fw-bold mb-4">Gestión de Categorias</h1>
@@ -51,35 +51,6 @@
             </div>
         </div>
 
-        <!-- Modal Agregar -->
-        <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <form action="{{ route('acuaponico.pasante.pasante.storeCategory') }}" method="POST">
-                    @csrf
-                    <div class="modal-content">
-                        <div class="modal-header bg-primary text-white">
-                            <h5 class="modal-title" id="agregarLabel">Agregar Nueva Categoría</h5>
-                            <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Cerrar"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="date" class="form-label">Fecha:</label>
-                                <input type="date" name="date" class="form-control" id="date" required readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nombre de la Categoría:</label>
-                                <input type="text" name="name" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
         <!-- Modal Editar -->
         <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -124,6 +95,35 @@
         </div>
     </div>
 </div>
+<!-- Modal Agregar -->
+<div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="{{ route('acuaponico.pasante.pasante.storeCategory') }}" method="POST">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="agregarLabel">Agregar Nueva Categoría</h5>
+                    <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Fecha:</label>
+                        <input type="date" name="date" class="form-control" id="date" required readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nombre de la Categoría:</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!-- Script Modal Editar -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {

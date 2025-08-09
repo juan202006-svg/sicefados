@@ -1,6 +1,6 @@
 @extends('acuaponico::layouts.masterpa')
 @push('breadcrumbs')
-    <li class="breadcrumb-item active">Sistemas Acuaponicos</li>
+<li class="breadcrumb-item active">Sistemas Acuaponicos</li>
 @endpush
 @section('content2')
 
@@ -25,7 +25,6 @@
                             <th>Ubicacion</th>
                             <th>Imagen</th>
                             <th>Capacidad de lotes</th>
-                            <th>Unidad Productiva</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -53,7 +52,6 @@
                                 @endif
                             </td>
                             <td class="text-center">{{ $item->lot_capacity }}</td>
-                            <td class="text-center">{{ $item->environment->name ?? 'No asignado' }}</td> <!-- Aquí va la unidad productiva -->
                             <td class="text-center">
                                 @if($item->active)
                                 <span class="badge bg-success">Activo</span>
@@ -69,7 +67,6 @@
                                     data-location="{{ $item->location }}"
                                     data-image="{{ $item->image }}"
                                     data-lot_capacity="{{ $item->lot_capacity }}"
-                                    data-environment_id="{{ $item->environment_id }}"
                                     data-active="{{ $item->active }}"
                                     data-toggle="modal"
                                     data-target="#editar">
@@ -85,64 +82,6 @@
                 </table>
             </div>
         </div>
-
-        <!-- Modal Agregar -->
-        <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <form action="{{ route ('acuaponico.pasante.pasante.acuaponicostore') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-content">
-                        <div class="modal-header bg-primary text-white">
-                            <h5 class="modal-title" id="agregarLabel">Agregar Nuevo sistema</h5>
-                            <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Cerrar"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nombre:</label>
-                                <input type="text" name="name" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Descripcion:</label>
-                                <textarea class="form-control" name="description"> </textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="location" class="form-label">Ubicacion:</label>
-                                <input type="text" name="location" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="image" class="form-label">Imagen: </label>
-                                <input type="file" name="image" class="form-control" accept="image/*">
-                            </div>
-                            <div class="mb-3">
-                                <label for="lot_capacity" class="form-label">Capacidad de lotes:</label>
-                                <input type="number" name="lot_capacity" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="environment_id" class="form-label">Unidad Productiva:</label>
-                                <select class="form-control" name="environment_id" required>
-                                    <option value="" disabled selected>Seleccione una unidad productiva</option>
-                                    @foreach ($environment as $env)
-                                    <option value="{{ $env->id }}">{{ $env->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="active" class="form-label">Estado:</label>
-                                <select class="form-control" name="active" required>
-                                    <option value="" disabled selected>Seleccione un estado</option>
-                                    <option value="1">Activo</option>
-                                    <option value="0">Inactivo</option>
-                                </select>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                            </div>
-                        </div>
-                </form>
-            </div>
-        </div>
-
         <!-- Modal Editar -->
         <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -184,15 +123,6 @@
                                 <input type="number" class="form-control" id="edit-lot_capacity" name="lot_capacity">
                             </div>
                             <div class="form-group">
-                                <label for="edit-environment_id" class="form-label">Unidad Productiva:</label>
-                                <select class="form-control" id="edit-environment_id" name="environment_id">
-                                    <option value="">Seleccione una unidad productiva</option>
-                                    @foreach ($environment as $env)
-                                    <option value="{{ $env->id }}">{{ $env->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
                                 <label for="edit-active" class="form-label">Estado:</label>
                                 <select class="form-control" id="edit-active" name="active">
                                     <option value="" disabled selected>Seleccione un estado</option>
@@ -221,7 +151,53 @@
                 </div>
             </div>
         </div>
-        <div>
+
+        <!-- Modal Agregar -->
+        <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form action="{{ route ('acuaponico.pasante.pasante.acuaponicostore') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title" id="agregarLabel">Agregar Nuevo sistema</h5>
+                            <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nombre:</label>
+                                <input type="text" name="name" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Descripcion:</label>
+                                <textarea class="form-control" name="description"> </textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Ubicacion:</label>
+                                <input type="text" name="location" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Imagen: </label>
+                                <input type="file" name="image" class="form-control" accept="image/*">
+                            </div>
+                            <div class="mb-3">
+                                <label for="lot_capacity" class="form-label">Capacidad de lotes:</label>
+                                <input type="number" name="lot_capacity" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="active" class="form-label">Estado:</label>
+                                <select class="form-control" name="active" required>
+                                    <option value="" disabled selected>Seleccione un estado</option>
+                                    <option value="1">Activo</option>
+                                    <option value="0">Inactivo</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div>
+                </form>
+            </div>
         </div>
 
         <!-- Script Modal Editar -->
@@ -240,7 +216,6 @@
                         document.getElementById('edit-preview-image').src = image ? `/modules/acuaponico/images/acuaponico/${image}` : '';
 
                         document.getElementById('edit-lot_capacity').value = this.getAttribute('data-lot_capacity');
-                        document.getElementById('edit-environment_id').value = this.getAttribute('data-environment_id');
                         document.getElementById('edit-active').value = this.getAttribute('data-active');
                     });
                 });
@@ -308,4 +283,4 @@
         </script>
         @endsection
 
-        @endsection
+@endsection

@@ -16,7 +16,7 @@
             </button>
         </div>
         <div class="table-responsive">
-            <table id="tabla-seguimientopez" class="table table-hover table-bordered align-middle text-center">
+            <table id="seguimientoplantatable" class="table table-hover table-bordered align-middle text-center">
                 <thead style="background-color: #f8f9fa;">
                     <tr>
                         <th>Codigo</th>
@@ -36,7 +36,7 @@
                     <tr>
                         <td class="text-center">{{ $n++ }}</td>
                         <td class="text-center">{{ $sp->Tracking->date }}</td>
-                        <td class="text-center">{{ $sp->Tracking->crops->species->common_name }}</td>
+                        <td class="text-center">{{ $sp->Tracking->crops->species->name }}</td>
                         <td class="text-center">{{ $sp->plant_count }}</td>
                         <td class="text-center">{{ $sp->height_cm }}cm</td>
                         <td class="text-center">{{ $sp->growth }}cm</td>
@@ -83,7 +83,7 @@
                                     <option value="">Seleccione un seguimiento</option>
                                     @foreach ($seguimientos as $seguimiento)
                                     <option value="{{ $seguimiento->id }}">
-                                        {{ $seguimiento->crops->species->common_name }} - {{ $seguimiento->date }}
+                                        {{ $seguimiento->crops->species->name }} - {{ $seguimiento->date }}
                                     </option>
                                     @endforeach
                                 </select>
@@ -148,7 +148,7 @@
                             <option value="">Seleccione un seguimiento</option>
                             @foreach ($seguimientos as $seguimiento)
                             <option value="{{ $seguimiento->id }}">
-                                {{ $seguimiento->crops->species->common_name }} - {{ $seguimiento->date }}
+                                {{ $seguimiento->crops->species->name }} - {{ $seguimiento->date }}
                             </option>
                             @endforeach
                         </select>
@@ -278,26 +278,6 @@
         }
     });
 </script>
-@if (session('success'))
-<script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Éxito',
-        text: '{{ session("success") }}',
-        confirmButtonColor: '#3085d6',
-    });
-</script>
-@endif
-@if (session('error'))
-<script>
-    Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: '{{ session("error") }}',
-        confirmButtonColor: '#d33',
-    });
-</script>
-@endif
 <script>
     // Agregar
     let plantasPrevias = 0;
@@ -405,6 +385,43 @@
         });
     });
 </script>
+@if (session('success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: '{{ session("success") }}',
+            confirmButtonColor: '#3085d6',
+        });
+    });
+</script>
+@endif
 
+@if (session('error'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '{{ session("error") }}',
+            confirmButtonColor: '#d33',
+        });
+    });
+</script>
+@endif
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        $('#seguimientoplantatable').DataTable({
+            responsive: false,
+            autoWidth: false,
+            language: {
+                url: "{{ asset('AdminLTE/plugins/datatables/i18n/es-ES.json') }}"
+            }
+        });
+    });
+</script>
+@endsection
 
 @endsection

@@ -17,8 +17,7 @@ class AquaponicSystem extends Model
         'location',
         'image',
         'lot_capacity',
-        'active',
-        'environment_id'
+        'active'
     ];
     protected $table = 'aquaponic_systems';
 

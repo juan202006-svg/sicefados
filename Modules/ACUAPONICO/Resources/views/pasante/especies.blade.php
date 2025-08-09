@@ -36,7 +36,6 @@
                         <td class="text-center">
                             @if ($especie->image)
                             <img src="{{ asset('modules/acuaponico/images/especies/' . $especie->image) }}" alt="Imagen de la especie" class="img-fluid" style="max-width: 100px; max-height: 100px;">
-
                             @else
                             <span class="text-muted">Sin imagen</span>
                             @endif

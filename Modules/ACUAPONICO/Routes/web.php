@@ -41,7 +41,6 @@ Route::controller(AquaponicSystemController::class)->group(function () {
     Route::post('/pasante/sistemas_acuaponicos/store', 'store')->name('acuaponico.pasante.pasante.acuaponicostore');
     Route::put('/pasante/sistemas_acuaponicos/update/{id}', 'update')->name('acuaponico.pasante.pasante.acuaponicoupdate');
     Route::delete('/pasante/sistemas_acuaponicos/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.acuaponicodestroy');
-
 });
 
 
@@ -55,7 +54,6 @@ Route::controller(LotController::class)->group(function () {
     // admin
 
     Route::get('/admin/admin/registrolote', 'showRegistroLote')->name('acuaponico.admin.admin.registrolote');
-
 });
 // rutas de las categorias
 
@@ -82,7 +80,6 @@ Route::controller(SpeciesAquaponicController::class)->group(function () {
 // rutas para los cultivos
 Route::controller(CropAquaponicController::class)->group(function () {
     Route::get('/pasante/cultivo/lista', 'index')->name('acuaponico.pasante.pasante.crops');
-    Route::get('/pasante/cultivo/create', 'create')->name('acuaponico.pasante.pasante.createcrops');
     Route::post('/pasante/cultivo/store', 'store')->name('acuaponico.pasante.pasante.storecrops');
     Route::put('/pasante/cultivo/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatecrops');
     Route::delete('/pasante/cultivo/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroycrops');
@@ -145,4 +142,16 @@ Route::controller(ActivityControlController::class)->group(function () {
     Route::put('/pasante/controlactividad/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatecontrolactivity');
     Route::delete('/pasante/controlactividad/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroycontrolactivity');
     Route::get('/evidencia/{id}/ver', 'verEvidencia')->name('evidencia.ver');
+});
+
+// rutas para las resiembras
+Route::controller(ResowingController::class)->group(function () {
+    Route::get('/pasante/resiembras/lista', 'index')->name('acuaponico.pasante.pasante.indexresowing');
+    Route::post('/pasante/resiembras/store', 'store')->name('acuaponico.pasante.pasante.storeresowing');
+    Route::put('/pasante/resiembras/update/{id}', 'update')->name('acuaponico.pasante.pasante.updateresowing');
+    Route::delete('/pasante/resiembras/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyresowing');
+    Route::get('/crop-details/{cropId}', 'getCropDetails');
+    Route::get('/crops-by-system/{systemId}', 'getCropsBySystem');
+    // Ruta temporal de debug
+    Route::get('/debug-crops', 'debugCrops');
 });

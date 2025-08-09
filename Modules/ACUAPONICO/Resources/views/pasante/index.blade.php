@@ -177,7 +177,7 @@
                     </div>
                     <div class="mb-3 text-center">
                         <label class="form-label">Imagen actual:</label><br>
-                        <img id="edit-preview-image" src="" alt="Imagen de la especie" class="img-fluid mb-2" style="max-width: 100px; max-height: 100px;">
+                        <img id="edit-preview-image" src="" alt="Imagen del lote" class="img-fluid mb-2" style="max-width: 100px; max-height: 100px;">
                     </div>
                     <div class="mb-3">
                         <label for="edit-image" class="form-label">Imagen:</label>
@@ -276,9 +276,6 @@
                 document.getElementById('edit-id').value = id;
                 document.getElementById('edit-name').value = name;
                 inputCapacity.value = capacity;
-
-                // Mostrar imagen actual
-                document.getElementById('current-image').src = `/modules/acuaponico/images/lotes/${image}`;
 
                 // Validación de capacidad ocupada
                 if (Number(capacity) < capacidadOcupada) {

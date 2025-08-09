@@ -25,39 +25,11 @@ class LotController extends Controller
         return view('acuaponico::admin.registrolote')->with(['lots' => $lots]);
     }
 
-    
 
-    /**
-     * Muestra el formulario de creación (no usado actualmente).
-     */
-    public function create()
-    {
-        return view('acuaponico::create');
-    }
-
-    /**
-     * Guarda un nuevo lote.
-     */
     public function store(Request $request)
     {
-
-    $request->validate([
-        'date' => 'required|date',
-        'name' => 'required|string',
-        'capacity' => 'required|integer',
-        'state' => 'required|string',
-        'image' => 'nullable|image|max:2048', 
-    ]);
-
-    $imageName = null;
-    
-    if ($request->hasFile('image')) {
-        $imageName = time() . '.' . $request->image->extension();
-        $request->image->storeAs('public/lotes', $imageName); // se guarda en storage/app/public/lotes
-    }
-
         $lot = new Lot();
-        $lot->aquaponic_system_id  = $request->aquaponic_system_id;
+        $lot->aquaponic_system_id = $request->aquaponic_system_id;
         $lot->date = $request->date;
         $lot->name = $request->name;
         $lot->capacity = $request->capacity;
@@ -69,22 +41,19 @@ class LotController extends Controller
             // Guardar en carpeta propia de lotes
             $file->move(public_path('modules/acuaponico/images/lotes'), $filename);
 
-            // Guardar solo el nombre del archivo
+            // Asignar nombre de archivo al modelo
             $lot->image = $filename;
         }
-
         $lot->description = $request->description;
         $lot->state = $request->state;
-        $lot->image = $imageName ? 'storage/lotes/' . $imageName : null; // Guardar ruta relativa
-
         $lot->save();
 
-
-        // Actualiza el estado en base a la capacidad y ocupación actual (que es 0)
+        // Llama el método que actualiza automáticamente el estado
         $lot->actualizarEstadoAutomatico();
 
         return redirect()->back()->with('success', 'Lote generado correctamente.');
     }
+
 
 
     /**
@@ -96,7 +65,8 @@ class LotController extends Controller
             'name' => 'required|string|max:255',
             'capacity' => 'required|integer|min:0',
             'state' => 'required|in:disponible,no disponible',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',        ]);
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
 
         $lot = Lot::with('cultivos')->findOrFail($id);
 
@@ -121,20 +91,24 @@ class LotController extends Controller
         $lot->capacity = $request->capacity;
         $lot->state = $request->state;
         if ($request->hasFile('image')) {
-            // Opcional: eliminar imagen anterior si lo deseas
-            if ($lot->image && file_exists(public_path($lot->image))) {
-                unlink(public_path($lot->image));
+            // Eliminar imagen anterior si existe
+            if ($lot->image && file_exists(public_path('modules/acuaponico/images/lotes/' . $lot->image))) {
+                unlink(public_path('modules/acuaponico/images/lotes/' . $lot->image));
             }
 
-            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('uploads/lotes'), $imageName);
-            $lot->image = 'uploads/lotes/' . $imageName;
-        }
+            // Guardar nueva imagen
+            $file = $request->file('image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('modules/acuaponico/images/lotes'), $filename);
 
+            // Asignar nuevo nombre al modelo
+            $lot->image = $filename;
+        };
+        $lot->description = $request->description;
         $lot->save();
 
-        
-        // $lot->actualizarEstadoAutomatico(); // Comentar si interfiere con la selección manual
+
+        $lot->actualizarEstadoAutomatico();
 
         if ($request->from === 'admin') {
             return redirect()->route('acuaponico.admin.admin.registrolote')->with('success', 'Lote actualizado correctamente.');

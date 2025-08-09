@@ -25,7 +25,6 @@ class CreateTrackingFishTable extends Migration
             $table->timestamps(); 
         });
     }
-
     /**
      * Reverse the migrations.
      *

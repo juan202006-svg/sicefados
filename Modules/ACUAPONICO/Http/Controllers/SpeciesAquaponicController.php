@@ -20,15 +20,6 @@ class SpeciesAquaponicController extends Controller
         return view('acuaponico::pasante.especies', compact('especies', 'categorias'));
     }
 
-    public function registroEspecies()
-    {
-        $especies = SpeciesAquaponic::with('category')->get();
-        $categorias = Category::all();
-        return view('acuaponico::admin.registroespecie', compact('especies', 'categorias'));
-    }
-
-
-
     public function store(Request $request)
     {
         $category_id = $request->category_id;
@@ -61,10 +52,23 @@ class SpeciesAquaponicController extends Controller
     {
         $especies = Specie::findOrFail($id);
         $especies->category_id = $request->input('category_id');
-        $especies->scientific_name = $request->input('scientific_name');
-        $especies->common_name = $request->input('common_name');
-        $especies->life_cycle = $request->input('life_cycle');
-        $especies->optimal_temperature = $request->input('optimal_temperature');
+        $especies->name = $request->input('scientific_name');
+        $especies->name = $request->input('name');
+         if ($request->hasFile('image')) {
+            // Eliminar imagen anterior si existe
+            if ($especies->image && file_exists(public_path('modules/acuaponico/images/especies/' . $especies->image))) {
+                unlink(public_path('modules/acuaponico/images/especies/' . $especies->image));
+            }
+
+            // Guardar nueva imagen
+            $file = $request->file('image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('modules/acuaponico/images/especies'), $filename);
+
+            // Asignar nuevo nombre al modelo
+            $especies->image = $filename;
+        };
+        $especies->description = $request->input('description');
         $especies->save();
 
         return redirect()->back()->with('success', 'especie generada correctamente.');

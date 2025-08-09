@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\Category;
 use Modules\ACUAPONICO\Entities\Lot;
-use Modules\ACUAPONICO\Entities\speciesAquaponic;
+use Modules\AGROCEFA\Entities\specie;
 use Modules\ACUAPONICO\Entities\CropAquaponic;
 
 
@@ -15,7 +15,7 @@ class ProductionController extends Controller
 
     public function index()
     {
-        $species = speciesAquaponic::all();
+        $species = specie::all();
 
         if (request()->ajax()) {
             return view('acuaponico::admin.producciones', compact('species',));

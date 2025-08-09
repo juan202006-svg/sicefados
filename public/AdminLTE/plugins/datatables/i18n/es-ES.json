@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
     "decimal": "",
     "emptyTable": "No hay datos disponibles en la tabla",
     "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
@@ -20,20 +19,5 @@
         "sortAscending": ": activar para ordenar ascendente",
         "sortDescending": ": activar para ordenar descendente"
     }
-=======
-  "sProcessing":     "Procesando...",
-  "sLengthMenu":     "Mostrar _MENU_ registros",
-  "sZeroRecords":    "No se encontraron resultados",
-  "sEmptyTable":     "Ningún dato disponible en esta tabla",
-  "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-  "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-  "sSearch":         "Buscar:",
-  "sLoadingRecords": "Cargando...",
-  "oPaginate": {
-    "sFirst":    "Primero",
-    "sLast":     "Último",
-    "sNext":     "Siguiente",
-    "sPrevious": "Anterior"
-  }
->>>>>>> ae8055158991911aeef9b496fc04c0cb1cf9e67e
+
 }

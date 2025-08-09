@@ -289,6 +289,12 @@
                                 <p>Gestión de Cultivos</p>
                             </a>
                         </li>
+                         <li class="nav-item">
+                            <a href="{{ route('acuaponico.pasante.pasante.indexresowing') }}" class="nav-link" id="gestionCategorias">
+                                <i class="fas fa-tags"></i>
+                                <p>Gestión de Resiembras</p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link collapsed" data-toggle="collapse" href="#submenuSeguimiento" role="button" aria-expanded="false" aria-controls="submenuSeguimiento">
                                 <i class="fas fa-eye"></i>

@@ -12,11 +12,10 @@ class AquaponicSystemController extends Controller
 {
     public function index()
     {
-        $environment = Environment::all();
 
-        $acuaponico = AquaponicSystem::with('environment')->get();
+        $acuaponico = AquaponicSystem::get();
 
-        return view('acuaponico::pasante.acuaponico', compact('acuaponico', 'environment'));
+        return view('acuaponico::pasante.acuaponico', ['acuaponico' => $acuaponico,]);
     }
     public function store(Request $request)
     {
@@ -36,7 +35,6 @@ class AquaponicSystemController extends Controller
 
         $acuaponico->lot_capacity = $request->lot_capacity;
         $acuaponico->active = $request->active;
-        $acuaponico->environment_id = $request->environment_id;
         $acuaponico->save();
 
         return redirect()->back()->with('success', 'Sistema acuapónico creado correctamente.');
@@ -61,7 +59,6 @@ class AquaponicSystemController extends Controller
 
         $acuaponico->lot_capacity = $request->lot_capacity;
         $acuaponico->active = $request->active;
-        $acuaponico->environment_id = $request->environment_id;
         $acuaponico->save();
 
         return redirect()->back()->with('success', 'Sistema acuapónico actualizado correctamente.');

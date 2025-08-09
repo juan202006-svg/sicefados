@@ -11,6 +11,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Modules\AGROCEFA\Entities\Specie;
 use Modules\ACUAPONICO\Entities\Lot;
 use Modules\ACUAPONICO\Entities\AquaponicSystem;
+use Modules\ACUAPONICO\Entities\Tracking;
 
 
 class Crop extends Model implements Auditable
@@ -49,7 +50,10 @@ class Crop extends Model implements Auditable
         return $this->belongsTo(AquaponicSystem::class, 'aquaponic_system_id');
     }
 
-
+    public function trackings()
+    {
+        return $this->hasMany(Tracking::class, 'crop_id');
+    }
 
     public function variety(){
         return $this->belongsTo(Variety::class);
