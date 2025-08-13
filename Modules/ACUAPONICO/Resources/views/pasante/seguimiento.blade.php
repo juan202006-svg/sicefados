@@ -1,7 +1,7 @@
 @extends('acuaponico::layouts.masterpa')
 
 @push('breadcrumbs')
-    <li class="breadcrumb-item active">Seguimientos generales</li>
+<li class="breadcrumb-item active">Seguimientos generales</li>
 @endpush
 @section('content2')
 
@@ -18,43 +18,69 @@
             <table id="seguimientosTable" class="table table-hover table-bordered align-middle text-center">
                 <thead style="background-color: #f8f9fa;">
                     <tr>
-                        <th>Codigo</th>
-                        <th>S/acuaponico</th>
+                        <th>Código</th>
+                        <th>Sistema Acuapónico</th>
                         <th>Fecha</th>
-                        <th>Cultivo</th>
-                        <th>Tiempo dias</th>
+                        <th>Cultivo/Resiembra</th>
+                        <th>Tipo</th>
+                        <th>Tiempo (días)</th>
                         <th>Novedades</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php $n = 1; @endphp
-                    @foreach ($seguimientos as $seguimiento)
+                    @forelse ($seguimientos as $seguimiento)
                     <tr>
                         <td class="text-center">{{ $n++ }}</td>
-                        <td class="text-center">{{ $seguimiento->crops->aquaponicSystem->name}}</td>
+                        <td class="text-center">
+                            @if($seguimiento->subject_type === 'crop')
+                            {{ $seguimiento->crops->aquaponicSystem->name ?? 'N/A' }}
+                            @else
+                            {{ $seguimiento->subject->aquaponicSystem->name ?? 'N/A' }}
+                            @endif
+                        </td>
                         <td class="text-center">{{ $seguimiento->date }}</td>
-                        <td class="text-center">{{ $seguimiento->crops->species->name }}</td>
+                        <td class="text-center">
+                            @if($seguimiento->subject_type === 'crop')
+                            {{ $seguimiento->crops->species->name ?? 'N/A' }}
+                            @else
+                            {{ $seguimiento->subject->crops->species->name ?? 'N/A' }}
+                            @endif
+                        </td>
+                        <td class="text-center">
+                            @if($seguimiento->subject_type === 'crop')
+                            <span class="badge badge-primary">Cultivo</span>
+                            @else
+                            <span class="badge badge-warning">Resiembra</span>
+                            @endif
+                        </td>
                         <td class="text-center">{{ $seguimiento->days_elapsed }}</td>
-                        <td class="text-center">{{ $seguimiento->notes }}</td>
+                        <td class="text-center">{{ Str::limit($seguimiento->notes, 50) }}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-success btn-sm editbtn"
                                 data-id="{{ $seguimiento->id }}"
-                                date-aquaponic_system_id="{{ $seguimiento->aquaponic_system_id }}"
+                                data-aquaponic_system_id="{{ $seguimiento->aquaponic_system_id }}"
                                 data-date="{{ $seguimiento->date }}"
-                                data-crop_id="{{ $seguimiento->crop_id }}"
+                                data-crop_id="{{ $seguimiento->subject_id }}"
+                                data-subject_type="{{ $seguimiento->subject_type }}"
+                                data-subject_id="{{ $seguimiento->subject_id }}"
                                 data-days_elapsed="{{ $seguimiento->days_elapsed }}"
                                 data-notes="{{ $seguimiento->notes }}"
                                 data-toggle="modal"
                                 data-target="#editar">
-                                Editar
+                                <i class="fas fa-edit"></i>
                             </button>
                             <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $seguimiento->id }}">
-                                Eliminar
+                                <i class="fas fa-trash"></i>
                             </button>
                         </td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="8" class="text-center">No hay seguimientos registrados</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -148,20 +174,19 @@
                         <input type="date" name="date" class="form-control" id="date" readonly>
                     </div>
                     <div class="mb-3">
-                        <label for="crop_id">Cultivo:</label>
+                        <label for="crop_id">Cultivo/Resiembra:</label>
                         <select name="crop_id" id="crop_id" class="form-control" required>
-                            <option value="">Seleccione un cultivo</option>
-                            @foreach ($cultivos as $cultivo)
-                            <option
-                                value="{{ $cultivo->id }}"
-                                data-date="{{ $cultivo->date }}"
-                                data-system="{{ $cultivo->aquaponic_system_id }}">
-                                {{ $cultivo->species->name?? 'no hay cultivos' }} - {{
-                                        $cultivo->status }}
-                            </option>
-                            @endforeach
+                            <option value="">Seleccione un cultivo o resiembra</option>
                         </select>
+                        <small class="form-text text-muted">
+                            <i class="fas fa-info-circle"></i>
+                            Se mostrarán cultivos en estado "Cultivado" o "Seguimiento" y resiembras en estado "Registrada" o "Seguimiento" del sistema seleccionado.
+                        </small>
                     </div>
+
+                    <!-- Campos ocultos para el tipo de sujeto -->
+                    <input type="hidden" name="subject_type" id="subject_type">
+                    <input type="hidden" name="subject_id" id="subject_id">
                     <div class=" mb-3">
                         <label for="days_elapsed" class="form-label">Tiempo en dias:</label>
                         <input type="number" name="days_elapsed" class="form-control" id="days_elapsed" readonly>
@@ -190,6 +215,80 @@
 
         const localDate = `${year}-${month}-${day}`;
         dateInput.value = localDate;
+    });
+</script>
+<!-- Script para el filtrado de cultivos por sistema -->
+<script>
+    $(document).ready(function() {
+        // When aquaponic system changes
+        $('#aquaponic_system_id').change(function() {
+            let systemId = $(this).val();
+
+            // Reset crop dropdown
+            $('#crop_id').empty().append('<option value="">Seleccione un cultivo o resiembra</option>');
+            $('#subject_type').val('');
+            $('#subject_id').val('');
+
+            if (systemId) {
+                // Mostrar indicador de carga
+                $('#crop_id').empty().append('<option value="">Cargando...</option>');
+
+                $.get(`/crops-by-system/${systemId}`)
+                    .done(function(response) {
+                        $('#crop_id').empty().append('<option value="">Seleccione un cultivo o resiembra</option>');
+
+                        if (response.success && response.data) {
+                            response.data.forEach(function(item) {
+                                $('#crop_id').append(
+                                    `<option value="${item.id}" 
+                                         data-subject-type="${item.subject_type}" 
+                                         data-subject-id="${item.subject_id}">${item.display_name}</option>`
+                                );
+                            });
+
+                            if (response.count === 0) {
+                                $('#crop_id').append('<option value="" disabled>No hay cultivos o resiembras disponibles para este sistema</option>');
+                            } else {
+                                console.log(`Cargados ${response.count} elementos para el sistema ${response.system_id}`);
+                            }
+                        } else {
+                            $('#crop_id').append('<option value="" disabled>Error al cargar datos</option>');
+                        }
+                    })
+                    .fail(function(xhr, status, error) {
+                        console.error('Error al cargar cultivos:', error);
+                        $('#crop_id').empty().append('<option value="">Error al cargar datos</option>');
+                    });
+            }
+        });
+
+        // When crop changes
+        $('#crop_id').change(function() {
+            let selectedOption = $(this).find('option:selected');
+            let subjectType = selectedOption.data('subject-type');
+            let subjectId = selectedOption.data('subject-id');
+
+            // Update hidden fields
+            $('#subject_type').val(subjectType);
+            $('#subject_id').val(subjectId);
+        });
+
+        // Form validation
+        $('form[action*="storetracking"]').on('submit', function(e) {
+            let subjectType = $('#subject_type').val();
+            let subjectId = $('#subject_id').val();
+
+            if (!subjectType || !subjectId) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de validación',
+                    text: 'Por favor seleccione un cultivo o resiembra válido.',
+                    confirmButtonColor: '#d33',
+                });
+                return false;
+            }
+        });
     });
 </script>
 <!--script del modal editar-->
@@ -305,9 +404,6 @@
         setupSystemCropDependency('edit-aquaponic_system_id', 'edit-crop_id', 'edit-days_elapsed');
     });
 </script>
-
-
-
 @section('scripts')
 <script>
     $(document).ready(function() {

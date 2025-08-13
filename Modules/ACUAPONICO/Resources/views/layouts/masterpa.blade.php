@@ -256,7 +256,7 @@
                         <li class="nav-item">
                             <a href="{{ route('acuaponico.pasante.welcomepas') }}" class="nav-link" id="gestionLotes">
                                 <i class="fas fa-th-large"></i>
-                                <p>Dashboard</p>
+                                <p>Inicio</p>
                             </a>
                         </li>
                         <li class="nav-item">

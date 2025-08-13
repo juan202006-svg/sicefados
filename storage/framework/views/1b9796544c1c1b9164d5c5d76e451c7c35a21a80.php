@@ -60,6 +60,7 @@
                             </td>
                             <td class="text-center">
                                 <button type="button" class="btn btn-success btn-sm editbtn"
+
                                     data-id="<?php echo e($item->id); ?>"
                                     data-name="<?php echo e($item->name); ?>"
                                     data-description="<?php echo e($item->description); ?>"
@@ -69,10 +70,10 @@
                                     data-active="<?php echo e($item->active); ?>"
                                     data-toggle="modal"
                                     data-target="#editar">
-                                    Editar
+                                    <i class="fas fa-edit"></i>
                                 </button>
                                 <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="<?php echo e($item->id); ?>">
-                                    Eliminar
+                                    <i class="fas fa-trash-alt"></i>
                                 </button>
                             </td>
                         </tr>
@@ -185,9 +186,7 @@
                             <div class="form-group">
                                 <label for="active" class="form-label">Estado:</label>
                                 <select class="form-control" name="active" required>
-                                    <option value="" disabled selected>Seleccione un estado</option>
                                     <option value="1">Activo</option>
-                                    <option value="0">Inactivo</option>
                                 </select>
                             </div>
                             <div class="modal-footer">
@@ -282,5 +281,5 @@
         </script>
         <?php $__env->stopSection(); ?>
 
-<?php $__env->stopSection(); ?>
+        <?php $__env->stopSection(); ?>
 <?php echo $__env->make('acuaponico::layouts.masterpa', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/pasante/acuaponico.blade.php ENDPATH**/ ?>

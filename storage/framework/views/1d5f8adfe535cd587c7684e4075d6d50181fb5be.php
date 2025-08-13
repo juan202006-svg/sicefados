@@ -74,7 +74,7 @@
                 <div class="modal fade " id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form id="formEditar" action="<?php echo e(route('acuaponico.pasante.pasante.updatecrops',$cultivo->id)); ?>" method="POST">
+                            <form id="formEditar" action="<?php echo e(route('acuaponico.pasante.pasante.updatecrops', $cultivo->id)); ?>" method="POST">
                                 <?php echo csrf_field(); ?>
                                 <?php echo method_field('put'); ?>
                                 <div class="modal-header">

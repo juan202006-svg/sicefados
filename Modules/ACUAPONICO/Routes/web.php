@@ -63,6 +63,8 @@ Route::controller(CategoryController::class)->group(function () {
     Route::get('/pasante/categoria/create', 'create')->name('acuaponico.pasante.pasante.createCategory');
     Route::put('/pasante/categoria/update/{id}', 'update')->name('acuaponico.pasante.pasante.updateCategory');
     Route::delete('/pasante/categoria/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyCategory');
+    //admin
+    Route::get('/admin/admin/registrocategoria', 'registroCategoria')->name('acuaponico.admin.admin.registrocategoria');
 });
 
 // rutas  para las especies
@@ -99,6 +101,7 @@ Route::controller(TrackingController::class)->group(function () {
     Route::post('/pasante/seguimiento/store', 'store')->name('acuaponico.pasante.pasante.storetracking');
     Route::put('/pasante/seguimiento/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatetracking');
     Route::delete('/pasante/seguimiento/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroytracking');
+    Route::get('/crops-by-system/{systemId}', 'getCropsBySystem');
 
     //admin
     Route::get('/admin/admin/registroseguimiento', 'registro')->name('acuaponico.admin.admin.registroseguimiento');
@@ -152,6 +155,8 @@ Route::controller(ResowingController::class)->group(function () {
     Route::delete('/pasante/resiembras/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyresowing');
     Route::get('/crop-details/{cropId}', 'getCropDetails');
     Route::get('/crops-by-system/{systemId}', 'getCropsBySystem');
+    Route::get('/resowing-edit-data/{id}', 'getEditData')->name('acuaponico.pasante.pasante.getEditData');
+    Route::get('/crop-lots-for-edit/{cropId}/{resowingId?}', 'getCropLotsForEdit');
     // Ruta temporal de debug
     Route::get('/debug-crops', 'debugCrops');
 });

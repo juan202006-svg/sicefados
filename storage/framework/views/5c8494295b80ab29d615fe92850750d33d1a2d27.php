@@ -22,6 +22,7 @@
                             <th>Cultivo</th>
                             <th>Cantidad</th>
                             <th>Mortalidad Original</th>
+                            <th>Lotes</th>
                             <th>Descripción</th>
                             <th>Fecha</th>
                             <th>Estado</th>
@@ -40,6 +41,11 @@
 
                             </td>
                             <td class="text-center"><?php echo e($item->original_mortality); ?></td>
+                            <td class="text-center">
+                                <?php $__currentLoopData = $item->lots; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lot): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo e($lot->name); ?> (<?php echo e($lot->pivot->quantity); ?>)<br>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </td>
                             <td class="text-center"><?php echo e($item->description); ?></td>
                             <td class="text-center"><?php echo e($item->date); ?></td>
                             <td class="text-center">
@@ -54,12 +60,16 @@
                                     data-description="<?php echo e($item->description); ?>"
                                     data-date="<?php echo e($item->date); ?>"
                                     data-status="<?php echo e($item->status); ?>"
+                                    <?php $__currentLoopData = $item->lots; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lot): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    data-lot_<?php echo e($lot->id); ?>="<?php echo e($lot->pivot->quantity); ?>"
+                                    data-lot_name_<?php echo e($lot->id); ?>="<?php echo e($lot->name); ?>"
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     data-toggle="modal"
                                     data-target="#editar">
-                                    Editar
+                                    <i class="fas fa-edit"></i>
                                 </button>
                                 <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="<?php echo e($item->id); ?>">
-                                    Eliminar
+                                    <i class="fas fa-trash-alt"></i>
                                 </button>
                             </td>
                         </tr>
@@ -84,7 +94,7 @@
                             <input type="hidden" name="id" id="edit-id">
                             <div class="mb-3">
                                 <label for="edit-date" class="form-label">Fecha:</label>
-                                <input type="date" class="form-control" id="edit-date" name="date" required>
+                                <input type="date" class="form-control" id="edit-date" name="date" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-aquaponic_system_id" class="form-label">Sistema Acuapónico:</label>
@@ -97,14 +107,22 @@
                             <div class="mb-3">
                                 <label for="edit-crop_id" class="form-label">Cultivo:</label>
                                 <select name="crop_id" id="edit-crop_id" class="form-control" required>
-                                    <?php $__currentLoopData = $cultivos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cultivo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($cultivo->id); ?>"><?php echo e($cultivo->species->name ?? 'Sin especie'); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="" disabled selected>Cargando cultivos...</option>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-original_mortality" class="form-label">Mortalidad Original:</label>
                                 <input type="number" class="form-control" id="edit-original_mortality" name="original_mortality" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Lotes:</label>
+                                <div id="edit-lots-container">
+                                    <!-- Aquí se llenan por JS -->
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit-quantity" class="form-label">Cantidad Total:</label>
+                                <input type="number" class="form-control" id="edit-quantity" name="quantity" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-description" class="form-label">Descripción:</label>
@@ -113,7 +131,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                            <button type="submit" class="btn btn-primary" id="btnGuardarCambios">Guardar Cambios</button>
                         </div>
                     </form>
                 </div>
@@ -147,7 +165,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="date" class="form-label">Fecha:</label>
-                        <input type="date" class="form-control" id="date" name="date" required>
+                        <input type="date" class="form-control" id="date" name="date" readonly>
                     </div>
                     <!-- Sistema Acuapónico -->
                     <div class="mb-3">
@@ -194,7 +212,7 @@
                             <option value="Registrada">Resiembra</option>
                         </select>
                     </div>
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -204,11 +222,14 @@
         </form>
     </div>
 </div>
-<?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
 <script>
     $(document).ready(function() {
+        // ========================================
+        // CONFIGURACIÓN INICIAL
+        // ========================================
+        
         // DataTable initialization
         $('#resiembraTable').DataTable({
             responsive: false,
@@ -218,7 +239,7 @@
             }
         });
 
-        // Set current date
+        // Set current date for registration form
         const dateInput = document.getElementById('date');
         if (dateInput) {
             const today = new Date();
@@ -229,19 +250,314 @@
             dateInput.value = localDate;
         }
 
+        // ========================================
+        // FUNCIONALIDAD DE REGISTRO (NUEVA RESIEMBRA)
+        // ========================================
+        
+        // When aquaponic system changes in registration form
+        $('#aquaponic_system_id').change(function() {
+            let systemId = $(this).val();
+
+            // Reset fields
+            $('#crop_id').empty().append('<option value="" disabled selected>Seleccione un cultivo de plantas</option>');
+            $('#mortalidad_total').val('');
+            $('#lots-container').empty();
+            $('#quantity').val('');
+
+            if (systemId) {
+                console.log('Sistema seleccionado:', systemId);
+                $.get(`/crops-by-system/${systemId}`)
+                    .done(function(data) {
+                        console.log('Cultivos recibidos:', data);
+                        if (data && data.length > 0) {
+                            data.forEach(function(crop) {
+                                $('#crop_id').append(
+                                    `<option value="${crop.id}">${crop.species?.name ?? 'Sin especie'}</option>`
+                                );
+                            });
+                        } else {
+                            $('#crop_id').append('<option value="" disabled>No hay cultivos de plantas en seguimiento</option>');
+                        }
+                    })
+                    .fail(function(xhr, status, error) {
+                        console.error('Error al cargar cultivos:', error);
+                        alert('Error al cargar cultivos: ' + error);
+                    });
+            }
+        });
+
+        // When crop changes in registration form
+        $('#crop_id').change(function() {
+            let cropId = $(this).val();
+            $('#mortalidad_total').val('');
+            $('#lots-container').empty();
+            $('#quantity').val('');
+
+            if (cropId) {
+                console.log('Cultivo seleccionado:', cropId);
+                $.get(`/crop-details/${cropId}`)
+                    .done(function(data) {
+                        console.log('Detalles del cultivo:', data);
+
+                        // Show mortality
+                        $('#mortalidad_total').val(data.mortality || 0);
+
+                        // Generate lot inputs
+                        if (data.lots && data.lots.length > 0) {
+                            data.lots.forEach(function(lot) {
+                                $('#lots-container').append(`
+                                    <div class="mb-2">
+                                        <label>${lot.name} (Disponible: ${lot.available_capacity})</label>
+                                        <input type="number" 
+                                               name="lots[${lot.id}]" 
+                                               max="${lot.available_capacity}" 
+                                               min="0" 
+                                               class="form-control lot-input"
+                                               data-lot-id="${lot.id}">
+                                    </div>
+                                `);
+                            });
+                        } else {
+                            $('#lots-container').append('<p>No hay lotes disponibles para este cultivo.</p>');
+                        }
+                    })
+                    .fail(function(xhr, status, error) {
+                        console.error('Error al cargar detalles del cultivo:', error);
+                        alert('Error al cargar detalles del cultivo: ' + error);
+                    });
+            }
+        });
+
+        // Calculate total quantity when lot inputs change in registration form
+        $(document).on('input', '.lot-input', function() {
+            let total = 0;
+            $('.lot-input').each(function() {
+                total += parseInt($(this).val()) || 0;
+            });
+            $('#quantity').val(total);
+            
+            // Validar que no exceda la mortalidad
+            const mortality = parseInt($('#mortalidad_total').val()) || 0;
+            
+            if (total > mortality) {
+                $('#quantity').addClass('is-invalid');
+                if (!$('#quantity').next('.invalid-feedback').length) {
+                    $('#quantity').after('<div class="invalid-feedback">La cantidad total no puede exceder la mortalidad registrada.</div>');
+                }
+            } else {
+                $('#quantity').removeClass('is-invalid');
+                $('#quantity').next('.invalid-feedback').remove();
+            }
+        });
+
+        // Validación del formulario de registro
+        $('form[action*="storeresowing"]').on('submit', function(e) {
+            const total = parseInt($('#quantity').val()) || 0;
+            const mortality = parseInt($('#mortalidad_total').val()) || 0;
+            
+            if (total > mortality) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de validación',
+                    text: 'La cantidad total no puede exceder la mortalidad registrada.',
+                    confirmButtonColor: '#d33',
+                });
+                return false;
+            }
+        });
+
+        // ========================================
+        // FUNCIONALIDAD DE EDICIÓN
+        // ========================================
+        
         // Edit button events
         $(document).on('click', '.editbtn', function() {
             const id = $(this).data('id');
             $('#formEditar').attr('action', `/pasante/resiembras/update/${id}`);
             $('#edit-id').val(id);
-            $('#edit-date').val($(this).data('date'));
-            $('#edit-aquaponic_system_id').val($(this).data('aquaponic_system_id'));
-            $('#edit-crop_id').val($(this).data('crop_id'));
-            $('#edit-original_mortality').val($(this).data('original_mortality'));
-            $('#edit-description').val($(this).data('description'));
-            $('#edit-status').val($(this).data('status'));
+            
+            // Cargar datos de la resiembra
+            $.get(`/resowing-edit-data/${id}`)
+                .done(function(data) {
+                    console.log('Datos de edición cargados:', data);
+                    
+                    // Llenar datos básicos
+                    $('#edit-date').val(data.resowing.date);
+                    $('#edit-aquaponic_system_id').val(data.resowing.aquaponic_system_id);
+                    $('#edit-description').val(data.resowing.description);
+                    $('#edit-original_mortality').val(data.mortality);
+                    
+                    // Llenar cultivos del sistema
+                    $('#edit-crop_id').empty().append('<option value="" disabled selected>Seleccione un cultivo</option>');
+                    if (data.cropsInSystem && data.cropsInSystem.length > 0) {
+                        data.cropsInSystem.forEach(function(crop) {
+                            const selected = crop.id == data.resowing.crop_id ? 'selected' : '';
+                            $('#edit-crop_id').append(
+                                `<option value="${crop.id}" ${selected}>${crop.species?.name ?? 'Sin especie'}</option>`
+                            );
+                        });
+                    }
+                    
+                    // Llenar lotes con cantidades actuales
+                    $('#edit-lots-container').empty();
+                    if (data.resowingLots && data.resowingLots.length > 0) {
+                        data.resowingLots.forEach(function(lot) {
+                            $('#edit-lots-container').append(`
+                                <div class="mb-2">
+                                    <label>${lot.name} (Disponible: ${lot.available_capacity})</label>
+                                    <input type="number" 
+                                           name="lots[${lot.id}]" 
+                                           max="${lot.available_capacity}" 
+                                           min="0" 
+                                           value="${lot.current_quantity}"
+                                           class="form-control edit-lot-input"
+                                           data-lot-id="${lot.id}">
+                                </div>
+                            `);
+                        });
+                    } else {
+                        $('#edit-lots-container').append('<p>No hay lotes registrados para esta resiembra.</p>');
+                    }
+                    
+                    // Calcular cantidad total inicial
+                    calculateEditTotal();
+                })
+                .fail(function(xhr, status, error) {
+                    console.error('Error al cargar datos de edición:', error);
+                    alert('Error al cargar datos de edición: ' + error);
+                });
         });
 
+        // Calculate total quantity for edit modal
+        function calculateEditTotal() {
+            let total = 0;
+            $('.edit-lot-input').each(function() {
+                total += parseInt($(this).val()) || 0;
+            });
+            $('#edit-quantity').val(total);
+        }
+
+        // When edit lot inputs change
+        $(document).on('input', '.edit-lot-input', function() {
+            calculateEditTotal();
+            
+            // Validar que no exceda la mortalidad
+            const total = parseInt($('#edit-quantity').val()) || 0;
+            const mortality = parseInt($('#edit-original_mortality').val()) || 0;
+            
+            if (total > mortality) {
+                $('#edit-quantity').addClass('is-invalid');
+                if (!$('#edit-quantity').next('.invalid-feedback').length) {
+                    $('#edit-quantity').after('<div class="invalid-feedback">La cantidad total no puede exceder la mortalidad registrada.</div>');
+                }
+            } else {
+                $('#edit-quantity').removeClass('is-invalid');
+                $('#edit-quantity').next('.invalid-feedback').remove();
+            }
+        });
+
+        // When edit aquaponic system changes
+        $('#edit-aquaponic_system_id').change(function() {
+            let systemId = $(this).val();
+            let resowingId = $('#edit-id').val();
+            
+            // Reset fields
+            $('#edit-crop_id').empty().append('<option value="" disabled selected>Cargando cultivos...</option>');
+            $('#edit-original_mortality').val('');
+            $('#edit-lots-container').empty();
+            $('#edit-quantity').val('');
+
+            if (systemId) {
+                $.get(`/crops-by-system/${systemId}`)
+                    .done(function(data) {
+                        $('#edit-crop_id').empty().append('<option value="" disabled selected>Seleccione un cultivo</option>');
+                        if (data && data.length > 0) {
+                            data.forEach(function(crop) {
+                                $('#edit-crop_id').append(
+                                    `<option value="${crop.id}">${crop.species?.name ?? 'Sin especie'}</option>`
+                                );
+                            });
+                        } else {
+                            $('#edit-crop_id').append('<option value="" disabled>No hay cultivos de plantas en seguimiento</option>');
+                        }
+                    })
+                    .fail(function(xhr, status, error) {
+                        console.error('Error al cargar cultivos:', error);
+                        alert('Error al cargar cultivos: ' + error);
+                    });
+            }
+        });
+
+        // When edit crop changes
+        $('#edit-crop_id').change(function() {
+            let cropId = $(this).val();
+            let resowingId = $('#edit-id').val();
+            $('#edit-original_mortality').val('');
+            $('#edit-lots-container').empty();
+            $('#edit-quantity').val('');
+
+            if (cropId) {
+                // Siempre usar el método que filtra por resiembra cuando estamos en modo edición
+                let url = `/crop-lots-for-edit/${cropId}/${resowingId}`;
+                
+                $.get(url)
+                    .done(function(data) {
+                        // Show mortality
+                        $('#edit-original_mortality').val(data.mortality || 0);
+
+                        // Generate lot inputs
+                        if (data.lots && data.lots.length > 0) {
+                            data.lots.forEach(function(lot) {
+                                let currentValue = lot.current_quantity || 0;
+                                $('#edit-lots-container').append(`
+                                    <div class="mb-2">
+                                        <label>${lot.name} (Disponible: ${lot.available_capacity})</label>
+                                        <input type="number" 
+                                               name="lots[${lot.id}]" 
+                                               max="${lot.available_capacity}" 
+                                               min="0" 
+                                               value="${currentValue}"
+                                               class="form-control edit-lot-input"
+                                               data-lot-id="${lot.id}">
+                                    </div>
+                                `);
+                            });
+                        } else {
+                            $('#edit-lots-container').append('<p>No hay lotes disponibles para este cultivo.</p>');
+                        }
+                        
+                        // Calcular total inicial
+                        calculateEditTotal();
+                    })
+                    .fail(function(xhr, status, error) {
+                        console.error('Error al cargar detalles del cultivo:', error);
+                        alert('Error al cargar detalles del cultivo: ' + error);
+                    });
+            }
+        });
+
+        // Validación del formulario de edición
+        $('#formEditar').on('submit', function(e) {
+            const total = parseInt($('#edit-quantity').val()) || 0;
+            const mortality = parseInt($('#edit-original_mortality').val()) || 0;
+            
+            if (total > mortality) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de validación',
+                    text: 'La cantidad total no puede exceder la mortalidad registrada.',
+                    confirmButtonColor: '#d33',
+                });
+                return false;
+            }
+        });
+
+        // ========================================
+        // FUNCIONALIDAD GENERAL
+        // ========================================
+        
         // Delete button events
         $(document).on('click', '.btnEliminar', function() {
             const id = $(this).data('id');
@@ -260,89 +576,6 @@
                     $('#formEliminar').submit();
                 }
             });
-        });
-
-        // When aquaponic system changes
-        $('#aquaponic_system_id').change(function() {
-            let systemId = $(this).val();
-            
-                         // Reset fields
-             $('#crop_id').empty().append('<option value="" disabled selected>Seleccione un cultivo de plantas</option>');
-            $('#mortalidad_total').val('');
-            $('#lots-container').empty();
-            $('#quantity').val('');
-
-            if (systemId) {
-                console.log('Sistema seleccionado:', systemId); // Debug
-                $.get(`/crops-by-system/${systemId}`)
-                .done(function(data) {
-                    console.log('Cultivos recibidos:', data); // Debug
-                    if (data && data.length > 0) {
-                        data.forEach(function(crop) {
-                            $('#crop_id').append(
-                                `<option value="${crop.id}">${crop.species?.name ?? 'Sin especie'}</option>`
-                            );
-                        });
-                                         } else {
-                         $('#crop_id').append('<option value="" disabled>No hay cultivos de plantas en seguimiento</option>');
-                     }
-                })
-                .fail(function(xhr, status, error) {
-                    console.error('Error al cargar cultivos:', error); // Debug
-                    alert('Error al cargar cultivos: ' + error);
-                });
-            }
-        });
-
-        // When crop changes
-        $('#crop_id').change(function() {
-            let cropId = $(this).val();
-            $('#mortalidad_total').val('');
-            $('#lots-container').empty();
-            $('#quantity').val('');
-
-            if (cropId) {
-                console.log('Cultivo seleccionado:', cropId); 
-                $.get(`/crop-details/${cropId}`)
-                .done(function(data) {
-                    console.log('Detalles del cultivo:', data); 
-                    
-                    // Show mortality
-                    $('#mortalidad_total').val(data.mortality || 0);
-
-                    // Generate lot inputs
-                    if (data.lots && data.lots.length > 0) {
-                        data.lots.forEach(function(lot) {
-                            $('#lots-container').append(`
-                            <div class="mb-2">
-                                <label>${lot.name} (Disponible: ${lot.available_capacity})</label>
-                                <input type="number" 
-                                       name="lots[${lot.id}]" 
-                                       max="${lot.available_capacity}" 
-                                       min="0" 
-                                       class="form-control lot-input"
-                                       data-lot-id="${lot.id}">
-                            </div>
-                        `);
-                        });
-                    } else {
-                        $('#lots-container').append('<p>No hay lotes disponibles para este cultivo.</p>');
-                    }
-                })
-                .fail(function(xhr, status, error) {
-                    console.error('Error al cargar detalles del cultivo:', error); 
-                    alert('Error al cargar detalles del cultivo: ' + error);
-                });
-            }
-        });
-
-        // Calculate total quantity when lot inputs change
-        $(document).on('input', '.lot-input', function() {
-            let total = 0;
-            $('.lot-input').each(function() {
-                total += parseInt($(this).val()) || 0;
-            });
-            $('#quantity').val(total);
         });
     });
 </script>
@@ -372,4 +605,6 @@
 </script>
 <?php endif; ?>
 <?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('acuaponico::layouts.masterpa', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/pasante/resiembra.blade.php ENDPATH**/ ?>

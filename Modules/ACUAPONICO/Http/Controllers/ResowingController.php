@@ -42,7 +42,7 @@ class ResowingController extends Controller
             return redirect()->back()->with('error', 'La suma de las cantidades asignadas a los lotes no puede superar la mortalidad registrada.');
         }
 
-        $resowing = Resowing::new([
+        $resowing = Resowing::create([
             'aquaponic_system_id' => $request->aquaponic_system_id,
             'crop_id' => $request->crop_id,
             'original_mortality' => $request->original_mortality,
@@ -64,15 +64,31 @@ class ResowingController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Validar que la suma de cantidades no exceda la mortalidad
+        $totalAssigned = array_sum($request->lots);
+        $mortalidad = $request->original_mortality;
+        if ($totalAssigned > $mortalidad) {
+            return redirect()->back()->with('error', 'La suma de las cantidades asignadas a los lotes no puede superar la mortalidad registrada.');
+        }
+
         $resowing = Resowing::findOrFail($id);
-        
         $resowing->update([
             'aquaponic_system_id' => $request->aquaponic_system_id,
             'crop_id' => $request->crop_id,
             'original_mortality' => $request->original_mortality,
             'description' => $request->description,
-            'date' => $request->date
+            'date' => $request->date,
         ]);
+
+        // Actualizar lotes relacionados
+        $resowing->lots()->detach();
+        if ($request->lots && is_array($request->lots)) {
+            foreach ($request->lots as $lotId => $quantity) {
+                if ($quantity > 0) {
+                    $resowing->lots()->attach($lotId, ['quantity' => $quantity]);
+                }
+            }
+        }
 
         return redirect()->back()->with('success', 'Resiembra actualizada correctamente.');
     }
@@ -170,6 +186,141 @@ class ResowingController extends Controller
             ]);
         } catch (\Exception $e) {
             \Log::error('Error en getCropDetails: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Obtiene los lotes de un cultivo específico para edición de resiembra
+     */
+    public function getCropLotsForEdit($cropId, $resowingId = null)
+    {
+        try {
+            // Obtener mortalidad del cultivo
+            $mortality = DB::table('trackings')
+                ->join('trackingplant', 'trackings.id', '=', 'trackingplant.tracking_id')
+                ->where('trackings.crop_id', $cropId)
+                ->sum('trackingplant.mortality');
+
+            // Si hay un resowingId, obtener todos los lotes del cultivo pero marcar los que están en la resiembra
+            if ($resowingId) {
+                // Obtener todos los lotes del cultivo
+                $allLots = DB::table('crop_lot')
+                    ->join('lots', 'crop_lot.lot_id', '=', 'lots.id')
+                    ->select(
+                        'lots.id',
+                        'lots.name',
+                        'lots.capacity',
+                        'crop_lot.planted_quantity',
+                        DB::raw('GREATEST(0, lots.capacity - (
+                            SELECT COALESCE(SUM(cl2.planted_quantity), 0)
+                            FROM crop_lot cl2 
+                            WHERE cl2.lot_id = lots.id
+                        )) as available_capacity')
+                    )
+                    ->where('crop_lot.crop_id', $cropId)
+                    ->get();
+
+                // Obtener los lotes de la resiembra específica
+                $resowingLots = DB::table('resowing_lot')
+                    ->where('resowing_id', $resowingId)
+                    ->pluck('quantity', 'lot_id')
+                    ->toArray();
+
+                // Combinar la información
+                $lots = $allLots->map(function($lot) use ($resowingLots) {
+                    $lot->current_quantity = $resowingLots[$lot->id] ?? 0;
+                    return $lot;
+                });
+            } else {
+                // Obtener todos los lotes del cultivo
+                $lots = DB::table('crop_lot')
+                    ->join('lots', 'crop_lot.lot_id', '=', 'lots.id')
+                    ->select(
+                        'lots.id',
+                        'lots.name',
+                        'lots.capacity',
+                        'crop_lot.planted_quantity',
+                        DB::raw('GREATEST(0, lots.capacity - (
+                            SELECT COALESCE(SUM(cl2.planted_quantity), 0)
+                            FROM crop_lot cl2 
+                            WHERE cl2.lot_id = lots.id
+                        )) as available_capacity')
+                    )
+                    ->where('crop_lot.crop_id', $cropId)
+                    ->get();
+            }
+
+            return response()->json([
+                'mortality' => $mortality ?? 0,
+                'lots' => $lots
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error en getCropLotsForEdit: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Retorna los datos completos de una resiembra para edición
+     */
+    public function getEditData($id)
+    {
+        try {
+            $resowing = Resowing::with(['lots', 'crops.species', 'system'])->findOrFail($id);
+            
+            // Obtener cultivos del sistema acuapónico para el dropdown
+            $cropsInSystem = Crop::where('aquaponic_system_id', $resowing->aquaponic_system_id)
+                ->where('status', 'Seguimiento')
+                ->whereHas('species.category', function($query) {
+                    $query->where('name', 'Planta');
+                })
+                ->with(['species.category'])
+                ->get();
+
+            // Obtener mortalidad del cultivo actual
+            $mortality = DB::table('trackings')
+                ->join('trackingplant', 'trackings.id', '=', 'trackingplant.tracking_id')
+                ->where('trackings.crop_id', $resowing->crop_id)
+                ->sum('trackingplant.mortality');
+
+            // Obtener todos los lotes del cultivo pero marcar los que están en la resiembra
+            $allLots = DB::table('crop_lot')
+                ->join('lots', 'crop_lot.lot_id', '=', 'lots.id')
+                ->select(
+                    'lots.id',
+                    'lots.name',
+                    'lots.capacity',
+                    'crop_lot.planted_quantity',
+                    DB::raw('GREATEST(0, lots.capacity - (
+                        SELECT COALESCE(SUM(cl2.planted_quantity), 0)
+                        FROM crop_lot cl2 
+                        WHERE cl2.lot_id = lots.id
+                    )) as available_capacity')
+                )
+                ->where('crop_lot.crop_id', $resowing->crop_id)
+                ->get();
+
+            // Obtener los lotes de la resiembra específica
+            $resowingLots = DB::table('resowing_lot')
+                ->where('resowing_id', $resowing->id)
+                ->pluck('quantity', 'lot_id')
+                ->toArray();
+
+            // Combinar la información
+            $resowingLots = $allLots->map(function($lot) use ($resowingLots) {
+                $lot->current_quantity = $resowingLots[$lot->id] ?? 0;
+                return $lot;
+            });
+
+            return response()->json([
+                'resowing' => $resowing,
+                'cropsInSystem' => $cropsInSystem,
+                'mortality' => $mortality ?? 0,
+                'resowingLots' => $resowingLots
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error en getEditData: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
