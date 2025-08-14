@@ -18,15 +18,15 @@ class TrackingController extends Controller
         try {
             $acuaponicos = AquaponicSystem::get();
             $cultivos = Crop::with('species')->whereIn('status', ['Cultivado', 'Seguimiento'])->get();
-            
+
             // Cargar seguimientos con relaciones más específicas
             $seguimientos = Tracking::with([
-                'crops.species', 
+                'crops.species',
                 'crops.aquaponicSystem',
                 'subject.crops.species', // Para resiembras
                 'subject.species' // Para cultivos
             ])->get();
-            
+
             return view('acuaponico::pasante.seguimiento', compact('seguimientos', 'cultivos', 'acuaponicos'));
         } catch (\Exception $e) {
             \Log::error('Error en TrackingController@index: ' . $e->getMessage());
@@ -34,81 +34,20 @@ class TrackingController extends Controller
         }
     }
 
-    public function getCropsBySystem($systemId)
+    public function getSubjectsBySystem($systemId)
     {
-        $result = [];
-        
-        try {
-            // 1. Cultivos del sistema en estado 'Seguimiento' o 'Cultivado'
-            $crops = Crop::where('aquaponic_system_id', $systemId)
-                ->whereIn('status', ['Seguimiento', 'Cultivado']) // Filtro por ambos estados
-                ->whereHas('species') // Solo cultivos que tengan especie
-                ->with(['species.category'])
-                ->get();
+        $crops = Crop::where('aquaponic_system_id', $systemId)
+            ->whereIn('status', ['seguimiento', 'cultivado'])
+            ->get();
 
-            foreach($crops as $crop) {
-                // Validar que existan todos los datos necesarios
-                if ($crop->species && $crop->species->name) {
-                    $result[] = [
-                        'id' => $crop->id,
-                        'name' => $crop->species->name,
-                        'type' => 'crop',
-                        'category' => $crop->species->category ? $crop->species->category->name : 'Sin categoría',
-                        'subject_type' => 'crop',
-                        'subject_id' => $crop->id,
-                        'display_name' => $crop->species->name . ' (Cultivo - ' . $crop->status . ')',
-                        'status' => $crop->status ?: 'Cultivado'
-                    ];
-                }
-            }
-            
-            // 2. Resiembras del sistema en estado 'Registrada' o 'Seguimiento'
-            $resowings = Resowing::where('aquaponic_system_id', $systemId)
-                ->whereIn('status', ['Registrada', 'Seguimiento']) // Filtro por ambos estados
-                ->whereHas('crops.species') // Solo resiembras que tengan cultivo con especie
-                ->with(['crops.species.category'])
-                ->get();
+        $resowings = Resowing::where('aquaponic_system_id', $systemId)
+            ->whereIn('status', ['registro', 'seguimiento'])
+            ->get();
 
-            foreach($resowings as $resowing) {
-                // Validar que existan todos los datos necesarios
-                if ($resowing->crops && $resowing->crops->species && $resowing->crops->species->name) {
-                    $result[] = [
-                        'id' => $resowing->crop_id,
-                        'name' => $resowing->crops->species->name,
-                        'type' => 'resowing',
-                        'category' => $resowing->crops->species->category ? $resowing->crops->species->category->name : 'Sin categoría',
-                        'subject_type' => 'resowing',
-                        'subject_id' => $resowing->id,
-                        'display_name' => $resowing->crops->species->name . ' (Resiembra - ' . $resowing->status . ')',
-                        'status' => $resowing->status ?: 'Registrada'
-                    ];
-                }
-            }
-
-            // Ordenar por tipo y luego por nombre
-            usort($result, function($a, $b) {
-                if ($a['type'] !== $b['type']) {
-                    return $a['type'] === 'crop' ? -1 : 1; // Cultivos primero
-                }
-                return strcmp($a['name'], $b['name']);
-            });
-
-            return response()->json([
-                'success' => true,
-                'data' => $result,
-                'count' => count($result),
-                'system_id' => $systemId
-            ]);
-
-        } catch (\Exception $e) {
-            \Log::error('Error en getCropsBySystem: ' . $e->getMessage());
-            return response()->json([
-                'success' => false,
-                'message' => 'Error al cargar los datos',
-                'data' => [],
-                'count' => 0
-            ], 500);
-        }
+        return response()->json([
+            'crops' => $crops,
+            'resowings' => $resowings
+        ]);
     }
 
     public function store(Request $request)
@@ -138,6 +77,10 @@ class TrackingController extends Controller
             $cultivo = Crop::findOrFail($request->subject_id);
             $cultivo->status = 'Seguimiento';
             $cultivo->save();
+        } elseif ($request->subject_type === 'resowing') {
+            $resowing = Resowing::findOrFail($request->subject_id);
+            $resowing->status = 'Seguimiento';
+            $resowing->save();
         }
 
         return redirect()->back()->with('success', 'Seguimiento registrado correctamente.');
@@ -161,7 +104,7 @@ class TrackingController extends Controller
         $seguimiento->days_elapsed = $request->input('days_elapsed');
         $seguimiento->notes = $request->input('notes');
         $seguimiento->save();
-        
+
         return redirect()->back()->with('success', 'Seguimiento actualizado correctamente.');
     }
 

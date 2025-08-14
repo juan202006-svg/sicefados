@@ -161,6 +161,10 @@
                     <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Fecha:</label>
+                        <input type="date" name="date" class="form-control" id="date" readonly>
+                    </div>
                     <div class="form-group">
                         <label for="aquaponic_system_id">S/acuaponico:</label>
                         <select id="aquaponic_system_id" name="aquaponic_system_id" class="form-control" required>
@@ -171,20 +175,15 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="date" class="form-label">Fecha:</label>
-                        <input type="date" name="date" class="form-control" id="date" readonly>
-                    </div>
-                    <div class="mb-3">
                         <label for="crop_id">Cultivo/Resiembra:</label>
                         <select name="crop_id" id="crop_id" class="form-control" required>
                             <option value="">Seleccione un cultivo o resiembra</option>
                         </select>
-                        <small class="form-text text-muted">
-                            <i class="fas fa-info-circle"></i>
-                            Se mostrarán cultivos en estado "Cultivado" o "Seguimiento" y resiembras en estado "Registrada" o "Seguimiento" del sistema seleccionado.
-                        </small>
                     </div>
-
+                    <div class="mb-3">
+                        <label for="item_type" class="form-label">Tipo:</label>
+                        <input type="text" id="item_type" class="form-control" readonly>
+                    </div>
                     <!-- Campos ocultos para el tipo de sujeto -->
                     <input type="hidden" name="subject_type" id="subject_type">
                     <input type="hidden" name="subject_id" id="subject_id">
@@ -204,6 +203,54 @@
         </form>
     </div>
 </div>
+
+<!-- Script para el metodo de ajax para cargar los cultivos y las resiembras  -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Cuando cambia el sistema acuapónico
+    document.getElementById('aquaponic_system_id').addEventListener('change', function () {
+        let systemId = this.value;
+        let cropSelect = document.getElementById('crop_id');
+        cropSelect.innerHTML = '<option value="">Seleccione un cultivo o resiembra</option>';
+
+        if (!systemId) return;
+
+        fetch(`/pasante/seguimiento/subjects/${systemId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Agregar cultivos
+                data.crops.forEach(crop => {
+                    cropSelect.innerHTML += `<option value="crop-${crop.id}">Cultivo: ${crop.name} (${crop.status})</option>`;
+                });
+
+                // Agregar resiembras
+                data.resowings.forEach(res => {
+                    cropSelect.innerHTML += `<option value="resowing-${res.id}">Resiembra: ${res.description} (${res.status})</option>`;
+                });
+            })
+            .catch(err => console.error('Error cargando datos:', err));
+    });
+
+    // Cuando el usuario selecciona un cultivo o resiembra
+    document.getElementById('crop_id').addEventListener('change', function () {
+        let value = this.value;
+        if (!value) return;
+
+        let [type, id] = value.split('-');
+        
+        // Guardar en los campos ocultos
+        document.getElementById('subject_type').value = type;
+        document.getElementById('subject_id').value = id;
+
+        // Mostrar el tipo en el campo visible
+        document.getElementById('item_type').value = type === 'crop' ? 'Cultivo' : 'Resiembra';
+    });
+
+});
+</script>
+
+
 <!-- Script para establecer la fecha actual en el campo de fecha  -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -218,80 +265,7 @@
         dateInput.value = localDate;
     });
 </script>
-<!-- Script para el filtrado de cultivos por sistema -->
-<script>
-    $(document).ready(function() {
-        // When aquaponic system changes
-        $('#aquaponic_system_id').change(function() {
-            let systemId = $(this).val();
 
-            // Reset crop dropdown
-            $('#crop_id').empty().append('<option value="">Seleccione un cultivo o resiembra</option>');
-            $('#subject_type').val('');
-            $('#subject_id').val('');
-
-            if (systemId) {
-                // Mostrar indicador de carga
-                $('#crop_id').empty().append('<option value="">Cargando...</option>');
-
-                $.get(`/crops-by-system/${systemId}`)
-                    .done(function(response) {
-                        $('#crop_id').empty().append('<option value="">Seleccione un cultivo o resiembra</option>');
-
-                        if (response.success && response.data) {
-                            response.data.forEach(function(item) {
-                                $('#crop_id').append(
-                                    `<option value="${item.id}" 
-                                         data-subject-type="${item.subject_type}" 
-                                         data-subject-id="${item.subject_id}">${item.display_name}</option>`
-                                );
-                            });
-
-                            if (response.count === 0) {
-                                $('#crop_id').append('<option value="" disabled>No hay cultivos o resiembras disponibles para este sistema</option>');
-                            } else {
-                                console.log(`Cargados ${response.count} elementos para el sistema ${response.system_id}`);
-                            }
-                        } else {
-                            $('#crop_id').append('<option value="" disabled>Error al cargar datos</option>');
-                        }
-                    })
-                    .fail(function(xhr, status, error) {
-                        console.error('Error al cargar cultivos:', error);
-                        $('#crop_id').empty().append('<option value="">Error al cargar datos</option>');
-                    });
-            }
-        });
-
-        // When crop changes
-        $('#crop_id').change(function() {
-            let selectedOption = $(this).find('option:selected');
-            let subjectType = selectedOption.data('subject-type');
-            let subjectId = selectedOption.data('subject-id');
-
-            // Update hidden fields
-            $('#subject_type').val(subjectType);
-            $('#subject_id').val(subjectId);
-        });
-
-        // Form validation
-        $('form[action*="storetracking"]').on('submit', function(e) {
-            let subjectType = $('#subject_type').val();
-            let subjectId = $('#subject_id').val();
-
-            if (!subjectType || !subjectId) {
-                e.preventDefault();
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error de validación',
-                    text: 'Por favor seleccione un cultivo o resiembra válido.',
-                    confirmButtonColor: '#d33',
-                });
-                return false;
-            }
-        });
-    });
-</script>
 <!--script del modal editar-->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -405,19 +379,6 @@
         setupSystemCropDependency('edit-aquaponic_system_id', 'edit-crop_id', 'edit-days_elapsed');
     });
 </script>
-<?php $__env->startSection('scripts'); ?>
-<script>
-    $(document).ready(function() {
-        $('#seguimientosTable').DataTable({
-            responsive: false,
-            autoWidth: false,
-            language: {
-                url: "<?php echo e(asset('AdminLTE/plugins/datatables/i18n/es-ES.json')); ?>"
-            }
-        });
-    });
-</script>
-<?php $__env->stopSection(); ?>
 <?php if(session('success')): ?>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -443,5 +404,18 @@
     });
 </script>
 <?php endif; ?>
+<?php $__env->startSection('scripts'); ?>
+<script>
+    $(document).ready(function() {
+        $('#seguimientosTable').DataTable({
+            responsive: false,
+            autoWidth: false,
+            language: {
+                url: "<?php echo e(asset('AdminLTE/plugins/datatables/i18n/es-ES.json')); ?>"
+            }
+        });
+    });
+</script>
+<?php $__env->stopSection(); ?>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('acuaponico::layouts.masterpa', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/pasante/seguimiento.blade.php ENDPATH**/ ?>

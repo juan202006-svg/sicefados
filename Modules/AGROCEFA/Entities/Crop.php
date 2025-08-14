@@ -33,16 +33,16 @@ class Crop extends Model implements Auditable
         'aquaponic_system_id'
 
     ];
-     protected $table = 'crops';
-   
-      public function species()
+    protected $table = 'crops';
+
+    public function species()
     {
         return $this->belongsTo(Specie::class, 'species_id');
     }
     public function lotes()
     {
         return $this->belongsToMany(Lot::class, 'crop_lot', 'crop_id', 'lot_id')
-            ->withPivot('planted_quantity') 
+            ->withPivot('planted_quantity')
             ->withTimestamps();;
     }
     public function aquaponicSystem()
@@ -52,26 +52,22 @@ class Crop extends Model implements Auditable
 
     public function trackings()
     {
-        return $this->hasMany(Tracking::class, 'crop_id');
+        return $this->morphMany(Tracking::class, 'subject');
     }
 
-    public function variety(){
+    public function variety()
+    {
         return $this->belongsTo(Variety::class);
     }
 
-    public function environments(){
+    public function environments()
+    {
         return $this->belongsToMany(Environment::class, 'crop_environments'); // Asegúrate de que coincida con el nombre de tu tabla
-    }                                               
+    }
 
-    
-    public function labors(){
+
+    public function labors()
+    {
         return $this->belongsToMany(Labor::class, 'crop_labors');
     }
-    
-
-
-
 }
-
-
-

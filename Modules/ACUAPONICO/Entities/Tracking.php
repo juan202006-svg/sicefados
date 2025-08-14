@@ -7,49 +7,49 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\AGROCEFA\Entities\Crop;
 use Modules\ACUAPONICO\Entities\Lot;
 use Modules\ACUAPONICO\Entities\Resowing;
+use Modules\ACUAPONICO\Entities\TrackingFish;
 
 class Tracking extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['aquaponic_system_id', 'date', 'subject_type', 'subject_id', 'days_elapsed', 'notes'];
+    protected $fillable = [
+        'aquaponic_system_id',
+        'date',
+        'subject_type',
+        'subject_id',
+        'days_elapsed',
+        'notes'
+    ];
+
     protected $table = 'trackings';
 
-    // Relación con el cultivo (para compatibilidad)
-    public function crops()
-    {
-        return $this->belongsTo(Crop::class, 'subject_id')->where('subject_type', 'crop');
-    }
-
-    // Relación polimórfica para el sujeto (cultivo o resiembra)
+    /**
+     * Relación polimórfica: puede ser un Crop o un Resowing.
+     */
     public function subject()
     {
-        if ($this->subject_type === 'crop') {
-            return $this->belongsTo(Crop::class, 'subject_id');
-        } elseif ($this->subject_type === 'resowing') {
-            return $this->belongsTo(Resowing::class, 'subject_id');
-        }
+        return $this->morphTo();
     }
 
-    // Método helper para obtener el cultivo (tanto si es directo como si es resiembra)
     public function getCropAttribute()
     {
-        if ($this->subject_type === 'crop') {
+        if ($this->subject instanceof Crop) {
             return $this->subject;
-        } elseif ($this->subject_type === 'resowing') {
-            return $this->subject->crops; // Resowing tiene relación con Crop
+        } elseif ($this->subject instanceof Resowing) {
+            return $this->subject->crop; 
         }
         return null;
     }
+
     public function lot()
     {
         return $this->belongsTo(Lot::class);
     }
 
-
     public function latestFishTracking()
     {
-        return $this->hasOne(\Modules\ACUAPONICO\Entities\TrackingFish::class)->latestOfMany();
+        return $this->hasOne(TrackingFish::class)->latestOfMany();
     }
 
     protected static function newFactory()

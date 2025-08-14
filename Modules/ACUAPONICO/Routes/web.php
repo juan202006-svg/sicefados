@@ -101,8 +101,7 @@ Route::controller(TrackingController::class)->group(function () {
     Route::post('/pasante/seguimiento/store', 'store')->name('acuaponico.pasante.pasante.storetracking');
     Route::put('/pasante/seguimiento/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatetracking');
     Route::delete('/pasante/seguimiento/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroytracking');
-    Route::get('/crops-by-system/{systemId}', 'getCropsBySystem');
-
+    Route::get('/pasante/seguimiento/subjects/{systemId}', 'getSubjectsBySystem')->name('acuaponico.pasante.pasante.subjects');
     //admin
     Route::get('/admin/admin/registroseguimiento', 'registro')->name('acuaponico.admin.admin.registroseguimiento');
 });

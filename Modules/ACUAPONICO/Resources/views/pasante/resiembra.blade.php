@@ -226,10 +226,6 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
-        // ========================================
-        // CONFIGURACIÓN INICIAL
-        // ========================================
-        
         // DataTable initialization
         $('#resiembraTable').DataTable({
             responsive: false,
@@ -250,9 +246,7 @@
             dateInput.value = localDate;
         }
 
-        // ========================================
         // FUNCIONALIDAD DE REGISTRO (NUEVA RESIEMBRA)
-        // ========================================
         
         // When aquaponic system changes in registration form
         $('#aquaponic_system_id').change(function() {
@@ -367,9 +361,7 @@
             }
         });
 
-        // ========================================
         // FUNCIONALIDAD DE EDICIÓN
-        // ========================================
         
         // Edit button events
         $(document).on('click', '.editbtn', function() {
@@ -554,11 +546,8 @@
             }
         });
 
-        // ========================================
-        // FUNCIONALIDAD GENERAL
-        // ========================================
         
-        // Delete button events
+        // Eliminar los registros de resiembra
         $(document).on('click', '.btnEliminar', function() {
             const id = $(this).data('id');
             Swal.fire({

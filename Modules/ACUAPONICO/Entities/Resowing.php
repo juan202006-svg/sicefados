@@ -43,7 +43,10 @@ class Resowing extends Model
     {
         return $this->crops ? $this->crops->trackings : collect();
     }
-
+    public function trackings()
+    {
+        return $this->morphMany(Tracking::class, 'subject');
+    }
     protected static function newFactory()
     {
         return \Modules\ACUAPONICO\Database\factories\ResowingFactory::new();

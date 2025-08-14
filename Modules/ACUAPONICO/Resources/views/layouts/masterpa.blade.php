@@ -45,7 +45,7 @@
 
         /* Navbar */
         .main-header {
-            background-color: #0288D1 !important;
+            background-color: #01579B !important;
         }
 
         /* Sidebar */
@@ -80,7 +80,6 @@
             /* línea decorativa */
             color: white !important;
         }
-
         /* Footer */
         .main-footer {
             background-color: #455A64 !important;
@@ -213,7 +212,7 @@
 
                 <!-- Enlace a Home -->
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ route ('cefa.acuaponico.index')}}" class="nav-link text-white">Inicio</a>
+                    <a href="{{ route ('cefa.acuaponico.index')}}" class="nav-link text-dark">Inicio</a>
                 </li>
             </ul>
             <!-- Botones alineados a la derecha -->
@@ -228,8 +227,8 @@
                 <li class="nav-item">
                     <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                         @csrf
-                        <button type="submit" class="btn btn-link nav-link" style="color: white;">
-                            <i class="fas fa-sign-out-alt" style="color: white"></i>
+                        <button type="submit" class="btn btn-link nav-link" style="color: dark;">
+                            <i class="fas fa-sign-out-alt" style="color: dark"></i>
                         </button>
                     </form>
                 </li>

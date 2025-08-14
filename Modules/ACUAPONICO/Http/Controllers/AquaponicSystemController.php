@@ -37,6 +37,13 @@ class AquaponicSystemController extends Controller
         $acuaponico->active = $request->active;
         $acuaponico->save();
 
+
+        $lot = new Environment();
+        $lot->name = $request->name . ' - Lote';
+        $lot->description = $request->description;
+        $lot->location = $request->location;
+        $lot->image = $acuaponico->image; // Reutilizar la imagen
+
         return redirect()->back()->with('success', 'Sistema acuapónico creado correctamente.');
     }
 

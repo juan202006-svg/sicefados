@@ -76,7 +76,7 @@
                 <div class="modal fade " id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updatecrops', $cultivo->id) }}" method="POST">
+                            <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updatecrops',['id' => 0]) }}" method="POST">
                                 @csrf
                                 @method('put')
                                 <div class="modal-header">
