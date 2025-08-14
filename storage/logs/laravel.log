@@ -15803,11 +15803,19 @@
 #52 C:\\laragon\\www\\sicefados\\server.php(21): require_once('C:\\\\laragon\\\\www\\\\...')
 #53 {main}
 "} 
+<<<<<<< HEAD
 [2025-08-13 11:22:07] local.ERROR: Method Modules\ACUAPONICO\Http\Controllers\SpeciesAquaponicController::registroEspecies does not exist. {"userId":72,"exception":"[object] (BadMethodCallException(code: 0): Method Modules\\ACUAPONICO\\Http\\Controllers\\SpeciesAquaponicController::registroEspecies does not exist. at C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php:68)
 [stacktrace]
 #0 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php(54): Illuminate\\Routing\\Controller->__call('registroEspecie...', Array)
 #1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(45): Illuminate\\Routing\\Controller->callAction('registroEspecie...', Array)
 #2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(261): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(Modules\\ACUAPONICO\\Http\\Controllers\\SpeciesAquaponicController), 'registroEspecie...')
+=======
+[2025-08-13 17:13:53] local.ERROR: Class "Modules\ACUAPONICO\Entities\CropAquaponic" not found {"userId":73,"exception":"[object] (Error(code: 0): Class \"Modules\\ACUAPONICO\\Entities\\CropAquaponic\" not found at C:\\laragon\\www\\sicefados\\Modules\\ACUAPONICO\\Http\\Controllers\\HarvestAquaponicController.php:16)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php(54): Modules\\ACUAPONICO\\Http\\Controllers\\HarvestAquaponicController->index()
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(45): Illuminate\\Routing\\Controller->callAction('index', Array)
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(261): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(Modules\\ACUAPONICO\\Http\\Controllers\\HarvestAquaponicController), 'index')
+>>>>>>> 8d7040e6aeb6cfef6445114db96bdcdd51f59adb
 #3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(205): Illuminate\\Routing\\Route->runController()
 #4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(721): Illuminate\\Routing\\Route->run()
 #5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(128): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
@@ -15856,6 +15864,7 @@
 #48 C:\\laragon\\www\\sicefados\\server.php(21): require_once('C:\\\\laragon\\\\www\\\\...')
 #49 {main}
 "} 
+<<<<<<< HEAD
 [2025-08-13 13:25:09] local.ERROR: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión (SQL: select * from `users` where `id` = 71 and `users`.`deleted_at` is null limit 1) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 2002): SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión (SQL: select * from `users` where `id` = 71 and `users`.`deleted_at` is null limit 1) at C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:712)
 [stacktrace]
 #0 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(672): Illuminate\\Database\\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
@@ -20871,3 +20880,5 @@
 #57 C:\\laragon\\www\\sicefados\\server.php(21): require_once('C:\\\\laragon\\\\www\\\\...')
 #58 {main}
 "} 
+=======
+>>>>>>> 8d7040e6aeb6cfef6445114db96bdcdd51f59adb
