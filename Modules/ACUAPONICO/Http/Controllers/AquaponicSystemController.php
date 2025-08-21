@@ -17,6 +17,16 @@ class AquaponicSystemController extends Controller
 
         return view('acuaponico::pasante.acuaponico', ['acuaponico' => $acuaponico,]);
     }
+
+    public function registerAcuaponic()
+    {
+        $acuaponico = AquaponicSystem::get();
+
+        return view('acuaponico::admin.registroacuaponicos', ['acuaponico' => $acuaponico,]);
+    }
+
+
+
     public function store(Request $request)
     {
         $acuaponico = new AquaponicSystem();

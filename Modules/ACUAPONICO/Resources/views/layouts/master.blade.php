@@ -24,6 +24,9 @@
   <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
 
+
+  <link rel="icon" href="{{ secure_asset('favicon.ico') }}" type="image/x-icon">
+
   <style>
     .main-header {
         border-bottom: none !important;
@@ -104,15 +107,27 @@
     
     .nav-divider {
         width: 1px;
-        height: 30px;
+        height: 3px;
         background-color: rgba(255, 255, 255, 0.3);
         margin: 0 0.5rem;
         align-self: center;
     }
 
     .navbar-nav {
-        gap: 30px;
+        gap: 5px;
     }
+
+    .navbar-nav .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Espacio entre icono y texto */
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.navbar-nav .nav-link i {
+    margin: 0; /* Elimina margen adicional del icono */
+    line-height: 1; /* Alinea verticalmente */
+}
     
     .dropdown-menu {
         border: none;
@@ -204,7 +219,13 @@
                 <i class="fas fa-user-shield mr-2"></i> Administrador
             </a>
         </li>
-        
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ route('acuaponico.admin.admin.registroacuaponicos') }}"
+               class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registroacuaponicos') ? 'active' : '' }}">
+                <i class="fas fa-users mr-2"></i>Acuapónicos
+            </a>
+        </li>
+
         <li class="nav-item d-none d-sm-inline-block">
             <a href="{{ route('acuaponico.admin.admin.usuarios') }}"
                class="nav-link {{ request()->routeIs('acuaponico.admin.admin.usuarios') ? 'active' : '' }}">
@@ -223,6 +244,7 @@
                 <a class="dropdown-item {{ request()->routeIs('acuaponico.admin.admin.registrocategoria') ? 'active' : '' }}" href="{{ route('acuaponico.admin.admin.registrocategoria') }}"><i class="fas fa-tags mr-2"></i> Registro de categorías</a>
                 <a class="dropdown-item {{ request()->routeIs('acuaponico.admin.admin.registroespecie') ? 'active' : '' }}" href="{{ route('acuaponico.admin.admin.registroespecie') }}"><i class="fas fa-fish mr-2"></i> Registros de especies</a>
                 <a class="dropdown-item {{ request()->routeIs('acuaponico.admin.admin.registrocultivo') ? 'active' : '' }}" href="{{ route('acuaponico.admin.admin.registrocultivo') }}"><i class="fas fa-seedling mr-2"></i> Registros de cultivos</a>
+                <a class="dropdown-item {{ request()->routeIs('acuaponico.admin.admin.registroresiembras') ? 'active' : '' }}" href="{{ route('acuaponico.admin.admin.registroresiembras') }}"><i class="fas fa-undo-alt mr-2"></i> Gestión de resiembras</a>
                 
                 <div class="dropdown-divider"></div>
                 
@@ -278,6 +300,12 @@
         <nav class="mt-2 ">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
+                    <a href="{{ route('acuaponico.admin.admin.registroacuaponicos')}}" class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registroacuaponicos') ? 'active bg-info text-white' : '' }}">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>Gestión de sistemas acuapónicos</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('acuaponico.admin.admin.usuarios')}}" class="nav-link {{ request()->routeIs('acuaponico.admin.admin.usuarios') ? 'active bg-info text-white' : '' }}">
                         <i class="nav-icon fas fa-users"></i>
                         <p>Gestión de Usuarios</p>
@@ -291,6 +319,8 @@
                     'acuaponico.admin.admin.registroespecie',
                     'acuaponico.admin.admin.registrocultivo',
                     'acuaponico.admin.admin.registroseguimiento',
+                    'acuaponico.admin.admin.registroresiembras',
+                    'acuaponico.admin.admin.registroacuaponicos',
                 ];
                 $isProduccionActive = collect($produccionRoutes)->contains(fn($route) => request()->routeIs($route));
                 @endphp
@@ -336,6 +366,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('acuaponico.admin.admin.registroresiembras') }}" 
+                              class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registroresiembras') ? 'active bg-info text-white' : '' }}">
+                                <i class="{{ request()->routeIs('acuaponico.admin.admin.registroresiembras') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                                <p>gestion de resiembras</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('acuaponico.admin.admin.registroseguimiento') }}" 
                               class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registroseguimiento') ? 'active bg-info text-white' : '' }}">
                                 <i class="{{ request()->routeIs('acuaponico.admin.admin.registroseguimiento') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
@@ -367,7 +404,8 @@
     @yield('content2')
     @yield('content3')
     @yield('content4')
-    @yield('content5')
+    @yield('content6')
+    @yield('content7')
 </div> 
 
 <script src="{{ asset('AdminLTE/plugins/jquery/jquery.min.js') }}"></script>

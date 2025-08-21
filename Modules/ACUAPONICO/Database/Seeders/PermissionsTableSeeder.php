@@ -122,6 +122,27 @@ class PermissionsTableSeeder extends Seeder
         ]);
         $permission_admin[] = $permission->id;
 
+
+        //acceso a la vista de registroacuaponicos
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.registroacuaponicos'], [ // Registro o actualización de permiso
+            'name' => 'Acceso lista de registro de sistemas acuapónicos',
+            'description' => 'Vista de registro de sistemas acuapónicos',
+            'description_english' => 'Access to the list of aquaponic systems registration',
+            'app_id' => $app->id
+        ]);
+
+        $permissions_admin[] = $permission->id;
+
+        //acceso a la vista de gestion de resiembras
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.registroresiembras'], [ // Registro o actualización de permiso
+            'name' => 'Acceso lista de registro de resiembras',
+            'description' => 'Vista de registro de resiembras',
+            'description_english' => 'Access to the list of resowing registration',
+            'app_id' => $app->id
+        ]);
+
+        $permissions_admin[] = $permission->id;
+
         // Consulta de ROLES
         $rol_admin = Role::where('slug', 'acuaponico.admin')->first(); // Rol Administrador
 

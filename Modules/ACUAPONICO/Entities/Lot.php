@@ -22,7 +22,10 @@ class Lot extends Model
         return $this->belongsToMany(Crop::class, 'crop_lot', 'lot_id', 'crop_id')
             ->withPivot('planted_quantity')
             ->withTimestamps();
+        
+         return $this->belongsToMany(Cultivo::class, 'cultivo_lot')->withPivot('planted_quantity');
     }
+    
 
     // Total de unidades ocupadas en este lote (basado en la tabla pivote)
     public function getOcupadoAttribute()

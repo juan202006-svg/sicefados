@@ -21,8 +21,9 @@ class LotController extends Controller
 
     public function showRegistroLote()
     {
-        $lots = Lot::with('cultivos')->get();
-        return view('acuaponico::admin.registrolote')->with(['lots' => $lots]);
+    $acuaponico = AquaponicSystem::all();
+    $lots = Lot::with(['cultivos', 'aquaponicSystem'])->get();
+    return view('acuaponico::admin.registrolote', compact('lots','acuaponico'));
     }
 
 

@@ -41,6 +41,9 @@ Route::controller(AquaponicSystemController::class)->group(function () {
     Route::post('/pasante/sistemas_acuaponicos/store', 'store')->name('acuaponico.pasante.pasante.acuaponicostore');
     Route::put('/pasante/sistemas_acuaponicos/update/{id}', 'update')->name('acuaponico.pasante.pasante.acuaponicoupdate');
     Route::delete('/pasante/sistemas_acuaponicos/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.acuaponicodestroy');
+
+    //admin
+    Route::get('/admin/admin/registroacuaponico', 'registerAcuaponic')->name('acuaponico.admin.admin.registroacuaponicos');
 });
 
 
@@ -159,4 +162,9 @@ Route::controller(ResowingController::class)->group(function () {
     Route::get('/crop-lots-for-edit/{cropId}/{resowingId?}', 'getCropLotsForEdit');
     // Ruta temporal de debug
     Route::get('/debug-crops', 'debugCrops');
+
+
+    //admin
+    Route::get('/admin/admin/registroresiembras', 'registroResiembras')->name('acuaponico.admin.admin.registroresiembras');
 });
+    
