@@ -16,7 +16,7 @@ class CropAquaponicController extends Controller
     public function index()
     {
         $acuaponicos = AquaponicSystem::get();
-        $especies = Specie::all();
+        $especies = Specie::whereNotNull('category_id')->get();
         $cultivos = Crop::with(['species', 'lotes', 'aquaponicSystem'])
             ->whereNotNull('aquaponic_system_id')
             ->get();
@@ -189,29 +189,44 @@ class CropAquaponicController extends Controller
         }
     }
 
-    public function getLotesPorSistema($id)
-    {
-        try {
-            $lotes = Lot::where('aquaponic_system_id', $id)
-                ->where('state', 'disponible')
-                ->get()
-                ->map(function ($lote) {
-                    return [
-                        'id' => $lote->id,
-                        'name' => $lote->name,
-                        'capacity' => $lote->capacity,
-                        'ocupado' => $lote->ocupado,
-                        'disponible' => $lote->disponible,
-                        'state' => $lote->state
-                    ];
-                });
+   public function getLotesPorSistema($id, Request $request)
+{
+    try {
+        $cropId = $request->query('crop_id');
+        $query = Lot::where('aquaponic_system_id', $id);
 
-            return response()->json($lotes);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Ocurrió un error al obtener los lotes.',
-                'error' => $e->getMessage()
-            ], 500);
+        if ($cropId) {
+            $query->where(function ($q) use ($cropId) {
+                $q->where('state', 'disponible')
+                  ->orWhereExists(function ($sub) use ($cropId) {
+                      $sub->select(DB::raw(1))
+                          ->from('crop_lot')
+                          ->whereColumn('crop_lot.lot_id', 'lots.id')
+                          ->where('crop_lot.crop_id', $cropId);
+                  });
+            });
+        } else {
+            $query->where('state', 'disponible');
         }
+
+        $lotes = $query->get()
+            ->map(function ($lote) {
+                return [
+                    'id' => $lote->id,
+                    'name' => $lote->name,
+                    'capacity' => $lote->capacity,
+                    'ocupado' => $lote->ocupado,
+                    'disponible' => $lote->disponible,
+                    'state' => $lote->state
+                ];
+            });
+
+        return response()->json($lotes);
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Ocurrió un error al obtener los lotes.',
+            'error' => $e->getMessage()
+        ], 500);
     }
+}
 }

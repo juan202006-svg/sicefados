@@ -7,34 +7,37 @@ use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\Tracking;
 use Modules\ACUAPONICO\Entities\TrackingFish;
 use Illuminate\Database\QueryException;
+use Modules\AGROCEFA\Entities\Crop;
 use Carbon\Carbon;
 
 class TrackingFishController extends Controller
-{ 
-
-public function index()
 {
-    $hoy = Carbon::now()->toDateString(); // Obtiene la fecha actual en formato 'YYYY-MM-DD'
+    public function index()
+    {
+        $hoy = Carbon::now()->toDateString(); // Obtiene la fecha actual en formato 'YYYY-MM-DD'
 
-    // Trae todos los seguimientos de peces con relaciones
-    $seguimientoPez = TrackingFish::with('Tracking.crops.species.category')->get();
+        // Trae todos los seguimientos de peces con relaciones
+        $seguimientoPez = TrackingFish::with('Tracking.crops.species.category')->get();
 
-    // Solo seguimientos de hoy y categoría "Pez"
-    $seguimientos = Tracking::whereDate('date', $hoy)
-        ->whereHas('crops.species.category', function ($query) {
-            $query->where('name', 'Pez');
-        })
-        ->with(['crops.species', 'latestFishTracking'])
-        ->get();
+        // Solo seguimientos de hoy y categoría "Pez"
+        $seguimientos = Tracking::whereDate('date', $hoy)
+            ->whereHas('crops.species.category', function ($query) {
+                $query->where('name', 'Pez');
+            })
+            ->with(['crops.species', 'latestFishTracking'])
+            ->get();
 
-    return view('acuaponico::pasante.seguimientoPeces', compact('seguimientoPez', 'seguimientos'));
-}
-
+        return view('acuaponico::pasante.seguimientoPeces', compact('seguimientoPez', 'seguimientos'));
+    }
 
     public function store(Request $request)
     {
-        $pesoActual = $request->weight_gr;
-        $cantidadActual = $request->fish_count;
+        // Validar datos
+        $request->validate([
+            'tracking_id' => 'required|exists:trackings,id',
+            'fish_count' => 'required|integer|min:0',
+            'weight_gr' => 'required|numeric|min:0',
+        ]);
 
         // Buscar el tracking actual y su cultivo
         $trackingActual = Tracking::with('crops')->findOrFail($request->tracking_id);
@@ -65,9 +68,11 @@ public function index()
         }
 
         // Cálculos
+        $pesoActual = $request->weight_gr;
+        $cantidadActual = $request->fish_count;
         $ganancia = $pesoActual - $pesoAnterior;
         $biomasa = $pesoActual * $cantidadActual;
-        $mortalidad = $pecesAnteriores - $cantidadActual;
+        $mortalidad = max(0, $pecesAnteriores - $cantidadActual); // Asegurar que la mortalidad no sea negativa
 
         // Guardar seguimiento
         $seguimiento = new TrackingFish();
@@ -79,11 +84,24 @@ public function index()
         $seguimiento->mortality = $mortalidad;
         $seguimiento->save();
 
+        // Actualizar el estado de los lotes asociados al cultivo
+        $crop = Crop::find($cropId);
+        foreach ($crop->lotes as $lot) {
+            $lot->actualizarEstadoAutomatico();
+        }
+
         return redirect()->back()->with('success', 'Seguimiento de peces registrado correctamente.');
     }
 
     public function update(Request $request, $id)
     {
+        // Validar datos
+        $request->validate([
+            'tracking_id' => 'required|exists:trackings,id',
+            'fish_count' => 'required|integer|min:0',
+            'weight_gr' => 'required|numeric|min:0',
+        ]);
+
         $seguimiento = TrackingFish::findOrFail($id);
         $pesoActual = $request->input('weight_gr');
         $cantidadActual = $request->input('fish_count');
@@ -121,8 +139,14 @@ public function index()
         $seguimiento->weight_gr = $pesoActual;
         $seguimiento->biomass_gr = $pesoActual * $cantidadActual;
         $seguimiento->weight_gain_gr = $pesoActual - $pesoAnterior;
-        $seguimiento->mortality = $pecesAnteriores - $cantidadActual;
+        $seguimiento->mortality = max(0, $pecesAnteriores - $cantidadActual); // Asegurar que la mortalidad no sea negativa
         $seguimiento->save();
+
+        // Actualizar el estado de los lotes asociados al cultivo
+        $crop = Crop::find($cropId);
+        foreach ($crop->lotes as $lot) {
+            $lot->actualizarEstadoAutomatico();
+        }
 
         return redirect()->back()->with('success', 'Seguimiento de peces actualizado correctamente.');
     }
@@ -131,7 +155,16 @@ public function index()
     {
         try {
             $seguimientoPez = TrackingFish::findOrFail($id);
+            $tracking_id = $seguimientoPez->tracking_id;
             $seguimientoPez->delete();
+
+            // Actualizar el estado de los lotes asociados al cultivo
+            $tracking = Tracking::find($tracking_id);
+            $crop = Crop::find($tracking->crop_id);
+            foreach ($crop->lotes as $lot) {
+                $lot->actualizarEstadoAutomatico();
+            }
+
             return redirect()->back()->with('success', 'Seguimiento de pez eliminado exitosamente.');
         } catch (QueryException $e) {
             if ($e->getCode() == '23000') {
@@ -140,7 +173,6 @@ public function index()
             return redirect()->back()->with('error', 'Ocurrió un error al intentar eliminar el seguimiento.');
         }
     }
-
 
     public function getPreviousFishData($trackingId)
     {

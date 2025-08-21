@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="{{ asset('images/Favicon2.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('AdminLTE/dist/img/IconoAcuaponico.png') }}" type="image/x-icon">
     <title>Gestión de Unidad de Cultivos</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -21,8 +21,8 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <style>
-        
-       
+
+
     </style>
 </head>
 
@@ -197,7 +197,7 @@
                         <!-- Timeline interactivo -->
                         <div class="acuaponic-timeline">
                             <div class="timeline-step">
-                                <div class="step-icon bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 40px; height: 40px; margin-left: -38.2%;" >
+                                <div class="step-icon bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 40px; height: 40px; margin-left: -38.2%;">
                                     <i class="fas fa-fish"></i>
                                 </div>
                                 <div class="step-content ml-3">
@@ -263,13 +263,13 @@
             function animateCounters() {
                 const counters = document.querySelectorAll('.counter');
                 const speed = 200;
-        
+
                 counters.forEach(counter => {
                     const target = +counter.getAttribute('data-target');
                     const count = +counter.innerText;
                     const increment = target / speed;
 
-                    if(count < target) {
+                    if (count < target) {
                         counter.innerText = Math.ceil(count + increment);
                         setTimeout(animateCounters, 1);
                     } else {
@@ -277,7 +277,7 @@
                     }
                 });
             }
-    
+
             // Ejecutar cuando el documento esté listo
             document.addEventListener('DOMContentLoaded', animateCounters);
         </script>
@@ -351,22 +351,22 @@
         <div class="modal fade" id="modal2" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content" style="border-radius: 15px; overflow: hidden; border: none; box-shadow: 0 5px 20px rgba(0,0,0,0.2);">
-            
+
                     <h2 class="modal-title text-center text-success fw-bold m-0">Fertilizante Natural en Acuaponía</h2>
 
                     <!-- Cuerpo del modal -->
                     <div class="modal-body p-0">
                         <div class="row g-0">
                             <!-- Columna izquierda con imagen ampliada -->
-                            <div class="col-md-7">  <!-- Cambiado de col-md-6 a col-md-7 -->
-                                <img src="{{ asset('/AdminLTE/dist/img/fertilizanteacuapon.jpeg') }}" 
-                                    class="img-fluid h-100 w-100 object-fit-cover" 
+                            <div class="col-md-7"> <!-- Cambiado de col-md-6 a col-md-7 -->
+                                <img src="{{ asset('/AdminLTE/dist/img/fertilizanteacuapon.jpeg') }}"
+                                    class="img-fluid h-100 w-100 object-fit-cover"
                                     alt="Sistema acuapónico"
-                                    style="min-height: 400px; object-position: center;">  <!-- Aumentada altura mínima -->
+                                    style="min-height: 400px; object-position: center;"> <!-- Aumentada altura mínima -->
                             </div>
-                    
+
                             <!-- Columna derecha con contenido ajustado -->
-                            <div class="col-md-5 p-4 d-flex flex-column">  <!-- Cambiado de col-md-6 a col-md-5 -->
+                            <div class="col-md-5 p-4 d-flex flex-column"> <!-- Cambiado de col-md-6 a col-md-5 -->
                                 <!-- Proceso de fertilización -->
                                 <div class="mb-4">
                                     <div class="d-flex align-items-center mb-3">
@@ -377,7 +377,7 @@
                                     </div>
                                     <p class="ps-5">Los peces producen desechos ricos en amoníaco a través de su metabolismo.</p>
                                 </div>
-                        
+
                                 <!-- Transformación bacteriana -->
                                 <div class="mb-4">
                                     <div class="d-flex align-items-center mb-3">
@@ -388,7 +388,7 @@
                                     </div>
                                     <p class="ps-5">Bacterias beneficiosas convierten el amoníaco en nitritos y luego en nitratos.</p>
                                 </div>
-                        
+
                                 <!-- Absorción por plantas -->
                                 <div class="mb-4">
                                     <div class="d-flex align-items-center mb-3">
@@ -399,7 +399,7 @@
                                     </div>
                                     <p class="ps-5">Las plantas absorben los nitratos como su principal fuente de nitrógeno.</p>
                                 </div>
-                        
+
                                 <!-- Comparación con fertilizantes tradicionales -->
                                 <div class="bg-light p-3 rounded mt-auto">
                                     <div class="d-flex align-items-center mb-2">
@@ -407,7 +407,7 @@
                                         <h5 class="m-0 text-success">Ventajas vs. fertilizantes tradicionales</h5>
                                     </div>
                                     <div class="row">
-                                        <div class="col-12">  <!-- Cambiado a col-12 para ocupar todo el ancho -->
+                                        <div class="col-12"> <!-- Cambiado a col-12 para ocupar todo el ancho -->
                                             <div class="d-flex align-items-start mb-2">
                                                 <i class="fas fa-check-circle text-success mt-1 me-2"></i>
                                                 <div>
@@ -460,7 +460,7 @@
 
                         <!-- Imagen destacada centrada -->
                         <div class="text-center mb-4">
-                            <img src="{{ asset('/AdminLTE/dist/img/riegoacopon.jpg') }}" 
+                            <img src="{{ asset('/AdminLTE/dist/img/riegoacopon.jpg') }}"
                                 alt="Purificación acuapónica"
                                 class="img-fluid rounded shadow-sm"
                                 style="max-height: 250px; object-fit: cover;">
@@ -559,14 +559,14 @@
 
                     <!-- Cuerpo del modal -->
                     <div class="modal-body p-4">
-                
+
                         <!-- Imagen central con efecto flotante -->
                         <div class="text-center mb-4 position-relative" style="height: 250px;">
-                            <img src="{{ asset('/AdminLTE/dist/img/cicloacuaponico.jpg') }}" 
+                            <img src="{{ asset('/AdminLTE/dist/img/cicloacuaponico.jpg') }}"
                                 alt="Diagrama del ciclo acuapónico"
                                 class="img-fluid rounded-4 shadow-lg border border-3 border-success"
                                 style="max-height: 100%; width: auto; object-fit: contain; animation: float 6s ease-in-out infinite;">
-                    
+
                             <!-- Puntos interactivos -->
                             <div class="cycle-point" style="top: 20%; left: 30%;" data-step="1">
                                 <div class="point-pulse"></div>

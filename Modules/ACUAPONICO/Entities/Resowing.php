@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\ACUAPONICO\Entities\Lot;
 use Modules\AGROCEFA\Entities\Crop;
-use Modules\ACUAPONICO\Entities\Tracking;
 use Modules\ACUAPONICO\Entities\AquaponicSystem;
 
 class Resowing extends Model
@@ -29,10 +28,12 @@ class Resowing extends Model
             ->withPivot('quantity')
             ->withTimestamps();
     }
+
     public function crops()
     {
         return $this->belongsTo(Crop::class, 'crop_id');
     }
+
     public function system()
     {
         return $this->belongsTo(AquaponicSystem::class, 'aquaponic_system_id');
@@ -43,10 +44,19 @@ class Resowing extends Model
     {
         return $this->crops ? $this->crops->trackings : collect();
     }
-    public function trackings()
+
+    // Relación con resowing_trackings (si usas tabla separada)
+    public function resowingTrackings()
     {
-        return $this->morphMany(Tracking::class, 'subject');
+        return $this->hasMany(ResowingTracking::class, 'resowing_id');
     }
+
+    // Accesor para la cantidad total resembrada
+    public function getTotalQuantityAttribute()
+    {
+        return $this->lots()->sum('resowing_lot.quantity');
+    }
+
     protected static function newFactory()
     {
         return \Modules\ACUAPONICO\Database\factories\ResowingFactory::new();

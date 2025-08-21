@@ -1,6 +1,6 @@
 
 <?php $__env->startPush('breadcrumbs'); ?>
-    <li class="breadcrumb-item active">Gestión de Lotes</li>
+<li class="breadcrumb-item active">Gestión de Lotes</li>
 <?php $__env->stopPush(); ?>
 <?php $__env->startSection('content2'); ?>
 <h1 class="fw-bold mb-4">Gestión de Lotes</h1>
@@ -10,81 +10,83 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h5 class="mb-0 fw-semibold">Lista de Lotes</h5>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createLot">
-                <i class="bi bi-plus-circle"></i> Agregar Lote
+                <i class="bi bi-plus-circle"></i> Nuevo Lote
             </button>
         </div>
         <div class="table-responsive">
-            <table id="lotesTable" class="table table-hover table-bordered align-middle text-center" style="width:100%">
-                <thead style="background-color: #f8f9fa;">
-                    <tr>
-                        <th>Código</th>
-                        <th>S/Acuapónico</th>
-                        <th>Fecha</th>
-                        <th>Nombre</th>
-                        <th>Capacidad</th>
-                        <th>Imagen</th>
-                        <th>Descripción</th>
-                        <th>Ocupado</th>
-                        <th>Disponible</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $n = 1; ?>
-                    <?php $__currentLoopData = $lots; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lot): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <tr>
-                        <td class="text-center"><?php echo e($n++); ?></td>
-                        <td class="text-center"><?php echo e($lot->aquaponicSystem->name); ?></td>
-                        <td class="text-center"><?php echo e($lot->date); ?></td>
-                        <td class="text-center"><?php echo e($lot->name); ?></td>
-                        <td class="text-center"><?php echo e($lot->capacity); ?></td>
-                        <td class="text-center">
-                            <?php if($lot->image): ?>
-                            <img src="<?php echo e(asset('modules/acuaponico/images/lotes/' . $lot->image)); ?>" alt="Imagen del lote" style="max-width: 100px; max-height: 100px;">
-                            <?php else: ?>
-                            <span class="text-muted">Sin imagen</span>
-                            <?php endif; ?>
-                        </td>
-                        <td class="text-center">
-                             <?php if( $lot->description ): ?>
-                            <span><?php echo e($lot->description); ?></span>
-                            <?php else: ?>
-                            <span class="text-muted">Sin descripción</span>
-                            <?php endif; ?>
-                        </td>
-                        <td class="text-center"><?php echo e($lot->ocupado); ?></td>
-                        <td class="text-center">
-                            <?php if($lot->disponible > 0): ?>
-                            <span class="badge bg-success"><?php echo e($lot->disponible); ?></span>
-                            <?php else: ?>
-                            <span class="badge bg-danger">0</span>
-                            <?php endif; ?>
-                        </td>
-                        <td class="text-center"><?php echo e($lot->state); ?></td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-success btn-sm editbtn"
-                                data-id="<?php echo e($lot->id); ?>"
-                                data-aquaponic_system_id="<?php echo e($lot->aquaponic_system_id); ?>"
-                                data-date="<?php echo e($lot->date); ?>"
-                                data-name="<?php echo e($lot->name); ?>"
-                                data-capacity="<?php echo e($lot->capacity); ?>"
-                                data-image="<?php echo e($lot->image); ?>"
-                                data-description="<?php echo e($lot->description); ?>"
-                                data-state="<?php echo e($lot->state); ?>"
-                                data-ocupado="<?php echo e($lot->ocupado); ?>"
-                                data-toggle="modal"
-                                data-target="#updateLot">
-                                Editar
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="<?php echo e($lot->id); ?>">
-                                Eliminar
-                            </button>
-                        </td>
-                    </tr>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </tbody>
-            </table>
+            <div class="card-body">
+                <table id="lotesTable" class="table table-hover table-bordered align-middle text-center" style="width:100%">
+                    <thead style="background-color: #f8f9fa;">
+                        <tr>
+                            <th>Código</th>
+                            <th>S/Acuapónico</th>
+                            <th>Fecha</th>
+                            <th>Nombre</th>
+                            <th>Capacidad</th>
+                            <th>Imagen</th>
+                            <th>Descripción</th>
+                            <th>Ocupado</th>
+                            <th>Disponible</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $n = 1; ?>
+                        <?php $__currentLoopData = $lots; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lot): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <tr>
+                            <td class="text-center"><?php echo e($n++); ?></td>
+                            <td class="text-center"><?php echo e($lot->aquaponicSystem->name); ?></td>
+                            <td class="text-center"><?php echo e($lot->date); ?></td>
+                            <td class="text-center"><?php echo e($lot->name); ?></td>
+                            <td class="text-center"><?php echo e($lot->capacity); ?></td>
+                            <td class="text-center">
+                                <?php if($lot->image): ?>
+                                <img src="<?php echo e(asset('modules/acuaponico/images/lotes/' . $lot->image)); ?>" alt="Imagen del lote" style="max-width: 100px; max-height: 100px;">
+                                <?php else: ?>
+                                <span class="text-muted">Sin imagen</span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="text-center">
+                                <?php if( $lot->description ): ?>
+                                <span><?php echo e($lot->description); ?></span>
+                                <?php else: ?>
+                                <span class="text-muted">Sin descripción</span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="text-center"><?php echo e($lot->ocupado); ?></td>
+                            <td class="text-center">
+                                <?php if($lot->disponible > 0): ?>
+                                <span class="badge bg-success"><?php echo e($lot->disponible); ?></span>
+                                <?php else: ?>
+                                <span class="badge bg-danger">0</span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="text-center"><?php echo e($lot->state); ?></td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-success btn-sm editbtn"
+                                    data-id="<?php echo e($lot->id); ?>"
+                                    data-aquaponic_system_id="<?php echo e($lot->aquaponic_system_id); ?>"
+                                    data-date="<?php echo e($lot->date); ?>"
+                                    data-name="<?php echo e($lot->name); ?>"
+                                    data-capacity="<?php echo e($lot->capacity); ?>"
+                                    data-image="<?php echo e($lot->image); ?>"
+                                    data-description="<?php echo e($lot->description); ?>"
+                                    data-state="<?php echo e($lot->state); ?>"
+                                    data-ocupado="<?php echo e($lot->ocupado); ?>"
+                                    data-toggle="modal"
+                                    data-target="#updateLot">
+                                    Editar
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="<?php echo e($lot->id); ?>">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -100,6 +102,10 @@
                     <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
+                      <div class="mb-3">
+                        <label for="date" class="form-label">Fecha:</label>
+                        <input type="date" name="date" class="form-control" id="date" readonly>
+                    </div>
                     <div class="mb-3">
                         <label for="aquaponic_system_id" class="form-label">Sistema Acuapónico:</label>
                         <select name="aquaponic_system_id" class="form-control" required>
@@ -108,10 +114,6 @@
                             <option value="<?php echo e($system->id); ?>"><?php echo e($system->name); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="date" class="form-label">Fecha:</label>
-                        <input type="date" name="date" class="form-control" id="date" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">Nombre:</label>

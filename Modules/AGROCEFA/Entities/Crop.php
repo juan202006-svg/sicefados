@@ -12,7 +12,7 @@ use Modules\AGROCEFA\Entities\Specie;
 use Modules\ACUAPONICO\Entities\Lot;
 use Modules\ACUAPONICO\Entities\AquaponicSystem;
 use Modules\ACUAPONICO\Entities\Tracking;
-
+use Modules\ACUAPONICO\Entities\Resowing;
 
 class Crop extends Model implements Auditable
 {
@@ -50,10 +50,6 @@ class Crop extends Model implements Auditable
         return $this->belongsTo(AquaponicSystem::class, 'aquaponic_system_id');
     }
 
-    public function trackings()
-    {
-        return $this->morphMany(Tracking::class, 'subject');
-    }
 
     public function variety()
     {
@@ -65,9 +61,16 @@ class Crop extends Model implements Auditable
         return $this->belongsToMany(Environment::class, 'crop_environments'); // Asegúrate de que coincida con el nombre de tu tabla
     }
 
-
+    public function trackings()
+    {
+        return $this->hasMany(Tracking::class, 'crop_id');
+    }
     public function labors()
     {
         return $this->belongsToMany(Labor::class, 'crop_labors');
+    }
+    public function resowings()
+    {
+        return $this->hasMany(Resowing::class, 'crop_id');
     }
 }

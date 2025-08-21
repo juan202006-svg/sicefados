@@ -19,6 +19,7 @@ class CreateTrackingPlantTable extends Migration
       $table->foreign('tracking_id')->references('id')->on('trackings');
       $table->integer('plant_count');             
       $table->integer('height_cm');               
+      $table->string('color_tone', 12); // Ej: "#28a745"
       $table->string('growth');                   
       $table->integer('comparison_percentage');  
       $table->integer('mortality');               

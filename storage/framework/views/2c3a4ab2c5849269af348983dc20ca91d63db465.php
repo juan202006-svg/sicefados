@@ -434,6 +434,13 @@
                             <p>Gestión de Resiembras</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="<?php echo e(route('acuaponico.pasante.pasante.indexresowingtracking')); ?>" 
+                           class="nav-link <?php echo e(request()->routeIs('acuaponico.pasante.pasante.indexresowingtracking') ? 'active bg-info text-white' : ''); ?>">
+                            <i class="nav-icon fas fa-tags"></i>
+                            <p>Seguimiento resiembra</p>
+                        </a>
+                    </li>
                     
                     <?php
                     $seguimientoRoutes = [

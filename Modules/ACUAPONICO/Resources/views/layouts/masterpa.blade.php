@@ -434,6 +434,13 @@
                             <p>Gestión de Resiembras</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('acuaponico.pasante.pasante.indexresowingtracking') }}" 
+                           class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexresowingtracking') ? 'active bg-info text-white' : '' }}">
+                            <i class="nav-icon fas fa-tags"></i>
+                            <p>Seguimiento resiembra</p>
+                        </a>
+                    </li>
                     
                     @php
                     $seguimientoRoutes = [

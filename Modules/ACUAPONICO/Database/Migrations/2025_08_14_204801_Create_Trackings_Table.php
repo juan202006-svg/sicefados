@@ -17,17 +17,14 @@ class CreateTrackingsTable extends Migration
             $table->id();
             $table->date('date');
             $table->unsignedBigInteger('aquaponic_system_id'); 
-            $table->enum('subject_type', ['crop', 'resowing'])->default('crop');
-            $table->unsignedBigInteger('subject_id'); // ID del cultivo o resiembra
+            $table->unsignedBigInteger('crop_id');
             $table->integer('days_elapsed')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
 
             // Relaciones foráneas
             $table->foreign('aquaponic_system_id')->references('id')->on('aquaponic_systems');
-            
-            // Índices para optimizar las consultas polimórficas
-            $table->index(['subject_type', 'subject_id']);
+            $table->foreign('crop_id')->references('id')->on('crops');
         });
     }
 

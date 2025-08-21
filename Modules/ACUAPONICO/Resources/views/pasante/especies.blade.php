@@ -1,6 +1,6 @@
 @extends ('acuaponico::layouts.masterpa')
 @push('breadcrumbs')
-    <li class="breadcrumb-item active">Gestión de Especies</li>
+<li class="breadcrumb-item active">Gestión de Especies</li>
 @endpush
 @section('content2')
 <h1 class="fw-bold mb-4">Gestión de Especies</h1>
@@ -13,54 +13,56 @@
             </button>
         </div>
         <div class="table-responsive">
-            <table id="especiesTable" class="table table-hover table-bordered align-middle text-center">
-                <thead style="background-color: #f8f9fa;">
-                    <tr>
-                        <th>Codigo</th>
-                        <th>Categoria</th>
-                        <th>Nombre Cientifico</th>
-                        <th>Nombre Comun</th>
-                        <th>Imagen</th>
-                        <th>Descripcion</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php $n = 1; @endphp
-                    @foreach ($especies as $especie)
-                    <tr>
-                        <td class="text-center">{{ $n++ }}</td>
-                        <td class="text-center">{{ $especie->category->name?? 'Sin categoría' }}</td>
-                        <td class="text-center">{{ $especie->scientific_name }}</td>
-                        <td class="text-center">{{ $especie->name }}</td>
-                        <td class="text-center">
-                            @if ($especie->image)
-                            <img src="{{ asset('modules/acuaponico/images/especies/' . $especie->image) }}" alt="Imagen de la especie" class="img-fluid" style="max-width: 100px; max-height: 100px;">
-                            @else
-                            <span class="text-muted">Sin imagen</span>
-                            @endif
-                        </td>
-                        <td class="text-center">{{ $especie->description ?? 'Sin descripción' }}</td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-success btn-sm editbtn"
-                                data-id="{{ $especie->id }}"
-                                data-category_id="{{ $especie->category_id }}"
-                                data-scientific_name="{{ $especie->scientific_name }}"
-                                data-name="{{ $especie->name }}"
-                                data-image="{{ $especie->image }}"
-                                data-description="{{ $especie->description }}"
-                                data-toggle="modal"
-                                data-target="#editar">
-                                Editar
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $especie->id }}">
-                                Eliminar
-                            </button>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="card-body">
+                <table id="especiesTable" class="table table-hover table-bordered align-middle text-center">
+                    <thead style="background-color: #f8f9fa;">
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Categoria</th>
+                            <th>Nombre Cientifico</th>
+                            <th>Nombre Comun</th>
+                            <th>Imagen</th>
+                            <th>Descripcion</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php $n = 1; @endphp
+                        @foreach ($especies as $especie)
+                        <tr>
+                            <td class="text-center">{{ $n++ }}</td>
+                            <td class="text-center">{{ $especie->category->name?? 'Sin categoría' }}</td>
+                            <td class="text-center">{{ $especie->scientific_name }}</td>
+                            <td class="text-center">{{ $especie->name }}</td>
+                            <td class="text-center">
+                                @if ($especie->image)
+                                <img src="{{ asset('modules/acuaponico/images/especies/' . $especie->image) }}" alt="Imagen de la especie" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+                                @else
+                                <span class="text-muted">Sin imagen</span>
+                                @endif
+                            </td>
+                            <td class="text-center">{{ $especie->description ?? 'Sin descripción' }}</td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-success btn-sm editbtn"
+                                    data-id="{{ $especie->id }}"
+                                    data-category_id="{{ $especie->category_id }}"
+                                    data-scientific_name="{{ $especie->scientific_name }}"
+                                    data-name="{{ $especie->name }}"
+                                    data-image="{{ $especie->image }}"
+                                    data-description="{{ $especie->description }}"
+                                    data-toggle="modal"
+                                    data-target="#editar">
+                                    Editar
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $especie->id }}">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
         <!-- Inicio de modal de editar-->
         <div class="modal fade " id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">

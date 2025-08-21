@@ -1,5 +1,5 @@
 <?php $__env->startPush('breadcrumbs'); ?>
-    <li class="breadcrumb-item active">Gestión de Especies</li>
+<li class="breadcrumb-item active">Gestión de Especies</li>
 <?php $__env->stopPush(); ?>
 <?php $__env->startSection('content2'); ?>
 <h1 class="fw-bold mb-4">Gestión de Especies</h1>
@@ -12,54 +12,56 @@
             </button>
         </div>
         <div class="table-responsive">
-            <table id="especiesTable" class="table table-hover table-bordered align-middle text-center">
-                <thead style="background-color: #f8f9fa;">
-                    <tr>
-                        <th>Codigo</th>
-                        <th>Categoria</th>
-                        <th>Nombre Cientifico</th>
-                        <th>Nombre Comun</th>
-                        <th>Imagen</th>
-                        <th>Descripcion</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $n = 1; ?>
-                    <?php $__currentLoopData = $especies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $especie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <tr>
-                        <td class="text-center"><?php echo e($n++); ?></td>
-                        <td class="text-center"><?php echo e($especie->category->name?? 'Sin categoría'); ?></td>
-                        <td class="text-center"><?php echo e($especie->scientific_name); ?></td>
-                        <td class="text-center"><?php echo e($especie->name); ?></td>
-                        <td class="text-center">
-                            <?php if($especie->image): ?>
-                            <img src="<?php echo e(asset('modules/acuaponico/images/especies/' . $especie->image)); ?>" alt="Imagen de la especie" class="img-fluid" style="max-width: 100px; max-height: 100px;">
-                            <?php else: ?>
-                            <span class="text-muted">Sin imagen</span>
-                            <?php endif; ?>
-                        </td>
-                        <td class="text-center"><?php echo e($especie->description ?? 'Sin descripción'); ?></td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-success btn-sm editbtn"
-                                data-id="<?php echo e($especie->id); ?>"
-                                data-category_id="<?php echo e($especie->category_id); ?>"
-                                data-scientific_name="<?php echo e($especie->scientific_name); ?>"
-                                data-name="<?php echo e($especie->name); ?>"
-                                data-image="<?php echo e($especie->image); ?>"
-                                data-description="<?php echo e($especie->description); ?>"
-                                data-toggle="modal"
-                                data-target="#editar">
-                                Editar
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="<?php echo e($especie->id); ?>">
-                                Eliminar
-                            </button>
-                        </td>
-                    </tr>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </tbody>
-            </table>
+            <div class="card-body">
+                <table id="especiesTable" class="table table-hover table-bordered align-middle text-center">
+                    <thead style="background-color: #f8f9fa;">
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Categoria</th>
+                            <th>Nombre Cientifico</th>
+                            <th>Nombre Comun</th>
+                            <th>Imagen</th>
+                            <th>Descripcion</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $n = 1; ?>
+                        <?php $__currentLoopData = $especies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $especie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <tr>
+                            <td class="text-center"><?php echo e($n++); ?></td>
+                            <td class="text-center"><?php echo e($especie->category->name?? 'Sin categoría'); ?></td>
+                            <td class="text-center"><?php echo e($especie->scientific_name); ?></td>
+                            <td class="text-center"><?php echo e($especie->name); ?></td>
+                            <td class="text-center">
+                                <?php if($especie->image): ?>
+                                <img src="<?php echo e(asset('modules/acuaponico/images/especies/' . $especie->image)); ?>" alt="Imagen de la especie" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+                                <?php else: ?>
+                                <span class="text-muted">Sin imagen</span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="text-center"><?php echo e($especie->description ?? 'Sin descripción'); ?></td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-success btn-sm editbtn"
+                                    data-id="<?php echo e($especie->id); ?>"
+                                    data-category_id="<?php echo e($especie->category_id); ?>"
+                                    data-scientific_name="<?php echo e($especie->scientific_name); ?>"
+                                    data-name="<?php echo e($especie->name); ?>"
+                                    data-image="<?php echo e($especie->image); ?>"
+                                    data-description="<?php echo e($especie->description); ?>"
+                                    data-toggle="modal"
+                                    data-target="#editar">
+                                    Editar
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="<?php echo e($especie->id); ?>">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <!-- Inicio de modal de editar-->
         <div class="modal fade " id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">

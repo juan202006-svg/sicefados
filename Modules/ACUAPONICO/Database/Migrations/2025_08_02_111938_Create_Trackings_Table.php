@@ -41,3 +41,4 @@ class CreateTrackingsTable extends Migration
         Schema::dropIfExists('trackings');
     }
 }
+

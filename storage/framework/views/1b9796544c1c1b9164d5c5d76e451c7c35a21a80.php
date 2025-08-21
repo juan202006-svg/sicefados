@@ -13,8 +13,8 @@
             </button>
         </div>
 
-        <div class="card shadow-sm border-0">
-            <div class="table-responsive">
+        <div class="table-responsive">
+            <div class="card-body">
                 <table id="acuaponicoTable" class="table table-hover table-bordered align-middle text-center">
                     <thead style="background-color: #f8f9fa;">
                         <tr>

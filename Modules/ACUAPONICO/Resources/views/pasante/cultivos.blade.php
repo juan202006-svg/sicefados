@@ -1,4 +1,4 @@
-@extends( 'acuaponico::layouts.masterpa' )
+@extends('acuaponico::layouts.masterpa')
 
 @push('breadcrumbs')
 <li class="breadcrumb-item active">Gestión de Cultivos</li>
@@ -35,7 +35,7 @@
                             <td class="text-center">{{ $n++ }}</td>
                             <td class="text-center">{{ $cultivo->date }}</td>
                             <td class="text-center">{{ $cultivo->aquaponicSystem->name }}</td>
-                            <td class="text-center">{{ $cultivo->species->name?? 'sin especie' }}</td>
+                            <td class="text-center">{{ $cultivo->species->name ?? 'sin especie' }}</td>
                             <td class="text-center">
                                 @foreach ($cultivo->lotes as $lote)
                                 <span class="badge bg-info">
@@ -43,14 +43,13 @@
                                 </span>
                                 @endforeach
                             </td>
-
                             <td class="text-center">{{ $cultivo->quantity }}</td>
                             <td class="text-center">{{ $cultivo->status }}</td>
                             <td class="text-center">
                                 <button type="button" class="btn btn-success btn-sm editbtn"
                                     data-id="{{ $cultivo->id }}"
                                     data-date="{{ $cultivo->date }}"
-                                    data-aquaponic_system_id="{{$cultivo->aquaponic_system_id }}"
+                                    data-aquaponic_system_id="{{ $cultivo->aquaponic_system_id }}"
                                     data-species_id="{{ $cultivo->species_id }}"
                                     data-lot_ids="{{ $cultivo->lotes->pluck('id')->implode(',') }}"
                                     data-quantity="{{ $cultivo->quantity }}"
@@ -62,21 +61,19 @@
                                     data-target="#editar">
                                     Editar
                                 </button>
-
                                 <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $cultivo->id }}">
                                     Eliminar
                                 </button>
                             </td>
-
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-                <!-- Inicio de modal de editar-->
-                <div class="modal fade " id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
+                <!-- Inicio de modal de editar -->
+                <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden=" true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updatecrops',['id' => 0]) }}" method="POST">
+                            <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updatecrops', ['id' => 0]) }}" method="POST">
                                 @csrf
                                 @method('put')
                                 <div class="modal-header">
@@ -86,7 +83,7 @@
                                 <div class="modal-body">
                                     <input type="hidden" name="id" id="edit-id">
                                     <div class="mb-3">
-                                        <label for="edit-fecha" class="form-label"> Fecha:</label>
+                                        <label for="edit-date" class="form-label">Fecha:</label>
                                         <input type="date" class="form-control" id="edit-date" name="date" required>
                                     </div>
                                     <div class="mb-3">
@@ -114,21 +111,30 @@
                                         <small class="form-text text-muted">Puede seleccionar más de un lote con Ctrl (Windows) o Cmd (Mac)</small>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="edit-quantity" class="form-label"> cantidad a cultivar: </label>
-                                        <input type="number" class="form-control" id="edit-quantity" name="quantity">
+                                        <label for="edit-quantity" class="form-label">Cantidad a cultivar:</label>
+                                        <input type="number" class="form-control" id="edit-quantity" name="quantity" required>
                                         <div class="invalid-feedback" id="error-cantidad-edit"></div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                        <button type="submit" class="btn btn-primary"> Guardar Cambios</button>
+                                    <div class="mb-3">
+                                        <label for="edit-status" class="form-label">Estado:</label>
+                                        <select name="status" id="edit-status" class="form-control" required>
+                                            <option value="Cultivado">Cultivado</option>
+                                            <option value="Seguimiento">Seguimiento</option>
+                                            <option value="Cosechado">Cosechado</option>
+                                        </select>
                                     </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                </div>
                             </form>
                         </div>
                     </div>
                 </div>
-                <!--termina modal de editar-->
-                <!--Inicia modal de eliminar-->
-                <div class="modal fade " id="eliminar" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
+                <!-- Termina modal de editar -->
+                <!-- Inicia modal de eliminar -->
+                <div class="modal fade" id="eliminar" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <form id="formEliminar" action="" method="POST" style="display:none;">
@@ -145,7 +151,7 @@
 <!-- Modal Agregar -->
 <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="{{route('acuaponico.pasante.pasante.storecrops') }}" method="POST">
+        <form action="{{ route('acuaponico.pasante.pasante.storecrops') }}" method="POST">
             @csrf
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
@@ -182,7 +188,7 @@
                         <small class="form-text text-muted">Puede seleccionar más de un lote con Ctrl (Windows) o Cmd (Mac)</small>
                     </div>
                     <div class="mb-3">
-                        <label for="quantity" class="form-label">Cantidad a cultivar: </label>
+                        <label for="quantity" class="form-label">Cantidad a cultivar:</label>
                         <input type="number" id="quantity" name="quantity" class="form-control" required>
                         <div class="invalid-feedback" id="error-cantidad"></div>
                     </div>
@@ -190,6 +196,8 @@
                         <label for="status" class="form-label">Estado:</label>
                         <select name="status" class="form-control" required>
                             <option value="Cultivado">Cultivado</option>
+                            <option value="Seguimiento">Seguimiento</option>
+                            <option value="Cosechado">Cosechado</option>
                         </select>
                     </div>
                 </div>
@@ -201,20 +209,19 @@
         </form>
     </div>
 </div>
-<!-- Script para establecer la fecha actual en el campo de fecha  -->
+<!-- Script para establecer la fecha actual en el campo de fecha -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const dateInput = document.getElementById('date');
         const today = new Date();
-
         const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0'); // Mes empieza desde 0
+        const month = String(today.getMonth() + 1).padStart(2, '0');
         const day = String(today.getDate()).padStart(2, '0');
-
         const localDate = `${year}-${month}-${day}`;
         dateInput.value = localDate;
     });
 </script>
+<!-- Script para validación del modal de agregar -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const loteSelect = document.getElementById('lot_ids');
@@ -254,7 +261,42 @@
         });
     });
 </script>
+<!-- Script para cargar lotes al agregar -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sistemaSelect = document.getElementById('aquaponic_system_id');
+        const lotesSelect = document.getElementById('lot_ids');
 
+        sistemaSelect.addEventListener('change', function() {
+            const sistemaId = this.value;
+            lotesSelect.innerHTML = '';
+            if (sistemaId) {
+                fetch(`/pasante/cultivo/lotes-por-sistema/${sistemaId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length === 0) {
+                            lotesSelect.innerHTML = '<option disabled>No hay lotes disponibles</option>';
+                        } else {
+                            data.forEach(lote => {
+                                const option = document.createElement('option');
+                                option.value = lote.id;
+                                option.textContent = `${lote.name} - Disponible: ${lote.capacity - lote.ocupado}`;
+                                option.dataset.capacidad = lote.capacity;
+                                option.dataset.ocupado = lote.ocupado;
+                                option.dataset.state = lote.state;
+                                lotesSelect.appendChild(option);
+                            });
+                            setTimeout(() => {
+                                document.getElementById('quantity').dispatchEvent(new Event('input'));
+                            }, 100);
+                        }
+                    })
+                    .catch(error => console.error('Error al obtener los lotes:', error));
+            }
+        });
+    });
+</script>
+<!-- Script para el modal de editar -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const loteSelectEdit = document.getElementById('edit-lot_ids');
@@ -295,65 +337,67 @@
 
         document.querySelectorAll('.editbtn').forEach(button => {
             button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                const loteIds = this.getAttribute('data-lot_ids').split(',');
+                const cropId = this.getAttribute('data-id');
+                const date = this.getAttribute('data-date');
+                const aquaponicSystemId = this.getAttribute('data-aquaponic_system_id');
+                const speciesId = this.getAttribute('data-species_id');
+                const loteIdsStr = this.getAttribute('data-lot_ids');
+                const loteIds = loteIdsStr ? loteIdsStr.split(',') : [];
+                const quantity = this.getAttribute('data-quantity');
+                const status = this.getAttribute('data-status');
 
-                document.getElementById('edit-id').value = id;
-                document.getElementById('edit-date').value = this.getAttribute('data-date');
-                document.getElementById('edit-species_id').value = this.getAttribute('data-species_id');
-                document.getElementById('edit-quantity').value = this.getAttribute('data-quantity');
-                document.getElementById('edit-aquaponic_system_id').value = this.getAttribute('data-aquaponic_system_id');
+                // Almacenar asignados originales
+                const originalAsignados = {};
+                loteIds.forEach(id => {
+                    originalAsignados[id] = parseInt(this.getAttribute(`data-lot_asignado_${id}`)) || 0;
+                });
 
-                fetch(`/pasante/cultivo/lotes-por-sistema/${this.getAttribute('data-aquaponic_system_id')}`)
+                const editModal = document.getElementById('editar');
+                editModal.dataset.originalAsignados = JSON.stringify(originalAsignados);
+
+                // Setear valores
+                document.getElementById('edit-id').value = cropId;
+                document.getElementById('edit-date').value = date;
+                document.getElementById('edit-aquaponic_system_id').value = aquaponicSystemId;
+                document.getElementById('edit-species_id').value = speciesId;
+                document.getElementById('edit-quantity').value = quantity;
+                document.getElementById('edit-status').value = status;
+
+                // Fetch con crop_id
+                fetch(`/pasante/cultivo/lotes-por-sistema/${aquaponicSystemId}?crop_id=${cropId}`)
                     .then(response => response.json())
                     .then(data => {
-                        const loteSelectEdit = document.getElementById('edit-lot_ids');
                         loteSelectEdit.innerHTML = '';
+                        const originalAsignados = JSON.parse(editModal.dataset.originalAsignados || '{}');
                         data.forEach(lote => {
+                            let ocupadoEfectivo = lote.ocupado;
+                            if (lote.id in originalAsignados) {
+                                ocupadoEfectivo -= originalAsignados[lote.id];
+                            }
+                            ocupadoEfectivo = Math.max(0, ocupadoEfectivo);
+                            const disponibleEfectivo = lote.capacity - ocupadoEfectivo;
+
                             const option = document.createElement('option');
                             option.value = lote.id;
-                            option.text = lote.name + ` - Disponible: ${lote.capacity - lote.ocupado}`;
+                            option.text = `${lote.name} - Disponible: ${disponibleEfectivo}`;
                             option.setAttribute('data-capacidad', lote.capacity);
-                            option.setAttribute('data-ocupado', lote.ocupado);
-                            option.setAttribute('data-state', 'disponible');
-                            if (loteIds.includes(String(lote.id))) option.selected = true;
+                            option.setAttribute('data-ocupado', ocupadoEfectivo);
+                            option.setAttribute('data-state', lote.state);
+                            if (loteIds.includes(lote.id.toString())) {
+                                option.selected = true;
+                            }
                             loteSelectEdit.appendChild(option);
                         });
                         setTimeout(() => {
                             validarCantidadEdit();
                         }, 200);
-                    });
+                    })
+                    .catch(error => console.error('Error al obtener lotes:', error));
             });
         });
     });
 </script>
-
-<script>
-    document.getElementById('aquaponic_system_id').addEventListener('change', function() {
-        const sistemaId = this.value;
-        const lotesSelect = document.getElementById('lot_ids');
-        lotesSelect.innerHTML = '';
-        if (sistemaId) {
-            fetch(`/pasante/cultivo/lotes-por-sistema/${sistemaId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.length === 0) {
-                        lotesSelect.innerHTML = '<option disabled>No hay lotes disponibles</option>';
-                    } else {
-                        data.forEach(lote => {
-                            const option = document.createElement('option');
-                            option.value = lote.id;
-                            option.textContent = lote.name + ` - Disponible: ${lote.capacity - lote.ocupado}`;
-                            option.dataset.capacidad = lote.capacity;
-                            option.dataset.ocupado = lote.ocupado;
-                            lotesSelect.appendChild(option);
-                        });
-                    }
-                })
-                .catch(error => console.error('Error al obtener los lotes:', error));
-        }
-    });
-</script>
+<!-- Script para cargar lotes al cambiar sistema en editar -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const editSistemaSelect = document.getElementById('edit-aquaponic_system_id');
@@ -361,21 +405,33 @@
 
         editSistemaSelect.addEventListener('change', function() {
             const sistemaId = this.value;
+            const cropId = document.getElementById('edit-id').value;
             editLotesSelect.innerHTML = '';
             if (sistemaId) {
-                fetch(`/pasante/cultivo/lotes-por-sistema/${sistemaId}`)
+                fetch(`/pasante/cultivo/lotes-por-sistema/${sistemaId}?crop_id=${cropId}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.length === 0) {
                             editLotesSelect.innerHTML = '<option disabled>No hay lotes disponibles</option>';
                         } else {
+                            const originalAsignados = JSON.parse(document.getElementById('editar').dataset.originalAsignados || '{}');
                             data.forEach(lote => {
+                                let ocupadoEfectivo = lote.ocupado;
+                                if (lote.id in originalAsignados) {
+                                    ocupadoEfectivo -= originalAsignados[lote.id];
+                                }
+                                ocupadoEfectivo = Math.max(0, ocupadoEfectivo);
+                                const disponibleEfectivo = lote.capacity - ocupadoEfectivo;
+
                                 const option = document.createElement('option');
                                 option.value = lote.id;
-                                option.textContent = lote.name + ` - Disponible: ${lote.capacity - lote.ocupado}`;
-                                option.dataset.capacidad = lote.capacity;
-                                option.dataset.ocupado = lote.ocupado;
-                                option.dataset.state = 'disponible';
+                                option.textContent = `${lote.name} - Disponible: ${disponibleEfectivo}`;
+                                option.setAttribute('data-capacidad', lote.capacity);
+                                option.setAttribute('data-ocupado', ocupadoEfectivo);
+                                option.setAttribute('data-state', lote.state);
+                                if (lote.id in originalAsignados) {
+                                    option.selected = true;
+                                }
                                 editLotesSelect.appendChild(option);
                             });
                             setTimeout(() => {
@@ -388,7 +444,7 @@
         });
     });
 </script>
-<!--script del modal de eliminar-->
+<!-- Script del modal de eliminar -->
 <script>
     document.querySelectorAll('.btnEliminar').forEach(button => {
         button.addEventListener('click', function() {
@@ -412,8 +468,7 @@
         });
     });
 </script>
-
-
+<!-- Scripts para notificaciones -->
 @if (session('success'))
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -426,7 +481,6 @@
     });
 </script>
 @endif
-
 @if (session('error'))
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -452,8 +506,4 @@
     });
 </script>
 @endsection
-
-
-
-
 @endsection

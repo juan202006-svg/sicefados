@@ -9,7 +9,7 @@ class TrackingPlant extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tracking_id','plant_count','height_cm','growth','comparison_percentage','mortality'];
+    protected $fillable = ['tracking_id','plant_count','height_cm','color_tone','growth','comparison_percentage','mortality'];
     protected $table = 'trackingplant';
 
     public function Tracking()

@@ -18,69 +18,43 @@
             <table id="seguimientosTable" class="table table-hover table-bordered align-middle text-center">
                 <thead style="background-color: #f8f9fa;">
                     <tr>
-                        <th>Código</th>
-                        <th>Sistema Acuapónico</th>
+                        <th>Codigo</th>
+                        <th>S/acuaponico</th>
                         <th>Fecha</th>
-                        <th>Cultivo/Resiembra</th>
-                        <th>Tipo</th>
-                        <th>Tiempo (días)</th>
+                        <th>Cultivo</th>
+                        <th>Tiempo dias</th>
                         <th>Novedades</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php $n = 1; @endphp
-                    @forelse ($seguimientos as $seguimiento)
+                    @foreach ($seguimientos as $seguimiento)
                     <tr>
                         <td class="text-center">{{ $n++ }}</td>
-                        <td class="text-center">
-                            @if($seguimiento->subject_type === 'crop')
-                            {{ $seguimiento->crops->aquaponicSystem->name ?? 'N/A' }}
-                            @else
-                            {{ $seguimiento->subject->aquaponicSystem->name ?? 'N/A' }}
-                            @endif
-                        </td>
+                        <td class="text-center">{{ $seguimiento->crops->aquaponicSystem->name}}</td>
                         <td class="text-center">{{ $seguimiento->date }}</td>
-                        <td class="text-center">
-                            @if($seguimiento->subject_type === 'crop')
-                            {{ $seguimiento->crops->species->name ?? 'N/A' }}
-                            @else
-                            {{ $seguimiento->subject->crops->species->name ?? 'N/A' }}
-                            @endif
-                        </td>
-                        <td class="text-center">
-                            @if($seguimiento->subject_type === 'crop')
-                            <span class="badge badge-primary">Cultivo</span>
-                            @else
-                            <span class="badge badge-warning">Resiembra</span>
-                            @endif
-                        </td>
+                        <td class="text-center">{{ $seguimiento->crops->species->name }}</td>
                         <td class="text-center">{{ $seguimiento->days_elapsed }}</td>
-                        <td class="text-center">{{ Str::limit($seguimiento->notes, 50) }}</td>
+                        <td class="text-center">{{ $seguimiento->notes }}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-success btn-sm editbtn"
                                 data-id="{{ $seguimiento->id }}"
-                                data-aquaponic_system_id="{{ $seguimiento->aquaponic_system_id }}"
+                                date-aquaponic_system_id="{{ $seguimiento->aquaponic_system_id }}"
                                 data-date="{{ $seguimiento->date }}"
-                                data-crop_id="{{ $seguimiento->subject_id }}"
-                                data-subject_type="{{ $seguimiento->subject_type }}"
-                                data-subject_id="{{ $seguimiento->subject_id }}"
+                                data-crop_id="{{ $seguimiento->crop_id }}"
                                 data-days_elapsed="{{ $seguimiento->days_elapsed }}"
                                 data-notes="{{ $seguimiento->notes }}"
                                 data-toggle="modal"
                                 data-target="#editar">
-                                <i class="fas fa-edit"></i>
+                                Editar
                             </button>
                             <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $seguimiento->id }}">
-                                <i class="fas fa-trash"></i>
+                                Eliminar
                             </button>
                         </td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="8" class="text-center">No hay seguimientos registrados</td>
-                    </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -174,18 +148,20 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="crop_id">Cultivo/Resiembra:</label>
+                        <label for="crop_id">Cultivo:</label>
                         <select name="crop_id" id="crop_id" class="form-control" required>
-                            <option value="">Seleccione un cultivo o resiembra</option>
+                            <option value="">Seleccione un cultivo</option>
+                            @foreach ($cultivos as $cultivo)
+                            <option
+                                value="{{ $cultivo->id }}"
+                                data-date="{{ $cultivo->date }}"
+                                data-system="{{ $cultivo->aquaponic_system_id }}">
+                                {{ $cultivo->species->name?? 'no hay cultivos' }} - {{
+                                        $cultivo->status }}
+                            </option>
+                            @endforeach
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="item_type" class="form-label">Tipo:</label>
-                        <input type="text" id="item_type" class="form-control" readonly>
-                    </div>
-                    <!-- Campos ocultos para el tipo de sujeto -->
-                    <input type="hidden" name="subject_type" id="subject_type">
-                    <input type="hidden" name="subject_id" id="subject_id">
                     <div class=" mb-3">
                         <label for="days_elapsed" class="form-label">Tiempo en dias:</label>
                         <input type="number" name="days_elapsed" class="form-control" id="days_elapsed" readonly>
@@ -202,54 +178,6 @@
         </form>
     </div>
 </div>
-
-<!-- Script para el metodo de ajax para cargar los cultivos y las resiembras  -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    // Cuando cambia el sistema acuapónico
-    document.getElementById('aquaponic_system_id').addEventListener('change', function () {
-        let systemId = this.value;
-        let cropSelect = document.getElementById('crop_id');
-        cropSelect.innerHTML = '<option value="">Seleccione un cultivo o resiembra</option>';
-
-        if (!systemId) return;
-
-        fetch(`/pasante/seguimiento/subjects/${systemId}`)
-            .then(response => response.json())
-            .then(data => {
-                // Agregar cultivos
-                data.crops.forEach(crop => {
-                    cropSelect.innerHTML += `<option value="crop-${crop.id}">Cultivo: ${crop.name} (${crop.status})</option>`;
-                });
-
-                // Agregar resiembras
-                data.resowings.forEach(res => {
-                    cropSelect.innerHTML += `<option value="resowing-${res.id}">Resiembra: ${res.description} (${res.status})</option>`;
-                });
-            })
-            .catch(err => console.error('Error cargando datos:', err));
-    });
-
-    // Cuando el usuario selecciona un cultivo o resiembra
-    document.getElementById('crop_id').addEventListener('change', function () {
-        let value = this.value;
-        if (!value) return;
-
-        let [type, id] = value.split('-');
-        
-        // Guardar en los campos ocultos
-        document.getElementById('subject_type').value = type;
-        document.getElementById('subject_id').value = id;
-
-        // Mostrar el tipo en el campo visible
-        document.getElementById('item_type').value = type === 'crop' ? 'Cultivo' : 'Resiembra';
-    });
-
-});
-</script>
-
-
 <!-- Script para establecer la fecha actual en el campo de fecha  -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -264,7 +192,6 @@ document.addEventListener('DOMContentLoaded', function () {
         dateInput.value = localDate;
     });
 </script>
-
 <!--script del modal editar-->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -378,6 +305,22 @@ document.addEventListener('DOMContentLoaded', function () {
         setupSystemCropDependency('edit-aquaponic_system_id', 'edit-crop_id', 'edit-days_elapsed');
     });
 </script>
+
+
+
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        $('#seguimientosTable').DataTable({
+            responsive: false,
+            autoWidth: false,
+            language: {
+                url: "{{ asset('AdminLTE/plugins/datatables/i18n/es-ES.json') }}"
+            }
+        });
+    });
+</script>
+@endsection
 @if (session('success'))
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -403,17 +346,4 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 </script>
 @endif
-@section('scripts')
-<script>
-    $(document).ready(function() {
-        $('#seguimientosTable').DataTable({
-            responsive: false,
-            autoWidth: false,
-            language: {
-                url: "{{ asset('AdminLTE/plugins/datatables/i18n/es-ES.json') }}"
-            }
-        });
-    });
-</script>
-@endsection
 @endsection

@@ -4,7 +4,7 @@ namespace Modules\ACUAPONICO\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\ACUAPONICO\Entities\CropAquaponic;
+use Modules\AGROCEFA\Entities\Crop;
 use Modules\ACUAPONICO\Entities\HarvestAquaponic;
 
 class HarvestAquaponicController extends Controller
@@ -13,7 +13,7 @@ class HarvestAquaponicController extends Controller
     public function index()
     {
         // Cultivos en seguimiento
-        $cultivosSeguimiento = CropAquaponic::with('species')->where('status', 'Seguimiento')->get();
+        $cultivosSeguimiento = Crop::with('species')->where('status', 'Seguimiento')->get();
 
         // Cultivos usados en cosechas aunque ya no estén en seguimiento
         $cultivosUsados = HarvestAquaponic::with('crops.species')->get()

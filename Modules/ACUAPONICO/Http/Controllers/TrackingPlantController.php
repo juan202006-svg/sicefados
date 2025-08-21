@@ -7,30 +7,55 @@ use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\Tracking;
 use Modules\ACUAPONICO\Entities\TrackingPlant;
 use Illuminate\Database\QueryException;
+use Modules\ACUAPONICO\Entities\AquaponicSystem;
+use Modules\AGROCEFA\Entities\Crop;
+
 use Carbon\Carbon;
 
 class TrackingPlantController extends Controller
 {
+    public function __construct()
+    {
+        // Establecer la zona horaria de Colombia
+        Carbon::setLocale('es');
+        date_default_timezone_set('America/Bogota');
+    }
+
     public function index()
-{
-    $hoy = Carbon::now()->toDateString(); // Fecha actual
+    {
+        // Obtener la fecha actual en Colombia
+        $hoy = Carbon::now('America/Bogota')->toDateString();
 
-    // Seguimientos de plantas registrados hoy
-    $seguimientos = Tracking::whereDate('date', $hoy)
-        ->whereHas('crops.species.category', function ($query) {
-            $query->where('name', 'Planta');
-        })
-        ->with('crops.species')
-        ->get();
+        // Seguimientos de plantas registrados hoy
+        $seguimientos = Tracking::whereDate('date', $hoy)
+            ->whereHas('crops.species.category', function ($query) {
+                $query->where('name', 'Planta');
+            })
+            ->with('crops.species')
+            ->get();
 
-    // Seguimientos detallados con relaciones
-    $seguimientoPlanta = TrackingPlant::with('Tracking.crops.species.category')->get();
+        // Seguimientos detallados con relaciones, filtrados por fecha de hoy
+        $seguimientoPlanta = TrackingPlant::whereHas('Tracking', function ($query) use ($hoy) {
+                $query->whereDate('date', $hoy);
+            })
+            ->with('Tracking.crops.species.category')
+            ->get();
 
-    return view('acuaponico::pasante.seguimientoPlanta', compact('seguimientoPlanta', 'seguimientos'));
-}
+        $aquaponicSystems = AquaponicSystem::all();
+        return view('acuaponico::pasante.seguimientoPlanta', compact('seguimientoPlanta', 'seguimientos', 'aquaponicSystems'));
+    }
 
     public function store(Request $request)
     {
+        // Validar datos
+        $request->validate([
+            'tracking_id' => 'required|exists:trackings,id',
+            'plant_count' => 'required|integer|min:0',
+            'height_cm' => 'required|integer|min:0',
+            'color_tone' => 'required|string|max:12',
+            'growth' => 'nullable|string',
+        ]);
+
         // Buscar seguimiento anterior
         $anterior = TrackingPlant::where('tracking_id', $request->tracking_id)
             ->orderBy('created_at', 'desc')
@@ -57,16 +82,33 @@ class TrackingPlantController extends Controller
         $sg->tracking_id = $request->tracking_id;
         $sg->plant_count = $request->plant_count;
         $sg->height_cm = $request->height_cm;
+        $sg->color_tone = $request->color_tone;
         $sg->growth = $crecimiento;
         $sg->comparison_percentage = $rendimiento;
         $sg->mortality = $mortalidad;
         $sg->save();
+
+        // Actualizar el estado de los lotes asociados al cultivo
+        $tracking = Tracking::find($request->tracking_id);
+        $crop = Crop::find($tracking->crop_id);
+        foreach ($crop->lotes as $lot) {
+            $lot->actualizarEstadoAutomatico();
+        }
 
         return redirect()->back()->with('success', 'Seguimiento de planta creado exitosamente.');
     }
 
     public function update(Request $request, $id)
     {
+        // Validar datos
+        $request->validate([
+            'tracking_id' => 'required|exists:trackings,id',
+            'plant_count' => 'required|integer|min:0',
+            'height_cm' => 'required|integer|min:0',
+            'color_tone' => 'required|string|max:12',
+            'growth' => 'nullable|string',
+        ]);
+
         // Buscar seguimiento anterior que no sea este mismo
         $anterior = TrackingPlant::where('tracking_id', $request->tracking_id)
             ->where('id', '!=', $id)
@@ -94,10 +136,18 @@ class TrackingPlantController extends Controller
         $seguimientoPlanta->tracking_id = $request->tracking_id;
         $seguimientoPlanta->plant_count = $request->plant_count;
         $seguimientoPlanta->height_cm = $request->height_cm;
+        $seguimientoPlanta->color_tone = $request->color_tone;
         $seguimientoPlanta->growth = $crecimiento;
         $seguimientoPlanta->comparison_percentage = $rendimiento;
         $seguimientoPlanta->mortality = $mortalidad;
         $seguimientoPlanta->save();
+
+        // Actualizar el estado de los lotes asociados al cultivo
+        $tracking = Tracking::find($request->tracking_id);
+        $crop = Crop::find($tracking->crop_id);
+        foreach ($crop->lotes as $lot) {
+            $lot->actualizarEstadoAutomatico();
+        }
 
         return redirect()->back()->with('success', 'Seguimiento de planta actualizado correctamente.');
     }
@@ -106,7 +156,15 @@ class TrackingPlantController extends Controller
     {
         try {
             $seguimientos = TrackingPlant::findOrFail($id);
+            $tracking_id = $seguimientos->tracking_id;
             $seguimientos->delete();
+
+            // Actualizar el estado de los lotes asociados al cultivo
+            $tracking = Tracking::find($tracking_id);
+            $crop = Crop::find($tracking->crop_id);
+            foreach ($crop->lotes as $lot) {
+                $lot->actualizarEstadoAutomatico();
+            }
 
             return redirect()->back()->with('success', 'Seguimiento de planta eliminado correctamente.');
         } catch (QueryException $e) {
@@ -116,6 +174,7 @@ class TrackingPlantController extends Controller
             return redirect()->back()->with('error', 'Ocurrió un error al intentar eliminar el seguimiento de planta.');
         }
     }
+
     public function obtenerDatosAnteriores($tracking_id)
     {
         $anterior = TrackingPlant::where('tracking_id', $tracking_id)
@@ -134,5 +193,20 @@ class TrackingPlantController extends Controller
             'plantas' => $anterior->plant_count,
             'altura' => $anterior->height_cm
         ]);
+    }
+
+    public function obtenerSeguimientos($aquaponic_system_id)
+    {
+        $hoy = Carbon::now('America/Bogota')->toDateString();
+
+        $seguimientos = Tracking::where('aquaponic_system_id', $aquaponic_system_id)
+            ->whereDate('date', $hoy) // Filtra solo los seguimientos del día actual
+            ->whereHas('crops.species.category', function ($query) {
+                $query->where('name', 'Planta');
+            })
+            ->with('crops.species')
+            ->get();
+
+        return response()->json($seguimientos);
     }
 }

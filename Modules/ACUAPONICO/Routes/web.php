@@ -127,6 +127,7 @@ Route::controller(TrackingPlantController::class)->group(function () {
     Route::put('/pasante/seguimientoPlanta/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatetrackingplant');
     Route::delete('/pasante/seguimientoPlanta/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroytrackingplant');
     Route::get('/pasante/seguimientoPlanta/prevdata/{tracking_id}', 'obtenerDatosAnteriores')->name('acuaponico.pasante.pasante.prevdatatrackingplant');
+    Route::get('/pasante/seguimientoPlanta/seguimientos/{aquaponic_system_id}', 'obtenerSeguimientos')->name('acuaponico.pasante.pasante.seguimientosplant');
 });
 
 // rutas para las cosechas
@@ -153,9 +154,17 @@ Route::controller(ResowingController::class)->group(function () {
     Route::put('/pasante/resiembras/update/{id}', 'update')->name('acuaponico.pasante.pasante.updateresowing');
     Route::delete('/pasante/resiembras/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyresowing');
     Route::get('/crop-details/{cropId}', 'getCropDetails');
-    Route::get('/crops-by-system/{systemId}', 'getCropsBySystem');
+    Route::get('/crops-by-system/{systemId}/{resowingId?}', 'getCropsBySystem');
     Route::get('/resowing-edit-data/{id}', 'getEditData')->name('acuaponico.pasante.pasante.getEditData');
     Route::get('/crop-lots-for-edit/{cropId}/{resowingId?}', 'getCropLotsForEdit');
     // Ruta temporal de debug
     Route::get('/debug-crops', 'debugCrops');
+});
+
+Route::controller(ResowingTrackingController::class)->group(function () {
+    Route::get('/pasante/seguimiento_resiembra', 'index')->name('acuaponico.pasante.pasante.indexresowingtracking');
+    Route::post('/pasante/seguimiento_resiembra/store', 'store')->name('acuaponico.pasante.pasante.storeresowingtracking');
+    Route::put('/pasante/seguimiento_resiembra/update/{id}', 'update')->name('acuaponico.pasante.pasante.updateresowingtracking');
+    Route::delete('/pasante/seguimiento_resiembra/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyresowingtracking');
+   Route::get('/pasante/seguimiento_resiembra/previous/{resowing_id}', 'getPreviousTracking')->name('acuaponico.pasante.pasante.previousresowingtracking');
 });
