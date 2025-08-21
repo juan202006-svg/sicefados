@@ -10,17 +10,18 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     curl \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
-    && docker-php-ext-install pdo_mysql gd exif pcntl bcmath zip
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # Habilitar mod_rewrite de Apache (necesario para rutas en Laravel)
 RUN a2enmod rewrite
 
-# Copiamos los archivos del proyecto al contenedor
+# Establecemos el directorio de trabajo
 WORKDIR /var/www/html
+
+# Copiamos los archivos del proyecto al contenedor
 COPY . .
 
-# Instalar Composer
+# Instalar Composer desde la imagen oficial
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
 # Instalamos dependencias de Laravel
