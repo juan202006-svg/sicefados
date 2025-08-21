@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     zip \
     curl \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+    && docker-php-ext-install pdo_mysql gd exif pcntl bcmath zip
 
 # Habilitar mod_rewrite de Apache (necesario para rutas en Laravel)
 RUN a2enmod rewrite

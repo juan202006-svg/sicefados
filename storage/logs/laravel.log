@@ -37973,3 +37973,647 @@ Did you mean one of these?
 #9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #10 {main}
 "} 
+[2025-08-21 12:15:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:15:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:16:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:16:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:17:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:17:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:18:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:18:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:19:20] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:19:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:19:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:20:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:20:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:21:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:21:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:22:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:22:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:23:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:23:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:24:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:24:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:25:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:25:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:26:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:26:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:27:22] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:27:22] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:28:22] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:28:22] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:29:21] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 12:29:22] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 13:10:43] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 13:10:43] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 13:10:43] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 13:11:41] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 13:12:40] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 13:13:40] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 13:13:40] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 13:14:40] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 13:14:40] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 13:15:41] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 13:15:41] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 13:16:41] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 13:16:41] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 13:17:41] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
+[2025-08-21 13:17:41] local.ERROR: syntax error, unexpected token "<<", expecting end of file {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"<<\", expecting end of file at C:\\laragon\\www\\sicefados\\app\\Providers\\AppServiceProvider.php:6)
+[stacktrace]
+#0 C:\\laragon\\www\\sicefados\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\laragon\\\\www\\\\...')
+#1 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(747): Composer\\Autoload\\ClassLoader->loadClass('App\\\\Providers\\\\A...')
+#2 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(681): Illuminate\\Foundation\\Application->resolveProvider('App\\\\Providers\\\\A...')
+#3 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\ProviderRepository.php(75): Illuminate\\Foundation\\Application->register('App\\\\Providers\\\\A...')
+#4 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(661): Illuminate\\Foundation\\ProviderRepository->load(Array)
+#5 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\RegisterProviders.php(17): Illuminate\\Foundation\\Application->registerConfiguredProviders()
+#6 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(237): Illuminate\\Foundation\\Bootstrap\\RegisterProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#7 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(310): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#8 C:\\laragon\\www\\sicefados\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#9 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#10 {main}
+"} 
