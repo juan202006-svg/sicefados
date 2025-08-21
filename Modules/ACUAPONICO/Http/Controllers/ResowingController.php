@@ -27,6 +27,27 @@ class ResowingController extends Controller
         return view('acuaponico::pasante.resiembra', compact('resiembra', 'cultivos', 'acuaponico'));
     }
 
+<<<<<<< HEAD
+=======
+        public function registroResiembras  ()
+    {
+        $acuaponico = AquaponicSystem::get();
+        // Solo cultivos con especies que tengan categoría "Planta" en seguimiento
+        $cultivos = Crop::where('status', 'Seguimiento')
+            ->whereHas('species.category', function($query) {
+                $query->where('name', 'Planta');
+            })
+            ->with(['species.category'])
+            ->get();
+        $resiembra = Resowing::with('crops.species', 'system', 'lots')->get();
+
+        return view('acuaponico::admin.registroresiembras', compact('resiembra', 'cultivos', 'acuaponico'));
+    }
+
+
+
+
+>>>>>>> 1c56af8e8230f9435857922390b0b0385342dfab
     public function store(Request $request)
     {
         // Validar datos

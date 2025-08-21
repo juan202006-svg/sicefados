@@ -22,7 +22,10 @@ class Lot extends Model
         return $this->belongsToMany(Crop::class, 'crop_lot', 'lot_id', 'crop_id')
             ->withPivot('planted_quantity')
             ->withTimestamps();
+        
+         return $this->belongsToMany(Cultivo::class, 'cultivo_lot')->withPivot('planted_quantity');
     }
+    
 
     // Relación con resiembras usando la tabla pivote resowing_lot
     public function resowings()

@@ -16,9 +16,11 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('modules/acuaponico/css/styles.css') }}">
+    <link rel="stylesheet" href="http://localhost:8000/css/app.css">
 
     <!-- Scripts cargados de forma diferida -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <link rel="icon" href="{{ secure_asset('favicon.ico') }}" type="image/x-icon">
 
     <style>
 

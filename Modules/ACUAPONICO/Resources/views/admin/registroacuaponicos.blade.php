@@ -1,8 +1,6 @@
-<?php $__env->startPush('breadcrumbs'); ?>
-<li class="breadcrumb-item active">Sistemas Acuaponicos</li>
-<?php $__env->stopPush(); ?>
-<?php $__env->startSection('content2'); ?>
+@extends('acuaponico::layouts.master')
 
+@section('content6')
 <h1 class="fw-bold mb-4">Gestión de sistemas Acuaponicos</h1>
 <div class="content mt-4">
     <div class="card shadow-sm border-0">
@@ -29,55 +27,55 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $n = 1; ?>
-                        <?php $__currentLoopData = $acuaponico; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        @php $n = 1; @endphp
+                        @foreach ($acuaponico as $item)
                         <tr>
-                            <td class="text-center"><?php echo e($n++); ?></td>
-                            <td class="text-center"><?php echo e($item->name); ?></td>
+                            <td class="text-center">{{ $n++ }}</td>
+                            <td class="text-center">{{ $item->name }}</td>
                             <td class="text-center">
-                                <?php if($item->description): ?>
-                                <span><?php echo e($item->description); ?></span>
-                                <?php else: ?>
+                                @if ($item->description)
+                                <span>{{ $item->description }}</span>
+                                @else
                                 <span class="text-muted">Sin descripción</span>
-                                <?php endif; ?>
+                                @endif
                             </td>
-                            <td class="text-center"><?php echo e($item->location); ?></td>
+                            <td class="text-center">{{ $item->location }}</td>
                             <td class="text-center">
-                                <?php if($item->image): ?>
-                                <img src="<?php echo e(asset('modules/acuaponico/images/acuaponico/' . $item->image)); ?>" alt="Imagen de la especie" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+                                @if ($item->image)
+                                <img src="{{ asset('modules/acuaponico/images/acuaponico/' . $item->image) }}" alt="Imagen de la especie" class="img-fluid" style="max-width: 100px; max-height: 100px;">
 
-                                <?php else: ?>
+                                @else
                                 <span class="text-muted">Sin imagen</span>
-                                <?php endif; ?>
+                                @endif
                             </td>
-                            <td class="text-center"><?php echo e($item->lot_capacity); ?></td>
+                            <td class="text-center">{{ $item->lot_capacity }}</td>
                             <td class="text-center">
-                                <?php if($item->active): ?>
+                                @if($item->active)
                                 <span class="badge bg-success">Activo</span>
-                                <?php else: ?>
+                                @else
                                 <span class="badge bg-danger">Inactivo</span>
-                                <?php endif; ?>
+                                @endif
                             </td>
                             <td class="text-center">
                                 <button type="button" class="btn btn-success btn-sm editbtn"
 
-                                    data-id="<?php echo e($item->id); ?>"
-                                    data-name="<?php echo e($item->name); ?>"
-                                    data-description="<?php echo e($item->description); ?>"
-                                    data-location="<?php echo e($item->location); ?>"
-                                    data-image="<?php echo e($item->image); ?>"
-                                    data-lot_capacity="<?php echo e($item->lot_capacity); ?>"
-                                    data-active="<?php echo e($item->active); ?>"
+                                    data-id="{{ $item->id }}"
+                                    data-name="{{ $item->name }}"
+                                    data-description="{{ $item->description }}"
+                                    data-location="{{ $item->location }}"
+                                    data-image="{{ $item->image }}"
+                                    data-lot_capacity="{{ $item->lot_capacity }}"
+                                    data-active="{{ $item->active }}"
                                     data-toggle="modal"
                                     data-target="#editar">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="<?php echo e($item->id); ?>">
+                                <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $item->id }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </td>
                         </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -86,9 +84,9 @@
         <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="formEditar" action="<?php echo e(route('acuaponico.pasante.pasante.acuaponicoupdate', 0)); ?>" method="POST" enctype="multipart/form-data">
-                        <?php echo csrf_field(); ?>
-                        <?php echo method_field('put'); ?>
+                    <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.acuaponicoupdate', 0) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('put')
                         <div class="modal-header">
                             <h5 class="modal-title" id="editarLabel">Editar Sistema Acuaponico</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -145,8 +143,8 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="formEliminar" method="POST" action="">
-                        <?php echo csrf_field(); ?>
-                        <?php echo method_field('delete'); ?>
+                        @csrf
+                        @method('delete')
                     </form>
                 </div>
             </div>
@@ -155,8 +153,8 @@
         <!-- Modal Agregar -->
         <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <form action="<?php echo e(route ('acuaponico.pasante.pasante.acuaponicostore')); ?>" method="POST" enctype="multipart/form-data">
-                    <?php echo csrf_field(); ?>
+                <form action="{{ route ('acuaponico.pasante.pasante.acuaponicostore') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="modal-content">
                         <div class="modal-header bg-primary text-white">
                             <h5 class="modal-title" id="agregarLabel">Agregar Nuevo sistema</h5>
@@ -242,44 +240,42 @@
                 });
             });
         </script>
-        <?php if(session('success')): ?>
+        @if (session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     icon: 'success',
                     title: 'Éxito',
-                    text: '<?php echo e(session("success")); ?>',
+                    text: '{{ session("success") }}',
                     confirmButtonColor: '#3085d6',
                 });
             });
         </script>
-        <?php endif; ?>
+        @endif
 
-        <?php if(session('error')): ?>
+        @if (session('error'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: '<?php echo e(session("error")); ?>',
+                    text: '{{ session("error") }}',
                     confirmButtonColor: '#d33',
                 });
             });
         </script>
-        <?php endif; ?>
-        <?php $__env->startSection('scripts'); ?>
+        @endif
+        @section('scripts')
         <script>
             $(document).ready(function() {
                 $('#acuaponicoTable').DataTable({
                     responsive: false,
                     autoWidth: false,
                     language: {
-                        url: "<?php echo e(asset('AdminLTE/plugins/datatables/i18n/es-ES.json')); ?>"
+                        url: "{{ asset('AdminLTE/plugins/datatables/i18n/es-ES.json') }}"
                     }
                 });
             });
         </script>
-        <?php $__env->stopSection(); ?>
-
-        <?php $__env->stopSection(); ?>
-<?php echo $__env->make('acuaponico::layouts.masterpa', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/pasante/acuaponico.blade.php ENDPATH**/ ?>
+        @endsection
+@endsection
