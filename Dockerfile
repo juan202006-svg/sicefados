@@ -15,13 +15,11 @@ RUN apt-get update && apt-get install -y \
 # Habilitar mod_rewrite de Apache (necesario para rutas en Laravel)
 RUN a2enmod rewrite
 
-# Establecemos el directorio de trabajo
-WORKDIR /var/www/html
-
 # Copiamos los archivos del proyecto al contenedor
+WORKDIR /var/www/html
 COPY . .
 
-# Instalar Composer desde la imagen oficial
+# Instalar Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
 # Instalamos dependencias de Laravel
