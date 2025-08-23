@@ -35,7 +35,7 @@
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <ul class="navbar-nav d-flex flex-row">
                 <li class="nav-item d-none d-sm-inline-block me-4">
-                    <a href="<?php echo e(route('login')); ?>"
+                    <a href="<?php echo e(route('cefa.home')); ?>"
                         class="nav-link text-white"
                         style="font-size: 20px; position: relative;">
                         Inicio
@@ -101,7 +101,7 @@
                     <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
                         <!-- Título -->
                         <h1 style="font-family: Broadway; font-size: 45px; margin-bottom: 20px; color: #237424;">
-                            <strong>Unidad de Cultivos Acuapónica</strong>
+                            <strong>GSA - Gestion de Sistemas Acuaponicos</strong>
                         </h1>
 
                         <!-- Párrafo -->

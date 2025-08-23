@@ -27,8 +27,7 @@ class ResowingController extends Controller
         return view('acuaponico::pasante.resiembra', compact('resiembra', 'cultivos', 'acuaponico'));
     }
 
-<<<<<<< HEAD
-=======
+
         public function registroResiembras  ()
     {
         $acuaponico = AquaponicSystem::get();
@@ -45,9 +44,6 @@ class ResowingController extends Controller
     }
 
 
-
-
->>>>>>> 1c56af8e8230f9435857922390b0b0385342dfab
     public function store(Request $request)
     {
         // Validar datos

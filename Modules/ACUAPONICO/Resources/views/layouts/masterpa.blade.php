@@ -371,7 +371,7 @@
                  class="img-circle elevation-3" 
                  style="width: 90px; height: 90px; object-fit: cover;">
             <span class="brand-text mt-2" style="font-size: 18px; color: white; font-weight: bold;">
-                Acuapónico
+                GSA - Pasante
             </span>
         </a>
 
@@ -530,6 +530,8 @@
         @yield('content')
         @yield('content2')
     </div>
+    
+    <script src="{{ asset('AdminLTE/plugins/chartjs/Chart.min.js') }}"></script>
 
     <!-- jQuery local -->
     <script src="{{ asset('AdminLTE/plugins/jquery/jquery.min.js') }}"></script>

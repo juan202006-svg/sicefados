@@ -5,6 +5,11 @@ namespace Modules\ACUAPONICO\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\ACUAPONICO\Entities\AquaponicSystem;
+use Modules\ACUAPONICO\Entities\Lot;
+use Modules\AGROCEFA\Entities\Crop;
+use Modules\ACUAPONICO\Entities\HarvestAquaponic;
+use Illuminate\Support\Facades\DB;
 
 class ACUAPONICOController extends Controller
 {
@@ -26,7 +31,16 @@ class ACUAPONICOController extends Controller
     }
     public function pasante()
     {
-        return view('acuaponico::welcomepas');
+        $systems = AquaponicSystem::get(); // Obtiene todos los sistemas acuapónicos
+        $lotsCount = Lot::count(); // Obtiene el número total de lotes
+        $cropsCount = Crop::where('status', 'Seguimiento')->count(); // Obtiene el número de cultivos en seguimiento
+        $mortalityData = HarvestAquaponic::select('aquaponic_system_id', 'harvestable_id', 'harvestable_type', DB::raw('SUM(mortality) as total_mortality'))
+            ->groupBy('aquaponic_system_id', 'harvestable_id', 'harvestable_type')
+            ->get(); // Obtiene datos de mortalidad agregados
+        $cropsBySystem = Crop::select('aquaponic_system_id', DB::raw('COUNT(id) as count'))
+            ->groupBy('aquaponic_system_id')
+            ->get(); // Obtiene la distribución de cultivos por sistema
+        return view('acuaponico::welcomepas', compact('systems', 'lotsCount', 'cropsCount', 'mortalityData', 'cropsBySystem'));
     }
 
 

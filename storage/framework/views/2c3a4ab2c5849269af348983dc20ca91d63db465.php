@@ -30,6 +30,7 @@
     <!-- SweetAlert2 local -->
     <link rel="stylesheet" href="<?php echo e(asset('AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')); ?>">
 
+    <link rel="icon" href="<?php echo e(secure_asset('favicon.ico')); ?>" type="image/x-icon">
     <style>
         .main-header {
 
@@ -370,7 +371,7 @@
                  class="img-circle elevation-3" 
                  style="width: 90px; height: 90px; object-fit: cover;">
             <span class="brand-text mt-2" style="font-size: 18px; color: white; font-weight: bold;">
-                Acuapónico
+                GSA - Pasante
             </span>
         </a>
 
@@ -529,6 +530,8 @@
         <?php echo $__env->yieldContent('content'); ?>
         <?php echo $__env->yieldContent('content2'); ?>
     </div>
+    
+    <script src="<?php echo e(asset('AdminLTE/plugins/chartjs/Chart.min.js')); ?>"></script>
 
     <!-- jQuery local -->
     <script src="<?php echo e(asset('AdminLTE/plugins/jquery/jquery.min.js')); ?>"></script>

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\ACUAPONICO\Entities\Lot;
 use Modules\AGROCEFA\Entities\Crop;
 use Modules\ACUAPONICO\Entities\AquaponicSystem;
+use Modules\ACUAPONICO\Entities\ResowingTracking;
+use Modules\ACUAPONICO\Entities\HarvestAquaponic;
 
 class Resowing extends Model
 {
@@ -56,7 +58,10 @@ class Resowing extends Model
     {
         return $this->lots()->sum('resowing_lot.quantity');
     }
-
+    public function harvests()
+    {
+        return $this->morphMany(HarvestAquaponic::class, 'harvestable');
+    }
     protected static function newFactory()
     {
         return \Modules\ACUAPONICO\Database\factories\ResowingFactory::new();

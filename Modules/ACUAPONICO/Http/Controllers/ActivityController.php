@@ -13,7 +13,6 @@ use Illuminate\Support\Str;
 
 class ActivityController extends Controller
 {
-
     public function index()
     {
         $activities = ActivityAquaponic::with('user')->where('enviada', false)->get();
@@ -27,8 +26,6 @@ class ActivityController extends Controller
         $activities = ActivityAquaponic::with('user')->where('enviada', true)->get();
         return view('', compact('activities'));
     }
-
-
 
     public function create()
     {

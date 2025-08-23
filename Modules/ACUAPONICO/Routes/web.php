@@ -139,6 +139,7 @@ Route::controller(HarvestAquaponicController::class)->group(function () {
     Route::post('/pasante/cosecha/store', 'store')->name('acuaponico.pasante.pasante.storeharvest');
     Route::put('/pasante/cosecha/update/{id}', 'update')->name('acuaponico.pasante.pasante.updateharvest');
     Route::delete('/pasante/cosecha/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyharvest');
+    Route::get('/harvests/harvestables-by-system/{systemId}',  'getHarvestablesBySystem')->name('acuaponico.pasante.pasante.harvests.harvestables-by-system');
 });
 
 // rutas para el control de actividades
@@ -167,7 +168,6 @@ Route::controller(ResowingController::class)->group(function () {
     //admin
     Route::get('/admin/admin/registroresiembras', 'registroResiembras')->name('acuaponico.admin.admin.registroresiembras');
 });
-<<<<<<< HEAD
 
 Route::controller(ResowingTrackingController::class)->group(function () {
     Route::get('/pasante/seguimiento_resiembra', 'index')->name('acuaponico.pasante.pasante.indexresowingtracking');
@@ -176,6 +176,5 @@ Route::controller(ResowingTrackingController::class)->group(function () {
     Route::delete('/pasante/seguimiento_resiembra/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyresowingtracking');
    Route::get('/pasante/seguimiento_resiembra/previous/{resowing_id}', 'getPreviousTracking')->name('acuaponico.pasante.pasante.previousresowingtracking');
 });
-=======
+
     
->>>>>>> 1c56af8e8230f9435857922390b0b0385342dfab

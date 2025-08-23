@@ -9,6 +9,7 @@ use Modules\AGROCEFA\Entities\Crop;
 use Modules\ACUAPONICO\Entities\Resowing;
 
 
+
 class Lot extends Model
 {
     use HasFactory;
@@ -22,10 +23,8 @@ class Lot extends Model
         return $this->belongsToMany(Crop::class, 'crop_lot', 'lot_id', 'crop_id')
             ->withPivot('planted_quantity')
             ->withTimestamps();
-        
-         return $this->belongsToMany(Cultivo::class, 'cultivo_lot')->withPivot('planted_quantity');
     }
-    
+
 
     // Relación con resiembras usando la tabla pivote resowing_lot
     public function resowings()
@@ -38,53 +37,57 @@ class Lot extends Model
     // Total de unidades ocupadas en este lote (suma de cultivos + resiembras - mortalidades de cultivos y resiembras)
     public function getOcupadoAttribute()
     {
-        $ocupadoCultivos = $this->cultivos->sum(function ($cultivo) {
-            return $cultivo->pivot->planted_quantity ?? 0;
-        });
+        // Suma de cantidades de cultivos activos (no cosechados)
+        $ocupadoCultivos = $this->cultivos()
+            ->where('crops.status', '!=', 'Cosechado')
+            ->sum('crop_lot.planted_quantity');
 
-        $ocupadoResiembras = $this->resowings->sum(function ($resiembra) {
-            return $resiembra->pivot->quantity ?? 0;
-        });
+        // Suma de cantidades de resiembras activas (no cosechadas)
+        $ocupadoResiembras = $this->resowings()
+            ->where('resowings.status', '!=', 'Cosechada')
+            ->sum('resowing_lot.quantity');
 
-        // Suma de mortalidades de plantas asociadas a este lote (de cultivos)
+        // Suma de mortalidades de plantas asociadas a este lote (solo cultivos activos)
         $mortalidadPlantas = \DB::table('trackingplant')
             ->join('trackings', 'trackingplant.tracking_id', '=', 'trackings.id')
             ->join('crop_lot', 'trackings.crop_id', '=', 'crop_lot.crop_id')
+            ->join('crops', 'crop_lot.crop_id', '=', 'crops.id')
             ->where('crop_lot.lot_id', $this->id)
-            ->groupBy('crop_lot.lot_id') // Evitar duplicados
+            ->where('crops.status', '!=', 'Cosechado')
+            ->groupBy('crop_lot.lot_id')
             ->sum('trackingplant.mortality');
 
-        // Suma de mortalidades de peces asociadas a este lote (de cultivos)
+        // Suma de mortalidades de peces asociadas a este lote (solo cultivos activos)
         $mortalidadPeces = \DB::table('trackingfish')
             ->join('trackings', 'trackingfish.tracking_id', '=', 'trackings.id')
             ->join('crop_lot', 'trackings.crop_id', '=', 'crop_lot.crop_id')
+            ->join('crops', 'crop_lot.crop_id', '=', 'crops.id')
             ->where('crop_lot.lot_id', $this->id)
-            ->groupBy('crop_lot.lot_id') // Evitar duplicados
+            ->where('crops.status', '!=', 'Cosechado')
+            ->groupBy('crop_lot.lot_id')
             ->sum('trackingfish.mortality');
 
-        // Suma de mortalidades de resiembras asociadas a este lote (de resowing_trackings)
+        // Suma de mortalidades de resiembras asociadas a este lote (solo resiembras activas)
         $mortalidadResiembras = \DB::table('resowing_trackings')
             ->join('resowings', 'resowing_trackings.resowing_id', '=', 'resowings.id')
             ->join('resowing_lot', 'resowings.id', '=', 'resowing_lot.resowing_id')
             ->where('resowing_lot.lot_id', $this->id)
-            ->groupBy('resowing_lot.lot_id') // Evitar duplicados
+            ->where('resowings.status', '!=', 'Cosechada')
+            ->groupBy('resowing_lot.lot_id')
             ->sum('resowing_trackings.mortality');
 
         $ocupado = $ocupadoCultivos + $ocupadoResiembras - ($mortalidadPlantas + $mortalidadPeces + $mortalidadResiembras);
         return max(0, $ocupado); // Asegurar que no sea negativo
     }
 
-    // Disponible = capacidad - ocupado (no puede ser negativo)
     public function getDisponibleAttribute()
     {
         return max(0, $this->capacity - $this->ocupado);
     }
 
-    // Actualiza automáticamente el estado del lote según ocupado
     public function actualizarEstadoAutomatico()
     {
-        $disponible = $this->disponible;
-        $this->state = ($disponible > 0) ? 'disponible' : 'ocupado';
+        $this->state = $this->disponible > 0 ? 'disponible' : 'ocupado';
         $this->save();
     }
 

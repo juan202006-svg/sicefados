@@ -53,7 +53,6 @@
                                     data-species_id="{{ $cultivo->species_id }}"
                                     data-lot_ids="{{ $cultivo->lotes->pluck('id')->implode(',') }}"
                                     data-quantity="{{ $cultivo->quantity }}"
-                                    data-status="{{ $cultivo->status }}"
                                     @foreach($cultivo->lotes as $lote)
                                     data-lot_asignado_{{ $lote->id }}="{{ $lote->pivot->planted_quantity }}"
                                     @endforeach
@@ -73,7 +72,7 @@
                 <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden=" true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updatecrops', ['id' => 0]) }}" method="POST">
+                            <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updatecrops',  $cultivo->id ) }}" method="POST">
                                 @csrf
                                 @method('put')
                                 <div class="modal-header">
@@ -114,14 +113,6 @@
                                         <label for="edit-quantity" class="form-label">Cantidad a cultivar:</label>
                                         <input type="number" class="form-control" id="edit-quantity" name="quantity" required>
                                         <div class="invalid-feedback" id="error-cantidad-edit"></div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="edit-status" class="form-label">Estado:</label>
-                                        <select name="status" id="edit-status" class="form-control" required>
-                                            <option value="Cultivado">Cultivado</option>
-                                            <option value="Seguimiento">Seguimiento</option>
-                                            <option value="Cosechado">Cosechado</option>
-                                        </select>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -196,8 +187,6 @@
                         <label for="status" class="form-label">Estado:</label>
                         <select name="status" class="form-control" required>
                             <option value="Cultivado">Cultivado</option>
-                            <option value="Seguimiento">Seguimiento</option>
-                            <option value="Cosechado">Cosechado</option>
                         </select>
                     </div>
                 </div>
@@ -344,7 +333,6 @@
                 const loteIdsStr = this.getAttribute('data-lot_ids');
                 const loteIds = loteIdsStr ? loteIdsStr.split(',') : [];
                 const quantity = this.getAttribute('data-quantity');
-                const status = this.getAttribute('data-status');
 
                 // Almacenar asignados originales
                 const originalAsignados = {};
@@ -361,7 +349,6 @@
                 document.getElementById('edit-aquaponic_system_id').value = aquaponicSystemId;
                 document.getElementById('edit-species_id').value = speciesId;
                 document.getElementById('edit-quantity').value = quantity;
-                document.getElementById('edit-status').value = status;
 
                 // Fetch con crop_id
                 fetch(`/pasante/cultivo/lotes-por-sistema/${aquaponicSystemId}?crop_id=${cropId}`)

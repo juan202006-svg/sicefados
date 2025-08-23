@@ -541,24 +541,32 @@
             }
         }
     });
-
-    // Mostrar notificaciones de éxito o error
-    (session('success'))
-    Swal.fire({
-        icon: 'success',
-        title: 'Éxito',
-        text: '{{ session("success") }}',
-        confirmButtonColor: '#3085d6',
-    });
-    (session('error'))
-    Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: '{{ session("error") }}',
-        confirmButtonColor: '#d33',
+</script>
+@if (session('success'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: '{{ session("success") }}',
+            confirmButtonColor: '#3085d6',
+        });
     });
 </script>
+@endif
 
+@if (session('error'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '{{ session("error") }}',
+            confirmButtonColor: '#d33',
+        });
+    });
+</script>
+@endif
 @section('scripts')
 <script>
     $(document).ready(function() {

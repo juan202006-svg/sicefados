@@ -34,7 +34,7 @@ class TrackingPlantController extends Controller
             ->with('crops.species')
             ->get();
 
-        // Seguimientos detallados con relaciones, filtrados por fecha de hoy
+        // Seguimientos detallados con relaciones, 
         $seguimientoPlanta = TrackingPlant::whereHas('Tracking', function ($query) use ($hoy) {
                 $query->whereDate('date', $hoy);
             })

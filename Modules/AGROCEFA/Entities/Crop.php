@@ -13,6 +13,7 @@ use Modules\ACUAPONICO\Entities\Lot;
 use Modules\ACUAPONICO\Entities\AquaponicSystem;
 use Modules\ACUAPONICO\Entities\Tracking;
 use Modules\ACUAPONICO\Entities\Resowing;
+use Modules\ACUAPONICO\Entities\HarvestAquaponic;
 
 class Crop extends Model implements Auditable
 {
@@ -72,5 +73,9 @@ class Crop extends Model implements Auditable
     public function resowings()
     {
         return $this->hasMany(Resowing::class, 'crop_id');
+    }
+    public function harvests()
+    {
+        return $this->morphMany(HarvestAquaponic::class, 'harvestable');
     }
 }

@@ -1,8 +1,8 @@
-@extends('acuaponico::layouts.masterpa')
-@push('breadcrumbs')
+
+<?php $__env->startPush('breadcrumbs'); ?>
     <li class="breadcrumb-item active">Control de Actividades</li>
-@endpush
-@section('content2')
+<?php $__env->stopPush(); ?>
+<?php $__env->startSection('content2'); ?>
 <div class="container mt-4">
     <h2 class="text-center mb-4">Actividades Recibidas</h2>
     <div class="card shadow-sm border-0">
@@ -19,27 +19,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php $n = 1; @endphp
-                    @foreach($activities as $activity)
+                    <?php $n = 1; ?>
+                    <?php $__currentLoopData = $activities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $activity): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
-                        <td>{{ $n++ }}</td>
-                        <td>{{ $activity->activity_name}}</td>
-                        <td>{{ $activity->user->first_name }} {{ $activity->user->last_name }}</td>
-                        <td>{{ $activity->date }}</td>
-                        <td>{{ $activity->description }}</td>
+                        <td><?php echo e($n++); ?></td>
+                        <td><?php echo e($activity->activity_name); ?></td>
+                        <td><?php echo e($activity->user->first_name); ?> <?php echo e($activity->user->last_name); ?></td>
+                        <td><?php echo e($activity->date); ?></td>
+                        <td><?php echo e($activity->description); ?></td>
                         <td>
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#agregar{{ $activity->id }}">
+                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#agregar<?php echo e($activity->id); ?>">
                                 <i class="bi bi-plus-circle"></i> + Evidencia
                             </button>
                         </td>
                     </tr>
 
                     <!-- Modal Agregar Evidencia -->
-                    <div class="modal fade" id="agregar{{ $activity->id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal fade" id="agregar<?php echo e($activity->id); ?>" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
-                            <form action="{{ route('acuaponico.pasante.pasante.storecontrolactivity') }}" method="post" enctype="multipart/form-data">
-                                @csrf
-                                <input type="hidden" name="activity_id" value="{{ $activity->id }}">
+                            <form action="<?php echo e(route('acuaponico.pasante.pasante.storecontrolactivity')); ?>" method="post" enctype="multipart/form-data">
+                                <?php echo csrf_field(); ?>
+                                <input type="hidden" name="activity_id" value="<?php echo e($activity->id); ?>">
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary text-white">
                                         <h5 class="modal-title">Agregar Evidencia</h5>
@@ -48,7 +48,7 @@
                                     <div class="modal-body">
                                         <div class="mb-3">
                                             <label>Actividad:</label>
-                                            <input type="text" class="form-control" value="{{ $activity->activity_name }}" readonly>
+                                            <input type="text" class="form-control" value="<?php echo e($activity->activity_name); ?>" readonly>
                                         </div>
 
                                         <div class="mb-3">
@@ -73,7 +73,7 @@
                             </form>
                         </div>
                     </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
         </div>
@@ -98,35 +98,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php $n = 1; @endphp
-                    @foreach($evidencias as $evidencia)
+                    <?php $n = 1; ?>
+                    <?php $__currentLoopData = $evidencias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $evidencia): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
-                        <td>{{ $n++ }}</td>
-                        <td>{{ $evidencia->activity->activity_name  }}</td>
-                        <td>{{ $evidencia->date }}</td>
-                        <td>{{ $evidencia->news }}</td>
+                        <td><?php echo e($n++); ?></td>
+                        <td><?php echo e($evidencia->activity->activity_name); ?></td>
+                        <td><?php echo e($evidencia->date); ?></td>
+                        <td><?php echo e($evidencia->news); ?></td>
                         <td>
-                            @if($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence))
+                            <?php if($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence)): ?>
                             <span class="text-success">PDF Subido</span>
-                            @else
+                            <?php else: ?>
                             <span class="text-danger">No disponible</span>
-                            @endif
+                            <?php endif; ?>
                         </td>
                         <td>
-                            @if($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence))
-                            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#verPdfModal{{ $evidencia->id }}">
+                            <?php if($evidencia->evidence && Storage::disk('public')->exists($evidencia->evidence)): ?>
+                            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#verPdfModal<?php echo e($evidencia->id); ?>">
                                 <i class="bi bi-eye"></i>
                                 ver PDF
                             </button>
-                            @endif
+                            <?php endif; ?>
 
                             <!-- Botón editar -->
-                            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editarModal{{ $evidencia->id }}">
+                            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editarModal<?php echo e($evidencia->id); ?>">
                                 <i class="bi bi-pencil"></i> Editar
                             </button>
 
                             <!-- Botón eliminar -->
-                            <button class="btn btn-sm btn-danger btnEliminar" data-url="{{ route('acuaponico.pasante.pasante.destroycontrolactivity', $evidencia->id) }}">
+                            <button class="btn btn-sm btn-danger btnEliminar" data-url="<?php echo e(route('acuaponico.pasante.pasante.destroycontrolactivity', $evidencia->id)); ?>">
                                 <i class="bi bi-trash"></i> Eliminar
                             </button>
 
@@ -135,7 +135,7 @@
                     </tr>
 
                     <!-- Modal Ver PDF -->
-                    <div class="modal fade" id="verPdfModal{{ $evidencia->id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal fade" id="verPdfModal<?php echo e($evidencia->id); ?>" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -143,18 +143,18 @@
                                     <button class="btn-close" data-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <iframe src="{{ route('evidencia.ver', $evidencia->id) }}" width="100%" height="600px"></iframe>
+                                    <iframe src="<?php echo e(route('evidencia.ver', $evidencia->id)); ?>" width="100%" height="600px"></iframe>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Modal Editar -->
-                    <div class="modal fade" id="editarModal{{ $evidencia->id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal fade" id="editarModal<?php echo e($evidencia->id); ?>" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
-                            <form action="{{ route('acuaponico.pasante.pasante.updatecontrolactivity', $evidencia->id) }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                @method('PUT')
+                            <form action="<?php echo e(route('acuaponico.pasante.pasante.updatecontrolactivity', $evidencia->id)); ?>" method="POST" enctype="multipart/form-data">
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('PUT'); ?>
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary">
                                         <h5 class="modal-title text-white">Editar Evidencia</h5>
@@ -163,11 +163,11 @@
                                     <div class="modal-body">
                                         <div class="mb-3">
                                             <label>Fecha:</label>
-                                            <input type="date" name="date" class="form-control" value="{{ $evidencia->date }}">
+                                            <input type="date" name="date" class="form-control" value="<?php echo e($evidencia->date); ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label>Novedades:</label>
-                                            <textarea name="news" class="form-control">{{ $evidencia->news }}</textarea>
+                                            <textarea name="news" class="form-control"><?php echo e($evidencia->news); ?></textarea>
                                         </div>
                                         <div class="mb-3">
                                             <label>Actualizar PDF:</label>
@@ -182,7 +182,7 @@
                             </form>
                         </div>
                     </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
         </div>
@@ -190,8 +190,8 @@
 </div>
 <!-- Modal Eliminar -->
 <form id="formEliminar" method="POST" style="display: none;">
-    @csrf
-    @method('DELETE')
+    <?php echo csrf_field(); ?>
+    <?php echo method_field('DELETE'); ?>
 </form>
 
 
@@ -203,31 +203,31 @@
         inputs.forEach(input => input.value = today);
     });
 </script>
-@if (session('success'))
+<?php if(session('success')): ?>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             icon: 'success',
             title: 'Éxito',
-            text: '{{ session("success") }}',
+            text: '<?php echo e(session("success")); ?>',
             confirmButtonColor: '#3085d6',
         });
     });
 </script>
-@endif
+<?php endif; ?>
 
-@if (session('error'))
+<?php if(session('error')): ?>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: '{{ session("error") }}',
+            text: '<?php echo e(session("error")); ?>',
             confirmButtonColor: '#d33',
         });
     });
 </script>
-@endif
+<?php endif; ?>
 
 <script>
     document.querySelectorAll('.btnEliminar').forEach(button => {
@@ -253,14 +253,14 @@
         });
     });
 </script>
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 <script>
     $(document).ready(function() {
         $('#actividades').DataTable({
             responsive: false,
             autoWidth: false,
             language: {
-                url: "{{ asset('AdminLTE/plugins/datatables/i18n/es-ES.json') }}"
+                url: "<?php echo e(asset('AdminLTE/plugins/datatables/i18n/es-ES.json')); ?>"
             }
         });
     });
@@ -271,10 +271,11 @@
             responsive: false,
             autoWidth: false,
             language: {
-                url: "{{ asset('AdminLTE/plugins/datatables/i18n/es-ES.json') }}"
+                url: "<?php echo e(asset('AdminLTE/plugins/datatables/i18n/es-ES.json')); ?>"
             }
         });
     });
 </script>
-@endsection
-@endsection
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('acuaponico::layouts.masterpa', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/pasante/controlactividad.blade.php ENDPATH**/ ?>

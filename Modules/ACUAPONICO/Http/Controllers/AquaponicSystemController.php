@@ -52,7 +52,7 @@ class AquaponicSystemController extends Controller
         $lot->name = $request->name . ' - Lote';
         $lot->description = $request->description;
         $lot->location = $request->location;
-        $lot->image = $acuaponico->image; // Reutilizar la imagen
+        $lot->image = $acuaponico->image; 
 
         return redirect()->back()->with('success', 'Sistema acuapónico creado correctamente.');
     }
@@ -83,6 +83,7 @@ class AquaponicSystemController extends Controller
 
     public function destroy($id)
     {
+        
         $acuaponico = AquaponicSystem::findOrFail($id);
         $acuaponico->delete();
 

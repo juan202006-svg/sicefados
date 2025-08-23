@@ -5,27 +5,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="icon" href="{{ asset('images/Favicon2.png')}}" type="image/x-icon">
+  <link rel="icon" href="<?php echo e(asset('images/Favicon2.png')); ?>" type="image/x-icon">
   <title>Administrador | Unidad de Cultivos</title>
 
   <!-- Bootstrap local -->
-  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/bootstrap/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="<?php echo e(asset('AdminLTE/plugins/bootstrap/css/bootstrap.min.css')); ?>">
   
   <!-- Font Awesome local -->
-  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/fontawesome-free/css/all.min.css') }}">
+  <link rel="stylesheet" href="<?php echo e(asset('AdminLTE/plugins/fontawesome-free/css/all.min.css')); ?>">
   
   <!-- AdminLTE local -->
-  <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="<?php echo e(asset('AdminLTE/dist/css/adminlte.min.css')); ?>">
   
   <!-- OverlayScrollbars local -->
-  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+  <link rel="stylesheet" href="<?php echo e(asset('AdminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')); ?>">
   
   <!-- DataTables local -->
-  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="<?php echo e(asset('AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')); ?>">
+  <link rel="stylesheet" href="<?php echo e(asset('AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')); ?>">
 
 
-  <link rel="icon" href="{{ secure_asset('favicon.ico') }}" type="image/x-icon">
+  <link rel="icon" href="<?php echo e(secure_asset('favicon.ico')); ?>" type="image/x-icon">
 
   <style>
     .main-header {
@@ -182,7 +182,7 @@
         text-decoration: none !important;
     }
     
-    @keyframes slideIn {
+    @keyframes  slideIn {
         0% {
             opacity: 0;
             transform: translateY(5px);
@@ -203,8 +203,8 @@
 <nav class="main-header navbar navbar-expand navbar-white navbar-light shadow-sm" style="width: 83%;">
     <ul class="navbar-nav" style="margin-left: 5%;">
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ route('cefa.acuaponico.index') }}"
-               class="nav-link {{ request()->routeIs('cefa.acuaponico.index') ? 'active' : '' }}">
+            <a href="<?php echo e(route('cefa.acuaponico.index')); ?>"
+               class="nav-link <?php echo e(request()->routeIs('cefa.acuaponico.index') ? 'active' : ''); ?>">
                 <i class="fas fa-home mr-2"></i> Inicio
             </a>
         </li>   
@@ -214,37 +214,37 @@
         </li>
         
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ route('acuaponico.admin.welcome') }}"
-               class="nav-link {{ request()->routeIs('acuaponico.admin.welcome') ? 'active' : '' }}">
+            <a href="<?php echo e(route('acuaponico.admin.welcome')); ?>"
+               class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.welcome') ? 'active' : ''); ?>">
                 <i class="fas fa-user-shield mr-2"></i> Administrador
             </a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ route('acuaponico.admin.admin.registroacuaponicos') }}"
-               class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registroacuaponicos') ? 'active' : '' }}">
+            <a href="<?php echo e(route('acuaponico.admin.admin.registroacuaponicos')); ?>"
+               class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.admin.registroacuaponicos') ? 'active' : ''); ?>">
                 <i class="fas fa-users mr-2"></i>Acuapónicos
             </a>
         </li>
 
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ route('acuaponico.admin.admin.usuarios') }}"
-               class="nav-link {{ request()->routeIs('acuaponico.admin.admin.usuarios') ? 'active' : '' }}">
+            <a href="<?php echo e(route('acuaponico.admin.admin.usuarios')); ?>"
+               class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.admin.usuarios') ? 'active' : ''); ?>">
                 <i class="fas fa-users mr-2"></i> Usuarios
             </a>
         </li>
         
         <li class="nav-item dropdown d-none d-sm-inline-block">
-            <a href="#" class="nav-link dropdown-toggle {{ request()->routeIs('acuaponico.admin.admin.produccion*') || request()->is('acuaponico/admin/admin/registro*') ? 'active' : '' }}" 
+            <a href="#" class="nav-link dropdown-toggle <?php echo e(request()->routeIs('acuaponico.admin.admin.produccion*') || request()->is('acuaponico/admin/admin/registro*') ? 'active' : ''); ?>" 
                id="produccionDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-chart-line mr-2"></i> Producción
             </a>
             <div class="dropdown-menu dropdown-menu-left animate slideIn" aria-labelledby="produccionDropdown">
                 <h6 class="dropdown-header text-uppercase small font-weight-bold">Registros</h6>
-                <a class="dropdown-item {{ request()->routeIs('acuaponico.admin.admin.registrolote') ? 'active' : '' }}" href="{{ route('acuaponico.admin.admin.registrolote') }}"><i class="fas fa-clipboard-list mr-2"></i> Registro de lotes</a>
-                <a class="dropdown-item {{ request()->routeIs('acuaponico.admin.admin.registrocategoria') ? 'active' : '' }}" href="{{ route('acuaponico.admin.admin.registrocategoria') }}"><i class="fas fa-tags mr-2"></i> Registro de categorías</a>
-                <a class="dropdown-item {{ request()->routeIs('acuaponico.admin.admin.registroespecie') ? 'active' : '' }}" href="{{ route('acuaponico.admin.admin.registroespecie') }}"><i class="fas fa-fish mr-2"></i> Registros de especies</a>
-                <a class="dropdown-item {{ request()->routeIs('acuaponico.admin.admin.registrocultivo') ? 'active' : '' }}" href="{{ route('acuaponico.admin.admin.registrocultivo') }}"><i class="fas fa-seedling mr-2"></i> Registros de cultivos</a>
-                <a class="dropdown-item {{ request()->routeIs('acuaponico.admin.admin.registroresiembras') ? 'active' : '' }}" href="{{ route('acuaponico.admin.admin.registroresiembras') }}"><i class="fas fa-undo-alt mr-2"></i> Gestión de resiembras</a>
+                <a class="dropdown-item <?php echo e(request()->routeIs('acuaponico.admin.admin.registrolote') ? 'active' : ''); ?>" href="<?php echo e(route('acuaponico.admin.admin.registrolote')); ?>"><i class="fas fa-clipboard-list mr-2"></i> Registro de lotes</a>
+                <a class="dropdown-item <?php echo e(request()->routeIs('acuaponico.admin.admin.registrocategoria') ? 'active' : ''); ?>" href="<?php echo e(route('acuaponico.admin.admin.registrocategoria')); ?>"><i class="fas fa-tags mr-2"></i> Registro de categorías</a>
+                <a class="dropdown-item <?php echo e(request()->routeIs('acuaponico.admin.admin.registroespecie') ? 'active' : ''); ?>" href="<?php echo e(route('acuaponico.admin.admin.registroespecie')); ?>"><i class="fas fa-fish mr-2"></i> Registros de especies</a>
+                <a class="dropdown-item <?php echo e(request()->routeIs('acuaponico.admin.admin.registrocultivo') ? 'active' : ''); ?>" href="<?php echo e(route('acuaponico.admin.admin.registrocultivo')); ?>"><i class="fas fa-seedling mr-2"></i> Registros de cultivos</a>
+                <a class="dropdown-item <?php echo e(request()->routeIs('acuaponico.admin.admin.registroresiembras') ? 'active' : ''); ?>" href="<?php echo e(route('acuaponico.admin.admin.registroresiembras')); ?>"><i class="fas fa-undo-alt mr-2"></i> Gestión de resiembras</a>
                 
                 <div class="dropdown-divider"></div>
                 
@@ -259,8 +259,8 @@
             </div>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ route('acuaponico.admin.admin.actividades') }}"
-               class="nav-link {{ request()->routeIs('acuaponico.admin.admin.actividades') ? 'active' : '' }}">
+            <a href="<?php echo e(route('acuaponico.admin.admin.actividades')); ?>"
+               class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.admin.actividades') ? 'active' : ''); ?>">
                 <i class="fas fa-users mr-2"></i> Actividades
             </a>
         </li>
@@ -274,8 +274,8 @@
         </li>
         
         <li class="nav-item">
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
+            <form action="<?php echo e(route('logout')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
                 <button type="submit" class="btn btn-link nav-link" title="Cerrar sesión">
                     <i class="fas fa-sign-out-alt"></i>
                     <span class="d-none d-sm-inline ml-2">Salir</span>
@@ -287,7 +287,7 @@
 
 <aside class="main-sidebar elevation-4">
     <a href="" class="brand-link d-flex flex-column align-items-center py-3">
-        <img src="{{ asset('modules/acuaponico/images/iconos/icolog.png') }}" 
+        <img src="<?php echo e(asset('modules/acuaponico/images/iconos/icolog.png')); ?>" 
              alt="Logo Acuapónico" 
              class="img-circle elevation-3" 
              style="width: 90px; height: 90px; object-fit: cover;">
@@ -300,19 +300,19 @@
         <nav class="mt-2 ">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="{{ route('acuaponico.admin.admin.registroacuaponicos')}}" class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registroacuaponicos') ? 'active bg-info text-white' : '' }}">
+                    <a href="<?php echo e(route('acuaponico.admin.admin.registroacuaponicos')); ?>" class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.admin.registroacuaponicos') ? 'active bg-info text-white' : ''); ?>">
                         <i class="nav-icon fas fa-users"></i>
                         <p>Gestión de sistemas acuapónicos</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('acuaponico.admin.admin.usuarios')}}" class="nav-link {{ request()->routeIs('acuaponico.admin.admin.usuarios') ? 'active bg-info text-white' : '' }}">
+                    <a href="<?php echo e(route('acuaponico.admin.admin.usuarios')); ?>" class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.admin.usuarios') ? 'active bg-info text-white' : ''); ?>">
                         <i class="nav-icon fas fa-users"></i>
                         <p>Gestión de Usuarios</p>
                     </a>
                 </li>
 
-                @php
+                <?php
                 $produccionRoutes = [
                     'acuaponico.admin.admin.registrolote',
                     'acuaponico.admin.admin.registrocategoria',
@@ -323,59 +323,59 @@
                     'acuaponico.admin.admin.registroacuaponicos',
                 ];
                 $isProduccionActive = collect($produccionRoutes)->contains(fn($route) => request()->routeIs($route));
-                @endphp
+                ?>
 
                 <li class="nav-item">
                     <a href="#submenuProduccion" 
-                      class="nav-link {{ $isProduccionActive ? 'active bg-info text-white' : '' }}" 
+                      class="nav-link <?php echo e($isProduccionActive ? 'active bg-info text-white' : ''); ?>" 
                       data-toggle="collapse" 
-                      aria-expanded="{{ $isProduccionActive ? 'true' : 'false' }}">
+                      aria-expanded="<?php echo e($isProduccionActive ? 'true' : 'false'); ?>">
                         <i class="nav-icon fas fa-seedling"></i>
                         <p>
                             Producción
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-                    <ul class="collapse nav flex-column ms-3 {{ $isProduccionActive ? 'show' : '' }}" id="submenuProduccion">
+                    <ul class="collapse nav flex-column ms-3 <?php echo e($isProduccionActive ? 'show' : ''); ?>" id="submenuProduccion">
                         <li class="nav-item">
-                            <a href="{{ route('acuaponico.admin.admin.registrolote') }}" 
-                              class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registrolote') ? 'active bg-info text-white' : '' }}">
-                                <i class="{{ request()->routeIs('acuaponico.admin.admin.registrolote') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                            <a href="<?php echo e(route('acuaponico.admin.admin.registrolote')); ?>" 
+                              class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.admin.registrolote') ? 'active bg-info text-white' : ''); ?>">
+                                <i class="<?php echo e(request()->routeIs('acuaponico.admin.admin.registrolote') ? 'fas' : 'far'); ?> fa-circle nav-icon"></i>
                                 <p>Registro de lotes</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('acuaponico.admin.admin.registrocategoria') }}" 
-                              class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registrocategoria') ? 'active bg-info text-white' : '' }}">
-                                <i class="{{ request()->routeIs('acuaponico.admin.admin.registrocategoria') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                            <a href="<?php echo e(route('acuaponico.admin.admin.registrocategoria')); ?>" 
+                              class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.admin.registrocategoria') ? 'active bg-info text-white' : ''); ?>">
+                                <i class="<?php echo e(request()->routeIs('acuaponico.admin.admin.registrocategoria') ? 'fas' : 'far'); ?> fa-circle nav-icon"></i>
                                 <p>Registro de categorías</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('acuaponico.admin.admin.registroespecie') }}" 
-                              class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registroespecie') ? 'active bg-info text-white' : '' }}">
-                                <i class="{{ request()->routeIs('acuaponico.admin.admin.registroespecie') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                            <a href="<?php echo e(route('acuaponico.admin.admin.registroespecie')); ?>" 
+                              class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.admin.registroespecie') ? 'active bg-info text-white' : ''); ?>">
+                                <i class="<?php echo e(request()->routeIs('acuaponico.admin.admin.registroespecie') ? 'fas' : 'far'); ?> fa-circle nav-icon"></i>
                                 <p>Registros de especies</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('acuaponico.admin.admin.registrocultivo') }}" 
-                              class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registrocultivo') ? 'active bg-info text-white' : '' }}">
-                                <i class="{{ request()->routeIs('acuaponico.admin.admin.registrocultivo') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                            <a href="<?php echo e(route('acuaponico.admin.admin.registrocultivo')); ?>" 
+                              class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.admin.registrocultivo') ? 'active bg-info text-white' : ''); ?>">
+                                <i class="<?php echo e(request()->routeIs('acuaponico.admin.admin.registrocultivo') ? 'fas' : 'far'); ?> fa-circle nav-icon"></i>
                                 <p>Registro de cultivos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('acuaponico.admin.admin.registroresiembras') }}" 
-                              class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registroresiembras') ? 'active bg-info text-white' : '' }}">
-                                <i class="{{ request()->routeIs('acuaponico.admin.admin.registroresiembras') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                            <a href="<?php echo e(route('acuaponico.admin.admin.registroresiembras')); ?>" 
+                              class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.admin.registroresiembras') ? 'active bg-info text-white' : ''); ?>">
+                                <i class="<?php echo e(request()->routeIs('acuaponico.admin.admin.registroresiembras') ? 'fas' : 'far'); ?> fa-circle nav-icon"></i>
                                 <p>gestion de resiembras</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('acuaponico.admin.admin.registroseguimiento') }}" 
-                              class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registroseguimiento') ? 'active bg-info text-white' : '' }}">
-                                <i class="{{ request()->routeIs('acuaponico.admin.admin.registroseguimiento') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                            <a href="<?php echo e(route('acuaponico.admin.admin.registroseguimiento')); ?>" 
+                              class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.admin.registroseguimiento') ? 'active bg-info text-white' : ''); ?>">
+                                <i class="<?php echo e(request()->routeIs('acuaponico.admin.admin.registroseguimiento') ? 'fas' : 'far'); ?> fa-circle nav-icon"></i>
                                 <p>Seguimientos</p>
                             </a>
                         </li>
@@ -389,7 +389,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('acuaponico.admin.admin.actividades')}}" class="nav-link {{ request()->routeIs('acuaponico.admin.admin.actividades') ? 'active bg-info text-white' : '' }}">
+                    <a href="<?php echo e(route('acuaponico.admin.admin.actividades')); ?>" class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.admin.actividades') ? 'active bg-info text-white' : ''); ?>">
                         <i class="nav-icon fas fa-tasks"></i>
                         <p>Actividades</p>
                     </a>
@@ -400,26 +400,27 @@
 </aside>
 
 <div class="content-wrapper pt-0 mt-0" style="margin-top: 0 !important; padding-top: 55px !important; margin-left: 250px !important;">
-    @yield('content')
-    @yield('content2')
-    @yield('content3')
-    @yield('content4')
-    @yield('content6')
-    @yield('content7')
+    <?php echo $__env->yieldContent('content'); ?>
+    <?php echo $__env->yieldContent('content2'); ?>
+    <?php echo $__env->yieldContent('content3'); ?>
+    <?php echo $__env->yieldContent('content4'); ?>
+    <?php echo $__env->yieldContent('content6'); ?>
+    <?php echo $__env->yieldContent('content7'); ?>
 </div> 
 
-<script src="{{ asset('AdminLTE/plugins/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/dist/js/adminlte.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('AdminLTE/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+<script src="<?php echo e(asset('AdminLTE/plugins/jquery/jquery.min.js')); ?>"></script>
+<script src="<?php echo e(asset('AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js')); ?>"></script>
+<script src="<?php echo e(asset('AdminLTE/dist/js/adminlte.min.js')); ?>"></script>
+<script src="<?php echo e(asset('AdminLTE/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')); ?>"></script>
+<script src="<?php echo e(asset('AdminLTE/plugins/datatables/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(asset('AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(asset('AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js')); ?>"></script>
+<script src="<?php echo e(asset('AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(asset('AdminLTE/plugins/sweetalert2/sweetalert2.all.min.js')); ?>"></script>
 
-@stack('scripts')
-@yield('scripts')
+<?php echo $__env->yieldPushContent('scripts'); ?>
+<?php echo $__env->yieldContent('scripts'); ?>
 
 </body>
 </html>
+<?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/layouts/master.blade.php ENDPATH**/ ?>

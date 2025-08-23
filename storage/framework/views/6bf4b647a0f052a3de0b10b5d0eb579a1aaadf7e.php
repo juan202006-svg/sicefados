@@ -1,10 +1,10 @@
-@extends('acuaponico::layouts.masterpa')
 
-@push('breadcrumbs')
+
+<?php $__env->startPush('breadcrumbs'); ?>
     <li class="breadcrumb-item active">Dashboard</li>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@section('content2')
+<?php $__env->startSection('content2'); ?>
 <div class="container-fluid">
     <!-- Header del Dashboard -->
     <div class="row mb-4">
@@ -28,7 +28,7 @@
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Sistemas Acuapónicos
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $systems->count() }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo e($systems->count()); ?></div>
                             <div class="text-xs text-muted mt-1">Total registrados</div>
                         </div>
                         <div class="col-auto">
@@ -47,7 +47,7 @@
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                 Lotes Disponibles
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $lotsCount }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo e($lotsCount); ?></div>
                             <div class="text-xs text-muted mt-1">En gestión</div>
                         </div>
                         <div class="col-auto">
@@ -66,7 +66,7 @@
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 Cultivos Activos
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $cropsCount }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo e($cropsCount); ?></div>
                             <div class="text-xs text-muted mt-1">En seguimiento</div>
                         </div>
                         <div class="col-auto">
@@ -86,7 +86,7 @@
                                 Eficiencia
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                {{ $systems->count() > 0 ? number_format(($cropsCount / $systems->count()) * 100, 1) : 0 }}%
+                                <?php echo e($systems->count() > 0 ? number_format(($cropsCount / $systems->count()) * 100, 1) : 0); ?>%
                             </div>
                             <div class="text-xs text-muted mt-1">Productividad</div>
                         </div>
@@ -291,11 +291,11 @@
                         </div>
                         <div class="col-md-4">
                             <h6 class="font-weight-bold text-primary">Última Actualización</h6>
-                            <p class="text-muted mb-3">{{ date('d/m/Y H:i:s') }}</p>
+                            <p class="text-muted mb-3"><?php echo e(date('d/m/Y H:i:s')); ?></p>
                         </div>
                         <div class="col-md-4">
                             <h6 class="font-weight-bold text-primary">Próxima Revisión</h6>
-                            <p class="text-muted mb-3">{{ date('d/m/Y', strtotime('+7 days')) }}</p>
+                            <p class="text-muted mb-3"><?php echo e(date('d/m/Y', strtotime('+7 days'))); ?></p>
                         </div>
                     </div>
                 </div>
@@ -304,7 +304,7 @@
     </div>
 </div>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -314,7 +314,7 @@
 
         // Gráfica de Mortalidad mejorada (Bar Chart)
         var mortalityCtx = document.getElementById('mortalityChart').getContext('2d');
-        var mortalityData = @json($mortalityData ?? []);
+        var mortalityData = <?php echo json_encode($mortalityData ?? [], 15, 512) ?>;
         
         var labels = mortalityData.length > 0 ? mortalityData.map(function(item) {
             return item.harvestable_type === 'Modules\\AGROCEFA\\Entities\\Crop' ? 
@@ -406,7 +406,7 @@
 
         // Gráfica de Distribución de Cultivos mejorada (Pie Chart)
         var cropsBySystemCtx = document.getElementById('cropsBySystemChart').getContext('2d');
-        var cropsBySystem = @json($cropsBySystem ?? []);
+        var cropsBySystem = <?php echo json_encode($cropsBySystem ?? [], 15, 512) ?>;
         
         var systemLabels = cropsBySystem.length > 0 ? cropsBySystem.map(function(item) { 
             return 'Sistema ' + item.aquaponic_system_id; 
@@ -534,7 +534,7 @@
     width: 100%;
 }
 
-@keyframes fadeIn {
+@keyframes  fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
@@ -543,5 +543,6 @@
     animation: fadeIn 0.6s ease-out;
 }
 </style>
-@endpush
-@endsection
+<?php $__env->stopPush(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('acuaponico::layouts.masterpa', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/welcomepas.blade.php ENDPATH**/ ?>
