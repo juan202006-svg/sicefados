@@ -5,6 +5,7 @@ namespace Modules\ACUAPONICO\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+
 class HarvestAquaponic extends Model
 {
     use HasFactory;

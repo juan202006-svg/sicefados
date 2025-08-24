@@ -1,8 +1,8 @@
-@extends('acuaponico::layouts.master')
-@push('breadcrumbs')
+
+<?php $__env->startPush('breadcrumbs'); ?>
 <li class="breadcrumb-item active">Gestión de Cultivos</li>
-@endpush
-@section('content4')
+<?php $__env->stopPush(); ?>
+<?php $__env->startSection('content4'); ?>
 <h1 class="fw-bold mb-4">Gestión de Cultivos</h1>
 <div class="container mt-4">
     <div class="card shadow-sm border-0">
@@ -28,52 +28,52 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php $n = 1; @endphp
-                        @foreach ($cultivos as $cultivo)
+                        <?php $n = 1; ?>
+                        <?php $__currentLoopData = $cultivos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cultivo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td class="text-center">{{ $n++ }}</td>
-                            <td class="text-center">{{ $cultivo->date }}</td>
-                            <td class="text-center">{{ $cultivo->aquaponicSystem->name ?? 'sin sistema' }}</td>
-                            <td class="text-center">{{ $cultivo->species->name ?? 'sin especie' }}</td>
+                            <td class="text-center"><?php echo e($n++); ?></td>
+                            <td class="text-center"><?php echo e($cultivo->date); ?></td>
+                            <td class="text-center"><?php echo e($cultivo->aquaponicSystem->name ?? 'sin sistema'); ?></td>
+                            <td class="text-center"><?php echo e($cultivo->species->name ?? 'sin especie'); ?></td>
                             <td class="text-center">
-                                @foreach ($cultivo->lotes as $lote)
+                                <?php $__currentLoopData = $cultivo->lotes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lote): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <span class="badge bg-info">
-                                    {{ $lote->name }} ({{ $lote->pivot->planted_quantity }})
+                                    <?php echo e($lote->name); ?> (<?php echo e($lote->pivot->planted_quantity); ?>)
                                 </span>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </td>
-                            <td class="text-center">{{ $cultivo->quantity }}</td>
-                            <td class="text-center">{{ $cultivo->status }}</td>
+                            <td class="text-center"><?php echo e($cultivo->quantity); ?></td>
+                            <td class="text-center"><?php echo e($cultivo->status); ?></td>
                             <td class="text-center">
                                 <button type="button" class="btn btn-success btn-sm editbtn"
-                                    data-id="{{ $cultivo->id }}"
-                                    data-date="{{ $cultivo->date }}"
-                                    data-aquaponic_system_id="{{ $cultivo->aquaponic_system_id }}"
-                                    data-species_id="{{ $cultivo->species_id }}"
-                                    data-lot_ids="{{ $cultivo->lotes->pluck('id')->implode(',') }}"
-                                    data-quantity="{{ $cultivo->quantity }}"
-                                    data-status="{{ $cultivo->status }}"
-                                    @foreach($cultivo->lotes as $lote)
-                                    data-lot_asignado_{{ $lote->id }}="{{ $lote->pivot->planted_quantity }}"
-                                    @endforeach
+                                    data-id="<?php echo e($cultivo->id); ?>"
+                                    data-date="<?php echo e($cultivo->date); ?>"
+                                    data-aquaponic_system_id="<?php echo e($cultivo->aquaponic_system_id); ?>"
+                                    data-species_id="<?php echo e($cultivo->species_id); ?>"
+                                    data-lot_ids="<?php echo e($cultivo->lotes->pluck('id')->implode(',')); ?>"
+                                    data-quantity="<?php echo e($cultivo->quantity); ?>"
+                                    data-status="<?php echo e($cultivo->status); ?>"
+                                    <?php $__currentLoopData = $cultivo->lotes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lote): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    data-lot_asignado_<?php echo e($lote->id); ?>="<?php echo e($lote->pivot->planted_quantity); ?>"
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     data-toggle="modal"
                                     data-target="#editar">
                                     Editar
                                 </button>
-                                <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $cultivo->id }}">
+                                <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="<?php echo e($cultivo->id); ?>">
                                     Eliminar
                                 </button>
                             </td>
                         </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
                 <!-- Inicio de modal de editar -->
                 <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden=" true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updatecrops',  $cultivo->id ) }}" method="POST">                                @csrf
-                                @method('put')
+                            <form id="formEditar" action="<?php echo e(route('acuaponico.pasante.pasante.updatecrops',  $cultivo->id )); ?>" method="POST">                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('put'); ?>
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="editarLabel">Editar cultivo</h5>
                                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
@@ -88,18 +88,18 @@
                                         <label for="edit-aquaponic_system_id" class="form-label">S/acuaponico:</label>
                                         <select class="form-control" id="edit-aquaponic_system_id" name="aquaponic_system_id" required>
                                             <option value="">Seleccione un sistema acuapónico</option>
-                                            @foreach ($acuaponicos as $acuaponico)
-                                            <option value="{{ $acuaponico->id }}">{{ $acuaponico->name }}</option>
-                                            @endforeach
+                                            <?php $__currentLoopData = $acuaponicos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $acuaponico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($acuaponico->id); ?>"><?php echo e($acuaponico->name); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
                                     <div class="mb-3">
                                         <label for="edit-species_id" class="form-label">Especie:</label>
                                         <select class="form-control" id="edit-species_id" name="species_id" required>
                                             <option value="">Seleccione un cultivo</option>
-                                            @foreach ($especies as $especie)
-                                            <option value="{{ $especie->id }}">{{ $especie->name }}</option>
-                                            @endforeach
+                                            <?php $__currentLoopData = $especies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $especie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($especie->id); ?>"><?php echo e($especie->name); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
                                     <div class="mb-3">
@@ -136,8 +136,8 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <form id="formEliminar" action="" method="POST" style="display:none;">
-                                @csrf
-                                @method('delete')
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('delete'); ?>
                             </form>
                         </div>
                     </div>
@@ -149,8 +149,8 @@
 <!-- Modal Agregar -->
 <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="{{ route('acuaponico.pasante.pasante.storecrops') }}" method="POST">
-            @csrf
+        <form action="<?php echo e(route('acuaponico.pasante.pasante.storecrops')); ?>" method="POST">
+            <?php echo csrf_field(); ?>
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="agregarLabel">Agregar Nuevo cultivo</h5>
@@ -165,18 +165,18 @@
                         <label for="aquaponic_system_id">S/acuaponico:</label>
                         <select id="aquaponic_system_id" name="aquaponic_system_id" class="form-control" required>
                             <option value="">Seleccione un sistema acuapónico</option>
-                            @foreach ($acuaponicos as $acuaponico)
-                            <option value="{{ $acuaponico->id }}">{{ $acuaponico->name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $acuaponicos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $acuaponico): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($acuaponico->id); ?>"><?php echo e($acuaponico->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="species_id">Especie:</label>
                         <select name="species_id" class="form-control" required>
                             <option value="">Seleccione una especie</option>
-                            @foreach ($especies as $especie)
-                            <option value="{{ $especie->id }}">{{ $especie->name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $especies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $especie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($especie->id); ?>"><?php echo e($especie->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     <div class="form-group">
@@ -467,41 +467,42 @@
     });
 </script>
 <!-- Scripts para notificaciones -->
-@if (session('success'))
+<?php if(session('success')): ?>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             icon: 'success',
             title: 'Éxito',
-            text: '{{ session("success") }}',
+            text: '<?php echo e(session("success")); ?>',
             confirmButtonColor: '#3085d6',
         });
     });
 </script>
-@endif
-@if (session('error'))
+<?php endif; ?>
+<?php if(session('error')): ?>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: '{{ session("error") }}',
+            text: '<?php echo e(session("error")); ?>',
             confirmButtonColor: '#d33',
         });
     });
 </script>
-@endif
-@section('scripts')
+<?php endif; ?>
+<?php $__env->startSection('scripts'); ?>
 <script>
     $(document).ready(function() {
         $('#cultivoTable').DataTable({
             responsive: false,
             autoWidth: false,
             language: {
-                url: "{{ asset('AdminLTE/plugins/datatables/i18n/es-ES.json') }}"
+                url: "<?php echo e(asset('AdminLTE/plugins/datatables/i18n/es-ES.json')); ?>"
             }
         });
     });
 </script>
-@endsection
-@endsection
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('acuaponico::layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/admin/registrocultivo.blade.php ENDPATH**/ ?>

@@ -81,12 +81,14 @@ class Lot extends Model
     }
 
     // Actualiza automáticamente el estado del lote según ocupado
-    public function actualizarEstadoAutomatico()
-    {
+public function actualizarEstadoAutomatico($forzar = false)
+{
+    if (!$forzar) {
         $disponible = $this->disponible;
-        $this->state = ($disponible > 0) ? 'disponible' : 'ocupado';
+        $this->state = ($disponible > 0) ? 'disponible' : 'no disponible';
         $this->save();
     }
+}
 
     // Método de depuración para verificar los valores
     public function debugOccupation()

@@ -1,4 +1,3 @@
-```blade
 
 
 <?php $__env->startPush('breadcrumbs'); ?>

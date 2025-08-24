@@ -1,9 +1,9 @@
-@extends('acuaponico::layouts.master')
 
-@push('breadcrumbs')
+
+<?php $__env->startPush('breadcrumbs'); ?>
 <li class="breadcrumb-item active">Gestión de Lotes</li>
-@endpush
-@section('content')
+<?php $__env->stopPush(); ?>
+<?php $__env->startSection('content'); ?>
 <h1 class="fw-bold mb-4">Gestión de Lotes</h1>
 
 <div class="content mt-4">
@@ -33,58 +33,58 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php $n = 1; @endphp
-                        @foreach ($lots as $lot)
+                        <?php $n = 1; ?>
+                        <?php $__currentLoopData = $lots; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lot): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td class="text-center">{{ $n++ }}</td>
-                            <td class="text-center">{{ $lot->aquaponicSystem->name ?? 'sin lote' }}</td>
-                            <td class="text-center">{{ $lot->date }}</td>
-                            <td class="text-center">{{ $lot->name }}</td>
-                            <td class="text-center">{{ $lot->capacity }}</td>
+                            <td class="text-center"><?php echo e($n++); ?></td>
+                            <td class="text-center"><?php echo e($lot->aquaponicSystem->name ?? 'sin lote'); ?></td>
+                            <td class="text-center"><?php echo e($lot->date); ?></td>
+                            <td class="text-center"><?php echo e($lot->name); ?></td>
+                            <td class="text-center"><?php echo e($lot->capacity); ?></td>
                             <td class="text-center">
-                                @if ($lot->image)
-                                <img src="{{ asset('modules/acuaponico/images/lotes/' . $lot->image) }}" alt="Imagen del lote" style="max-width: 100px; max-height: 100px;">
-                                @else
+                                <?php if($lot->image): ?>
+                                <img src="<?php echo e(asset('modules/acuaponico/images/lotes/' . $lot->image)); ?>" alt="Imagen del lote" style="max-width: 100px; max-height: 100px;">
+                                <?php else: ?>
                                 <span class="text-muted">Sin imagen</span>
-                                @endif
+                                <?php endif; ?>
                             </td>
                             <td class="text-center">
-                                @if ( $lot->description )
-                                <span>{{ $lot->description }}</span>
-                                @else
+                                <?php if( $lot->description ): ?>
+                                <span><?php echo e($lot->description); ?></span>
+                                <?php else: ?>
                                 <span class="text-muted">Sin descripción</span>
-                                @endif
+                                <?php endif; ?>
                             </td>
-                            <td class="text-center">{{ $lot->ocupado }}</td>
+                            <td class="text-center"><?php echo e($lot->ocupado); ?></td>
                             <td class="text-center">
-                                @if($lot->disponible > 0)
-                                <span class="badge bg-success">{{ $lot->disponible }}</span>
-                                @else
+                                <?php if($lot->disponible > 0): ?>
+                                <span class="badge bg-success"><?php echo e($lot->disponible); ?></span>
+                                <?php else: ?>
                                 <span class="badge bg-danger">0</span>
-                                @endif
+                                <?php endif; ?>
                             </td>
-                            <td class="text-center">{{ $lot->state }}</td>
+                            <td class="text-center"><?php echo e($lot->state); ?></td>
                             <td class="text-center">
                                 <button type="button" class="btn btn-success btn-sm editbtn"
-                                    data-id="{{ $lot->id }}"
-                                    data-aquaponic_system_id="{{ $lot->aquaponic_system_id }}"
-                                    data-date="{{ $lot->date }}"
-                                    data-name="{{ $lot->name }}"
-                                    data-capacity="{{ $lot->capacity }}"
-                                    data-image="{{ $lot->image }}"
-                                    data-description="{{ $lot->description }}"
-                                    data-state="{{ $lot->state }}"
-                                    data-ocupado="{{ $lot->ocupado }}"
+                                    data-id="<?php echo e($lot->id); ?>"
+                                    data-aquaponic_system_id="<?php echo e($lot->aquaponic_system_id); ?>"
+                                    data-date="<?php echo e($lot->date); ?>"
+                                    data-name="<?php echo e($lot->name); ?>"
+                                    data-capacity="<?php echo e($lot->capacity); ?>"
+                                    data-image="<?php echo e($lot->image); ?>"
+                                    data-description="<?php echo e($lot->description); ?>"
+                                    data-state="<?php echo e($lot->state); ?>"
+                                    data-ocupado="<?php echo e($lot->ocupado); ?>"
                                     data-toggle="modal"
                                     data-target="#updateLot">
                                     Editar
                                 </button>
-                                <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $lot->id }}">
+                                <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="<?php echo e($lot->id); ?>">
                                     Eliminar
                                 </button>
                             </td>
                         </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
@@ -95,8 +95,8 @@
 <!-- Modal de creación -->
 <div class="modal fade" id="createLot" tabindex="-1" aria-labelledby="createLotLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="{{ route('acuaponico.pasante.pasante.storeLot') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+        <form action="<?php echo e(route('acuaponico.pasante.pasante.storeLot')); ?>" method="POST" enctype="multipart/form-data">
+            <?php echo csrf_field(); ?>
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="createLotLabel">Nuevo Lote</h5>
@@ -111,9 +111,9 @@
                         <label for="aquaponic_system_id" class="form-label">Sistema Acuapónico:</label>
                         <select name="aquaponic_system_id" class="form-control" required>
                             <option value="" disabled selected>Seleccione un sistema acuapónico</option>
-                            @foreach ($acuaponico as $system)
-                            <option value="{{ $system->id }}">{{ $system->name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $acuaponico; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $system): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($system->id); ?>"><?php echo e($system->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -152,9 +152,9 @@
 <div class="modal fade" id="updateLot" tabindex="-1" aria-labelledby="updateLotLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updateLot', 0) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('put')
+            <form id="formEditar" action="<?php echo e(route('acuaponico.pasante.pasante.updateLot', 0)); ?>" method="POST" enctype="multipart/form-data">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('put'); ?>
                 <div class="modal-header">
                     <h5 class="modal-title" id="updateLotLabel">Editar Lote</h5>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
@@ -164,9 +164,9 @@
                     <div class="mb-3">
                         <label for="edit-aquaponic_system_id" class="form-label">Sistema Acuapónico:</label>
                         <select class="form-control" id="edit-aquaponic_system_id" name="aquaponic_system_id" required>
-                            @foreach ($acuaponico as $system)
-                            <option value="{{ $system->id }}">{{ $system->name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $acuaponico; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $system): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($system->id); ?>"><?php echo e($system->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -213,8 +213,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="formEliminar" method="POST" action="">
-                @csrf
-                @method('delete')
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('delete'); ?>
 
             </form>
         </div>
@@ -342,44 +342,45 @@
 </script>
 
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 <script>
     $(document).ready(function() {
         $('#lotesTable').DataTable({
             responsive: false,
             autoWidth: false,
             language: {
-                url: "{{ asset('AdminLTE/plugins/datatables/i18n/es-ES.json') }}"
+                url: "<?php echo e(asset('AdminLTE/plugins/datatables/i18n/es-ES.json')); ?>"
             }
         });
     });
 </script>
-@endsection
-@if (session('success'))
+<?php $__env->stopSection(); ?>
+<?php if(session('success')): ?>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             icon: 'success',
             title: 'Éxito',
-            text: '{{ session("success") }}',
+            text: '<?php echo e(session("success")); ?>',
             confirmButtonColor: '#3085d6',
         });
     });
 </script>
-@endif
+<?php endif; ?>
 
-@if (session('error'))
+<?php if(session('error')): ?>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: '{{ session("error") }}',
+            text: '<?php echo e(session("error")); ?>',
             confirmButtonColor: '#d33',
         });
     });
 </script>
-@endif
+<?php endif; ?>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('acuaponico::layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/admin/registrolote.blade.php ENDPATH**/ ?>

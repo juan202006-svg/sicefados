@@ -30,6 +30,24 @@ class TrackingFishController extends Controller
         return view('acuaponico::pasante.seguimientoPeces', compact('seguimientoPez', 'seguimientos'));
     }
 
+    public function trackingFishs()
+    {
+        $hoy = Carbon::now()->toDateString(); // Obtiene la fecha actual en formato 'YYYY-MM-DD'
+
+        // Trae todos los seguimientos de peces con relaciones
+        $seguimientoPez = TrackingFish::with('Tracking.crops.species.category')->get();
+
+        // Solo seguimientos de hoy y categoría "Pez"
+        $seguimientos = Tracking::whereDate('date', $hoy)
+            ->whereHas('crops.species.category', function ($query) {
+                $query->where('name', 'Pez');
+            })
+            ->with(['crops.species', 'latestFishTracking'])
+            ->get();
+
+        return view('acuaponico::admin.pezseguimiento', compact('seguimientoPez', 'seguimientos'));
+    }
+
     public function store(Request $request)
     {
         // Validar datos
@@ -152,27 +170,35 @@ class TrackingFishController extends Controller
     }
 
     public function destroy($id)
-    {
-        try {
-            $seguimientoPez = TrackingFish::findOrFail($id);
-            $tracking_id = $seguimientoPez->tracking_id;
-            $seguimientoPez->delete();
+{
+    try {
+        $seguimientoPez = TrackingFish::findOrFail($id);
+        $tracking_id = $seguimientoPez->tracking_id;
+        $tracking = Tracking::find($tracking_id);
 
-            // Actualizar el estado de los lotes asociados al cultivo
-            $tracking = Tracking::find($tracking_id);
-            $crop = Crop::find($tracking->crop_id);
+        if (!$tracking) {
+            return redirect()->back()->with('error', 'El seguimiento asociado no existe.');
+        }
+
+        $seguimientoPez->delete();
+
+        // Actualizar el estado de los lotes asociados al cultivo
+        $crop = Crop::find($tracking->crop_id);
+
+        if ($crop) {
             foreach ($crop->lotes as $lot) {
                 $lot->actualizarEstadoAutomatico();
             }
-
-            return redirect()->back()->with('success', 'Seguimiento de pez eliminado exitosamente.');
-        } catch (QueryException $e) {
-            if ($e->getCode() == '23000') {
-                return redirect()->back()->with('error', 'No se puede eliminar este seguimiento de pez porque está relacionado con otro registro.');
-            }
-            return redirect()->back()->with('error', 'Ocurrió un error al intentar eliminar el seguimiento.');
         }
+
+        return redirect()->back()->with('success', 'Seguimiento de pez eliminado exitosamente.');
+    } catch (QueryException $e) {
+        if ($e->getCode() == '23000') {
+            return redirect()->back()->with('error', 'No se puede eliminar este seguimiento de pez porque está relacionado con otro registro.');
+        }
+        return redirect()->back()->with('error', 'Ocurrió un error al intentar eliminar el seguimiento.');
     }
+}
 
     public function getPreviousFishData($trackingId)
     {

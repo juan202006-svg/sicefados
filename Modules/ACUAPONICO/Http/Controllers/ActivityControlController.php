@@ -2,13 +2,14 @@
 
 namespace Modules\ACUAPONICO\Http\Controllers;
 
+namespace Modules\ACUAPONICO\Http\Controllers;
+
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\ACUAPONICO\Entities\ActivityAquaponic;
 use Modules\ACUAPONICO\Entities\ActivityControl;
 use Illuminate\Support\Facades\Storage;
-
 
 
 

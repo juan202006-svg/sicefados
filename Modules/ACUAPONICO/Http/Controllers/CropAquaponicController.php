@@ -3,7 +3,7 @@
 namespace Modules\ACUAPONICO\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Controller;
 use Modules\ACUAPONICO\Entities\Lot;
 use Modules\AGROCEFA\Entities\Specie;
 use Modules\AGROCEFA\Entities\Crop;
@@ -36,6 +36,31 @@ class CropAquaponicController extends Controller
         $lotesDisponibles = $lotesTodos->where('state', 'disponible');
 
         return view('acuaponico::pasante.cultivos', compact('especies', 'lotesDisponibles', 'cultivos', 'lotesTodos', 'acuaponicos'));
+    }
+
+        public function registroCultivo()
+    {
+        $acuaponicos = AquaponicSystem::get();
+        $especies = Specie::whereNotNull('category_id')->get();
+        $cultivos = Crop::with(['species', 'lotes', 'aquaponicSystem'])
+            ->whereNotNull('aquaponic_system_id')
+            ->get();
+
+        // Todos los lotes con capacidad y estado
+        $lotesTodos = Lot::with('cultivos')->get();
+
+        // Agregamos manualmente la ocupación de cada cultivo en cada lote
+        foreach ($lotesTodos as $lote) {
+            $ocupaciones = [];
+            foreach ($lote->cultivos as $cultivo) {
+                $ocupaciones[$cultivo->id] = $cultivo->pivot->planted_quantity;
+            }
+            $lote->ocupaciones = $ocupaciones;
+        }
+
+        $lotesDisponibles = $lotesTodos->where('state', 'disponible');
+
+        return view('acuaponico::admin.registrocultivo', compact('especies', 'lotesDisponibles', 'cultivos', 'lotesTodos', 'acuaponicos'));
     }
 
     public function store(Request $request)
@@ -148,6 +173,7 @@ class CropAquaponicController extends Controller
         $cultivo->aquaponic_system_id = $request->aquaponic_system_id;
         $cultivo->species_id = $request->species_id;
         $cultivo->quantity = $request->quantity;
+        $cultivo->status = $request->status;
         $cultivo->save();
 
         $cultivo->lotes()->sync($asignaciones);

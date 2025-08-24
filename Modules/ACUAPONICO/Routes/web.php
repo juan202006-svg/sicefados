@@ -1,6 +1,6 @@
 <?php
 
-use FontLib\Table\Type\name;
+use NumberToWords\Legacy\Numbers\Words\Locale\Ro;
 
 Route::middleware(['lang'])->group(function () {
     Route::prefix('acuaponico')->group(function () {
@@ -106,7 +106,7 @@ Route::controller(TrackingController::class)->group(function () {
     Route::delete('/pasante/seguimiento/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroytracking');
     Route::get('/pasante/seguimiento/subjects/{systemId}', 'getSubjectsBySystem')->name('acuaponico.pasante.pasante.subjects');
     //admin
-    Route::get('/admin/admin/registroseguimiento', 'registro')->name('acuaponico.admin.admin.registroseguimiento');
+    Route::get('/admin/admin/seguimientogeneral', 'General')->name('acuaponico.admin.admin.seguimientogeneral');
 });
 
 // rutas para los seguimientos de peces
@@ -116,6 +116,10 @@ Route::controller(TrackingFishController::class)->group(function () {
     Route::put('/pasante/seguimientoPez/update/{id}', 'update')->name('acuaponico.pasante.pasante.updatetrackingfish');
     Route::delete('/pasante/seguimientoPez/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroytrackingfish');
     Route::get('/pasante/seguimientoPez/prevdata/{id}', 'getPreviousFishData')->name('seguimientopez.prevdata');
+
+
+    //admin
+    Route::get('/admin/admin/registropezseguimiento', 'trackingFishs')->name('acuaponico.admin.admin.pezseguimiento');
 });
 
 
@@ -131,6 +135,9 @@ Route::controller(TrackingPlantController::class)->group(function () {
     Route::delete('/pasante/seguimientoPlanta/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroytrackingplant');
     Route::get('/pasante/seguimientoPlanta/prevdata/{tracking_id}', 'obtenerDatosAnteriores')->name('acuaponico.pasante.pasante.prevdatatrackingplant');
     Route::get('/pasante/seguimientoPlanta/seguimientos/{aquaponic_system_id}', 'obtenerSeguimientos')->name('acuaponico.pasante.pasante.seguimientosplant');
+
+    //admin
+    Route::get('/admin/admin/registroplantaseguimiento', 'trackingPlants')->name('acuaponico.admin.admin.plantaseguimiento');
 });
 
 // rutas para las cosechas
@@ -167,7 +174,6 @@ Route::controller(ResowingController::class)->group(function () {
     //admin
     Route::get('/admin/admin/registroresiembras', 'registroResiembras')->name('acuaponico.admin.admin.registroresiembras');
 });
-<<<<<<< HEAD
 
 Route::controller(ResowingTrackingController::class)->group(function () {
     Route::get('/pasante/seguimiento_resiembra', 'index')->name('acuaponico.pasante.pasante.indexresowingtracking');
@@ -175,7 +181,9 @@ Route::controller(ResowingTrackingController::class)->group(function () {
     Route::put('/pasante/seguimiento_resiembra/update/{id}', 'update')->name('acuaponico.pasante.pasante.updateresowingtracking');
     Route::delete('/pasante/seguimiento_resiembra/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyresowingtracking');
    Route::get('/pasante/seguimiento_resiembra/previous/{resowing_id}', 'getPreviousTracking')->name('acuaponico.pasante.pasante.previousresowingtracking');
+
+
+   //admin
+   Route::get('/admin/admin/registroseguimiento', 'resowingTracking')->name('acuaponico.admin.admin.registroseguimiento');
 });
-=======
     
->>>>>>> 1c56af8e8230f9435857922390b0b0385342dfab
