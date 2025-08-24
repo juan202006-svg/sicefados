@@ -19,6 +19,14 @@ class HarvestAquaponicController extends Controller
         return view('acuaponico::pasante.cosechas', ['systems' => $systems, 'cosechas' => $cosechas]);
     }
 
+    public function registroCosechas()
+    {
+        $systems = AquaponicSystem::get();
+        $cosechas = HarvestAquaponic::with(['aquaponicSystem', 'harvestable'])->get();
+
+        return view('acuaponico::admin.registrocosecha', ['systems' => $systems, 'cosechas' => $cosechas]);
+    }
+
     public function getHarvestablesBySystem($systemId)
     {
         // Obtener cultivos y resiembras en estado "Seguimiento"
