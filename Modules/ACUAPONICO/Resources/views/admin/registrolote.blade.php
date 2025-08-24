@@ -1,7 +1,9 @@
 @extends('acuaponico::layouts.master')
 
+@push('breadcrumbs')
+<li class="breadcrumb-item active">Gestión de Lotes</li>
+@endpush
 @section('content')
-
 <h1 class="fw-bold mb-4">Gestión de Lotes</h1>
 
 <div class="content mt-4">
@@ -9,81 +11,83 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h5 class="mb-0 fw-semibold">Lista de Lotes</h5>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createLot">
-                <i class="bi bi-plus-circle"></i> Agregar Lote
+                <i class="bi bi-plus-circle"></i> Nuevo Lote
             </button>
         </div>
         <div class="table-responsive">
-            <table id="lotesTable" class="table table-hover table-bordered align-middle text-center" style="width:100%">
-                <thead style="background-color: #f8f9fa;">
-                    <tr>
-                        <th>Código</th>
-                        <th>S/Acuapónico</th>
-                        <th>Fecha</th>
-                        <th>Nombre</th>
-                        <th>Capacidad</th>
-                        <th>Imagen</th>
-                        <th>Descripción</th>
-                        <th>Ocupado</th>
-                        <th>Disponible</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php $n = 1; @endphp
-                    @foreach ($lots as $lot)
-                    <tr>
-                        <td class="text-center">{{ $n++ }}</td>
-                        <td class="text-center">{{ optional($lot->aquaponicSystem)->name ?? 'Sin sistema' }}</td>
-                        <td class="text-center">{{ $lot->date }}</td>
-                        <td class="text-center">{{ $lot->name }}</td>
-                        <td class="text-center">{{ $lot->capacity }}</td>
-                        <td class="text-center">
-                            @if ($lot->image)
-                            <img src="{{ asset('modules/acuaponico/images/lotes/' . $lot->image) }}" alt="Imagen del lote" style="max-width: 100px; max-height: 100px;">
-                            @else
-                            <span class="text-muted">Sin imagen</span>
-                            @endif
-                        </td>
-                        <td class="text-center">
-                             @if ( $lot->description )
-                            <span>{{ $lot->description }}</span>
-                            @else
-                            <span class="text-muted">Sin descripción</span>
-                            @endif
-                        </td>
-                        <td class="text-center">{{ $lot->ocupado }}</td>
-                        <td class="text-center">
-                            @if($lot->disponible > 0)
-                            <span class="badge bg-success">{{ $lot->disponible }}</span>
-                            @else
-                            <span class="badge bg-danger">0</span>
-                            @endif
-                        </td>
-                        <td class="text-center">{{ $lot->state }}</td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-success btn-sm editbtn"
-                                data-id="{{ $lot->id }}"
-                                data-aquaponic_system_id="{{ $lot->aquaponic_system_id }}"
-                                data-date="{{ $lot->date }}"
-                                data-name="{{ $lot->name }}"
-                                data-capacity="{{ $lot->capacity }}"
-                                data-image="{{ $lot->image }}"
-                                data-description="{{ $lot->description }}"
-                                data-state="{{ $lot->state }}"
-                                data-ocupado="{{ $lot->ocupado }}"
-                                data-toggle="modal"
-                                data-target="#updateLot">
-                                Editar
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $lot->id }}">
-                                Eliminar
-                            </button>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="card-body">
+                <table id="lotesTable" class="table table-hover table-bordered align-middle text-center" style="width:100%">
+                    <thead style="background-color: #f8f9fa;">
+                        <tr>
+                            <th>Código</th>
+                            <th>S/Acuapónico</th>
+                            <th>Fecha</th>
+                            <th>Nombre</th>
+                            <th>Capacidad</th>
+                            <th>Imagen</th>
+                            <th>Descripción</th>
+                            <th>Ocupado</th>
+                            <th>Disponible</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php $n = 1; @endphp
+                        @foreach ($lots as $lot)
+                        <tr>
+                            <td class="text-center">{{ $n++ }}</td>
+                            <td class="text-center">{{ $lot->aquaponicSystem->name ?? 'sin lote' }}</td>
+                            <td class="text-center">{{ $lot->date }}</td>
+                            <td class="text-center">{{ $lot->name }}</td>
+                            <td class="text-center">{{ $lot->capacity }}</td>
+                            <td class="text-center">
+                                @if ($lot->image)
+                                <img src="{{ asset('modules/acuaponico/images/lotes/' . $lot->image) }}" alt="Imagen del lote" style="max-width: 100px; max-height: 100px;">
+                                @else
+                                <span class="text-muted">Sin imagen</span>
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                @if ( $lot->description )
+                                <span>{{ $lot->description }}</span>
+                                @else
+                                <span class="text-muted">Sin descripción</span>
+                                @endif
+                            </td>
+                            <td class="text-center">{{ $lot->ocupado }}</td>
+                            <td class="text-center">
+                                @if($lot->disponible > 0)
+                                <span class="badge bg-success">{{ $lot->disponible }}</span>
+                                @else
+                                <span class="badge bg-danger">0</span>
+                                @endif
+                            </td>
+                            <td class="text-center">{{ $lot->state }}</td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-success btn-sm editbtn"
+                                    data-id="{{ $lot->id }}"
+                                    data-aquaponic_system_id="{{ $lot->aquaponic_system_id }}"
+                                    data-date="{{ $lot->date }}"
+                                    data-name="{{ $lot->name }}"
+                                    data-capacity="{{ $lot->capacity }}"
+                                    data-image="{{ $lot->image }}"
+                                    data-description="{{ $lot->description }}"
+                                    data-state="{{ $lot->state }}"
+                                    data-ocupado="{{ $lot->ocupado }}"
+                                    data-toggle="modal"
+                                    data-target="#updateLot">
+                                    Editar
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $lot->id }}">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -99,6 +103,10 @@
                     <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
+                      <div class="mb-3">
+                        <label for="date" class="form-label">Fecha:</label>
+                        <input type="date" name="date" class="form-control" id="date" readonly>
+                    </div>
                     <div class="mb-3">
                         <label for="aquaponic_system_id" class="form-label">Sistema Acuapónico:</label>
                         <select name="aquaponic_system_id" class="form-control" required>
@@ -107,10 +115,6 @@
                             <option value="{{ $system->id }}">{{ $system->name }}</option>
                             @endforeach
                         </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="date" class="form-label">Fecha:</label>
-                        <input type="date" name="date" class="form-control" id="date" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">Nombre:</label>

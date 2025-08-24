@@ -1,4 +1,3 @@
-```blade
 @extends('acuaponico::layouts.masterpa')
 
 @push('breadcrumbs')

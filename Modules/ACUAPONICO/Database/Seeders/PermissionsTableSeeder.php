@@ -143,6 +143,43 @@ class PermissionsTableSeeder extends Seeder
 
         $permissions_admin[] = $permission->id;
 
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.registroseguimiento'], [ // Registro o actualización de permiso
+            'name' => 'Acceso lista de registro de seguimientos de resiembras',
+            'description' => 'Vista de registro de seguimientos de resiembras',
+            'description_english' => 'Access to the tracking registration list of resowings',
+            'app_id' => $app->id
+        ]);
+        $permissions_admin[] = $permission->id;
+
+
+        //acceso a la vista de seguimientos generales
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.seguimientogeneral'], [ // Registro o actualización de permiso
+            'name' => 'Acceso lista de seguimientos generales',
+            'description' => 'Vista de seguimientos generales',
+            'description_english' => 'Access to the general tracking list',
+            'app_id' => $app->id
+        ]);
+        $permissions_admin[] = $permission->id;
+
+
+        //acceso a la vista de seguimientos de peces
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.pezseguimiento'], [ // Registro o actualización de permiso
+            'name' => 'Acceso lista de seguimientos de peces',
+            'description' => 'Vista de seguimientos de peces',
+            'description_english' => 'Access to the fish tracking list',
+            'app_id' => $app->id
+        ]);
+        $permissions_admin[] = $permission->id;
+
+        //acceso a la vista de seguimientos de plantas
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.plantaseguimiento'], [ // Registro o actualización de permiso
+            'name' => 'Acceso lista de seguimientos de plantas',
+            'description' => 'Vista de seguimientos de plantas',
+            'description_english' => 'Access to the plant tracking list',
+            'app_id' => $app->id
+        ]);
+        $permissions_admin[] = $permission->id;
+
         // Consulta de ROLES
         $rol_admin = Role::where('slug', 'acuaponico.admin')->first(); // Rol Administrador
 

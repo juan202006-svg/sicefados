@@ -1,4 +1,6 @@
 <?php
+namespace Modules\ACUAPONICO\Http\Controllers;
+
 
 namespace Modules\ACUAPONICO\Http\Controllers;
 

@@ -1,9 +1,9 @@
-@extends('acuaponico::layouts.master')
 
-@push('breadcrumbs')
+
+<?php $__env->startPush('breadcrumbs'); ?>
 <li class="breadcrumb-item active">Seguimiento Resiembra</li>
-@endpush
-@section('content5')
+<?php $__env->stopPush(); ?>
+<?php $__env->startSection('content5'); ?>
 <h1 class="fw-bold mb-4">Seguimientos Resiembras</h1>
 <div class="content mt-4">
     <div class="card shadow-sm border-0">
@@ -33,48 +33,48 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php $n = 1; @endphp
-                    @foreach ($seguimiento_resiembra as $sr)
+                    <?php $n = 1; ?>
+                    <?php $__currentLoopData = $seguimiento_resiembra; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sr): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 <tr>
-    <td class="text-center">{{ $n++ }}</td>
-    <td class="text-center">{{ $sr->date ?? 'N/A' }}</td>
-    <td class="text-center">{{ $sr->aquaponicSystem->name ?? 'Sin sistema' }}</td>
-    <td class="text-center">{{ $sr->resowing->crops->species->name ?? 'Sin cultivo' }}</td>
-    <td class="text-center">{{ $sr->plant_count ?? '0' }}</td>
+    <td class="text-center"><?php echo e($n++); ?></td>
+    <td class="text-center"><?php echo e($sr->date ?? 'N/A'); ?></td>
+    <td class="text-center"><?php echo e($sr->aquaponicSystem->name ?? 'Sin sistema'); ?></td>
+    <td class="text-center"><?php echo e($sr->resowing->crops->species->name ?? 'Sin cultivo'); ?></td>
+    <td class="text-center"><?php echo e($sr->plant_count ?? '0'); ?></td>
     <td class="text-center">
-        <span class="color-circle" style="background-color: {{ $sr->color_tone ?? '#000' }};"></span>
+        <span class="color-circle" style="background-color: <?php echo e($sr->color_tone ?? '#000'); ?>;"></span>
     </td>
-    <td class="text-center">{{ $sr->height_cm ? $sr->height_cm . 'cm' : 'N/A' }}</td>
-    <td class="text-center">{{ $sr->days_elapsed ?? '0' }}</td>
-    <td class="text-center">{{ $sr->growth ? $sr->growth . 'cm' : '0' }}</td>
-    <td class="text-center">{{ $sr->comparison_percentage ? $sr->comparison_percentage . '%' : '0%' }}</td>
-    <td class="text-center">{{ $sr->mortality ?? '0' }}</td>
-    <td class="text-center">{{ $sr->notes ?? 'Sin novedades' }}</td>
+    <td class="text-center"><?php echo e($sr->height_cm ? $sr->height_cm . 'cm' : 'N/A'); ?></td>
+    <td class="text-center"><?php echo e($sr->days_elapsed ?? '0'); ?></td>
+    <td class="text-center"><?php echo e($sr->growth ? $sr->growth . 'cm' : '0'); ?></td>
+    <td class="text-center"><?php echo e($sr->comparison_percentage ? $sr->comparison_percentage . '%' : '0%'); ?></td>
+    <td class="text-center"><?php echo e($sr->mortality ?? '0'); ?></td>
+    <td class="text-center"><?php echo e($sr->notes ?? 'Sin novedades'); ?></td>
     <td class="text-center">
         <button type="button" class="btn btn-success btn-sm editbtn"
-            data-id="{{ $sr->id }}"
-            data-aquaponic_system_id="{{ $sr->aquaponicSystem->id ?? '' }}"
-            data-resowing_id="{{ $sr->resowing->id ?? '' }}"
-            data-plant_count="{{ $sr->plant_count ?? '' }}"
-            data-color_tone="{{ $sr->color_tone ?? '' }}"
-            data-height_cm="{{ $sr->height_cm ?? '' }}"
-            data-days_elapsed="{{ $sr->days_elapsed ?? '' }}"
-            data-growth="{{ $sr->growth ?? '' }}"
-            data-comparison_percentage="{{ $sr->comparison_percentage ?? '' }}"
-            data-mortality="{{ $sr->mortality ?? '' }}"
-            data-notes="{{ $sr->notes ?? '' }}"
-            data-date="{{ $sr->date ?? '' }}"
-            data-resowing_date="{{ $sr->resowing->date ?? '' }}"
+            data-id="<?php echo e($sr->id); ?>"
+            data-aquaponic_system_id="<?php echo e($sr->aquaponicSystem->id ?? ''); ?>"
+            data-resowing_id="<?php echo e($sr->resowing->id ?? ''); ?>"
+            data-plant_count="<?php echo e($sr->plant_count ?? ''); ?>"
+            data-color_tone="<?php echo e($sr->color_tone ?? ''); ?>"
+            data-height_cm="<?php echo e($sr->height_cm ?? ''); ?>"
+            data-days_elapsed="<?php echo e($sr->days_elapsed ?? ''); ?>"
+            data-growth="<?php echo e($sr->growth ?? ''); ?>"
+            data-comparison_percentage="<?php echo e($sr->comparison_percentage ?? ''); ?>"
+            data-mortality="<?php echo e($sr->mortality ?? ''); ?>"
+            data-notes="<?php echo e($sr->notes ?? ''); ?>"
+            data-date="<?php echo e($sr->date ?? ''); ?>"
+            data-resowing_date="<?php echo e($sr->resowing->date ?? ''); ?>"
             data-toggle="modal"
             data-target="#editar">
             Editar
         </button>
-        <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $sr->id }}">
+        <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="<?php echo e($sr->id); ?>">
             Eliminar
         </button>
     </td>
 </tr>
-@endforeach
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
         </div>
@@ -82,9 +82,9 @@
         <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updateresowingtracking', 0) }}" method="POST">
-                        @csrf
-                        @method('PUT')
+                    <form id="formEditar" action="<?php echo e(route('acuaponico.pasante.pasante.updateresowingtracking', 0)); ?>" method="POST">
+                        <?php echo csrf_field(); ?>
+                        <?php echo method_field('PUT'); ?>
                         <div class="modal-header">
                             <h5 class="modal-title" id="editarLabel">Editar Seguimiento Resiembras</h5>
                             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
@@ -99,24 +99,25 @@
                                 <label for="edit-aquaponic_system_id" class="form-label">Sistema acuapónico:</label>
                                 <select class="form-control" id="edit-aquaponic_system_id" name="aquaponic_system_id" required>
                                     <option value="">Seleccione el sistema</option>
-                                    @foreach ($sistema as $s)
-                                    <option value="{{ $s->id }}">{{ $s->name }}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $sistema; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($s->id); ?>"><?php echo e($s->name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-resowing_id" class="form-label">Resiembra:</label>
                                 <select class="form-control" id="edit-resowing_id" name="resowing_id" required>
                                     <option value="">Seleccione una resiembra</option>
-                                    @foreach ($resiembras as $r)
-                                    <option value="{{ $r->id }}"
-                                        data-system="{{ $r->aquaponic_system_id }}"
-                                        data-date="{{ $r->date }}"
-                                        data-total_quantity="{{ $r->total_quantity }}"
-                                        data-status="{{ $r->status }}">
-                                        {{ $r->crops->species->name ?? 'Sin cultivo' }} - {{ $r->status }}
+                                    <?php $__currentLoopData = $resiembras; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $r): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($r->id); ?>"
+                                        data-system="<?php echo e($r->aquaponic_system_id); ?>"
+                                        data-date="<?php echo e($r->date); ?>"
+                                        data-total_quantity="<?php echo e($r->total_quantity); ?>"
+                                        data-status="<?php echo e($r->status); ?>">
+                                        <?php echo e($r->crops->species->name ?? 'Sin cultivo'); ?> - <?php echo e($r->status); ?>
+
                                     </option>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -127,20 +128,20 @@
                             <div class="mb-3">
                                 <label class="form-label">Color de hoja:</label>
                                 <div class="d-flex gap-4">
-                                    @php
+                                    <?php
                                     $colores = [
                                     '#138713ff', // Verde oscuro
                                     '#a6d842ff', // Verde amarillento
                                     '#32dc32ff', // Verde claro
                                     '#1ccf00ff' // Verde normal
                                     ];
-                                    @endphp
-                                    @foreach($colores as $color)
+                                    ?>
+                                    <?php $__currentLoopData = $colores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $color): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <label>
-                                        <input type="radio" name="color_tone" value="{{ $color }}" required>
-                                        <span class="color-circle" style="background-color: {{ $color }};"></span>
+                                        <input type="radio" name="color_tone" value="<?php echo e($color); ?>" required>
+                                        <span class="color-circle" style="background-color: <?php echo e($color); ?>;"></span>
                                     </label>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -181,8 +182,8 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="formEliminar" method="POST" action="">
-                        @csrf
-                        @method('DELETE')
+                        <?php echo csrf_field(); ?>
+                        <?php echo method_field('DELETE'); ?>
                         <div class="modal-header">
                             <h5 class="modal-title" id="eliminarLabel">Eliminar Seguimiento</h5>
                             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
@@ -203,8 +204,8 @@
 <!-- Modal Agregar -->
 <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="{{ route('acuaponico.pasante.pasante.storeresowingtracking') }}" method="POST">
-            @csrf
+        <form action="<?php echo e(route('acuaponico.pasante.pasante.storeresowingtracking')); ?>" method="POST">
+            <?php echo csrf_field(); ?>
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="agregarLabel">Nuevo Seguimiento Resiembra</h5>
@@ -219,24 +220,25 @@
                         <label for="aquaponic_system_id" class="form-label">Sistema acuapónico:</label>
                         <select name="aquaponic_system_id" id="aquaponic_system_id" class="form-control" required>
                             <option value="">Seleccione el sistema</option>
-                            @foreach ($sistema as $s)
-                            <option value="{{ $s->id }}">{{ $s->name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $sistema; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($s->id); ?>"><?php echo e($s->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="resowing_id" class="form-label">Resiembra:</label>
                         <select name="resowing_id" id="resowing_id" class="form-control" required>
                             <option value="">Seleccione una resiembra</option>
-                            @foreach ($resiembras as $r)
-                            <option value="{{ $r->id }}"
-                                data-system="{{ $r->aquaponic_system_id }}"
-                                data-date="{{ $r->date }}"
-                                data-total_quantity="{{ $r->total_quantity }}"
-                                data-status="{{ $r->status }}">
-                                {{ $r->crops->species->name ?? 'Sin cultivo' }} - {{ $r->status }}
+                            <?php $__currentLoopData = $resiembras; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $r): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($r->id); ?>"
+                                data-system="<?php echo e($r->aquaponic_system_id); ?>"
+                                data-date="<?php echo e($r->date); ?>"
+                                data-total_quantity="<?php echo e($r->total_quantity); ?>"
+                                data-status="<?php echo e($r->status); ?>">
+                                <?php echo e($r->crops->species->name ?? 'Sin cultivo'); ?> - <?php echo e($r->status); ?>
+
                             </option>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -247,20 +249,20 @@
                     <div class="mb-3">
                         <label class="form-label">Color de hoja:</label>
                         <div class="d-flex gap-4">
-                            @php
+                            <?php
                             $colores = [
                             '#138713ff', // Verde oscuro
                             '#a6d842ff', // Verde amarillento
                             '#32dc32ff', // Verde claro
                             '#1ccf00ff' // Verde normal
                             ];
-                            @endphp
-                            @foreach($colores as $color)
+                            ?>
+                            <?php $__currentLoopData = $colores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $color): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <label>
-                                <input type="radio" name="color_tone" value="{{ $color }}" required>
-                                <span class="color-circle" style="background-color: {{ $color }};"></span>
+                                <input type="radio" name="color_tone" value="<?php echo e($color); ?>" required>
+                                <span class="color-circle" style="background-color: <?php echo e($color); ?>;"></span>
                             </label>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -404,11 +406,11 @@
             window.initialPlantCount = totalQuantity;
 
             if (this.value) {
-                fetch(`{{ url('/pasante/seguimiento_resiembra/previous') }}/${this.value}`, {
+                fetch(`<?php echo e(url('/pasante/seguimiento_resiembra/previous')); ?>/${this.value}`, {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
                     }
                 })
                 .then(response => response.json())
@@ -479,11 +481,11 @@
             window.initialPlantCount = totalQuantity;
 
             if (this.value) {
-                fetch(`{{ url('/pasante/seguimiento_resiembra/previous') }}/${this.value}`, {
+                fetch(`<?php echo e(url('/pasante/seguimiento_resiembra/previous')); ?>/${this.value}`, {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
                     }
                 })
                 .then(response => response.json())
@@ -585,11 +587,11 @@
                         const resowingStatus = selectedOption.getAttribute('data-status');
                         window.totalQuantity = parseInt(selectedOption.getAttribute('data-total_quantity')) || 0;
                         window.initialPlantCount = window.totalQuantity;
-                        fetch(`{{ url('/pasante/seguimiento_resiembra/previous') }}/${resowingSelect.value}`, {
+                        fetch(`<?php echo e(url('/pasante/seguimiento_resiembra/previous')); ?>/${resowingSelect.value}`, {
                             method: 'GET',
                             headers: {
                                 'Accept': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
                             }
                         })
                         .then(response => response.json())
@@ -709,41 +711,43 @@
         });
     });
 </script>
-@if (session('success'))
+<?php if(session('success')): ?>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             icon: 'success',
             title: 'Éxito',
-            text: '{{ session("success") }}',
+            text: '<?php echo e(session("success")); ?>',
             confirmButtonColor: '#3085d6',
         });
     });
 </script>
-@endif
-@if (session('error'))
+<?php endif; ?>
+<?php if(session('error')): ?>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: '{{ session("error") }}',
+            text: '<?php echo e(session("error")); ?>',
             confirmButtonColor: '#d33',
         });
     });
 </script>
-@endif
-@section('scripts')
+<?php endif; ?>
+<?php $__env->startSection('scripts'); ?>
 <script>
     $(document).ready(function() {
         $('#seguimientoresiembra').DataTable({
             responsive: false,
             autoWidth: false,
             language: {
-                url: "{{ asset('AdminLTE/plugins/datatables/i18n/es-ES.json') }}"
+                url: "<?php echo e(asset('AdminLTE/plugins/datatables/i18n/es-ES.json')); ?>"
             }
         });
     });
 </script>
-@endsection
-@endsection
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('acuaponico::layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/admin/registroseguimiento.blade.php ENDPATH**/ ?>

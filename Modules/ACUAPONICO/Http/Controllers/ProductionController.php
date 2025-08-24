@@ -3,7 +3,7 @@
 namespace Modules\ACUAPONICO\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Controller;
 use Modules\ACUAPONICO\Entities\Category;
 use Modules\ACUAPONICO\Entities\Lot;
 use Modules\AGROCEFA\Entities\specie;

@@ -1,12 +1,9 @@
-<<<<<<< HEAD
-=======
+@extends('acuaponico::layouts.master')
 
-
->>>>>>> 1e4428dc0c049a4f9f632ab86a7ed758e244a153
-<?php $__env->startPush('breadcrumbs'); ?>
+@push('breadcrumbs')
     <li class="breadcrumb-item active">Seguimientos Peces</li>
-<?php $__env->stopPush(); ?>
-<?php $__env->startSection('content2'); ?>
+@endpush
+@section('content9')
 
 <h1 class="fw-bold mb-4">Seguimiento Peces</h1>
 <div class="content mt-4">
@@ -33,36 +30,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $n = 1; ?>
-                    <?php $__currentLoopData = $seguimientoPez; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    @php $n = 1; @endphp
+                    @foreach ($seguimientoPez as $sp)
                     <tr>
-                        <td class="text-center"><?php echo e($n++); ?></td>
-                        <td class="text-center"><?php echo e($sp->Tracking->date); ?></td>
-                        <td class="text-center"><?php echo e($sp->Tracking->crops->species->name); ?></td>
-                        <td class="text-center"><?php echo e($sp->fish_count); ?></td>
-                        <td class="text-center"><?php echo e($sp->weight_gr); ?>gr</td>
-                        <td class="text-center"><?php echo e($sp->biomass_gr); ?>gr</td>
-                        <td class="text-center"><?php echo e($sp->weight_gain_gr); ?>gr</td>
-                        <td class="text-center"><?php echo e($sp->mortality); ?></td>
+                        <td class="text-center">{{ $n++ }}</td>
+                        <td class="text-center">{{ $sp->Tracking->date ?? 'Sin fecha' }}</td>
+                        <td class="text-center">{{ $sp->Tracking->crops->species->name ?? 'Sin cultivo' }}</td>
+                        <td class="text-center">{{ $sp->fish_count }}</td>
+                        <td class="text-center">{{ $sp->weight_gr }}gr</td>
+                        <td class="text-center">{{ $sp->biomass_gr }}gr</td>
+                        <td class="text-center">{{ $sp->weight_gain_gr }}gr</td>
+                        <td class="text-center">{{ $sp->mortality }}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-success btn-sm editbtn"
-                                data-id="<?php echo e($sp->id); ?>"
-                                data-tracking_id="<?php echo e($sp->tracking_id); ?>"
-                                data-fish_count="<?php echo e($sp->fish_count); ?>"
-                                data-weight_gr="<?php echo e($sp->weight_gr); ?>"
-                                data-biomass_gr="<?php echo e($sp->biomass_gr); ?>"
-                                data-weight_gain_gr="<?php echo e($sp->weight_gain_gr); ?>"
-                                data-mortality="<?php echo e($sp->mortality); ?>"
+                                data-id="{{ $sp->id }}"
+                                data-tracking_id="{{ $sp->tracking_id }}"
+                                data-fish_count="{{ $sp->fish_count }}"
+                                data-weight_gr="{{ $sp->weight_gr }}"
+                                data-biomass_gr="{{ $sp->biomass_gr }}"
+                                data-weight_gain_gr="{{ $sp->weight_gain_gr }}"
+                                data-mortality="{{ $sp->mortality }}"
                                 data-toggle="modal"
                                 data-target="#editar">
                                 Editar
                             </button>
-                            <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="<?php echo e($sp->id); ?>">
+                            <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $sp->id }}">
                                 Eliminar
                             </button>
                         </td>
                     </tr>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -70,9 +67,9 @@
         <div class="modal fade " id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form id="formEditar" action="<?php echo e(route('acuaponico.pasante.pasante.updatetrackingfish', 0)); ?>" method="POST">
-                        <?php echo csrf_field(); ?>
-                        <?php echo method_field('put'); ?>
+                    <form id="formEditar" action="{{route('acuaponico.pasante.pasante.updatetrackingfish', 0)}}" method="POST">
+                        @csrf
+                        @method('put')
                         <div class="modal-header">
                             <h5 class="modal-title" id="editarLabel">Editar Seguimiento Peces</h5>
                             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
@@ -83,14 +80,13 @@
                                 <label for="edit-tracking_id" class="form-label">Cultivo seguimineto:</label>
                                 <select class="form-control" id="edit-tracking_id" name="tracking_id" required>
                                     <option value="">Seleccione un seguimiento</option>
-                                    <?php $__currentLoopData = $seguimientos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $seguimiento): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($seguimiento->id); ?>"
-                                        data-peces="<?php echo e(optional($seguimiento->latestFishTracking)->fish_count ?? $seguimiento->crops->quantity); ?>"
-                                        data-peso="<?php echo e(optional($seguimiento->latestFishTracking)->weight_gr ?? 0); ?>">
-                                        <?php echo e($seguimiento->crops->species->name); ?> - <?php echo e($seguimiento->date); ?>
-
+                                    @foreach ($seguimientos as $seguimiento)
+                                    <option value="{{ $seguimiento->id }}"
+                                        data-peces="{{ optional($seguimiento->latestFishTracking)->fish_count ?? $seguimiento->crops->quantity }}"
+                                        data-peso="{{ optional($seguimiento->latestFishTracking)->weight_gr ?? 0 }}">
+                                        {{ $seguimiento->crops->species->name }} - {{ $seguimiento->date }}
                                     </option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -129,8 +125,8 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form id="formEliminar" method="POST" action="">
-                        <?php echo csrf_field(); ?>
-                        <?php echo method_field('delete'); ?>
+                        @csrf
+                        @method('delete')
 
                     </form>
                 </div>
@@ -141,8 +137,8 @@
 <!-- Modal Agregar -->
 <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="<?php echo e(route ('acuaponico.pasante.pasante.storetrackingfish')); ?>" method="POST">
-            <?php echo csrf_field(); ?>
+        <form action="{{route ('acuaponico.pasante.pasante.storetrackingfish') }}" method="POST">
+            @csrf
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="agregarLabel">Nuevo Seguimiento peces</h5>
@@ -153,14 +149,13 @@
                         <label for="tracking_id">Cultivo en seguimiento:</label>
                         <select name="tracking_id" id="tracking_id" class="form-control" required>
                             <option value="">Seleccione un seguimiento</option>
-                            <?php $__currentLoopData = $seguimientos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $seguimiento): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($seguimiento->id); ?>"
-                                data-peces="<?php echo e(optional($seguimiento->latestFishTracking)->fish_count ?? $seguimiento->crops->quantity); ?>"
-                                data-peso="<?php echo e(optional($seguimiento->latestFishTracking)->weight_gr ?? 0); ?>">
-                                <?php echo e($seguimiento->crops->species->name); ?> - <?php echo e($seguimiento->date); ?>
-
+                            @foreach ($seguimientos as $seguimiento)
+                            <option value="{{ $seguimiento->id }}"
+                                data-peces="{{ optional($seguimiento->latestFishTracking)->fish_count ?? $seguimiento->crops->quantity }}"
+                                data-peso="{{ optional($seguimiento->latestFishTracking)->weight_gr ?? 0 }}">
+                                {{ $seguimiento->crops->species->name }} - {{ $seguimiento->date }}
                             </option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
@@ -365,43 +360,42 @@
         }
     });
 </script>
-<?php if(session('success')): ?>
+@if (session('success'))
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             icon: 'success',
             title: 'Éxito',
-            text: '<?php echo e(session("success")); ?>',
+            text: '{{ session("success") }}',
             confirmButtonColor: '#3085d6',
         });
     });
 </script>
-<?php endif; ?>
+@endif
 
-<?php if(session('error')): ?>
+@if (session('error'))
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: '<?php echo e(session("error")); ?>',
+            text: '{{ session("error") }}',
             confirmButtonColor: '#d33',
         });
     });
 </script>
-<?php endif; ?>
-<?php $__env->startSection('scripts'); ?>
+@endif
+@section('scripts')
 <script>
     $(document).ready(function() {
         $('#seguimientopeztable').DataTable({
             responsive: false,
             autoWidth: false,
             language: {
-                url: "<?php echo e(asset('AdminLTE/plugins/datatables/i18n/es-ES.json')); ?>"
+                url: "{{ asset('AdminLTE/plugins/datatables/i18n/es-ES.json') }}"
             }
         });
     });
 </script>
-<?php $__env->stopSection(); ?>
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make('acuaponico::layouts.masterpa', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/pasante/seguimientoPeces.blade.php ENDPATH**/ ?>
+@endsection
+@endsection

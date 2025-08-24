@@ -3,11 +3,11 @@
 namespace Modules\ACUAPONICO\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use Modules\ACUAPONICO\Entities\AquaponicSystem;
+use App\Http\Controllers\Controller;
 use Modules\AGROCEFA\Entities\Crop;
 use Modules\ACUAPONICO\Entities\Resowing;
 use Modules\ACUAPONICO\Entities\HarvestAquaponic;
+use Modules\ACUAPONICO\Entities\AquaponicSystem;    
 
 class HarvestAquaponicController extends Controller
 {

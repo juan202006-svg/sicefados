@@ -1,12 +1,9 @@
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 1e4428dc0c049a4f9f632ab86a7ed758e244a153
 <?php $__env->startPush('breadcrumbs'); ?>
     <li class="breadcrumb-item active">Seguimientos Peces</li>
 <?php $__env->stopPush(); ?>
-<?php $__env->startSection('content2'); ?>
+<?php $__env->startSection('content9'); ?>
 
 <h1 class="fw-bold mb-4">Seguimiento Peces</h1>
 <div class="content mt-4">
@@ -37,8 +34,8 @@
                     <?php $__currentLoopData = $seguimientoPez; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
                         <td class="text-center"><?php echo e($n++); ?></td>
-                        <td class="text-center"><?php echo e($sp->Tracking->date); ?></td>
-                        <td class="text-center"><?php echo e($sp->Tracking->crops->species->name); ?></td>
+                        <td class="text-center"><?php echo e($sp->Tracking->date ?? 'Sin fecha'); ?></td>
+                        <td class="text-center"><?php echo e($sp->Tracking->crops->species->name ?? 'Sin cultivo'); ?></td>
                         <td class="text-center"><?php echo e($sp->fish_count); ?></td>
                         <td class="text-center"><?php echo e($sp->weight_gr); ?>gr</td>
                         <td class="text-center"><?php echo e($sp->biomass_gr); ?>gr</td>
@@ -404,4 +401,4 @@
 </script>
 <?php $__env->stopSection(); ?>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('acuaponico::layouts.masterpa', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/pasante/seguimientoPeces.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('acuaponico::layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/admin/pezseguimiento.blade.php ENDPATH**/ ?>

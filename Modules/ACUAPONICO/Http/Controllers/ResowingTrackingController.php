@@ -20,6 +20,14 @@ class ResowingTrackingController extends Controller
         return view('acuaponico::pasante.seguimiento_resiembra', compact('sistema', 'seguimiento_resiembra', 'resiembras'));
     }
 
+    public function resowingTracking()
+    {
+        $sistema = AquaponicSystem::get();
+        $resiembras = Resowing::with(['crops.species', 'lots'])->whereIn('status', ['Registrada', 'Seguimiento'])->get();
+        $seguimiento_resiembra = ResowingTracking::with('aquaponicSystem', 'resowing.crops.species')->get();
+        return view('acuaponico::admin.registroseguimiento', compact('sistema', 'seguimiento_resiembra', 'resiembras'));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -157,37 +165,39 @@ class ResowingTrackingController extends Controller
     }
 
     public function destroy($id)
-    {
-        try {
-            $tracking = ResowingTracking::findOrFail($id);
-            $resowingId = $tracking->resowing_id;
+{
+    try {
+        $tracking = ResowingTracking::findOrFail($id);
+        $resowingId = $tracking->resowing_id;
 
-            $totalTrackings = ResowingTracking::where('resowing_id', $resowingId)->count();
+        $totalTrackings = ResowingTracking::where('resowing_id', $resowingId)->count();
 
-            $tracking->delete();
+        $tracking->delete();
 
+        $resowing = Resowing::find($resowingId);
+        if ($resowing) {
             if ($totalTrackings == 1) {
-                $resowing = Resowing::find($resowingId);
-                if ($resowing) {
-                    $resowing->status = 'Registrada';
-                    $resowing->save();
-                }
+                $resowing->status = 'Registrada';
+                $resowing->save();
             }
 
             // Actualizar el estado de los lotes asociados a la resiembra
-            $resowing = Resowing::find($resowingId);
             foreach ($resowing->lots as $lot) {
                 $lot->actualizarEstadoAutomatico();
             }
-
-            return redirect()->back()->with('success', 'Seguimiento eliminado correctamente.');
-        } catch (QueryException $e) {
-            if ($e->getCode() == '23000') {
-                return redirect()->back()->with('error', 'No se puede eliminar este seguimiento porque está relacionado con otro registro.');
-            }
-            return redirect()->back()->with('error', 'Ocurrió un error al intentar eliminar el seguimiento.');
+        } else {
+            // Log or handle the case where resowing is not found
+            \Log::warning("Resowing with ID {$resowingId} not found when deleting ResowingTracking ID {$id}");
         }
+
+        return redirect()->back()->with('success', 'Seguimiento eliminado correctamente.');
+    } catch (QueryException $e) {
+        if ($e->getCode() == '23000') {
+            return redirect()->back()->with('error', 'No se puede eliminar este seguimiento porque está relacionado con otro registro.');
+        }
+        return redirect()->back()->with('error', 'Ocurrió un error al intentar eliminar el seguimiento.');
     }
+}
 
     public function getPreviousTracking($resowingId)
     {

@@ -85,11 +85,14 @@ class Lot extends Model
         return max(0, $this->capacity - $this->ocupado);
     }
 
-    public function actualizarEstadoAutomatico()
-    {
-        $this->state = $this->disponible > 0 ? 'disponible' : 'ocupado';
-        $this->save();
-    }
+    // Actualiza automáticamente el estado del lote según ocupado
+public function actualizarEstadoAutomatico($forzar = false)
+{
+    if (!$forzar) {
+        $disponible = $this->disponible;
+        $this->state = ($disponible > 0) ? 'disponible' : 'no disponible';
+}
+}
 
     // Método de depuración para verificar los valores
     public function debugOccupation()

@@ -3,7 +3,7 @@
 namespace Modules\ACUAPONICO\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Controller;
 use Modules\ACUAPONICO\Entities\Lot;
 use Illuminate\Database\QueryException;
 use Modules\ACUAPONICO\Entities\AquaponicSystem;
@@ -107,16 +107,15 @@ class LotController extends Controller
         };
         $lot->description = $request->description;
         $lot->save();
+       
+        
 
-
-        $lot->actualizarEstadoAutomatico();
-
-        if ($request->from === 'admin') {
             return redirect()->route('acuaponico.admin.admin.registrolote')->with('success', 'Lote actualizado correctamente.');
-        } else {
-            return redirect()->route('acuaponico.pasante.pasante.index')->with('success', 'Lote actualizado correctamente.');
-        }
     }
+
+    
+
+    
 
 
     /**

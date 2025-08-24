@@ -23,12 +23,13 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-
     {
         // Forzar HTTPS en producción y cuando se use ngrok
         $appUrl = env('APP_URL');
         if (env('APP_ENV') === 'production' || (Str::contains($appUrl, 'ngrok'))) {
             \URL::forceScheme('https');
         }
+
+
     }
 }
