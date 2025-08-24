@@ -33,7 +33,6 @@
                             <td class="text-center">
                                 <button type="button" class="btn btn-success btn-sm editbtn"
                                     data-id="{{ $item->id }}"
-                                    data-date="{{ $item->date }}"
                                     data-name="{{ $item->name }}"
                                     data-toggle="modal"
                                     data-target="#editar">
@@ -61,10 +60,6 @@
                                 </div>
                                 <div class="modal-body">
                                     <input type="hidden" name="id" id="edit-id">
-                                    <div class="mb-3">
-                                        <label for="edit-date" class="form-label">Fecha:</label>
-                                        <input type="date" class="form-control" id="edit-date" name="date" readonly>
-                                    </div>
                                     <div class="mb-3">
                                         <label for="edit-name" class="form-label">Nombre:</label>
                                         <input type="text" class="form-control" id="edit-name" name="name">
@@ -130,7 +125,6 @@
                     const id = this.getAttribute('data-id');
                     document.getElementById('formEditar').action = `/pasante/categoria/update/${id}`;
                     document.getElementById('edit-id').value = id;
-                    document.getElementById('edit-date').value = this.getAttribute('data-date');
                     document.getElementById('edit-name').value = this.getAttribute('data-name');
                 });
             });

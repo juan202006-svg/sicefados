@@ -29,9 +29,9 @@ class ResowingTrackingController extends Controller
             'plant_count' => 'required|integer|min:0',
             'color_tone' => 'required|string',
             'height_cm' => 'required|numeric|min:0',
-            'days_elapsed' => 'required|integer|min:0', // Mantener validación por ahora
+            'days_elapsed' => 'required|integer|min:0',
             'growth' => 'nullable|numeric|min:0',
-            'comparison_percentage' => 'nullable|numeric|min:0|max:100',
+            'comparison_percentage' => 'nullable|numeric', // Permitir valores negativos
             'mortality' => 'nullable|integer|min:0',
             'notes' => 'nullable|string|max:255',
         ]);
@@ -55,23 +55,25 @@ class ResowingTrackingController extends Controller
         $previousTrackings = ResowingTracking::where('resowing_id', $request->resowing_id)->count();
         if ($previousTrackings === 0) {
             $validated['mortality'] = $totalQuantity - $validated['plant_count'];
-            $validated['comparison_percentage'] = $totalQuantity > 0 ? ($validated['plant_count'] / $totalQuantity) * 100 : 0;
+            // Usar tu fórmula para el primer seguimiento
+            $validated['comparison_percentage'] = $totalQuantity > 0 ? (($validated['plant_count'] - $totalQuantity) / $totalQuantity) * 100 : 0;
             $validated['growth'] = $validated['height_cm'];
         } else {
-            // Para seguimientos posteriores, obtener el seguimiento anterior
+            // Para seguimientos posteriores
             $previousTracking = ResowingTracking::where('resowing_id', $request->resowing_id)
                 ->orderBy('date', 'desc')
                 ->first();
             if ($previousTracking) {
                 $validated['mortality'] = $previousTracking->plant_count - $validated['plant_count'];
-                $validated['comparison_percentage'] = $previousTracking->plant_count > 0 ? ($validated['plant_count'] / $previousTracking->plant_count) * 100 : 0;
+                // Usar tu fórmula para el rendimiento
+                $validated['comparison_percentage'] = $previousTracking->plant_count > 0 ?
+                    (($validated['plant_count'] - $previousTracking->plant_count) / $previousTracking->plant_count) * 100 : 0;
                 $validated['growth'] = $validated['height_cm'] - $previousTracking->height_cm;
             }
         }
 
-        // Asegurar que los valores calculados sean no negativos
+        // Asegurar que los valores calculados sean válidos
         $validated['mortality'] = max(0, $validated['mortality']);
-        $validated['comparison_percentage'] = max(0, min(100, $validated['comparison_percentage']));
         $validated['growth'] = max(0, $validated['growth']);
 
         ResowingTracking::create($validated);
@@ -98,7 +100,7 @@ class ResowingTrackingController extends Controller
             'height_cm' => 'required|numeric|min:0',
             'days_elapsed' => 'nullable|integer|min:0',
             'growth' => 'nullable|numeric|min:0',
-            'comparison_percentage' => 'nullable|numeric|min:0|max:100',
+            'comparison_percentage' => 'nullable|numeric', // Permitir valores negativos
             'mortality' => 'nullable|integer|min:0',
             'notes' => 'nullable|string|max:255',
         ]);
@@ -127,18 +129,20 @@ class ResowingTrackingController extends Controller
         if (!$previousTrackings) {
             // Primer seguimiento
             $validated['mortality'] = $totalQuantity - $validated['plant_count'];
-            $validated['comparison_percentage'] = $totalQuantity > 0 ? ($validated['plant_count'] / $totalQuantity) * 100 : 0;
+            // Usar tu fórmula para el primer seguimiento
+            $validated['comparison_percentage'] = $totalQuantity > 0 ? (($validated['plant_count'] - $totalQuantity) / $totalQuantity) * 100 : 0;
             $validated['growth'] = $validated['height_cm'];
         } else {
             // Seguimientos posteriores
             $validated['mortality'] = $previousTrackings->plant_count - $validated['plant_count'];
-            $validated['comparison_percentage'] = $previousTrackings->plant_count > 0 ? ($validated['plant_count'] / $previousTrackings->plant_count) * 100 : 0;
+            // Usar tu fórmula para el rendimiento
+            $validated['comparison_percentage'] = $previousTrackings->plant_count > 0 ?
+                (($validated['plant_count'] - $previousTrackings->plant_count) / $previousTrackings->plant_count) * 100 : 0;
             $validated['growth'] = $validated['height_cm'] - $previousTrackings->height_cm;
         }
 
-        // Asegurar que los valores calculados sean no negativos
+        // Asegurar que los valores calculados sean válidos
         $validated['mortality'] = max(0, $validated['mortality']);
-        $validated['comparison_percentage'] = max(0, min(100, $validated['comparison_percentage']));
         $validated['growth'] = max(0, $validated['growth']);
 
         $tracking = ResowingTracking::findOrFail($id);

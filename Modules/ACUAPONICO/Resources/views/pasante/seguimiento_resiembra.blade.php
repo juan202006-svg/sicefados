@@ -23,7 +23,7 @@
                         <th>S/acuapónico</th>
                         <th>Resiembra</th>
                         <th>N° Plantas</th>
-                        <th>Tonalidad/color</th>
+                        <th>Tonalidad</th>
                         <th>Altura(cm)</th>
                         <th>Tiempo(dias)</th>
                         <th>Crecimiento</th>
@@ -126,7 +126,7 @@
                                 <div class="invalid-feedback" id="error-plantas-edit"></div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Color de hoja:</label>
+                                <label class="form-label">Tonalidad de la planta:</label>
                                 <div class="d-flex gap-4">
                                     @php
                                     $colores = [
@@ -157,7 +157,7 @@
                                 <input type="number" class="form-control" name="growth" id="edit-growth" readonly>
                             </div>
                             <div class="mb-3">
-                                <label for="edit-comparison_percentage" class="form-label">Rendimiento (%):</label>
+                                <label for="edit-comparison_percentage" class="form-label">Cambio Respecto al seguimiento Anterior(%):</label>
                                 <input type="number" class="form-control" name="comparison_percentage" id="edit-comparison_percentage" readonly>
                             </div>
                             <div class="mb-3">
@@ -246,7 +246,7 @@
                         <div class="invalid-feedback" id="error-plantas"></div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Color de hoja:</label>
+                        <label class="form-label">Tonalidad de la planta:</label>
                         <div class="d-flex gap-4">
                             @php
                             $colores = [
@@ -277,7 +277,7 @@
                         <input type="number" name="growth" class="form-control" id="growth" readonly>
                     </div>
                     <div class="mb-3">
-                        <label for="comparison_percentage" class="form-label">Rendimiento (%):</label>
+                        <label for="comparison_percentage" class="form-label">Cambio Respecto al seguimiento Anterior(%):</label>
                         <input type="number" name="comparison_percentage" class="form-control" id="comparison_percentage" readonly>
                     </div>
                     <div class="mb-3">
