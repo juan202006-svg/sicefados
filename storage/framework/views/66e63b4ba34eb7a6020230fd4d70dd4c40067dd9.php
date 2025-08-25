@@ -1,10 +1,9 @@
 
-
 <?php $__env->startPush('breadcrumbs'); ?>
 <li class="breadcrumb-item active">Gestión de Cosechas</li>
 <?php $__env->stopPush(); ?>
 
-<?php $__env->startSection('content2'); ?>
+<?php $__env->startSection('content11'); ?>
 <h1 class="fw-bold mb-4">Gestión de cosechas</h1>
 <div class="content mt-4">
     <div class="card shadow-sm border-0">
@@ -446,4 +445,4 @@
 </script>
 <?php $__env->stopSection(); ?>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('acuaponico::layouts.masterpa', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/pasante/cosechas.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('acuaponico::layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/admin/registrocosecha.blade.php ENDPATH**/ ?>

@@ -147,6 +147,9 @@ Route::controller(HarvestAquaponicController::class)->group(function () {
     Route::put('/pasante/cosecha/update/{id}', 'update')->name('acuaponico.pasante.pasante.updateharvest');
     Route::delete('/pasante/cosecha/destroy/{id}', 'destroy')->name('acuaponico.pasante.pasante.destroyharvest');
     Route::get('/harvests/harvestables-by-system/{systemId}',  'getHarvestablesBySystem')->name('acuaponico.pasante.pasante.harvests.harvestables-by-system');
+
+    //admin
+    Route::get('/admin/admin/registrocosechas', 'registroCosechas')->name('acuaponico.admin.admin.registrocosecha');
 });
 
 // rutas para el control de actividades

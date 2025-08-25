@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 ```html
+=======
+>>>>>>> 0bede349041c65244ddd26a2c85463adc8bb9ac9
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +22,7 @@
     <!-- DataTables local -->
     <link rel="stylesheet" href="<?php echo e(asset('AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')); ?>">
+    
 
     <style>
         .main-header {
@@ -287,7 +291,7 @@
                     <a class="dropdown-item <?php echo e(request()->routeIs('acuaponico.admin.admin.registroseguimiento') ? 'active' : ''); ?>"
                        href="<?php echo e(route('acuaponico.admin.admin.registroseguimiento')); ?>"><i class="fas fa-undo-alt mr-2"></i> Seguimiento resiembra</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#"><i class="fas fa-harvest mr-2"></i> Cosecha</a>
+                    <a class="dropdown-item" href="<?php echo e(route('acuaponico.admin.admin.registrocosecha')); ?>"><i class="fas fa-harvest mr-2"></i> Cosecha</a>
                 </div>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
@@ -397,12 +401,6 @@
                                     <p>Registros de cultivos</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Cosecha</p>
-                                </a>
-                            </li>
                         </ul>
                     </li>
 
@@ -472,7 +470,13 @@
                             </li>
                         </ul>
                     </li>
-
+                    <li class="nav-item">
+                        <a href="<?php echo e(route('acuaponico.admin.admin.registrocosecha')); ?>"
+                           class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.admin.registrocosecha') ? 'active' : ''); ?>">
+                            <i class="nav-icon fas fa-tasks"></i>
+                            <p>Cosecha</p>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="<?php echo e(route('acuaponico.admin.admin.actividades')); ?>"
                            class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.admin.actividades') ? 'active' : ''); ?>">
@@ -496,6 +500,7 @@
         <?php echo $__env->yieldContent('content8'); ?>
         <?php echo $__env->yieldContent('content9'); ?>
         <?php echo $__env->yieldContent('content10'); ?>
+        <?php echo $__env->yieldContent('content11'); ?>
     </div>
 
     <script src="<?php echo e(asset('AdminLTE/plugins/jquery/jquery.min.js')); ?>"></script>
@@ -507,6 +512,7 @@
     <script src="<?php echo e(asset('AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js')); ?>"></script>
     <script src="<?php echo e(asset('AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')); ?>"></script>
     <script src="<?php echo e(asset('AdminLTE/plugins/sweetalert2/sweetalert2.all.min.js')); ?>"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <?php echo $__env->yieldPushContent('scripts'); ?>
     <?php echo $__env->yieldContent('scripts'); ?>

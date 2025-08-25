@@ -1,10 +1,9 @@
-
-
-<?php $__env->startPush('breadcrumbs'); ?>
+@extends('acuaponico::layouts.master')
+@push('breadcrumbs')
 <li class="breadcrumb-item active">Gestión de Cosechas</li>
-<?php $__env->stopPush(); ?>
+@endpush
 
-<?php $__env->startSection('content2'); ?>
+@section('content11')
 <h1 class="fw-bold mb-4">Gestión de cosechas</h1>
 <div class="content mt-4">
     <div class="card shadow-sm border-0">
@@ -31,48 +30,48 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $n = 1; ?>
-                    <?php $__currentLoopData = $cosechas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ch): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    @php $n = 1; @endphp
+                    @foreach ($cosechas as $ch)
                     <tr>
-                        <td><?php echo e($n++); ?></td>
-                        <td><?php echo e($ch->aquaponicSystem->name ?? 'N/A'); ?></td>
+                        <td>{{ $n++ }}</td>
+                        <td>{{ $ch->aquaponicSystem->name ?? 'N/A' }}</td>
                         <td>
-                            <?php if($ch->harvestable instanceof \Modules\AGROCEFA\Entities\Crop): ?>
-                            <?php echo e($ch->harvestable->species->name); ?> (Cultivo)
-                            <?php elseif($ch->harvestable instanceof \Modules\ACUAPONICO\Entities\Resowing): ?>
-                            <?php echo e($ch->harvestable->crops->species->name ?? 'N/A'); ?> (Resiembra)
-                            <?php else: ?>
+                            @if ($ch->harvestable instanceof \Modules\AGROCEFA\Entities\Crop)
+                            {{ $ch->harvestable->species->name }} (Cultivo)
+                            @elseif ($ch->harvestable instanceof \Modules\ACUAPONICO\Entities\Resowing)
+                            {{ $ch->harvestable->crops->species->name ?? 'N/A' }} (Resiembra)
+                            @else
                             N/A
-                            <?php endif; ?>
+                            @endif
                         </td>
-                        <td><?php echo e($ch->date); ?></td>
-                        <td><?php echo e($ch->quantity); ?></td>
-                        <td><?php echo e($ch->unit); ?></td>
-                        <td><?php echo e($ch->destination); ?></td>
-                        <td><?php echo e($ch->mortality); ?></td>
-                        <td><?php echo e($ch->notes); ?></td>
+                        <td>{{ $ch->date }}</td>
+                        <td>{{ $ch->quantity }}</td>
+                        <td>{{ $ch->unit }}</td>
+                        <td>{{ $ch->destination }}</td>
+                        <td>{{ $ch->mortality }}</td>
+                        <td>{{ $ch->notes }}</td>
                         <td>
                             <button type="button" class="btn btn-success btn-sm editbtn"
-                                data-id="<?php echo e($ch->id); ?>"
-                                data-aquaponic_system_id="<?php echo e($ch->aquaponic_system_id); ?>"
-                                data-harvestable_id="<?php echo e($ch->harvestable_id); ?>"
-                                data-harvestable_type="<?php echo e($ch->harvestable_type); ?>"
-                                data-date="<?php echo e($ch->date); ?>"
-                                data-quantity="<?php echo e($ch->quantity); ?>"
-                                data-unit="<?php echo e($ch->unit); ?>"
-                                data-destination="<?php echo e($ch->destination); ?>"
-                                data-mortality="<?php echo e($ch->mortality); ?>"
-                                data-notes="<?php echo e($ch->notes); ?>"
+                                data-id="{{ $ch->id }}"
+                                data-aquaponic_system_id="{{ $ch->aquaponic_system_id }}"
+                                data-harvestable_id="{{ $ch->harvestable_id }}"
+                                data-harvestable_type="{{ $ch->harvestable_type }}"
+                                data-date="{{ $ch->date }}"
+                                data-quantity="{{ $ch->quantity }}"
+                                data-unit="{{ $ch->unit }}"
+                                data-destination="{{ $ch->destination }}"
+                                data-mortality="{{ $ch->mortality }}"
+                                data-notes="{{ $ch->notes }}"
                                 data-toggle="modal"
                                 data-target="#editar">
                                 Editar
                             </button>
-                            <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="<?php echo e($ch->id); ?>">
+                            <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $ch->id }}">
                                 Eliminar
                             </button>
                         </td>
                     </tr>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -82,8 +81,8 @@
 <!-- Modal Agregar -->
 <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="<?php echo e(route('acuaponico.pasante.pasante.storeharvest')); ?>" method="POST">
-            <?php echo csrf_field(); ?>
+        <form action="{{ route('acuaponico.pasante.pasante.storeharvest') }}" method="POST">
+            @csrf
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="agregarLabel">Nueva Cosecha</h5>
@@ -100,9 +99,9 @@
                         <label for="aquaponic_system_id" class="form-label">Sistema Acuapónico:</label>
                         <select name="aquaponic_system_id" id="aquaponic_system_id" class="form-control" required>
                             <option value="">Seleccione un sistema</option>
-                            <?php $__currentLoopData = $systems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $system): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($system->id); ?>"><?php echo e($system->name); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            @foreach ($systems as $system)
+                            <option value="{{ $system->id }}">{{ $system->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
@@ -150,9 +149,9 @@
 <!-- Modal Editar -->
 <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form id="formEditar" action="<?php echo e(route('acuaponico.pasante.pasante.updateharvest', 0)); ?>" method="POST">
-            <?php echo csrf_field(); ?>
-            <?php echo method_field('PUT'); ?>
+        <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updateharvest', 0) }}" method="POST">
+            @csrf
+            @method('PUT')
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="editarLabel">Editar Cosecha</h5>
@@ -170,9 +169,9 @@
                         <label for="edit-aquaponic_system_id" class="form-label">Sistema Acuapónico:</label>
                         <select name="aquaponic_system_id" id="edit-aquaponic_system_id" class="form-control" required>
                             <option value="">Seleccione un sistema</option>
-                            <?php $__currentLoopData = $systems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $system): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($system->id); ?>"><?php echo e($system->name); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            @foreach ($systems as $system)
+                            <option value="{{ $system->id }}">{{ $system->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
@@ -222,8 +221,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="formEliminar" method="POST" action="">
-                <?php echo csrf_field(); ?>
-                <?php echo method_field('DELETE'); ?>
+                @csrf
+                @method('DELETE')
                 <div class="modal-header">
                     <h5 class="modal-title" id="eliminarLabel">Eliminar Cosecha</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -263,7 +262,7 @@
                 const systemId = this.value;
                 harvestableSelect.innerHTML = '<option value="">Cargando...</option>';
                 if (systemId) {
-                    fetch(`<?php echo e(route('acuaponico.pasante.pasante.harvests.harvestables-by-system', '')); ?>/${systemId}?harvestable_id=${initialHarvestableId || ''}&harvestable_type=${encodeURIComponent(initialHarvestableType || '')}`)
+                    fetch(`{{ route('acuaponico.pasante.pasante.harvests.harvestables-by-system', '') }}/${systemId}?harvestable_id=${initialHarvestableId || ''}&harvestable_type=${encodeURIComponent(initialHarvestableType || '')}`)
                         .then(response => {
                             if (!response.ok) throw new Error('Network response was not ok');
                             return response.json();
@@ -408,42 +407,41 @@
 </script>
 
 <!-- Scripts para notificaciones -->
-<?php if(session('success')): ?>
+@if (session('success'))
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             icon: 'success',
             title: 'Éxito',
-            text: '<?php echo e(session("success")); ?>',
+            text: '{{ session("success") }}',
             confirmButtonColor: '#3085d6',
         });
     });
 </script>
-<?php endif; ?>
-<?php if(session('error')): ?>
+@endif
+@if (session('error'))
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: '<?php echo e(session("error")); ?>',
+            text: '{{ session("error") }}',
             confirmButtonColor: '#d33',
         });
     });
 </script>
-<?php endif; ?>
-<?php $__env->startSection('scripts'); ?>
+@endif
+@section('scripts')
 <script>
     $(document).ready(function() {
         $('#cosecha').DataTable({
             responsive: false,
             autoWidth: false,
             language: {
-                url: "<?php echo e(asset('AdminLTE/plugins/datatables/i18n/es-ES.json')); ?>"
+                url: "{{ asset('AdminLTE/plugins/datatables/i18n/es-ES.json') }}"
             }
         });
     });
 </script>
-<?php $__env->stopSection(); ?>
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make('acuaponico::layouts.masterpa', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/pasante/cosechas.blade.php ENDPATH**/ ?>
+@endsection
+@endsection

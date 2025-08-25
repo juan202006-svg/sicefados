@@ -180,6 +180,16 @@ class PermissionsTableSeeder extends Seeder
         ]);
         $permissions_admin[] = $permission->id;
 
+
+        //acceso a la vista de cosechas
+        $permission = Permission::updateOrCreate(['slug' => 'acuaponico.admin.admin.registrocosecha'], [ // Registro o actualización de permiso
+            'name' => 'Acceso lista de registro de cosechas',
+            'description' => 'Vista de registro de cosechas',
+            'description_english' => 'Access to the list of harvest registration',
+            'app_id' => $app->id
+        ]);
+        $permissions_admin[] = $permission->id;
+
         // Consulta de ROLES
         $rol_admin = Role::where('slug', 'acuaponico.admin')->first(); // Rol Administrador
 
