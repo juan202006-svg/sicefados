@@ -170,8 +170,6 @@ Route::controller(ResowingController::class)->group(function () {
     Route::get('/crop-lots-for-edit/{cropId}/{resowingId?}', 'getCropLotsForEdit');
     // Ruta temporal de debug
     Route::get('/debug-crops', 'debugCrops');
-
-
     //admin
     Route::get('/admin/admin/registroresiembras', 'registroResiembras')->name('acuaponico.admin.admin.registroresiembras');
 });
@@ -187,8 +185,3 @@ Route::controller(ResowingTrackingController::class)->group(function () {
    //admin
    Route::get('/admin/admin/registroseguimiento', 'resowingTracking')->name('acuaponico.admin.admin.registroseguimiento');
 });
-<<<<<<< HEAD
-
-=======
->>>>>>> 1e4428dc0c049a4f9f632ab86a7ed758e244a153
-    

@@ -6,7 +6,7 @@
 <div class="container mt-4">
     <div class="card shadow-sm border-0">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h5 class="mb-0 fw-semibold">Lista de Cultivos</h5>
+            <h5 class="mb-0 fw-semibold">Lista de especies</h5>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregar">
                 <i class="bi bi-plus-circle"></i> Nueva Especie
             </button>

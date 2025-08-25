@@ -108,7 +108,7 @@
                                 <input type="number" class="form-control" name="height_cm" id="edit-height_cm" required>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Color de hoja:</label>
+                                <label class="form-label">Tonalidad de la planta:</label>
                                 <div class="d-flex gap-4">
                                     <?php
                                     $colores = [
@@ -197,7 +197,7 @@
                         <input type="number" name="height_cm" class="form-control" id="height_cm" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Color de hoja:</label>
+                        <label class="form-label">Tonalidad de la planta:</label>
                         <div class="d-flex gap-4">
                             <?php
                             $colores = [

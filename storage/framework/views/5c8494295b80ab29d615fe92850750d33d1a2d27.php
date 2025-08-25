@@ -93,10 +93,6 @@
                         <div class="modal-body">
                             <input type="hidden" name="id" id="edit-id">
                             <div class="mb-3">
-                                <label for="edit-date" class="form-label">Fecha:</label>
-                                <input type="date" class="form-control" id="edit-date" name="date" readonly>
-                            </div>
-                            <div class="mb-3">
                                 <label for="edit-aquaponic_system_id" class="form-label">Sistema Acuapónico:</label>
                                 <select name="aquaponic_system_id" id="edit-aquaponic_system_id" class="form-control" required>
                                     <option value="" disabled>Seleccione un sistema acuapónico</option>

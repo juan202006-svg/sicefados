@@ -47,7 +47,6 @@ class AquaponicSystemController extends Controller
         $acuaponico->active = $request->active;
         $acuaponico->save();
 
-
         $lot = new Environment();
         $lot->name = $request->name . ' - Lote';
         $lot->description = $request->description;

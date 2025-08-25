@@ -25,7 +25,6 @@
                             <th>Lote</th>
                             <th>Cantidad</th>
                             <th>Estado</th>
-                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

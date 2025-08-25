@@ -22,7 +22,7 @@
                         <th>S/acuapónico</th>
                         <th>Resiembra</th>
                         <th>N° Plantas</th>
-                        <th>Tonalidad/color</th>
+                        <th>Tonalidad</th>
                         <th>Altura(cm)</th>
                         <th>Tiempo(dias)</th>
                         <th>Crecimiento</th>
@@ -92,10 +92,6 @@
                         <div class="modal-body">
                             <input type="hidden" name="id" id="edit-id">
                             <div class="mb-3">
-                                <label for="edit-date" class="form-label">Fecha:</label>
-                                <input type="date" class="form-control" id="edit-date" name="date" readonly>
-                            </div>
-                            <div class="mb-3">
                                 <label for="edit-aquaponic_system_id" class="form-label">Sistema acuapónico:</label>
                                 <select class="form-control" id="edit-aquaponic_system_id" name="aquaponic_system_id" required>
                                     <option value="">Seleccione el sistema</option>
@@ -126,7 +122,7 @@
                                 <div class="invalid-feedback" id="error-plantas-edit"></div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Color de hoja:</label>
+                                <label class="form-label">Tonalidad de la planta:</label>
                                 <div class="d-flex gap-4">
                                     <?php
                                     $colores = [
@@ -157,7 +153,7 @@
                                 <input type="number" class="form-control" name="growth" id="edit-growth" readonly>
                             </div>
                             <div class="mb-3">
-                                <label for="edit-comparison_percentage" class="form-label">Rendimiento (%):</label>
+                                <label for="edit-comparison_percentage" class="form-label">Cambio Respecto al seguimiento Anterior(%):</label>
                                 <input type="number" class="form-control" name="comparison_percentage" id="edit-comparison_percentage" readonly>
                             </div>
                             <div class="mb-3">
@@ -247,7 +243,7 @@
                         <div class="invalid-feedback" id="error-plantas"></div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Color de hoja:</label>
+                        <label class="form-label">Tonalidad de la planta:</label>
                         <div class="d-flex gap-4">
                             <?php
                             $colores = [
@@ -278,7 +274,7 @@
                         <input type="number" name="growth" class="form-control" id="growth" readonly>
                     </div>
                     <div class="mb-3">
-                        <label for="comparison_percentage" class="form-label">Rendimiento (%):</label>
+                        <label for="comparison_percentage" class="form-label">Cambio Respecto al seguimiento Anterior(%):</label>
                         <input type="number" name="comparison_percentage" class="form-control" id="comparison_percentage" readonly>
                     </div>
                     <div class="mb-3">
@@ -749,5 +745,5 @@
 </script>
 <?php $__env->stopSection(); ?>
 <?php $__env->stopSection(); ?>
-```
+
 <?php echo $__env->make('acuaponico::layouts.masterpa', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/pasante/seguimiento_resiembra.blade.php ENDPATH**/ ?>

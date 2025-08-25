@@ -19,7 +19,7 @@
                 <thead style="background-color: #f8f9fa;">
                     <tr>
                         <th>Código</th>
-                        <th>Sistema Acuapónico</th>
+                        <th>S/Acuapónico</th>
                         <th>Cultivo/Resiembra</th>
                         <th>Fecha</th>
                         <th>Cantidad</th>
@@ -27,7 +27,6 @@
                         <th>Destino</th>
                         <th>Mortandad</th>
                         <th>Novedades</th>
-                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
