@@ -19,7 +19,6 @@ class PermissionsTableSeeder extends Seeder
         // Crear una lista de permisos para el rol 
         $permissions_admin = []; // Lista de permisos para el rol de administrador
 
-        // Consultar aplicación SICA para registrar los roles
         $app = App::where('name', 'ACUAPONICO')->first();
 
 

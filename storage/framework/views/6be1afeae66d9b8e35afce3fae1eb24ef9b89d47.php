@@ -24,7 +24,6 @@
                         <th>Altura(cm)</th>
                         <th>Tonalidad</th>
                         <th>Crecimiento</th>
-                        <th>Rendimiento(%)</th>
                         <th>Mortalidad</th>
                         <th>Acciones</th>
                     </tr>
@@ -43,7 +42,6 @@
                             <span class="color-circle" style="background-color: <?php echo e($sp->color_tone); ?>;"></span>
                         </td>
                         <td class="text-center"><?php echo e($sp->growth); ?>cm</td>
-                        <td class="text-center"><?php echo e($sp->comparison_percentage); ?>%</td>
                         <td class="text-center"><?php echo e($sp->mortality); ?></td>
                         <td class="text-center">
                             <button type="button" class="btn btn-success btn-sm editbtn"
@@ -54,7 +52,6 @@
                                 data-height_cm="<?php echo e($sp->height_cm); ?>"
                                 data-color_tone="<?php echo e($sp->color_tone); ?>"
                                 data-growth="<?php echo e($sp->growth); ?>"
-                                data-comparison_percentage="<?php echo e($sp->comparison_percentage); ?>"
                                 data-mortality="<?php echo e($sp->mortality); ?>"
                                 data-toggle="modal"
                                 data-target="#editar">
@@ -131,10 +128,6 @@
                                 <input type="number" class="form-control" name="growth" id="edit-growth" readonly>
                             </div>
                             <div class="mb-3">
-                                <label for="edit-comparison_percentage" class="form-label">Rendimiento (%):</label>
-                                <input type="number" class="form-control" name="comparison_percentage" id="edit-comparison_percentage" readonly>
-                            </div>
-                            <div class="mb-3">
                                 <label for="edit-mortality" class="form-label">Mortalidad:</label>
                                 <input type="number" class="form-control" name="mortality" id="edit-mortality" readonly>
                             </div>
@@ -154,6 +147,17 @@
                     <form id="formEliminar" method="POST" action="">
                         <?php echo csrf_field(); ?>
                         <?php echo method_field('delete'); ?>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="eliminarLabel">Eliminar Seguimiento</h5>
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Estás seguro de que deseas eliminar este seguimiento?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -218,10 +222,6 @@
                     <div class="mb-3">
                         <label for="growth" class="form-label">Crecimiento:</label>
                         <input type="number" name="growth" class="form-control" id="growth" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="comparison_percentage" class="form-label">Rendimiento (%):</label>
-                        <input type="number" name="comparison_percentage" class="form-control" id="comparison_percentage" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="mortality" class="form-label">Mortalidad:</label>
@@ -304,7 +304,6 @@
                 const plantCount = this.getAttribute('data-plant_count');
                 const heightCm = this.getAttribute('data-height_cm');
                 const growth = this.getAttribute('data-growth');
-                const comparisonPercentage = this.getAttribute('data-comparison_percentage');
                 const mortality = this.getAttribute('data-mortality');
                 const colorTone = this.getAttribute('data-color_tone');
 
@@ -316,7 +315,6 @@
                     document.getElementById('edit-plant_count').value = plantCount;
                     document.getElementById('edit-height_cm').value = heightCm;
                     document.getElementById('edit-growth').value = growth;
-                    document.getElementById('edit-comparison_percentage').value = comparisonPercentage;
                     document.getElementById('edit-mortality').value = mortality;
 
                     // Preseleccionar el color
@@ -415,11 +413,10 @@
             const editPlantCount = document.getElementById('edit-plant_count');
             const editHeightCm = document.getElementById('edit-height_cm');
             const editGrowth = document.getElementById('edit-growth');
-            const editComparisonPercentage = document.getElementById('edit-comparison_percentage');
             const editMortality = document.getElementById('edit-mortality');
             const errorPlantasEdit = document.getElementById('error-plantas-edit');
 
-            if (!editPlantCount || !editHeightCm || !editGrowth || !editComparisonPercentage || !editMortality || !errorPlantasEdit) {
+            if (!editPlantCount || !editHeightCm || !editGrowth || !editMortality || !errorPlantasEdit) {
                 console.error('Uno o más elementos del DOM no están disponibles.');
                 return false;
             }
@@ -429,9 +426,6 @@
 
             const growth = (alturaActual - editAlturaPrevia).toFixed(2);
             editGrowth.value = growth > 0 ? growth : 0;
-
-            const comparisonPercentage = editAlturaPrevia > 0 ? (alturaActual / editAlturaPrevia * 100).toFixed(2) : 0;
-            editComparisonPercentage.value = comparisonPercentage;
 
             const mortality = editPlantasPrevias - actuales > 0 ? editPlantasPrevias - actuales : 0;
             editMortality.value = mortality;
@@ -511,11 +505,10 @@
                 const plantCount = document.getElementById('plant_count');
                 const heightCm = document.getElementById('height_cm');
                 const growth = document.getElementById('growth');
-                const comparisonPercentage = document.getElementById('comparison_percentage');
                 const mortality = document.getElementById('mortality');
                 const errorPlantas = document.getElementById('error-plantas');
 
-                if (!plantCount || !heightCm || !growth || !comparisonPercentage || !mortality || !errorPlantas) {
+                if (!plantCount || !heightCm || !growth || !mortality || !errorPlantas) {
                     console.error('Uno o más elementos del DOM no están disponibles.');
                     return;
                 }
@@ -524,7 +517,6 @@
                 const alturaActual = parseFloat(heightCm.value) || 0;
 
                 growth.value = (alturaActual - alturaPrevia).toFixed(2);
-                comparisonPercentage.value = (alturaPrevia > 0 ? (alturaActual / alturaPrevia * 100).toFixed(2) : 0);
                 mortality.value = (plantasPrevias - actuales > 0 ? plantasPrevias - actuales : 0);
 
                 if (actuales > plantasPrevias) {
@@ -578,6 +570,6 @@
     });
 </script>
 <?php $__env->stopSection(); ?>
-
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('acuaponico::layouts.masterpa', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\sicefados\Modules/ACUAPONICO\Resources/views/pasante/seguimientoPlanta.blade.php ENDPATH**/ ?>

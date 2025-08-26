@@ -21,7 +21,6 @@ class CreateTrackingPlantTable extends Migration
       $table->integer('height_cm');               
       $table->string('color_tone', 12); // Ej: "#28a745"
       $table->string('growth');                   
-      $table->integer('comparison_percentage');  
       $table->integer('mortality');               
       $table->timestamps();
     });

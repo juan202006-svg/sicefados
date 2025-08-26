@@ -20,7 +20,6 @@ class ResowingTracking extends Model
         'height_cm',
         'color_tone',
         'growth',
-        'comparison_percentage',
         'mortality',
         'notes'
     ];

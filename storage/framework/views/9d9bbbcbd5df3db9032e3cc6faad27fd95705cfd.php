@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-```html
-=======
->>>>>>> 0bede349041c65244ddd26a2c85463adc8bb9ac9
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -330,17 +326,6 @@
                 Acuapónico
             </span>
         </a>
-
-<aside class="main-sidebar elevation-4">
-    <a href="" class="brand-link d-flex flex-column align-items-center py-3">
-        <img src="<?php echo e(asset('modules/acuaponico/images/iconos/icolog.png')); ?>" 
-             alt="Logo Acuapónico" 
-             class="img-circle elevation-3" 
-             style="width: 90px; height: 90px; object-fit: cover;">
-        <span class="brand-text mt-2" style="font-size: 18px; color: white; font-weight: bold;">
-            GSA - Administrador
-        </span>
-    </a>
 
         <div class="sidebar">
             <nav class="mt-2">

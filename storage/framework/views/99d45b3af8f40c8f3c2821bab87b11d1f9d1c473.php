@@ -3,27 +3,12 @@
 <?php $__env->startPush('breadcrumbs'); ?>
 <li class="breadcrumb-item active">Gestión de Lotes</li>
 <?php $__env->stopPush(); ?>
-<<<<<<< HEAD
-<?php $__env->startSection('content'); ?>
-<h1 class="fw-bold mb-4">Gestión de Lotes</h1>
-
-<div class="content mt-4">
-    <div class="card shadow-sm border-0">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h5 class="mb-0 fw-semibold">Lista de Lotes</h5>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createLot">
-                <i class="bi bi-plus-circle"></i> Nuevo Lote
-            </button>
-        </div>
-        <div class="table-responsive">
-=======
 
 <?php $__env->startSection('content'); ?>
 <div class="container-fluid px-4" style="width: 80%; margin-top: 5%;">
     <div class="container mt-5">
         <div class="card shadow">
             <!-- Header con animación dentro de la tarjeta -->
->>>>>>> 0bede349041c65244ddd26a2c85463adc8bb9ac9
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-4 animate__animated animate__fadeInDown">
                     <h1 class="h3 mb-0 text-gray-800 fw-bold" style="font-size: 300%; margin-left: 8%; margin-top: 3%;">
@@ -173,24 +158,6 @@
 
 <!-- Modal de creación - Versión Compacta -->
 <div class="modal fade" id="createLot" tabindex="-1" aria-labelledby="createLotLabel" aria-hidden="true">
-<<<<<<< HEAD
-    <div class="modal-dialog">
-        <form action="<?php echo e(route('acuaponico.pasante.pasante.storeLot')); ?>" method="POST" enctype="multipart/form-data">
-            <?php echo csrf_field(); ?>
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="createLotLabel">Nuevo Lote</h5>
-                    <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                      <div class="mb-3">
-                        <label for="date" class="form-label">Fecha:</label>
-                        <input type="date" name="date" class="form-control" id="date" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="aquaponic_system_id" class="form-label">Sistema Acuapónico:</label>
-                        <select name="aquaponic_system_id" class="form-control" required>
-=======
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg" style="overflow: hidden;">
             <div class="modal-header bg-gradient-primary text-white py-3">
@@ -218,18 +185,12 @@
                             <i class="fas fa-tint mr-1"></i>Sistema Acuapónico:
                         </label>
                         <select name="aquaponic_system_id" class="form-control form-control-sm rounded" required>
->>>>>>> 0bede349041c65244ddd26a2c85463adc8bb9ac9
                             <option value="" disabled selected>Seleccione un sistema acuapónico</option>
                             <?php $__currentLoopData = $acuaponico; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $system): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option value="<?php echo e($system->id); ?>"><?php echo e($system->name); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
-<<<<<<< HEAD
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nombre:</label>
-                        <input type="text" name="name" class="form-control" required>
-=======
                     
                     <div class="form-group mb-3">
                         <label for="name" class="form-label small font-weight-bold text-primary mb-1">
@@ -243,7 +204,6 @@
                             <i class="fas fa-boxes mr-1"></i>Capacidad:
                         </label>
                         <input type="number" name="capacity" class="form-control form-control-sm rounded" required>
->>>>>>> 0bede349041c65244ddd26a2c85463adc8bb9ac9
                     </div>
                     
                     <div class="row mt-2">

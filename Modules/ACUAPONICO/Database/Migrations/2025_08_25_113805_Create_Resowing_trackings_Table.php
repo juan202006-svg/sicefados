@@ -18,7 +18,6 @@ class CreateResowingTrackingsTable extends Migration
             $table->integer('height_cm'); // Altura en cm
             $table->string('color_tone', 12)->nullable(); // Ej: "#28a745"
             $table->string('growth'); // Estado de crecimiento
-            $table->integer('comparison_percentage'); // Comparación %
             $table->integer('mortality'); // Mortalidad
             $table->text('notes')->nullable(); // Notas
             $table->timestamps();

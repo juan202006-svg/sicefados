@@ -418,18 +418,33 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('acuaponico.pasante.pasante.indexresowing') }}"
-                           class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexresowing') ? 'active bg-info text-white' : '' }}">
-                            <i class="nav-icon fas fa-recycle"></i>
-                            <p>Gestión de Resiembras</p>
+                        <a href="#submenuResiembra"
+                           class="nav-link {{ request()->routeIs(['acuaponico.pasante.pasante.indexresowing', 'acuaponico.pasante.pasante.indexresowingtracking']) ? 'active' : '' }}"
+                           data-toggle="collapse"
+                           aria-expanded="{{ request()->routeIs(['acuaponico.pasante.pasante.indexresowing', 'acuaponico.pasante.pasante.indexresowingtracking']) ? 'true' : 'false' }}">
+                            <i class="nav-icon fas fa-seedling"></i>
+                            <p>
+                                Resiembras
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('acuaponico.pasante.pasante.indexresowingtracking') }}"
-                           class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexresowingtracking') ? 'active bg-info text-white' : '' }}">
-                            <i class="nav-icon fas fa-clipboard-check"></i>
-                            <p>Seguimiento resiembra</p>
-                        </a>
+                        <ul class="collapse nav flex-column ms-3 {{ request()->routeIs(['acuaponico.pasante.pasante.indexresowing', 'acuaponico.pasante.pasante.indexresowingtracking']) ? 'show' : '' }}"
+                            id="submenuResiembra">
+                            <li class="nav-item">
+                                <a href="{{ route('acuaponico.admin.admin.registroresiembras') }}"
+                                   class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexresowing') ? 'active' : '' }}">
+                                    <i class="{{ request()->routeIs('acuaponico.pasante.pasante.indexresowing') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                                    <p>Gestión resiembras</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('acuaponico.pasante.pasante.indexresowingtracking') }}"
+                                   class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexresowingtracking') ? 'active' : '' }}">
+                                    <i class="{{ request()->routeIs('acuaponico.pasante.pasante.indexresowingtracking') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                                    <p>Seguimiento resiembra</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     @php
                         $seguimientoRoutes = [

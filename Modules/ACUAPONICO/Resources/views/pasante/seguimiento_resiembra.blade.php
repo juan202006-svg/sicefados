@@ -26,7 +26,6 @@
                         <th>Altura(cm)</th>
                         <th>Tiempo(dias)</th>
                         <th>Crecimiento</th>
-                        <th>Rendimiento(%)</th>
                         <th>Mortalidad</th>
                         <th>Novedades</th>
                         <th>Acciones</th>
@@ -47,7 +46,6 @@
                         <td class="text-center">{{ $sr->height_cm }}cm</td>
                         <td class="text-center">{{ $sr->days_elapsed }}</td>
                         <td class="text-center">{{ $sr->growth }}cm</td>
-                        <td class="text-center">{{ $sr->comparison_percentage }}%</td>
                         <td class="text-center">{{ $sr->mortality }}</td>
                         <td class="text-center">{{ $sr->notes ?? 'sin novedades' }}</td>
                         <td class="text-center">
@@ -60,7 +58,6 @@
                                 data-height_cm="{{ $sr->height_cm }}"
                                 data-days_elapsed="{{ $sr->days_elapsed }}"
                                 data-growth="{{ $sr->growth }}"
-                                data-comparison_percentage="{{ $sr->comparison_percentage }}"
                                 data-mortality="{{ $sr->mortality }}"
                                 data-notes="{{ $sr->notes }}"
                                 data-date="{{ $sr->date }}"
@@ -150,10 +147,6 @@
                             <div class="mb-3">
                                 <label for="edit-growth" class="form-label">Crecimiento:</label>
                                 <input type="number" class="form-control" name="growth" id="edit-growth" readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit-comparison_percentage" class="form-label">Cambio Respecto al seguimiento Anterior(%):</label>
-                                <input type="number" class="form-control" name="comparison_percentage" id="edit-comparison_percentage" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-mortality" class="form-label">Mortalidad:</label>
@@ -270,10 +263,6 @@
                     <div class="mb-3">
                         <label for="growth" class="form-label">Crecimiento:</label>
                         <input type="number" name="growth" class="form-control" id="growth" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="comparison_percentage" class="form-label">Cambio Respecto al seguimiento Anterior(%):</label>
-                        <input type="number" name="comparison_percentage" class="form-control" id="comparison_percentage" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="mortality" class="form-label">Mortalidad:</label>
@@ -393,7 +382,6 @@
 
             // Limpiar campos calculados
             document.getElementById('growth').value = '';
-            document.getElementById('comparison_percentage').value = '';
             document.getElementById('mortality').value = '';
 
             window.totalQuantity = totalQuantity;
@@ -468,7 +456,6 @@
             document.getElementById('edit-plant_count').value = totalQuantity;
             document.getElementById('edit-height_cm').value = '';
             document.getElementById('edit-growth').value = '';
-            document.getElementById('edit-comparison_percentage').value = '';
             document.getElementById('edit-mortality').value = '';
 
             window.totalQuantity = totalQuantity;
@@ -540,7 +527,6 @@
                     height_cm: this.getAttribute('data-height_cm'),
                     days_elapsed: this.getAttribute('data-days_elapsed'),
                     growth: this.getAttribute('data-growth'),
-                    comparison_percentage: this.getAttribute('data-comparison_percentage'),
                     mortality: this.getAttribute('data-mortality'),
                     notes: this.getAttribute('data-notes'),
                     resowing_date: this.getAttribute('data-resowing_date')
@@ -553,7 +539,6 @@
                 document.getElementById('edit-height_cm').value = this.getAttribute('data-height_cm');
                 document.getElementById('edit-days_elapsed').value = this.getAttribute('data-days_elapsed');
                 document.getElementById('edit-growth').value = this.getAttribute('data-growth');
-                document.getElementById('edit-comparison_percentage').value = this.getAttribute('data-comparison_percentage');
                 document.getElementById('edit-mortality').value = this.getAttribute('data-mortality');
                 document.getElementById('edit-notes').value = this.getAttribute('data-notes') || '';
 
@@ -637,7 +622,6 @@
             const plantCountInput = document.getElementById(`${prefix}plant_count`);
             const heightInput = document.getElementById(`${prefix}height_cm`);
             const growthInput = document.getElementById(`${prefix}growth`);
-            const comparisonPercentageInput = document.getElementById(`${prefix}comparison_percentage`);
             const mortalityInput = document.getElementById(`${prefix}mortality`);
             const errorDiv = document.getElementById(`error-plantas${isEditModal ? '-edit' : ''}`);
             const resowingSelect = document.getElementById(`${prefix}resowing_id`);
@@ -669,18 +653,6 @@
             }
             growth = Math.max(0, growth);
             growthInput.value = growth.toFixed(2);
-
-            // Calcular rendimiento (%)
-            let comparisonPercentage = 0;
-            let baseQuantity = totalQuantity;
-            if (resowingStatus === 'Seguimiento' && previousTracking) {
-                baseQuantity = parseInt(previousTracking.plant_count) || totalQuantity;
-            }
-            if (baseQuantity > 0) {
-                comparisonPercentage = (plantCount / baseQuantity) * 100;
-                comparisonPercentage = Math.min(100, Math.max(0, comparisonPercentage));
-            }
-            comparisonPercentageInput.value = comparisonPercentage.toFixed(2);
 
             // Calcular mortalidad
             let mortality = 0;
