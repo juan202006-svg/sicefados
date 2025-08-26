@@ -99,7 +99,7 @@ class ResowingController extends Controller
             if ($quantity > 0) {
                 $resowing->lots()->attach($lotId, ['quantity' => $quantity]);
                 $lot = Lot::find($lotId);
-                $lot->actualizarEstadoAutomatico(); // Actualizar estado del lote
+                $lot->actualizarEstadoAutomatico(true); // Actualizar estado del lote
             }
         }
 
@@ -169,7 +169,7 @@ class ResowingController extends Controller
             if ($quantity > 0) {
                 $resowing->lots()->attach($lotId, ['quantity' => $quantity]);
                 $lot = Lot::find($lotId);
-                $lot->actualizarEstadoAutomatico(); // Actualizar estado del lote
+                $lot->actualizarEstadoAutomatico(true); // Actualizar estado del lote
             }
         }
 
@@ -188,7 +188,7 @@ class ResowingController extends Controller
             foreach ($lotIds as $lotId) {
                 $lot = Lot::find($lotId);
                 if ($lot) {
-                    $lot->actualizarEstadoAutomatico();
+                    $lot->actualizarEstadoAutomatico(true);
                 }
             }
 

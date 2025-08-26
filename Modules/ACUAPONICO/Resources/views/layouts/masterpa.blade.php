@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,8 +51,10 @@
             width: 250px;
             z-index: 1031;
             background-color: #66bee1 !important;
-            overflow-y: auto; /* Scroll solo para el sidebar si es necesario */
-            max-height: 100vh; /* Limitar altura al viewport */
+            overflow-y: auto;
+            /* Scroll solo para el sidebar si es necesario */
+            max-height: 100vh;
+            /* Limitar altura al viewport */
             scrollbar-width: thin;
             scrollbar-color: #89d1e9 #E1F5FE;
         }
@@ -60,9 +63,11 @@
         .main-sidebar::-webkit-scrollbar {
             width: 8px;
         }
+
         .main-sidebar::-webkit-scrollbar-track {
             background: #E1F5FE;
         }
+
         .main-sidebar::-webkit-scrollbar-thumb {
             background: #89d1e9;
             border-radius: 4px;
@@ -73,13 +78,16 @@
             margin-left: 250px;
             min-height: 100vh;
             padding-top: 56px;
-            overflow: hidden; /* Evitar scroll en el wrapper */
+            overflow: hidden;
+            /* Evitar scroll en el wrapper */
         }
 
         .content {
-            height: calc(100vh - 56px - 60px); /* Altura fija restando navbar y padding del header */
+            height: calc(100vh - 56px - 60px);
+            /* Altura fija restando navbar y padding del header */
             padding: 15px;
-            overflow-y: auto; /* Scroll solo en el contenido */
+            overflow-y: auto;
+            /* Scroll solo en el contenido */
         }
 
         /* Estilos del navbar */
@@ -87,6 +95,7 @@
             padding: 0.5rem 1rem;
             background-color: #89d1e9 !important;
         }
+
         .navbar-light .navbar-nav .nav-link {
             color: white;
             transition: all 0.2s ease;
@@ -97,14 +106,17 @@
             font-size: 0.95rem;
             position: relative;
         }
+
         .navbar-light .navbar-nav .nav-link:hover {
             color: white;
             background-color: rgba(255, 255, 255, 0.2);
         }
+
         .navbar-light .navbar-nav .active {
             color: white !important;
             background-color: rgba(255, 255, 255, 0.3);
         }
+
         .navbar-light .navbar-nav .active:after {
             content: '';
             position: absolute;
@@ -114,6 +126,7 @@
             height: 2px;
             background-color: white;
         }
+
         .nav-divider {
             width: 1px;
             height: 30px;
@@ -124,7 +137,8 @@
 
         /* Ajuste para mover botones hacia la derecha */
         .navbar-nav.ml-auto {
-            margin-left: 70px !important; /* Desplazar hacia la derecha */
+            margin-left: 70px !important;
+            /* Desplazar hacia la derecha */
         }
 
         /* Estilos del sidebar */
@@ -132,10 +146,12 @@
             background-color: rgba(255, 255, 255, 0.3) !important;
             color: white !important;
         }
+
         .nav-sidebar .nav-link p,
         .nav-sidebar .nav-link i {
             color: white;
         }
+
         .brand-link {
             border-bottom: none;
             background-color: #66bee1 !important;
@@ -151,22 +167,26 @@
             border: 1px solid rgba(0, 0, 0, 0.05);
             background-color: #66bee1;
         }
+
         .dropdown-item {
             padding: 0.5rem 1.5rem;
             color: white;
             transition: all 0.2s;
             font-size: 0.9rem;
         }
+
         .dropdown-item:hover {
             background-color: rgba(255, 255, 255, 0.1);
             color: white;
             padding-left: 1.75rem;
         }
+
         .dropdown-header {
             font-size: 0.75rem;
             padding: 0.25rem 1.5rem;
             color: rgba(255, 255, 255, 0.6);
         }
+
         .dropdown-divider {
             border-color: rgba(255, 255, 255, 0.1);
             margin: 0.25rem 0;
@@ -189,11 +209,13 @@
             font-size: 18px;
             transition: opacity 0.3s ease;
         }
+
         .dots-loader {
             display: flex;
             gap: 12px;
             margin-bottom: 10px;
         }
+
         .dots-loader span {
             width: 15px;
             height: 15px;
@@ -201,20 +223,50 @@
             border-radius: 50%;
             animation: bounce 1.2s infinite ease-in-out;
         }
-        .dots-loader span:nth-child(2) { animation-delay: 0.2s; }
-        .dots-loader span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
-            40% { transform: scale(1); opacity: 1; }
+
+        .dots-loader span:nth-child(2) {
+            animation-delay: 0.2s;
         }
-        .text-loader { color: #01579B; }
+
+        .dots-loader span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+                opacity: 0.3;
+            }
+
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .text-loader {
+            color: #01579B;
+        }
 
         /* Animación del dropdown */
         @keyframes slideIn {
-            0% { opacity: 0; transform: translateY(5px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .animate.slideIn { animation: slideIn 0.2s ease-out; }
+
+        .animate.slideIn {
+            animation: slideIn 0.2s ease-out;
+        }
 
         /* Responsividad */
         @media (max-width: 768px) {
@@ -222,17 +274,21 @@
                 transform: translateX(-250px);
                 transition: transform 0.3s ease;
             }
+
             .main-sidebar.active {
                 transform: translateX(0);
             }
+
             .main-header {
                 left: 0;
                 width: 100%;
             }
+
             .content-wrapper {
                 margin-left: 0;
                 padding-top: 56px;
             }
+
             .sidebar-toggle {
                 display: block;
                 position: fixed;
@@ -244,8 +300,18 @@
                 cursor: pointer;
             }
         }
+
+        /* Ajuste para el modal */
+        .modal-backdrop {
+            z-index: 1040 !important;
+        }
+
+        .modal {
+            z-index: 1050 !important;
+        }
     </style>
 </head>
+
 <body class="hold-transition sidebar-mini">
     <!-- Loader -->
     <div id="global-loader">
@@ -267,7 +333,7 @@
         <ul class="navbar-nav">
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="{{ route('cefa.acuaponico.index') }}"
-                   class="nav-link {{ request()->routeIs('cefa.acuaponico.index') ? 'active' : '' }}">
+                    class="nav-link {{ request()->routeIs('cefa.acuaponico.index') ? 'active' : '' }}">
                     <i class="fas fa-home mr-2"></i> Inicio
                 </a>
             </li>
@@ -276,13 +342,13 @@
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="{{ route('acuaponico.pasante.welcomepas') }}"
-                   class="nav-link {{ request()->routeIs('acuaponico.pasante.welcomepas') ? 'active' : '' }}">
+                    class="nav-link {{ request()->routeIs('acuaponico.pasante.welcomepas') ? 'active' : '' }}">
                     <i class="fas fa-user-tie mr-2"></i> Pasante
                 </a>
             </li>
             <li class="nav-item dropdown d-none d-sm-inline-block">
                 <a href="#" class="nav-link dropdown-toggle {{ request()->routeIs('acuaponico.pasante.pasante.*') && !request()->routeIs('acuaponico.pasante.pasante.indextracking*') ? 'active' : '' }}"
-                   id="gestionDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                    id="gestionDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-tasks mr-2"></i> Gestión
                 </a>
                 <div class="dropdown-menu dropdown-menu-left animate slideIn" aria-labelledby="gestionDropdown">
@@ -309,7 +375,7 @@
             </li>
             <li class="nav-item dropdown d-none d-sm-inline-block">
                 <a href="#" class="nav-link dropdown-toggle {{ request()->routeIs('acuaponico.pasante.pasante.indextracking*') ? 'active' : '' }}"
-                   id="seguimientoDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                    id="seguimientoDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-chart-line mr-2"></i> Seguimientos
                 </a>
                 <div class="dropdown-menu dropdown-menu-left animate slideIn" aria-labelledby="seguimientoDropdown">
@@ -326,20 +392,20 @@
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="{{ route('acuaponico.pasante.pasante.indexharvest') }}"
-                   class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexharvest') ? 'active' : '' }}">
+                    class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexharvest') ? 'active' : '' }}">
                     <i class="fas fa-tractor mr-2"></i> Cosechas
                 </a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="{{ route('acuaponico.pasante.pasante.indexactivity') }}"
-                   class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexactivity') ? 'active' : '' }}">
+                    class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexactivity') ? 'active' : '' }}">
                     <i class="fas fa-clipboard-list mr-2"></i> Actividades
                 </a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{{ asset('modules/acuaponico/Manual/Manual_Usuario_Sistema.pdf') }}" download title="Manual de Usuario" style="color: white;">
+                <a class="nav-link" href="{{ asset('modules/acuaponico/Manual/Manual_Usuario_GSA.pdf') }}" download title="Manual de Usuario" style="color: white;">
                     <i class="fas fa-book-open"></i>
                     <span class="d-none d-sm-inline ml-2">Manual</span>
                 </a>
@@ -365,9 +431,9 @@
     <aside class="main-sidebar elevation-4">
         <a href="" class="brand-link d-flex flex-column align-items-center py-3">
             <img src="{{ asset('modules/acuaponico/images/iconos/icolog.png') }}"
-                 alt="Logo Acuapónico"
-                 class="img-circle elevation-3"
-                 style="width: 90px; height: 90px; object-fit: cover;">
+                alt="Logo Acuapónico"
+                class="img-circle elevation-3"
+                style="width: 90px; height: 90px; object-fit: cover;">
             <span class="brand-text mt-2" style="font-size: 18px; color: white; font-weight: bold;">
                 GSA - Pasante
             </span>
@@ -377,88 +443,60 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <li class="nav-item">
                         <a href="{{ route('acuaponico.pasante.welcomepas') }}"
-                           class="nav-link {{ request()->routeIs('acuaponico.pasante.welcomepas') ? 'active bg-info text-white' : '' }}">
+                            class="nav-link {{ request()->routeIs('acuaponico.pasante.welcomepas') ? 'active bg-info text-white' : '' }}">
                             <i class="nav-icon fas fa-th"></i>
                             <p>Inicio</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('acuaponico.pasante.pasante.acuaponicoindex') }}"
-                           class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.acuaponicoindex') ? 'active bg-info text-white' : '' }}">
+                            class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.acuaponicoindex') ? 'active bg-info text-white' : '' }}">
                             <i class="nav-icon fas fa-water"></i>
                             <p>Sistemas Acuaponicos</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('acuaponico.pasante.pasante.index') }}"
-                           class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.index') ? 'active bg-info text-white' : '' }}">
+                            class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.index') ? 'active bg-info text-white' : '' }}">
                             <i class="nav-icon fas fa-th-large"></i>
                             <p>Gestión de Lotes</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('acuaponico.pasante.pasante.categoria') }}"
-                           class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.categoria') ? 'active bg-info text-white' : '' }}">
+                            class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.categoria') ? 'active bg-info text-white' : '' }}">
                             <i class="nav-icon fas fa-tags"></i>
                             <p>Gestión de Categorias</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('acuaponico.pasante.pasante.indexspecies') }}"
-                           class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexspecies') ? 'active bg-info text-white' : '' }}">
+                            class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexspecies') ? 'active bg-info text-white' : '' }}">
                             <i class="nav-icon fas fa-dna"></i>
                             <p>Gestión de Especies</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('acuaponico.pasante.pasante.crops') }}"
-                           class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.crops') ? 'active bg-info text-white' : '' }}">
+                            class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.crops') ? 'active bg-info text-white' : '' }}">
                             <i class="nav-icon fas fa-seedling"></i>
                             <p>Gestión de Cultivos</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#submenuResiembra"
-                           class="nav-link {{ request()->routeIs(['acuaponico.pasante.pasante.indexresowing', 'acuaponico.pasante.pasante.indexresowingtracking']) ? 'active' : '' }}"
-                           data-toggle="collapse"
-                           aria-expanded="{{ request()->routeIs(['acuaponico.pasante.pasante.indexresowing', 'acuaponico.pasante.pasante.indexresowingtracking']) ? 'true' : 'false' }}">
-                            <i class="nav-icon fas fa-seedling"></i>
-                            <p>
-                                Resiembras
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="collapse nav flex-column ms-3 {{ request()->routeIs(['acuaponico.pasante.pasante.indexresowing', 'acuaponico.pasante.pasante.indexresowingtracking']) ? 'show' : '' }}"
-                            id="submenuResiembra">
-                            <li class="nav-item">
-                                <a href="{{ route('acuaponico.admin.admin.registroresiembras') }}"
-                                   class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexresowing') ? 'active' : '' }}">
-                                    <i class="{{ request()->routeIs('acuaponico.pasante.pasante.indexresowing') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
-                                    <p>Gestión resiembras</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('acuaponico.pasante.pasante.indexresowingtracking') }}"
-                                   class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexresowingtracking') ? 'active' : '' }}">
-                                    <i class="{{ request()->routeIs('acuaponico.pasante.pasante.indexresowingtracking') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
-                                    <p>Seguimiento resiembra</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+
                     @php
-                        $seguimientoRoutes = [
-                            'acuaponico.pasante.pasante.indextracking',
-                            'acuaponico.pasante.pasante.indextrakingfish',
-                            'acuaponico.pasante.pasante.indextrackingplant'
-                        ];
-                        $isSeguimientoActive = collect($seguimientoRoutes)->contains(fn($route) => request()->routeIs($route));
+                    $seguimientoRoutes = [
+                    'acuaponico.pasante.pasante.indextracking',
+                    'acuaponico.pasante.pasante.indextrakingfish',
+                    'acuaponico.pasante.pasante.indextrackingplant'
+                    ];
+                    $isSeguimientoActive = collect($seguimientoRoutes)->contains(fn($route) => request()->routeIs($route));
                     @endphp
                     <li class="nav-item">
                         <a href="#submenuSeguimiento"
-                           class="nav-link {{ $isSeguimientoActive ? 'active bg-info text-white' : '' }}"
-                           data-toggle="collapse"
-                           aria-expanded="{{ $isSeguimientoActive ? 'true' : 'false' }}">
+                            class="nav-link {{ $isSeguimientoActive ? 'active bg-info text-white' : '' }}"
+                            data-toggle="collapse"
+                            aria-expanded="{{ $isSeguimientoActive ? 'true' : 'false' }}">
                             <i class="nav-icon fas fa-eye"></i>
                             <p>
                                 Control Seguimientos
@@ -468,21 +506,21 @@
                         <ul class="collapse nav flex-column ms-3 {{ $isSeguimientoActive ? 'show' : '' }}" id="submenuSeguimiento">
                             <li class="nav-item">
                                 <a href="{{ route('acuaponico.pasante.pasante.indextracking') }}"
-                                   class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indextracking') ? 'active bg-info text-white' : '' }}">
+                                    class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indextracking') ? 'active bg-info text-white' : '' }}">
                                     <i class="{{ request()->routeIs('acuaponico.pasante.pasante.indextracking') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
                                     <p>Seguimientos Generales</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('acuaponico.pasante.pasante.indextrakingfish') }}"
-                                   class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indextrakingfish') ? 'active bg-info text-white' : '' }}">
+                                    class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indextrakingfish') ? 'active bg-info text-white' : '' }}">
                                     <i class="{{ request()->routeIs('acuaponico.pasante.pasante.indextrakingfish') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
                                     <p>Seguimientos Peces</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('acuaponico.pasante.pasante.indextrackingplant') }}"
-                                   class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indextrackingplant') ? 'active bg-info text-white' : '' }}">
+                                    class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indextrackingplant') ? 'active bg-info text-white' : '' }}">
                                     <i class="{{ request()->routeIs('acuaponico.pasante.pasante.indextrackingplant') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
                                     <p>Seguimientos Plantas</p>
                                 </a>
@@ -490,15 +528,44 @@
                         </ul>
                     </li>
                     <li class="nav-item">
+                        <a href="#submenuResiembra"
+                            class="nav-link {{ request()->routeIs(['acuaponico.pasante.pasante.indexresowing', 'acuaponico.pasante.pasante.indexresowingtracking']) ? 'active' : '' }}"
+                            data-toggle="collapse"
+                            aria-expanded="{{ request()->routeIs(['acuaponico.pasante.pasante.indexresowing', 'acuaponico.pasante.pasante.indexresowingtracking']) ? 'true' : 'false' }}">
+                            <i class="nav-icon fas fa-seedling"></i>
+                            <p>
+                                Resiembras
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="collapse nav flex-column ms-3 {{ request()->routeIs(['acuaponico.pasante.pasante.indexresowing', 'acuaponico.pasante.pasante.indexresowingtracking']) ? 'show' : '' }}"
+                            id="submenuResiembra">
+                            <li class="nav-item">
+                                <a href="{{ route('acuaponico.pasante.pasante.indexresowing') }}"
+                                    class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexresowing') ? 'active' : '' }}">
+                                    <i class="{{ request()->routeIs('acuaponico.pasante.pasante.indexresowing') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                                    <p>Gestión resiembras</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('acuaponico.pasante.pasante.indexresowingtracking') }}"
+                                    class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexresowingtracking') ? 'active' : '' }}">
+                                    <i class="{{ request()->routeIs('acuaponico.pasante.pasante.indexresowingtracking') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
+                                    <p>Seguimiento resiembra</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('acuaponico.pasante.pasante.indexharvest') }}"
-                           class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexharvest') ? 'active bg-info text-white' : '' }}">
+                            class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexharvest') ? 'active bg-info text-white' : '' }}">
                             <i class="nav-icon fas fa-tractor"></i>
                             <p>Gestión de Cosechas</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('acuaponico.pasante.pasante.indexactivity') }}"
-                           class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexactivity') ? 'active bg-info text-white' : '' }}">
+                            class="nav-link {{ request()->routeIs('acuaponico.pasante.pasante.indexactivity') ? 'active bg-info text-white' : '' }}">
                             <i class="nav-icon fas fa-clipboard-list"></i>
                             <p>Control de Actividades</p>
                         </a>
@@ -594,9 +661,18 @@
 
             // Inicializar dropdowns del navbar
             $('.dropdown-toggle').dropdown();
+
+            // Inicialización de modales
+            $('.modal').on('show.bs.modal', function() {
+                $('body').addClass('modal-open');
+            }).on('hidden.bs.modal', function() {
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            });
         });
     </script>
 
     @yield('scripts')
 </body>
+
 </html>

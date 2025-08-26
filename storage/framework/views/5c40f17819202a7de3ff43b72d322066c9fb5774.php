@@ -2,90 +2,97 @@
 
 <?php $__env->startSection('content6'); ?>
 <div class="container-fluid px-4" style="width: 80%; margin-top: 5%;">
+    <!-- Header mejorado con gradiente y sombra -->
     <div class="container mt-5">
-        <div class="card shadow">
-            <!-- Header con animación dentro de la tarjeta -->
-            <div class="card-body">
+        <div class="card shadow-lg border-0" style="background: linear-gradient(135deg, #71ccef 0%, #71ccef 100%);">
+            <div class="card-body py-4">
                 <div class="d-flex justify-content-between align-items-center mb-4 animate__animated animate__fadeInDown">
-                    <h1 class="h3 mb-0 text-gray-800 fw-bold" style="font-size: 300%; margin-left: 8%; margin-top: 3%;">
-                        Gestión de Sistemas Acuapónicos
+                    <h1 class="h2 mb-0 text-white fw-bold text-center w-100" style="font-size: 2.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                        <i class="fas fa-water me-3"></i>Gestión de Sistemas Acuapónicos
                     </h1>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Tarjeta principal con animación -->
-    <div class="card shadow border-0 animate__animated animate__fadeInUp" style="margin-top: 10%;">
-        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 text-primary fw-semibold" style="margin-left: 3%;">
-                <i class="fas fa-list mr-2"></i>Lista de Sistemas Acuapónicos
+    <!-- Tarjeta principal con diseño moderno -->
+    <div class="card shadow-lg border-0 mt-5 animate__animated animate__fadeInUp" style="border-radius: 15px; overflow: hidden;">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background: linear-gradient(to right, #f8f9fc, #e3e6f0); border-bottom: 1px solid #e3e6f0;">
+            <h5 class="mb-0 text-primary fw-semibold">
+                <i class="fas fa-list me-2"></i>Lista de Sistemas Acuapónicos
             </h5>
-            <div class="spinner-grow text-primary spinner-grow-sm" role="status" id="tableSpinner">
-                <span class="sr-only">Cargando...</span>
+            <div class="spinner-border text-primary" role="status" id="tableSpinner" style="width: 1.5rem; height: 1.5rem;">
+                <span class="visually-hidden">Cargando...</span>
             </div>
         </div>
 
-        <div class="card-body p-0" style="margin-top: 2%; width: 90%; margin-left: 5%; margin-bottom: 5%;">
-            <button type="button" class="btn btn-success shadow-sm rounded-pill px-4 py-2 btn-hover-scale" data-toggle="modal" data-target="#agregar"
-            style="margin-left: 78%;">
-                <i class="fas fa-plus-circle mr-2"></i> Nuevo Sistema
-            </button>
-            <div class="table-responsive" style="margin-top: 3%;">
-                <table id="acuaponicoTable" class="table table-hover align-middle mb-0" style="border: 1px solid #dee2e6;">
-                    <thead class="thead-light" style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-info-circle text-primary me-2"></i>
+                    <small class="text-muted">Total de sistemas: <?php echo e(count($acuaponico)); ?></small>
+                </div>
+                <button type="button" class="btn btn-primary rounded-pill px-4 py-2 fw-medium shadow-sm" data-toggle="modal" data-target="#agregar"
+                    style="background: linear-gradient(135deg, #71ccef 0%, #71ccef 100%); border: none; transition: all 0.3s ease;">
+                    <i class="fas fa-plus-circle me-2"></i> Nuevo Sistema
+                </button>
+            </div>
+            
+            <div class="table-responsive rounded-3 shadow-sm">
+                <table id="acuaponicoTable" class="table table-hover align-middle mb-0" style="border: 1px solid #e3e6f0;">
+                    <thead class="thead-dark" style="background: linear-gradient(to right, #71ccef, #71ccef); color: white;">
                         <tr>
-                            <th class="text-center" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">#</th>
-                            <th style="border-right: 1px solid #dee2e6; padding: 12px 8px;">Nombre</th>
-                            <th style="border-right: 1px solid #dee2e6; padding: 12px 8px;">Descripción</th>
-                            <th style="border-right: 1px solid #dee2e6; padding: 12px 8px;">Ubicación</th>
-                            <th class="text-center" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">Imagen</th>
-                            <th class="text-center" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">Capacidad</th>
-                            <th class="text-center" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">Estado</th>
-                            <th class="text-center" style="padding: 12px 8px;">Acciones</th>
+                            <th class="text-center py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">#</th>
+                            <th class="py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">Nombre</th>
+                            <th class="py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">Descripción</th>
+                            <th class="py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">Ubicación</th>
+                            <th class="text-center py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">Imagen</th>
+                            <th class="text-center py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">Capacidad</th>
+                            <th class="text-center py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">Estado</th>
+                            <th class="text-center py-3">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $n = 1; ?>
                         <?php $__currentLoopData = $acuaponico; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <tr class="animate__animated animate__fadeInRight" style="animation-delay: <?php echo e($n * 0.05); ?>s; border-bottom: 1px solid #dee2e6;">
-                            <td class="text-center fw-bold" style="border-right: 1px solid #dee2e6; padding: 12px 8px;"><?php echo e($n++); ?></td>
-                            <td class="fw-medium" style="border-right: 1px solid #dee2e6; padding: 12px 8px;"><?php echo e($item->name); ?></td>
-                            <td style="border-right: 1px solid #dee2e6; padding: 12px 8px;">
+                        <tr class="animate__animated animate__fadeIn" style="animation-delay: <?php echo e($n * 0.03); ?>s; border-bottom: 1px solid #e3e6f0; transition: all 0.3s ease;">
+                            <td class="text-center fw-bold py-3" style="border-right: 1px solid #e3e6f0;"><?php echo e($n++); ?></td>
+                            <td class="fw-medium py-3" style="border-right: 1px solid #e3e6f0;"><?php echo e($item->name); ?></td>
+                            <td class="py-3" style="border-right: 1px solid #e3e6f0;">
                                 <?php if($item->description): ?>
                                 <span class="text-muted" data-toggle="tooltip" title="<?php echo e($item->description); ?>"><?php echo e(Str::limit($item->description, 40)); ?></span>
                                 <?php else: ?>
                                 <span class="text-muted font-italic">Sin descripción</span>
                                 <?php endif; ?>
                             </td>
-                            <td style="border-right: 1px solid #dee2e6; padding: 12px 8px;"><?php echo e($item->location); ?></td>
-                            <td class="text-center" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">
+                            <td class="py-3" style="border-right: 1px solid #e3e6f0;"><?php echo e($item->location); ?></td>
+                            <td class="text-center py-3" style="border-right: 1px solid #e3e6f0;">
                                 <?php if($item->image): ?>
                                 <img src="<?php echo e(asset('modules/acuaponico/images/acuaponico/' . $item->image)); ?>" 
                                      alt="Imagen del sistema" 
-                                     class="img-thumbnail rounded img-hover-zoom" 
-                                     style="width: 70px; height: 70px; object-fit: cover;"
+                                     class="img-thumbnail rounded-circle img-hover-zoom" 
+                                     style="width: 60px; height: 60px; object-fit: cover; border: 2px solid #e3e6f0;"
                                      data-toggle="modal" data-target="#imageModal" data-image="<?php echo e(asset('modules/acuaponico/images/acuaponico/' . $item->image)); ?>">
                                 <?php else: ?>
-                                <span class="badge badge-light p-2">
+                                <span class="badge bg-light p-2 rounded-circle">
                                     <i class="fas fa-image text-muted"></i>
                                 </span>
                                 <?php endif; ?>
                             </td>
-                            <td class="text-center fw-bold" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">
-                                <span class="badge bg-info rounded-pill px-3 py-2"><?php echo e($item->lot_capacity); ?></span>
+                            <td class="text-center fw-bold py-3" style="border-right: 1px solid #e3e6f0;">
+                                <span class="badge bg-info rounded-pill px-3 py-2 shadow-sm"><?php echo e($item->lot_capacity); ?></span>
                             </td>
-                            <td class="text-center" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">
+                            <td class="text-center py-3" style="border-right: 1px solid #e3e6f0;">
                                 <?php if($item->active): ?>
-                                <span class="badge badge-success rounded-pill px-3 py-2 pulse-active">Activo</span>
+                                <span class="badge bg-success rounded-pill px-3 py-2 shadow-sm pulse-active">Activo</span>
                                 <?php else: ?>
-                                <span class="badge badge-danger rounded-pill px-3 py-2">Inactivo</span>
+                                <span class="badge bg-danger rounded-pill px-3 py-2 shadow-sm">Inactivo</span>
                                 <?php endif; ?>
                             </td>
-                            <td class="text-center" style="padding: 12px 8px;">
+                            <td class="text-center py-3">
                                 <div class="d-flex justify-content-center action-buttons">
-                                    <!-- Botón de Editar Mejorado - SOLO ICONO AMARILLO -->
-                                    <button type="button" class="btn btn-action btn-edit editbtn"
+                                    <!-- Botón de Editar -->
+                                    <button type="button" class="btn btn-action btn-edit editbtn mx-1"
                                         data-id="<?php echo e($item->id); ?>"
                                         data-name="<?php echo e($item->name); ?>"
                                         data-description="<?php echo e($item->description); ?>"
@@ -101,8 +108,8 @@
                                         <span class="btn-tooltip">Editar</span>
                                     </button>
                                     
-                                    <!-- Botón de Eliminar Mejorado -->
-                                    <button type="button" class="btn btn-action btn-delete btnEliminar" data-id="<?php echo e($item->id); ?>">
+                                    <!-- Botón de Eliminar -->
+                                    <button type="button" class="btn btn-action btn-delete btnEliminar mx-1" data-id="<?php echo e($item->id); ?>">
                                         <div class="btn-icon">
                                             <i class="fas fa-trash"></i>
                                         </div>
@@ -122,32 +129,28 @@
 <!-- Modal para visualización de imagen -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title">Imagen del Sistema</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-primary text-white py-3">
+                <h5 class="modal-title"><i class="fas fa-image me-2"></i>Imagen del Sistema</h5>
+                <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body text-center">
-                <img id="modalImage" src="" alt="Imagen ampliada" class="img-fluid rounded">
+            <div class="modal-body text-center p-4">
+                <img id="modalImage" src="" alt="Imagen ampliada" class="img-fluid rounded shadow">
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal Editar - Versión Compacta -->
+<!-- Modal Editar -->
 <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg" style="overflow: hidden;">
             <div class="modal-header bg-gradient-primary text-white py-3">
-                <h5 class="modal-title font-weight-bold mb-0" id="editarLabel">
-                    <i class="fas fa-edit mr-2"></i>
+                <h5 class="modal-title fw-bold mb-0" id="editarLabel">
+                    <i class="fas fa-edit me-2"></i>
                     Editar Sistema
                 </h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
             </div>
             
             <form id="formEditar" action="<?php echo e(route('acuaponico.pasante.pasante.acuaponicoupdate', 0)); ?>" method="POST" enctype="multipart/form-data">
@@ -160,16 +163,16 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="edit-name" class="form-label small font-weight-bold text-primary mb-1">
-                                    <i class="fas fa-tag mr-1"></i>Nombre:
+                                <label for="edit-name" class="form-label small fw-bold text-primary mb-1">
+                                    <i class="fas fa-tag me-1"></i>Nombre:
                                 </label>
                                 <input type="text" class="form-control form-control-sm rounded" id="edit-name" name="name" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="edit-location" class="form-label small font-weight-bold text-primary mb-1">
-                                    <i class="fas fa-map-marker-alt mr-1"></i>Ubicación:
+                                <label for="edit-location" class="form-label small fw-bold text-primary mb-1">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Ubicación:
                                 </label>
                                 <input type="text" class="form-control form-control-sm rounded" id="edit-location" name="location">
                             </div>
@@ -177,8 +180,8 @@
                     </div>
                     
                     <div class="form-group mb-3">
-                        <label for="edit-description" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-align-left mr-1"></i>Descripción:
+                        <label for="edit-description" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-align-left me-1"></i>Descripción:
                         </label>
                         <textarea class="form-control form-control-sm rounded" id="edit-description" name="description" rows="2" style="resize: none;"></textarea>
                     </div>
@@ -186,16 +189,16 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="edit-lot_capacity" class="form-label small font-weight-bold text-primary mb-1">
-                                    <i class="fas fa-boxes mr-1"></i>Capacidad:
+                                <label for="edit-lot_capacity" class="form-label small fw-bold text-primary mb-1">
+                                    <i class="fas fa-boxes me-1"></i>Capacidad:
                                 </label>
                                 <input type="number" class="form-control form-control-sm rounded" id="edit-lot_capacity" name="lot_capacity">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="edit-active" class="form-label small font-weight-bold text-primary mb-1">
-                                    <i class="fas fa-power-off mr-1"></i>Estado:
+                                <label for="edit-active" class="form-label small fw-bold text-primary mb-1">
+                                    <i class="fas fa-power-off me-1"></i>Estado:
                                 </label>
                                 <select class="form-control form-control-sm rounded" id="edit-active" name="active">
                                     <option value="1">Activo</option>
@@ -208,8 +211,8 @@
                     <div class="row mt-2">
                         <div class="col-md-6">
                             <div class="text-center border rounded p-2 h-100 d-flex flex-column justify-content-center">
-                                <label class="form-label small font-weight-bold text-primary mb-1 d-block">
-                                    <i class="fas fa-image mr-1"></i>Imagen actual:
+                                <label class="form-label small fw-bold text-primary mb-1 d-block">
+                                    <i class="fas fa-image me-1"></i>Imagen actual:
                                 </label>
                                 <div class="mt-1 image-preview-container">
                                     <img id="edit-preview-image" src="" alt="Imagen del sistema" 
@@ -223,13 +226,13 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group h-100 d-flex flex-column justify-content-center">
-                                <label for="edit-image" class="form-label small font-weight-bold text-primary mb-1">
-                                    <i class="fas fa-camera mr-1"></i>Cambiar imagen:
+                                <label for="edit-image" class="form-label small fw-bold text-primary mb-1">
+                                    <i class="fas fa-camera me-1"></i>Cambiar imagen:
                                 </label>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input custom-file-input-sm" id="edit-image" name="image" accept="image/*">
                                     <label class="custom-file-label small rounded" for="edit-image" id="edit-image-label">
-                                        <i class="fas fa-upload mr-1"></i>Seleccionar
+                                        <i class="fas fa-upload me-1"></i>Seleccionar
                                     </label>
                                 </div>
                                 <small class="form-text text-muted mt-1 small">
@@ -240,12 +243,12 @@
                     </div>
                 </div>
                 
-                <div class="modal-footer bg-light py-2">
-                    <button type="button" class="btn btn-sm btn-secondary rounded px-3 py-1" data-dismiss="modal">
-                        <i class="fas fa-times mr-1"></i>Cancelar
+                <div class="modal-footer bg-light py-3">
+                    <button type="button" class="btn btn-sm btn-secondary rounded px-3 py-2" data-dismiss="modal">
+                        <i class="fas fa-times me-1"></i>Cancelar
                     </button>
-                    <button type="submit" class="btn btn-sm btn-primary rounded px-3 py-1 shadow">
-                        <i class="fas fa-save mr-1"></i>Guardar
+                    <button type="submit" class="btn btn-sm btn-primary rounded px-3 py-2 shadow">
+                        <i class="fas fa-save me-1"></i>Guardar
                     </button>
                 </div>
             </form>
@@ -255,24 +258,22 @@
 
 <!-- Modal Eliminar -->
 <div class="modal fade" id="eliminar" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">        
-    <div class="modal-content">
-        <div class="modal-header bg-danger text-white">
+    <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-danger text-white py-3">
             <h5 class="modal-title" id="eliminarLabel">
-                <i class="fas fa-exclamation-triangle mr-2"></i>Confirmar Eliminación
+                <i class="fas fa-exclamation-triangle me-2"></i>Confirmar Eliminación
             </h5>
-            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-            <p>¿Estás seguro de que deseas eliminar este sistema acuapónico? Esta acción no se puede deshacer.</p>
+        <div class="modal-body p-4">
+            <p class="mb-0">¿Estás seguro de que deseas eliminar este sistema acuapónico? Esta acción no se puede deshacer.</p>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer bg-light py-3">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                <i class="fas fa-times mr-2"></i>Cancelar
+                <i class="fas fa-times me-2"></i>Cancelar
             </button>
             <button type="button" class="btn btn-danger" id="confirmarEliminacion">
-                <i class="fas fa-trash mr-2"></i>Eliminar
+                <i class="fas fa-trash me-2"></i>Eliminar
             </button>
         </div>
         <form id="formEliminar" method="POST" action="">
@@ -282,18 +283,16 @@
     </div>
 </div>
 
-<!-- Modal Agregar - Versión Compacta (Nuevo estilo) -->
+<!-- Modal Agregar -->
 <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg" style="overflow: hidden;">
             <div class="modal-header bg-gradient-primary text-white py-3">
-                <h5 class="modal-title font-weight-bold mb-0" id="agregarLabel">
-                    <i class="fas fa-plus-circle mr-2"></i>
+                <h5 class="modal-title fw-bold mb-0" id="agregarLabel">
+                    <i class="fas fa-plus-circle me-2"></i>
                     Nuevo Sistema
                 </h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
             </div>
             
             <form action="<?php echo e(route('acuaponico.pasante.pasante.acuaponicostore')); ?>" method="POST" enctype="multipart/form-data" id="formAgregar">
@@ -303,16 +302,16 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="add-name" class="form-label small font-weight-bold text-primary mb-1">
-                                    <i class="fas fa-tag mr-1"></i>Nombre:
+                                <label for="add-name" class="form-label small fw-bold text-primary mb-1">
+                                    <i class="fas fa-tag me-1"></i>Nombre:
                                 </label>
                                 <input type="text" class="form-control form-control-sm rounded" id="add-name" name="name" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="add-location" class="form-label small font-weight-bold text-primary mb-1">
-                                    <i class="fas fa-map-marker-alt mr-1"></i>Ubicación:
+                                <label for="add-location" class="form-label small fw-bold text-primary mb-1">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Ubicación:
                                 </label>
                                 <input type="text" class="form-control form-control-sm rounded" id="add-location" name="location" required>
                             </div>
@@ -320,8 +319,8 @@
                     </div>
                     
                     <div class="form-group mb-3">
-                        <label for="add-description" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-align-left mr-1"></i>Descripción:
+                        <label for="add-description" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-align-left me-1"></i>Descripción:
                         </label>
                         <textarea class="form-control form-control-sm rounded" id="add-description" name="description" rows="2" style="resize: none;"></textarea>
                     </div>
@@ -329,16 +328,16 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="add-lot_capacity" class="form-label small font-weight-bold text-primary mb-1">
-                                    <i class="fas fa-boxes mr-1"></i>Capacidad:
+                                <label for="add-lot_capacity" class="form-label small fw-bold text-primary mb-1">
+                                    <i class="fas fa-boxes me-1"></i>Capacidad:
                                 </label>
                                 <input type="number" class="form-control form-control-sm rounded" id="add-lot_capacity" name="lot_capacity" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="add-active" class="form-label small font-weight-bold text-primary mb-1">
-                                    <i class="fas fa-power-off mr-1"></i>Estado:
+                                <label for="add-active" class="form-label small fw-bold text-primary mb-1">
+                                    <i class="fas fa-power-off me-1"></i>Estado:
                                 </label>
                                 <select class="form-control form-control-sm rounded" id="add-active" name="active" required>
                                     <option value="1">Activo</option>
@@ -351,8 +350,8 @@
                     <div class="row mt-2">
                         <div class="col-md-6">
                             <div class="text-center border rounded p-2 h-100 d-flex flex-column justify-content-center">
-                                <label class="form-label small font-weight-bold text-primary mb-1 d-block">
-                                    <i class="fas fa-image mr-1"></i>Vista previa:
+                                <label class="form-label small fw-bold text-primary mb-1 d-block">
+                                    <i class="fas fa-image me-1"></i>Vista previa:
                                 </label>
                                 <div class="mt-1 image-preview-container">
                                     <img id="add-preview-image" src="" alt="Vista previa de imagen" 
@@ -366,13 +365,13 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group h-100 d-flex flex-column justify-content-center">
-                                <label for="add-image" class="form-label small font-weight-bold text-primary mb-1">
-                                    <i class="fas fa-camera mr-1"></i>Seleccionar imagen:
+                                <label for="add-image" class="form-label small fw-bold text-primary mb-1">
+                                    <i class="fas fa-camera me-1"></i>Seleccionar imagen:
                                 </label>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input custom-file-input-sm" id="add-image" name="image" accept="image/*">
                                     <label class="custom-file-label small rounded" for="add-image" id="add-image-label">
-                                        <i class="fas fa-upload mr-1"></i>Seleccionar
+                                        <i class="fas fa-upload me-1"></i>Seleccionar
                                     </label>
                                 </div>
                                 <small class="form-text text-muted mt-1 small">
@@ -383,20 +382,21 @@
                     </div>
                 </div>
                 
-                <div class="modal-footer bg-light py-2">
-                    <button type="button" class="btn btn-sm btn-secondary rounded px-3 py-1" data-dismiss="modal">
-                        <i class="fas fa-times mr-1"></i>Cancelar
+                <div class="modal-footer bg-light py-3">
+                    <button type="button" class="btn btn-sm btn-secondary rounded px-3 py-2" data-dismiss="modal">
+                        <i class="fas fa-times me-1"></i>Cancelar
                     </button>
-                    <button type="submit" class="btn btn-sm btn-primary rounded px-3 py-1 shadow">
-                        <i class="fas fa-save mr-1"></i>Guardar
+                    <button type="submit" class="btn btn-sm btn-primary rounded px-3 py-2 shadow">
+                        <i class="fas fa-save me-1"></i>Guardar
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 <!-- Footer Sencillo -->
-<footer class="footer mt-5 py-3 bg-light border-top">
+<footer class="footer mt-5 py-4 bg-light border-top">
     <div class="container-fluid">
         <div class="row align-items-center">
             <div class="col-12 text-center">
@@ -414,353 +414,426 @@
     background-color: #f8f9fa !important;
     border-top: 1px solid #e9ecef !important;
 }
-</style>
 
-<!-- Estilos adicionales para animaciones y botones mejorados -->
-<style>
-    /* Animaciones personalizadas */
-    @keyframes  fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+/* Estilos mejorados para un aspecto más profesional */
+.card {
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+}
+
+.table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(78, 115, 223, 0.05);
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+}
+
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #71ccef 0%, #71ccef 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #71ccef 0%, #71ccef 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(78, 115, 223, 0.3);
+}
+
+.badge {
+    font-weight: 500;
+}
+
+/* Animaciones personalizadas */
+@keyframes  fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes  pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes  bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+@keyframes  shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes  iconPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.animate__animated {
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
+
+.animate__fadeInDown {
+    animation-name: fadeInDown;
+}
+
+.animate__fadeInUp {
+    animation-name: fadeInUp;
+}
+
+.animate__fadeInRight {
+    animation-name: fadeInRight;
+}
+
+/* Contenedor de botones de acción */
+.action-buttons {
+    gap: 12px;
+}
+
+/* Botones de acción mejorados */
+.btn-action {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: none;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Botón de editar - SOLO ICONO AMARILLO SIN FONDO */
+.btn-edit {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #e74a3b, #be2617);
+}
+
+.btn-action:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.btn-action:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Botón de editar hover - SOLO ICONO AMARILLO */
+.btn-edit:hover {
+    background: transparent !important;
+}
+
+.btn-delete:hover {
+    background: linear-gradient(135deg, #be2617, #e74a3b);
+    animation: shake 0.5s ease;
+}
+
+/* Iconos dentro de los botones */
+.btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+/* Icono de editar - COLOR AMARILLO */
+.btn-edit .btn-icon {
+    color: #ffc107 !important; /* Color amarillo */
+}
+
+.btn-delete .btn-icon {
+    color: white;
+}
+
+.btn-action:hover .btn-icon {
+    animation: iconPulse 0.5s ease;
+}
+
+/* Tooltips para botones */
+.btn-tooltip {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+}
+
+.btn-action:hover .btn-tooltip {
+    opacity: 1;
+    visibility: visible;
+    bottom: -35px;
+}
+
+/* Efectos de hover */
+.btn-hover-scale {
+    transition: all 0.3s ease;
+}
+
+.btn-hover-scale:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.img-hover-zoom {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.img-hover-zoom:hover {
+    transform: scale(1.8);
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Estado activo con pulso */
+.pulse-active {
+    animation: pulse 2s infinite;
+}
+
+/* Spinner personalizado */
+.spinner-grow {
+    animation-duration: 0.8s;
+}
+
+/* Efecto de carga para la tabla */
+#acuaponicoTable {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#acuaponicoTable.loaded {
+    opacity: 1;
+}
+
+/* Tooltip personalizado */
+.tooltip-inner {
+    background-color: #333;
+    color: #fff;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+
+.bs-tooltip-top .arrow::before {
+    border-top-color: #333;
+}
+
+/* Estilos para tabla con líneas */
+#acuaponicoTable {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+
+#acuaponicoTable th,
+#acuaponicoTable td {
+    border-right: 1px solid #e3e6f0;
+    border-bottom: 1px solid #e3e6f0;
+}
+
+#acuaponicoTable th:last-child,
+#acuaponicoTable td:last-child {
+    border-right: none;
+}
+
+#acuaponicoTable tr:last-child td {
+    border-bottom: none;
+}
+
+#acuaponicoTable thead th {
+    background: linear-gradient(to right, #71ccef, #71ccef);
+    border-top: 1px solid #e3e6f0;
+    border-bottom: 2px solid #e3e6f0;
+    font-weight: 600;
+    color: white;
+}
+
+/* ESTILOS ESPECÍFICOS PARA EL MODAL DE EDICIÓN MEJORADO */
+.bg-gradient-primary {
+    background: linear-gradient(87deg, #71ccef 0, #71ccef 100%) !important;
+}
+
+.modal-image-preview {
+    max-height: 80px;
+    object-fit: cover;
+    transition: all 0.3s ease;
+    border: 2px solid #e3e6f0;
+    border-radius: 8px;
+}
+
+.modal-image-preview:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.image-preview-container {
+    position: relative;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-modal-save {
+    background: linear-gradient(135deg, #71ccef, #71ccef);
+    border: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-modal-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(78, 115, 223, 0.4) !important;
+}
+
+.btn-modal-save:active {
+    transform: translateY(0);
+}
+
+.btn-modal-cancel {
+    transition: all 0.3s ease;
+}
+
+.btn-modal-cancel:hover {
+    background-color: #858796;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.custom-file-label {
+    transition: all 0.3s ease;
+    border-radius: 6px;
+}
+
+.custom-file-input:focus ~ .custom-file-label {
+    border-color: #71ccef;
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+/* Animación para el modal completo */
+@keyframes  modalEntry {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    transform: translate(0, -50px);
+    opacity: 0;
+}
+
+.modal.show .modal-dialog {
+    transform: translate(0, 0);
+    opacity: 1;
+    animation: modalEntry 0.4s ease;
+}
+
+/* Estilos para inputs más pequeños */
+.form-control-sm {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 6px;
+    border: 1px solid #d1d3e2;
+}
+
+.form-control-sm:focus {
+    border-color: #71ccef;
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+.custom-file-input-sm {
+    height: calc(1.5em + 1rem + 2px);
+}
+
+.custom-file-input-sm ~ .custom-file-label {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    height: calc(1.5em + 1rem + 2px);
+    border-radius: 6px;
+    border: 1px solid #d1d3e2;
+}
+
+/* Mejoras visuales para los modales */
+.modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-footer {
+    border-top: 1px solid #e3e6f0;
+}
+
+/* Responsividad mejorada */
+@media (max-width: 768px) {
+    .container-fluid {
+        width: 95% !important;
+        margin-top: 2% !important;
     }
     
-    @keyframes  pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
+    .card-header h1 {
+        font-size: 1.8rem !important;
     }
     
-    @keyframes  bounce {
-        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-        40% { transform: translateY(-10px); }
-        60% { transform: translateY(-5px); }
-    }
-    
-    @keyframes  shake {
-        0%, 100% { transform: translateX(0); }
-        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-        20%, 40%, 60%, 80% { transform: translateX(5px); }
-    }
-    
-    @keyframes  iconPulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.2); }
-        100% { transform: scale(1); }
-    }
-    
-    @keyframes  borderFlow {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-    
-    .animate__animated {
-        animation-duration: 0.5s;
-        animation-fill-mode: both;
-    }
-    
-    .animate__fadeInDown {
-        animation-name: fadeInDown;
-    }
-    
-    .animate__fadeInUp {
-        animation-name: fadeInUp;
-    }
-    
-    .animate__fadeInRight {
-        animation-name: fadeInRight;
-    }
-    
-    /* Contenedor de botones de acción */
     .action-buttons {
-        gap: 12px;
+        flex-direction: column;
+        gap: 8px;
     }
     
-    /* Botones de acción mejorados */
-    .btn-action {
-        position: relative;
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        border: none;
-        overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    .table-responsive {
+        font-size: 0.85rem;
     }
-    
-    /* Botón de editar - SOLO ICONO AMARILLO SIN FONDO */
-    .btn-edit {
-        background: transparent !important;
-        box-shadow: none !important;
-    }
-    
-    .btn-delete {
-        background: linear-gradient(135deg, #e74a3b, #be2617);
-    }
-    
-    .btn-action:hover {
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-    }
-    
-    .btn-action:active {
-        transform: translateY(0) scale(0.98);
-    }
-    
-    /* Botón de editar hover - SOLO ICONO AMARILLO */
-    .btn-edit:hover {
-        background: transparent !important;
-    }
-    
-    .btn-delete:hover {
-        background: linear-gradient(135deg, #be2617, #e74a3b);
-        animation: shake 0.5s ease;
-    }
-    
-    /* Iconos dentro de los botones */
-    .btn-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 16px;
-        transition: all 0.3s ease;
-    }
-    
-    /* Icono de editar - COLOR AMARILLO */
-    .btn-edit .btn-icon {
-        color: #ffc107 !important; /* Color amarillo */
-    }
-    
-    .btn-delete .btn-icon {
-        color: white;
-    }
-    
-    .btn-action:hover .btn-icon {
-        animation: iconPulse 0.5s ease;
-    }
-    
-    /* Tooltips para botones */
-    .btn-tooltip {
-        position: absolute;
-        bottom: -30px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #333;
-        color: white;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 12px;
-        white-space: nowrap;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.16);
-    }
-    
-    .btn-action:hover .btn-tooltip {
-        opacity: 1;
-        visibility: visible;
-        bottom: -35px;
-    }
-    
-    /* Efectos de hover */
-    .btn-hover-scale {
-        transition: all 0.3s ease;
-    }
-    
-    .btn-hover-scale:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    
-    .img-hover-zoom {
-        transition: transform 0.3s ease;
-        cursor: pointer;
-    }
-    
-    .img-hover-zoom:hover {
-        transform: scale(1.8);
-        z-index: 100;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-    
-    /* Estado activo con pulso */
-    .pulse-active {
-        animation: pulse 2s infinite;
-    }
-    
-    /* Spinner personalizado */
-    .spinner-grow {
-        animation-duration: 0.8s;
-    }
-    
-    /* Efecto de carga para la tabla */
-    #acuaponicoTable {
-        opacity: 0;
-        transition: opacity 0.5s ease;
-    }
-    
-    #acuaponicoTable.loaded {
-        opacity: 1;
-    }
-    
-    /* Tooltip personalizado */
-    .tooltip-inner {
-        background-color: #333;
-        color: #fff;
-        border-radius: 4px;
-        padding: 5px 10px;
-    }
-    
-    .bs-tooltip-top .arrow::before {
-        border-top-color: #333;
-    }
-    
-    /* Estilos para tabla con líneas */
-    #acuaponicoTable {
-        border-collapse: separate;
-        border-spacing: 0;
-        width: 100%;
-    }
-    
-    #acuaponicoTable th,
-    #acuaponicoTable td {
-        border-right: 1px solid #dee2e6;
-        border-bottom: 1px solid #dee2e6;
-    }
-    
-    #acuaponicoTable th:last-child,
-    #acuaponicoTable td:last-child {
-        border-right: none;
-    }
-    
-    #acuaponicoTable tr:last-child td {
-        border-bottom: none;
-    }
-    
-    #acuaponicoTable thead th {
-        background-color: #f8f9fa;
-        border-top: 1px solid #dee2e6;
-        border-bottom: 2px solid #dee2e6;
-        font-weight: 600;
-        color: #495057;
-    }
-    
-    /* ESTILOS ESPECÍFICOS PARA EL MODAL DE EDICIÓN MEJORADO */
-    .bg-gradient-primary {
-        background: linear-gradient(87deg, #4e73df 0, #224abe 100%) !important;
-    }
-    
-    .border-top-animation {
-        height: 4px;
-        background: linear-gradient(90deg, #4e73df, #224abe, #4e73df);
-        background-size: 200% 100%;
-        animation: borderFlow 3s ease infinite;
-        width: 100%;
-    }
-    
-    .modal-image-preview {
-        max-height: 80px;
-        object-fit: cover;
-        transition: all 0.3s ease;
-        border: 2px solid #e3e6f0;
-    }
-    
-    .modal-image-preview:hover {
-        transform: scale(1.05);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-    
-    .image-preview-container {
-        position: relative;
-        min-height: 80px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .btn-modal-save {
-        background: linear-gradient(135deg, #4e73df, #224abe);
-        border: none;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .btn-modal-save:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(78, 115, 223, 0.4) !important;
-    }
-    
-    .btn-modal-save:active {
-        transform: translateY(0);
-    }
-    
-    .btn-modal-cancel {
-        transition: all 0.3s ease;
-    }
-    
-    .btn-modal-cancel:hover {
-        background-color: #858796;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    
-    .custom-file-label {
-        transition: all 0.3s ease;
-    }
-    
-    .custom-file-input:focus ~ .custom-file-label {
-        border-color: #4e73df;
-        box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
-    }
-    
-    /* Animación para el modal completo */
-    @keyframes  modalEntry {
-        0% {
-            opacity: 0;
-            transform: scale(0.9) translateY(-20px);
-        }
-        100% {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
-    }
-    
-    .modal.fade .modal-dialog {
-        transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-        transform: translate(0, -50px);
-        opacity: 0;
-    }
-    
-    .modal.show .modal-dialog {
-        transform: translate(0, 0);
-        opacity: 1;
-        animation: modalEntry 0.4s ease;
-    }
-    
-    /* Estilos para inputs más pequeños */
-    .form-control-sm {
-        padding: 0.25rem 0.5rem;
-        font-size: 0.875rem;
-        line-height: 1.5;
-        border-radius: 0.2rem;
-    }
-    
-    .custom-file-input-sm {
-        height: calc(1.5em + 0.5rem + 2px);
-    }
-    
-    .custom-file-input-sm ~ .custom-file-label {
-        padding: 0.25rem 0.5rem;
-        font-size: 0.875rem;
-        line-height: 1.5;
-        height: calc(1.5em + 0.5rem + 2px);
-    }
-    
+}
 </style>
 
 <!-- Scripts para funcionalidad y animaciones -->
@@ -814,7 +887,7 @@
             } else {
                 $('#add-preview-image').hide();
                 $('#add-no-image-placeholder').show();
-                $('#add-image-label').html('<i class="fas fa-upload mr-1"></i>Seleccionar');
+                $('#add-image-label').html('<i class="fas fa-upload me-1"></i>Seleccionar');
             }
         });
 
@@ -964,14 +1037,14 @@
                 document.head.insertAdjacentHTML('beforeend', dynamicStyle);
                 
                 Swal.fire({
-                    title: '<i class="fas fa-exclamation-triangle mr-2"></i>¿Eliminar Sistema?',
+                    title: '<i class="fas fa-exclamation-triangle me-2"></i>¿Eliminar Sistema?',
                     html: '<div style="text-align:center;">Esta acción <span style="color:#e74a3b; font-weight:bold;">no se puede deshacer</span> y el sistema acuapónico será eliminado permanentemente.</div>',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: 'transparent',
                     cancelButtonColor: 'transparent',
-                    confirmButtonText: '<i class="fas fa-trash text-white mr-2"></i>Eliminar',
-                    cancelButtonText: '<i class="fas fa-times mr-2"></i>Cancelar',
+                    confirmButtonText: '<i class="fas fa-trash text-white me-2"></i>Eliminar',
+                    cancelButtonText: '<i class="fas fa-times me-2"></i>Cancelar',
                     reverseButtons: true,
                     customClass: {
                         popup: 'custom-delete-style',

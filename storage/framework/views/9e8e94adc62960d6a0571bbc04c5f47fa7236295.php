@@ -6,79 +6,87 @@
 
 <?php $__env->startSection('content4'); ?>
 <div class="container-fluid px-4" style="width: 80%; margin-top: 5%;">
+    <!-- Header mejorado con gradiente y sombra -->
     <div class="container mt-5">
-        <div class="card shadow">
-            <!-- Header con animación dentro de la tarjeta -->
-            <div class="card-body">
+        <div class="card shadow-lg border-0" style="background: linear-gradient(135deg, #71ccef 0%, #71ccef 100%);">
+            <div class="card-body py-4">
                 <div class="d-flex justify-content-between align-items-center mb-4 animate__animated animate__fadeInDown">
-                    <h1 class="h3 mb-0 text-gray-800 fw-bold" style="font-size: 300%; margin-left: 8%; margin-top: 3%;">
-                        Gestión de Cultivos
+                    <h1 class="h2 mb-0 text-white fw-bold text-center w-100" style="font-size: 2.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                        <i class="fas fa-seedling me-3"></i>Gestión de Cultivos
                     </h1>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Tarjeta principal con animación -->
-    <div class="card shadow border-0 animate__animated animate__fadeInUp" style="margin-top: 10%;">
-        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 text-primary fw-semibold" style="margin-left: 3%;">
-                <i class="fas fa-list mr-2"></i>Lista de Cultivos
+    <!-- Tarjeta principal con diseño moderno -->
+    <div class="card shadow-lg border-0 mt-5 animate__animated animate__fadeInUp" style="border-radius: 15px; overflow: hidden;">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background: linear-gradient(to right, #f8f9fc, #e3e6f0); border-bottom: 1px solid #e3e6f0;">
+            <h5 class="mb-0 text-primary fw-semibold">
+                <i class="fas fa-list me-2"></i>Lista de Cultivos
             </h5>
-            <div class="spinner-grow text-primary spinner-grow-sm" role="status" id="tableSpinner">
-                <span class="sr-only">Cargando...</span>
+            <div class="spinner-border text-primary" role="status" id="tableSpinner" style="width: 1.5rem; height: 1.5rem;">
+                <span class="visually-hidden">Cargando...</span>
             </div>
         </div>
 
-        <div class="card-body p-0" style="margin-top: 2%; width: 90%; margin-left: 5%; margin-bottom: 5%;">
-            <button type="button" class="btn btn-success shadow-sm rounded-pill px-4 py-2 btn-hover-scale" data-toggle="modal" data-target="#agregar">
-                <i class="fas fa-plus-circle mr-2"></i> Nuevo Cultivo
-            </button>
-            <div class="table-responsive" style="margin-top: 3%; max-height: 500px; overflow-y: auto;">
-                <table id="cultivoTable" class="table table-hover align-middle mb-0" style="border: 1px solid #dee2e6;">
-                    <thead class="thead-light" style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6; position: sticky; top: 0; z-index: 1;">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-info-circle text-primary me-2"></i>
+                    <small class="text-muted">Total de cultivos: <?php echo e(count($cultivos)); ?></small>
+                </div>
+                <button type="button" class="btn btn-primary rounded-pill px-4 py-2 fw-medium shadow-sm" data-toggle="modal" data-target="#agregar"
+                    style="background: linear-gradient(135deg, #71ccef 0%, #71ccef 100%); border: none; transition: all 0.3s ease;">
+                    <i class="fas fa-plus-circle me-2"></i> Nuevo Cultivo
+                </button>
+            </div>
+            
+            <div class="table-responsive rounded-3 shadow-sm">
+                <table id="cultivoTable" class="table table-hover align-middle mb-0" style="border: 1px solid #e3e6f0;">
+                    <thead class="thead-dark" style="background: linear-gradient(to right, #71ccef, #71ccef); color: white;">
                         <tr>
-                            <th class="text-center" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">#</th>
-                            <th style="border-right: 1px solid #dee2e6; padding: 12px 8px;">Fecha</th>
-                            <th style="border-right: 1px solid #dee2e6; padding: 12px 8px;">S/acuaponico</th>
-                            <th style="border-right: 1px solid #dee2e6; padding: 12px 8px;">Especie</th>
-                            <th style="border-right: 1px solid #dee2e6; padding: 12px 8px;">Lote</th>
-                            <th class="text-center" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">Cantidad</th>
-                            <th class="text-center" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">Estado</th>
-                            <th class="text-center" style="padding: 12px 8px;">Acciones</th>
+                            <th class="text-center py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">#</th>
+                            <th class="py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">Fecha</th>
+                            <th class="py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">Sistema Acuapónico</th>
+                            <th class="py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">Especie</th>
+                            <th class="py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">Lotes</th>
+                            <th class="text-center py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">Cantidad</th>
+                            <th class="text-center py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">Estado</th>
+                            <th class="text-center py-3">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $n = 1; ?>
                         <?php $__currentLoopData = $cultivos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cultivo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <tr class="animate__animated animate__fadeInRight" style="animation-delay: <?php echo e($n * 0.05); ?>s; border-bottom: 1px solid #dee2e6;">
-                            <td class="text-center fw-bold" style="border-right: 1px solid #dee2e6; padding: 12px 8px;"><?php echo e($n++); ?></td>
-                            <td class="fw-medium" style="border-right: 1px solid #dee2e6; padding: 12px 8px;"><?php echo e($cultivo->date); ?></td>
-                            <td style="border-right: 1px solid #dee2e6; padding: 12px 8px;"><?php echo e($cultivo->aquaponicSystem->name ?? 'Sin sistema'); ?></td>
-                            <td style="border-right: 1px solid #dee2e6; padding: 12px 8px;"><?php echo e($cultivo->species->name ?? 'Sin especie'); ?></td>
-                            <td style="border-right: 1px solid #dee2e6; padding: 12px 8px;">
+                        <tr class="animate__animated animate__fadeIn" style="animation-delay: <?php echo e($n * 0.03); ?>s; border-bottom: 1px solid #e3e6f0; transition: all 0.3s ease;">
+                            <td class="text-center fw-bold py-3" style="border-right: 1px solid #e3e6f0;"><?php echo e($n++); ?></td>
+                            <td class="fw-medium py-3" style="border-right: 1px solid #e3e6f0;"><?php echo e($cultivo->date); ?></td>
+                            <td class="py-3" style="border-right: 1px solid #e3e6f0;"><?php echo e($cultivo->aquaponicSystem->name ?? 'Sin sistema'); ?></td>
+                            <td class="py-3" style="border-right: 1px solid #e3e6f0;"><?php echo e($cultivo->species->name ?? 'Sin especie'); ?></td>
+                            <td class="py-3" style="border-right: 1px solid #e3e6f0;">
                                 <?php $__currentLoopData = $cultivo->lotes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lote): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <span class="badge bg-info rounded-pill px-3 py-2">
+                                <span class="badge bg-info rounded-pill px-3 py-2 shadow-sm">
                                     <?php echo e($lote->name); ?> (<?php echo e($lote->pivot->planted_quantity); ?>)
                                 </span>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </td>
-                            <td class="text-center fw-bold" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">
-                                <span class="badge bg-primary rounded-pill px-3 py-2"><?php echo e($cultivo->quantity); ?></span>
+                            <td class="text-center fw-bold py-3" style="border-right: 1px solid #e3e6f0;">
+                                <span class="badge bg-primary rounded-pill px-3 py-2 shadow-sm"><?php echo e($cultivo->quantity); ?></span>
                             </td>
-                            <td class="text-center" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">
+                            <td class="text-center py-3" style="border-right: 1px solid #e3e6f0;">
                                 <?php if($cultivo->status == 'Cultivado'): ?>
-                                <span class="badge badge-success rounded-pill px-3 py-2 pulse-active">Cultivado</span>
+                                <span class="badge bg-success rounded-pill px-3 py-2 shadow-sm pulse-active">Cultivado</span>
                                 <?php elseif($cultivo->status == 'Seguimiento'): ?>
-                                <span class="badge badge-warning rounded-pill px-3 py-2">Seguimiento</span>
+                                <span class="badge bg-warning rounded-pill px-3 py-2 shadow-sm">Seguimiento</span>
                                 <?php else: ?>
-                                <span class="badge badge-info rounded-pill px-3 py-2">Cosechado</span>
+                                <span class="badge bg-info rounded-pill px-3 py-2 shadow-sm">Cosechado</span>
                                 <?php endif; ?>
                             </td>
-                            <td class="text-center" style="padding: 12px 8px;">
+                            <td class="text-center py-3">
                                 <div class="d-flex justify-content-center action-buttons">
-                                    <!-- Botón de Editar Mejorado - SOLO ICONO AMARILLO -->
-                                    <button type="button" class="btn btn-action btn-edit editbtn"
+                                    <!-- Botón de Editar - SOLO ICONO AMARILLO SIN FONDO -->
+                                    <button type="button" class="btn btn-action btn-edit editbtn mx-1"
                                         data-id="<?php echo e($cultivo->id); ?>"
                                         data-date="<?php echo e($cultivo->date); ?>"
                                         data-aquaponic_system_id="<?php echo e($cultivo->aquaponic_system_id); ?>"
@@ -97,8 +105,8 @@
                                         <span class="btn-tooltip">Editar</span>
                                     </button>
                                     
-                                    <!-- Botón de Eliminar Mejorado -->
-                                    <button type="button" class="btn btn-action btn-delete btnEliminar" data-id="<?php echo e($cultivo->id); ?>">
+                                    <!-- Botón de Eliminar -->
+                                    <button type="button" class="btn btn-action btn-delete btnEliminar mx-1" data-id="<?php echo e($cultivo->id); ?>">
                                         <div class="btn-icon">
                                             <i class="fas fa-trash"></i>
                                         </div>
@@ -115,18 +123,16 @@
     </div>
 </div>
 
-<!-- Modal Editar - Versión Compacta -->
+<!-- Modal Editar -->
 <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg" style="overflow: hidden;">
             <div class="modal-header bg-gradient-primary text-white py-3">
-                <h5 class="modal-title font-weight-bold mb-0" id="editarLabel">
-                    <i class="fas fa-edit mr-2"></i>
+                <h5 class="modal-title fw-bold mb-0" id="editarLabel">
+                    <i class="fas fa-edit me-2"></i>
                     Editar Cultivo
                 </h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
             </div>
             
             <form id="formEditar" action="<?php echo e(route('acuaponico.pasante.pasante.updatecrops', 0)); ?>" method="POST">
@@ -137,15 +143,15 @@
                     <input type="hidden" name="id" id="edit-id">
                     
                     <div class="form-group mb-3">
-                        <label for="edit-date" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-calendar mr-1"></i>Fecha:
+                        <label for="edit-date" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-calendar me-1"></i>Fecha:
                         </label>
                         <input type="date" class="form-control form-control-sm rounded" id="edit-date" name="date" required>
                     </div>
                     
                     <div class="form-group mb-3">
-                        <label for="edit-aquaponic_system_id" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-water mr-1"></i>Sistema Acuapónico:
+                        <label for="edit-aquaponic_system_id" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-water me-1"></i>Sistema Acuapónico:
                         </label>
                         <select class="form-control form-control-sm rounded" id="edit-aquaponic_system_id" name="aquaponic_system_id" required>
                             <option value="">Seleccione un sistema acuapónico</option>
@@ -156,8 +162,8 @@
                     </div>
                     
                     <div class="form-group mb-3">
-                        <label for="edit-species_id" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-leaf mr-1"></i>Especie:
+                        <label for="edit-species_id" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-leaf me-1"></i>Especie:
                         </label>
                         <select class="form-control form-control-sm rounded" id="edit-species_id" name="species_id" required>
                             <option value="">Seleccione una especie</option>
@@ -168,8 +174,8 @@
                     </div>
                     
                     <div class="form-group mb-3">
-                        <label for="edit-lot_ids" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-th-large mr-1"></i>Lotes:
+                        <label for="edit-lot_ids" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-th-large me-1"></i>Lotes:
                         </label>
                         <select id="edit-lot_ids" class="form-control form-control-sm rounded" name="lot_ids[]" multiple required>
                         </select>
@@ -179,16 +185,16 @@
                     </div>
                     
                     <div class="form-group mb-3">
-                        <label for="edit-quantity" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-seedling mr-1"></i>Cantidad a cultivar:
+                        <label for="edit-quantity" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-seedling me-1"></i>Cantidad a cultivar:
                         </label>
                         <input type="number" class="form-control form-control-sm rounded" id="edit-quantity" name="quantity" required>
                         <div class="invalid-feedback small" id="error-cantidad-edit"></div>
                     </div>
                     
                     <div class="form-group mb-3">
-                        <label for="edit-status" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-power-off mr-1"></i>Estado:
+                        <label for="edit-status" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-power-off me-1"></i>Estado:
                         </label>
                         <select name="status" id="edit-status" class="form-control form-control-sm rounded" required>
                             <option value="Cultivado">Cultivado</option>
@@ -198,12 +204,12 @@
                     </div>
                 </div>
                 
-                <div class="modal-footer bg-light py-2">
-                    <button type="button" class="btn btn-sm btn-secondary rounded px-3 py-1" data-dismiss="modal">
-                        <i class="fas fa-times mr-1"></i>Cancelar
+                <div class="modal-footer bg-light py-3">
+                    <button type="button" class="btn btn-sm btn-secondary rounded px-3 py-2" data-dismiss="modal">
+                        <i class="fas fa-times me-1"></i>Cancelar
                     </button>
-                    <button type="submit" class="btn btn-sm btn-primary rounded px-3 py-1 shadow">
-                        <i class="fas fa-save mr-1"></i>Guardar
+                    <button type="submit" class="btn btn-sm btn-primary rounded px-3 py-2 shadow">
+                        <i class="fas fa-save me-1"></i>Guardar
                     </button>
                 </div>
             </form>
@@ -211,18 +217,16 @@
     </div>
 </div>
 
-<!-- Modal Agregar - Versión Compacta -->
+<!-- Modal Agregar -->
 <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg" style="overflow: hidden;">
             <div class="modal-header bg-gradient-primary text-white py-3">
-                <h5 class="modal-title font-weight-bold mb-0" id="agregarLabel">
-                    <i class="fas fa-plus-circle mr-2"></i>
+                <h5 class="modal-title fw-bold mb-0" id="agregarLabel">
+                    <i class="fas fa-plus-circle me-2"></i>
                     Nuevo Cultivo
                 </h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
             </div>
             
             <form action="<?php echo e(route('acuaponico.pasante.pasante.storecrops')); ?>" method="POST" id="formAgregar">
@@ -230,15 +234,15 @@
                 
                 <div class="modal-body p-4">
                     <div class="form-group mb-3">
-                        <label for="date" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-calendar mr-1"></i>Fecha:
+                        <label for="date" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-calendar me-1"></i>Fecha:
                         </label>
                         <input type="date" name="date" class="form-control form-control-sm rounded" id="date" readonly>
                     </div>
                     
                     <div class="form-group mb-3">
-                        <label for="aquaponic_system_id" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-water mr-1"></i>Sistema Acuapónico:
+                        <label for="aquaponic_system_id" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-water me-1"></i>Sistema Acuapónico:
                         </label>
                         <select id="aquaponic_system_id" name="aquaponic_system_id" class="form-control form-control-sm rounded" required>
                             <option value="">Seleccione un sistema acuapónico</option>
@@ -249,8 +253,8 @@
                     </div>
                     
                     <div class="form-group mb-3">
-                        <label for="species_id" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-leaf mr-1"></i>Especie:
+                        <label for="species_id" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-leaf me-1"></i>Especie:
                         </label>
                         <select name="species_id" class="form-control form-control-sm rounded" required>
                             <option value="">Seleccione una especie</option>
@@ -261,8 +265,8 @@
                     </div>
                     
                     <div class="form-group mb-3">
-                        <label for="lot_ids" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-th-large mr-1"></i>Lotes:
+                        <label for="lot_ids" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-th-large me-1"></i>Lotes:
                         </label>
                         <select id="lot_ids" name="lot_ids[]" class="form-control form-control-sm rounded" multiple required>
                         </select>
@@ -272,16 +276,16 @@
                     </div>
                     
                     <div class="form-group mb-3">
-                        <label for="quantity" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-seedling mr-1"></i>Cantidad a cultivar:
+                        <label for="quantity" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-seedling me-1"></i>Cantidad a cultivar:
                         </label>
                         <input type="number" id="quantity" name="quantity" class="form-control form-control-sm rounded" required>
                         <div class="invalid-feedback small" id="error-cantidad"></div>
                     </div>
                     
                     <div class="form-group mb-3">
-                        <label for="status" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-power-off mr-1"></i>Estado:
+                        <label for="status" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-power-off me-1"></i>Estado:
                         </label>
                         <select name="status" class="form-control form-control-sm rounded" required>
                             <option value="Cultivado">Cultivado</option>
@@ -291,12 +295,12 @@
                     </div>
                 </div>
                 
-                <div class="modal-footer bg-light py-2">
-                    <button type="button" class="btn btn-sm btn-secondary rounded px-3 py-1" data-dismiss="modal">
-                        <i class="fas fa-times mr-1"></i>Cancelar
+                <div class="modal-footer bg-light py-3">
+                    <button type="button" class="btn btn-sm btn-secondary rounded px-3 py-2" data-dismiss="modal">
+                        <i class="fas fa-times me-1"></i>Cancelar
                     </button>
-                    <button type="submit" class="btn btn-sm btn-primary rounded px-3 py-1 shadow">
-                        <i class="fas fa-save mr-1"></i>Guardar
+                    <button type="submit" class="btn btn-sm btn-primary rounded px-3 py-2 shadow">
+                        <i class="fas fa-save me-1"></i>Guardar
                     </button>
                 </div>
             </form>
@@ -305,7 +309,7 @@
 </div>
 
 <!-- Footer Sencillo -->
-<footer class="footer mt-5 py-3 bg-light border-top">
+<footer class="footer mt-5 py-4 bg-light border-top">
     <div class="container-fluid">
         <div class="row align-items-center">
             <div class="col-12 text-center">
@@ -324,17 +328,50 @@
     border-top: 1px solid #e9ecef !important;
 }
 
-/* Estilos para la tabla con scroll */
-.table-responsive {
-    max-height: 500px;
-    overflow-y: auto;
+/* Estilos mejorados para un aspecto más profesional */
+.card {
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Estilos para mantener el encabezado fijo */
-.thead-light {
-    position: sticky;
-    top: 0;
-    z-index: 1;
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+}
+
+.table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(78, 115, 223, 0.05);
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+}
+
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #71ccef 0%, #71ccef 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #71ccef 0%, #71ccef 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(78, 115, 223, 0.3);
+}
+
+.badge {
+    font-weight: 500;
 }
 
 /* Animaciones personalizadas */
@@ -367,12 +404,6 @@
     100% { transform: scale(1); }
 }
 
-@keyframes  borderFlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
 .animate__animated {
     animation-duration: 0.5s;
     animation-fill-mode: both;
@@ -398,8 +429,8 @@
 /* Botones de acción mejorados */
 .btn-action {
     position: relative;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -536,8 +567,8 @@
 
 #cultivoTable th,
 #cultivoTable td {
-    border-right: 1px solid #dee2e6;
-    border-bottom: 1px solid #dee2e6;
+    border-right: 1px solid #e3e6f0;
+    border-bottom: 1px solid #e3e6f0;
 }
 
 #cultivoTable th:last-child,
@@ -550,20 +581,20 @@
 }
 
 #cultivoTable thead th {
-    background-color: #f8f9fa;
-    border-top: 1px solid #dee2e6;
-    border-bottom: 2px solid #dee2e6;
+    background: linear-gradient(to right, #71ccef, #71ccef);
+    border-top: 1px solid #e3e6f0;
+    border-bottom: 2px solid #e3e6f0;
     font-weight: 600;
-    color: #495057;
+    color: white;
 }
 
 /* ESTILOS ESPECÍFICOS PARA EL MODAL DE EDICIÓN MEJORADO */
 .bg-gradient-primary {
-    background: linear-gradient(87deg, #4e73df 0, #224abe 100%) !important;
+    background: linear-gradient(87deg, #71ccef 0, #71ccef 100%) !important;
 }
 
 .btn-modal-save {
-    background: linear-gradient(135deg, #4e73df, #224abe);
+    background: linear-gradient(135deg, #71ccef, #71ccef);
     border: none;
     transition: all 0.3s ease;
     position: relative;
@@ -615,10 +646,51 @@
 
 /* Estilos para inputs más pequeños */
 .form-control-sm {
-    padding: 0.25rem 0.5rem;
+    padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
     line-height: 1.5;
-    border-radius: 0.2rem;
+    border-radius: 6px;
+    border: 1px solid #d1d3e2;
+}
+
+.form-control-sm:focus {
+    border-color: #71ccef;
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+/* Mejoras visuales para los modales */
+.modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-footer {
+    border-top: 1px solid #e3e6f0;
+}
+
+/* Responsividad mejorada */
+@media (max-width: 768px) {
+    .container-fluid {
+        width: 95% !important;
+        margin-top: 2% !important;
+    }
+    
+    .card-header h1 {
+        font-size: 1.8rem !important;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .table-responsive {
+        font-size: 0.85rem;
+    }
 }
 </style>
 
@@ -868,14 +940,14 @@
                 document.head.insertAdjacentHTML('beforeend', dynamicStyle);
                 
                 Swal.fire({
-                    title: '<i class="fas fa-exclamation-triangle mr-2"></i>¿Eliminar Cultivo?',
+                    title: '<i class="fas fa-exclamation-triangle me-2"></i>¿Eliminar Cultivo?',
                     html: '<div style="text-align:center;">Esta acción <span style="color:#e74a3b; font-weight:bold;">no se puede deshacer</span> y el cultivo será eliminado permanentemente.</div>',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: 'transparent',
                     cancelButtonColor: 'transparent',
-                    confirmButtonText: '<i class="fas fa-trash text-white mr-2"></i>Eliminar',
-                    cancelButtonText: '<i class="fas fa-times mr-2"></i>Cancelar',
+                    confirmButtonText: '<i class="fas fa-trash text-white me-2"></i>Eliminar',
+                    cancelButtonText: '<i class="fas fa-times me-2"></i>Cancelar',
                     reverseButtons: true,
                     customClass: {
                         popup: 'custom-delete-style',

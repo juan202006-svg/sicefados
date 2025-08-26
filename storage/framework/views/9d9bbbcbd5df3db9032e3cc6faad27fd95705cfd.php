@@ -18,7 +18,6 @@
     <!-- DataTables local -->
     <link rel="stylesheet" href="<?php echo e(asset('AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')); ?>">
-    
 
     <style>
         .main-header {
@@ -459,7 +458,7 @@
                         <a href="<?php echo e(route('acuaponico.admin.admin.registrocosecha')); ?>"
                            class="nav-link <?php echo e(request()->routeIs('acuaponico.admin.admin.registrocosecha') ? 'active' : ''); ?>">
                             <i class="nav-icon fas fa-tasks"></i>
-                            <p>Cosecha</p>
+                            <p>Cosechas</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -497,7 +496,6 @@
     <script src="<?php echo e(asset('AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js')); ?>"></script>
     <script src="<?php echo e(asset('AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')); ?>"></script>
     <script src="<?php echo e(asset('AdminLTE/plugins/sweetalert2/sweetalert2.all.min.js')); ?>"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <?php echo $__env->yieldPushContent('scripts'); ?>
     <?php echo $__env->yieldContent('scripts'); ?>

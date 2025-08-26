@@ -116,7 +116,7 @@ class CropAquaponicController extends Controller
 
         foreach (array_keys($asignaciones) as $lotId) {
             $lote = Lot::find($lotId);
-            $lote->actualizarEstadoAutomatico();
+            $lote->actualizarEstadoAutomatico(true);
         }
 
         return redirect()->back()->with('success', 'Cultivo agregado correctamente.');
@@ -166,7 +166,7 @@ class CropAquaponicController extends Controller
         }
 
         foreach ($cultivo->lotes as $loteAnterior) {
-            $loteAnterior->actualizarEstadoAutomatico();
+            $loteAnterior->actualizarEstadoAutomatico(true);
         }
 
         $cultivo->date = $request->date;
@@ -180,7 +180,7 @@ class CropAquaponicController extends Controller
 
         foreach (array_keys($asignaciones) as $lotId) {
             $lote = Lot::find($lotId);
-            $lote->actualizarEstadoAutomatico();
+            $lote->actualizarEstadoAutomatico(true);
         }
 
         return redirect()->back()->with('success', 'Cultivo actualizado correctamente.');

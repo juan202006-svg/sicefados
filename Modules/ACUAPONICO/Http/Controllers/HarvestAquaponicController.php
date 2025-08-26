@@ -121,7 +121,7 @@ class HarvestAquaponicController extends Controller
             $resowing->save();
             // Actualizar los lotes asociados
             foreach ($resowing->lots as $lote) {
-                $lote->actualizarEstadoAutomatico();
+                $lote->actualizarEstadoAutomatico(true);
             }
         }
 
@@ -195,7 +195,7 @@ class HarvestAquaponicController extends Controller
         // Actualizar todos los lotes afectados
         $lotesToUpdate = $oldLotes->merge($newLotes)->unique('id');
         foreach ($lotesToUpdate as $lote) {
-            $lote->actualizarEstadoAutomatico();
+            $lote->actualizarEstadoAutomatico(true);
         }
 
         return redirect()->back()->with('success', 'Cosecha actualizada correctamente. Los lotes han sido actualizados.');
@@ -222,7 +222,7 @@ class HarvestAquaponicController extends Controller
 
         // Actualizar los lotes asociados
         foreach ($lotes as $lote) {
-            $lote->actualizarEstadoAutomatico();
+            $lote->actualizarEstadoAutomatico(true);
         }
 
         return redirect()->back()->with('success', 'Cosecha eliminada correctamente y estado de lotes actualizado.');

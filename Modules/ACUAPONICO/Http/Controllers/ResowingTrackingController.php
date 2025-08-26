@@ -85,7 +85,7 @@ class ResowingTrackingController extends Controller
 
         // Actualizar el estado de los lotes asociados a la resiembra
         foreach ($resowing->lots as $lot) {
-            $lot->actualizarEstadoAutomatico();
+            $lot->actualizarEstadoAutomatico(true);
         }
 
         return redirect()->back()->with('success', 'Seguimiento creado correctamente.');
@@ -146,7 +146,7 @@ class ResowingTrackingController extends Controller
 
         // Actualizar el estado de los lotes asociados a la resiembra
         foreach ($resowing->lots as $lot) {
-            $lot->actualizarEstadoAutomatico();
+            $lot->actualizarEstadoAutomatico(true);
         }
 
         return redirect()->back()->with('success', 'Seguimiento actualizado correctamente.');
@@ -171,7 +171,7 @@ class ResowingTrackingController extends Controller
 
                 // Actualizar el estado de los lotes asociados a la resiembra
                 foreach ($resowing->lots as $lot) {
-                    $lot->actualizarEstadoAutomatico();
+                    $lot->actualizarEstadoAutomatico(true);
                 }
             } else {
                 // Log or handle the case where resowing is not found

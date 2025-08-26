@@ -5,241 +5,153 @@
 @endpush
 
 @section('content2')
-<h1 class="fw-bold mb-4">Gestión de cosechas</h1>
-<div class="content mt-4">
-    <div class="card shadow-sm border-0">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h5 class="mb-0 fw-semibold">Lista de Cosechas</h5>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregar">
-                <i class="bi bi-plus-circle"></i> Nueva Cosecha
+<div class="container-fluid mt-4">
+    <h1 class="fw-bold mb-4 text-primary text-center">Gestión de Cosechas</h1>
+    <div class="card shadow-sm border-0 rounded-lg">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center p-3">
+            <h5 class="mb-0 text-dark font-weight-bold">Lista de Cosechas</h5>
+            <button type="button" class="btn btn-primary btn-lg rounded-pill ml-auto" data-toggle="modal" data-target="#agregar">
+                <i class="fas fa-plus-circle mr-2"></i> Nueva Cosecha
             </button>
         </div>
-        <div class="table-responsive">
-            <table id="cosecha" class="table table-hover table-bordered align-middle text-center">
-                <thead style="background-color: #f8f9fa;">
-                    <tr>
-                        <th>Código</th>
-                        <th>S/Acuapónico</th>
-                        <th>Cultivo/Resiembra</th>
-                        <th>Fecha</th>
-                        <th>Cantidad</th>
-                        <th>Unidad medida</th>
-                        <th>Destino</th>
-                        <th>Mortandad</th>
-                        <th>Novedades</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php $n = 1; @endphp
-                    @foreach ($cosechas as $ch)
-                    <tr>
-                        <td>{{ $n++ }}</td>
-                        <td>{{ $ch->aquaponicSystem->name ?? 'N/A' }}</td>
-                        <td>
-                            @if ($ch->harvestable instanceof \Modules\AGROCEFA\Entities\Crop)
-                            {{ $ch->harvestable->species->name }} (Cultivo)
-                            @elseif ($ch->harvestable instanceof \Modules\ACUAPONICO\Entities\Resowing)
-                            {{ $ch->harvestable->crops->species->name ?? 'N/A' }} (Resiembra)
-                            @else
-                            N/A
-                            @endif
-                        </td>
-                        <td>{{ $ch->date }}</td>
-                        <td>{{ $ch->quantity }}</td>
-                        <td>{{ $ch->unit }}</td>
-                        <td>{{ $ch->destination }}</td>
-                        <td>{{ $ch->mortality }}</td>
-                        <td>{{ $ch->notes }}</td>
-                        <td>
-                            <button type="button" class="btn btn-success btn-sm editbtn"
-                                data-id="{{ $ch->id }}"
-                                data-aquaponic_system_id="{{ $ch->aquaponic_system_id }}"
-                                data-harvestable_id="{{ $ch->harvestable_id }}"
-                                data-harvestable_type="{{ $ch->harvestable_type }}"
-                                data-date="{{ $ch->date }}"
-                                data-quantity="{{ $ch->quantity }}"
-                                data-unit="{{ $ch->unit }}"
-                                data-destination="{{ $ch->destination }}"
-                                data-mortality="{{ $ch->mortality }}"
-                                data-notes="{{ $ch->notes }}"
-                                data-toggle="modal"
-                                data-target="#editar">
-                                Editar
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $ch->id }}">
-                                Eliminar
-                            </button>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        <div class="card-body p-4">
+            <div class="table-responsive">
+                <table id="cosecha" class="table table-hover table-bordered text-center align-middle">
+                    <thead class="bg-primary text-white">
+                        <tr>
+                            <th>Código</th>
+                            <th>S/Acuapónico</th>
+                            <th>Cultivo/Resiembra</th>
+                            <th>Fecha</th>
+                            <th>Cantidad</th>
+                            <th>Unidad medida</th>
+                            <th>Destino</th>
+                            <th>Mortandad</th>
+                            <th>Novedades</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php $n = 1; @endphp
+                        @foreach ($cosechas as $ch)
+                        <tr class="table-light">
+                            <td>{{ $n++ }}</td>
+                            <td>{{ $ch->aquaponicSystem->name ?? 'N/A' }}</td>
+                            <td>
+                                @if ($ch->harvestable instanceof \Modules\AGROCEFA\Entities\Crop)
+                                {{ $ch->harvestable->species->name }} (Cultivo)
+                                @elseif ($ch->harvestable instanceof \Modules\ACUAPONICO\Entities\Resowing)
+                                {{ $ch->harvestable->crops->species->name ?? 'N/A' }} (Resiembra)
+                                @else
+                                N/A
+                                @endif
+                            </td>
+                            <td>{{ $ch->date }}</td>
+                            <td>{{ $ch->quantity }}</td>
+                            <td>{{ $ch->unit }}</td>
+                            <td>{{ $ch->destination }}</td>
+                            <td>{{ $ch->mortality }}</td>
+                            <td>{{ $ch->notes }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Modal Agregar -->
-<div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form action="{{ route('acuaponico.pasante.pasante.storeharvest') }}" method="POST">
-            @csrf
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="agregarLabel">Nueva Cosecha</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="date" class="form-label">Fecha:</label>
-                        <input type="date" name="date" class="form-control" id="date" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="aquaponic_system_id" class="form-label">Sistema Acuapónico:</label>
-                        <select name="aquaponic_system_id" id="aquaponic_system_id" class="form-control" required>
-                            <option value="">Seleccione un sistema</option>
-                            @foreach ($systems as $system)
-                            <option value="{{ $system->id }}">{{ $system->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="harvestable" class="form-label">Cultivo o Resiembre:</label>
-                        <select name="harvestable" id="harvestable" class="form-control" required>
-                            <option value="">Primero seleccione un sistema</option>
-                        </select>
-                        <input type="hidden" name="harvestable_id" id="harvestable_id">
-                        <input type="hidden" name="harvestable_type" id="harvestable_type">
-                    </div>
-                    <div class="mb-3">
-                        <label for="quantity" class="form-label">Cantidad:</label>
-                        <input type="number" name="quantity" class="form-control" id="quantity" step="0.01" required>
-                        <div class="invalid-feedback" id="error-peces" style="display:none;"></div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="unit" class="form-label">Unidad de medida:</label>
-                        <select name="unit" id="unit" class="form-control" required>
-                            <option value="Gramos">Gramos</option>
-                            <option value="Kilogramos">Kilogramos</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="destination" class="form-label">Destino:</label>
-                        <input type="text" name="destination" class="form-control" id="destination" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="mortality" class="form-label">Mortandad:</label>
-                        <input type="number" name="mortality" class="form-control" id="mortality" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="notes" class="form-label">Novedad:</label>
-                        <textarea name="notes" class="form-control" id="notes"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- Modal Editar -->
-<div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updateharvest', 0) }}" method="POST">
-            @csrf
-            @method('PUT')
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="editarLabel">Editar Cosecha</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" name="id" id="edit-id">
-                    <div class="mb-3">
-                        <label for="edit-date" class="form-label">Fecha:</label>
-                        <input type="date" class="form-control" id="edit-date" name="date" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-aquaponic_system_id" class="form-label">Sistema Acuapónico:</label>
-                        <select name="aquaponic_system_id" id="edit-aquaponic_system_id" class="form-control" required>
-                            <option value="">Seleccione un sistema</option>
-                            @foreach ($systems as $system)
-                            <option value="{{ $system->id }}">{{ $system->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-harvestable" class="form-label">Cultivo o Resiembre:</label>
-                        <select name="harvestable" id="edit-harvestable" class="form-control" required>
-                            <option value="">Primero seleccione un sistema</option>
-                        </select>
-                        <input type="hidden" name="harvestable_id" id="edit-harvestable_id">
-                        <input type="hidden" name="harvestable_type" id="edit-harvestable_type">
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-quantity" class="form-label">Cantidad:</label>
-                        <input type="number" class="form-control" id="edit-quantity" name="quantity" step="0.01" required>
-                        <div class="invalid-feedback" id="edit-error-peces" style="display:none;"></div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-unit" class="form-label">Unidad de medida:</label>
-                        <select name="unit" id="edit-unit" class="form-control" required>
-                            <option value="Gramos">Gramos</option>
-                            <option value="Kilogramos">Kilogramos</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-destination" class="form-label">Destino:</label>
-                        <input type="text" class="form-control" id="edit-destination" name="destination" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-mortality" class="form-label">Mortandad:</label>
-                        <input type="number" class="form-control" id="edit-mortality" name="mortality" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-notes" class="form-label">Novedad:</label>
-                        <textarea class="form-control" name="notes" id="edit-notes"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- Modal Eliminar -->
-<div class="modal fade" id="eliminar" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="formEliminar" method="POST" action="">
+    <!-- Modal Agregar -->
+    <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <form action="{{ route('acuaponico.pasante.pasante.storeharvest') }}" method="POST">
                 @csrf
-                @method('DELETE')
-                <div class="modal-header">
-                    <h5 class="modal-title" id="eliminarLabel">Eliminar Cosecha</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ¿Estás seguro de que deseas eliminar esta cosecha? Esta acción no se puede deshacer.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                <div class="modal-content border-0 rounded-lg shadow-lg">
+                    <div class="modal-header bg-gradient-primary text-white rounded-top p-4">
+                        <h5 class="modal-title font-weight-bold" id="agregarLabel">Nueva Cosecha</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body p-5 bg-white rounded-bottom">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="form-group mb-4">
+                                    <label for="date" class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-calendar-alt mr-2"></i> Fecha
+                                    </label>
+                                    <input type="date" name="date" class="form-control form-control-lg custom-input" id="date" readonly>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="aquaponic_system_id" class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-water mr-2"></i> Sistema Acuapónico
+                                    </label>
+                                    <select name="aquaponic_system_id" id="aquaponic_system_id" class="form-control form-control-lg custom-select" required>
+                                        <option value="">Seleccione un sistema</option>
+                                        @foreach ($systems as $system)
+                                        <option value="{{ $system->id }}">{{ $system->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="harvestable" class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-leaf mr-2"></i> Cultivo o Resiembra
+                                    </label>
+                                    <select name="harvestable" id="harvestable" class="form-control form-control-lg custom-select" required>
+                                        <option value="">Primero seleccione un sistema</option>
+                                    </select>
+                                    <input type="hidden" name="harvestable_id" id="harvestable_id">
+                                    <input type="hidden" name="harvestable_type" id="harvestable_type">
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="quantity" class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-sort-numeric-up mr-2"></i> Cantidad
+                                    </label>
+                                    <input type="number" name="quantity" class="form-control form-control-lg custom-input" id="quantity" step="0.01" required>
+                                    <div class="invalid-feedback" id="error-peces" style="display:none;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-4">
+                                    <label for="unit" class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-ruler mr-2"></i> Unidad de medida
+                                    </label>
+                                    <select name="unit" id="unit" class="form-control form-control-lg custom-select" required>
+                                        <option value="Gramos">Gramos</option>
+                                        <option value="Kilogramos">Kilogramos</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="destination" class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-map-marker-alt mr-2"></i> Destino
+                                    </label>
+                                    <input type="text" name="destination" class="form-control form-control-lg custom-input" id="destination" required>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="mortality" class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-skull-crossbones mr-2"></i> Mortandad
+                                    </label>
+                                    <input type="number" name="mortality" class="form-control form-control-lg custom-input" id="mortality" readonly>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="notes" class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-sticky-note mr-2"></i> Novedad
+                                    </label>
+                                    <textarea name="notes" class="form-control form-control-lg custom-textarea" id="notes"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light p-4 rounded-bottom">
+                        <button type="button" class="btn btn-secondary btn-lg rounded-pill px-4" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill px-4">Guardar</button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<link rel="stylesheet" href="{{ asset('css/custom-styles.css') }}">
+
 <!-- Scripts -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -252,7 +164,7 @@
         dateInput.value = `${year}-${month}-${day}`;
 
         // Función para cargar cultivos/resiembras
-        function loadHarvestables(systemSelectId, harvestableSelectId, harvestableIdInputId, harvestableTypeInputId, initialSystemId = null, initialHarvestableId = null, initialHarvestableType = null) {
+        function loadHarvestables(systemSelectId, harvestableSelectId, harvestableIdInputId, harvestableTypeInputId) {
             const systemSelect = document.getElementById(systemSelectId);
             const harvestableSelect = document.getElementById(harvestableSelectId);
             const harvestableIdInput = document.getElementById(harvestableIdInputId);
@@ -262,7 +174,7 @@
                 const systemId = this.value;
                 harvestableSelect.innerHTML = '<option value="">Cargando...</option>';
                 if (systemId) {
-                    fetch(`{{ route('acuaponico.pasante.pasante.harvests.harvestables-by-system', '') }}/${systemId}?harvestable_id=${initialHarvestableId || ''}&harvestable_type=${encodeURIComponent(initialHarvestableType || '')}`)
+                    fetch(`{{ route('acuaponico.pasante.pasante.harvests.harvestables-by-system', '') }}/${systemId}`)
                         .then(response => {
                             if (!response.ok) throw new Error('Network response was not ok');
                             return response.json();
@@ -272,13 +184,6 @@
                             data.forEach(item => {
                                 harvestableSelect.innerHTML += `<option value="${item.type}|${item.id}" data-quantity="${item.quantity}">${item.name}</option>`;
                             });
-                            if (initialHarvestableId && initialHarvestableType && systemId === initialSystemId) {
-                                const initialValue = `${initialHarvestableType}|${initialHarvestableId}`;
-                                harvestableSelect.value = initialValue;
-                                harvestableSelect.dispatchEvent(new Event('change'));
-                                initialHarvestableId = null;
-                                initialHarvestableType = null;
-                            }
                         })
                         .catch(error => {
                             console.error('Error fetching harvestables:', error);
@@ -291,8 +196,8 @@
 
             harvestableSelect.addEventListener('change', function() {
                 const value = this.value;
-                const mortalityInput = document.getElementById(systemSelectId.replace('aquaponic_system_id', 'mortality') || 'mortality');
-                const quantityInput = document.getElementById(systemSelectId.replace('aquaponic_system_id', 'quantity') || 'quantity');
+                const mortalityInput = document.getElementById('mortality');
+                const quantityInput = document.getElementById('quantity');
                 if (value) {
                     const [type, id] = value.split('|');
                     harvestableTypeInput.value = type;
@@ -307,43 +212,13 @@
                 }
             });
 
-            if (initialSystemId) {
-                systemSelect.value = initialSystemId;
+            if (systemSelect.value) {
                 systemSelect.dispatchEvent(new Event('change'));
             }
         }
 
         // Inicializar para el modal de agregar
         loadHarvestables('aquaponic_system_id', 'harvestable', 'harvestable_id', 'harvestable_type');
-
-        // Cargar datos para el modal de edición
-        document.querySelectorAll('.editbtn').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                document.getElementById('formEditar').action = `/pasante/cosecha/update/${id}`;
-                document.getElementById('edit-id').value = id;
-                document.getElementById('edit-date').value = this.getAttribute('data-date');
-                document.getElementById('edit-quantity').value = this.getAttribute('data-quantity');
-                document.getElementById('edit-unit').value = this.getAttribute('data-unit');
-                document.getElementById('edit-destination').value = this.getAttribute('data-destination');
-                document.getElementById('edit-mortality').value = this.getAttribute('data-mortality');
-                document.getElementById('edit-notes').value = this.getAttribute('data-notes');
-
-                loadHarvestables(
-                    'edit-aquaponic_system_id',
-                    'edit-harvestable',
-                    'edit-harvestable_id',
-                    'edit-harvestable_type',
-                    this.getAttribute('data-aquaponic_system_id'),
-                    this.getAttribute('data-harvestable_id'),
-                    this.getAttribute('data-harvestable_type')
-                );
-
-                setTimeout(() => {
-                    document.getElementById('edit-harvestable').dispatchEvent(new Event('change'));
-                }, 500);
-            });
-        });
 
         // Validar cantidad y calcular mortalidad
         function validateQuantity(inputId, errorId, harvestableSelectId, mortalityId) {
@@ -379,30 +254,6 @@
         }
 
         validateQuantity('quantity', 'error-peces', 'harvestable', 'mortality');
-        validateQuantity('edit-quantity', 'edit-error-peces', 'edit-harvestable', 'edit-mortality');
-
-        // Eliminar con SweetAlert
-        document.querySelectorAll('.btnEliminar').forEach(button => {
-            button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: "¡No podrás revertir esto!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Sí, eliminar',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const formEliminar = document.getElementById('formEliminar');
-                        formEliminar.action = `/pasante/cosecha/destroy/${id}`;
-                        formEliminar.submit();
-                    }
-                });
-            });
-        });
     });
 </script>
 
@@ -431,6 +282,7 @@
     });
 </script>
 @endif
+
 @section('scripts')
 <script>
     $(document).ready(function() {

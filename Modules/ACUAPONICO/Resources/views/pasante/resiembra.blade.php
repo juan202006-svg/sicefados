@@ -1,22 +1,23 @@
 @extends('acuaponico::layouts.masterpa')
+
 @push('breadcrumbs')
 <li class="breadcrumb-item active">Gestión de Resiembras</li>
 @endpush
+
 @section('content2')
-<h1 class="fw-bold mb-4">Gestión de resiembras</h1>
-<div class="content mt-4">
-    <div class="card shadow-sm border-0">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h5 class="mb-0 fw-semibold">Lista de Resiembras</h5>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregar">
-                <i class="bi bi-plus-circle"></i> Nueva resiembra
+<h1 class="fw-bold mb-4 text-primary text-center">Gestión de resiembras</h1>
+<div class="container-fluid mt-4">
+    <div class="card shadow-sm border-0 rounded-lg">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center p-3">
+            <h5 class="mb-0 text-dark font-weight-bold">Lista de Resiembras</h5>
+            <button type="button" class="btn btn-primary btn-lg rounded-pill ml-auto" data-toggle="modal" data-target="#agregar">
+                <i class="fas fa-plus-circle mr-2"></i> Nueva resiembra
             </button>
         </div>
-
-        <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
             <div class="table-responsive">
-                <table id="resiembraTable" class="table table-bordered table-striped datatable text-center">
-                    <thead style="background-color: #f8f9fa;">
+                <table id="resiembraTable" class="table table-hover table-bordered text-center align-middle">
+                    <thead class="bg-primary text-white">
                         <tr>
                             <th>Código</th>
                             <th>S/Acuapónico</th>
@@ -27,13 +28,12 @@
                             <th>Descripción</th>
                             <th>Fecha</th>
                             <th>Estado</th>
-                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php $n = 1; @endphp
                         @foreach ($resiembra as $item)
-                        <tr>
+                        <tr class="table-light">
                             <td class="text-center">{{ $n++ }}</td>
                             <td class="text-center">{{ $item->system->name }}</td>
                             <td class="text-center">{{ $item->crops->species->name }}</td>
@@ -46,31 +46,10 @@
                                 {{ $lot->name }} ({{ $lot->pivot->quantity }})<br>
                                 @endforeach
                             </td>
-                            <td class="text-center">{{ $item->description?? 'sin descripcion' }}</td>
+                            <td class="text-center">{{ $item->description ?? 'sin descripcion' }}</td>
                             <td class="text-center">{{ $item->date }}</td>
                             <td class="text-center">
-                                <span class="badge badge-success">{{ $item->status }}</span>
-                            </td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-success btn-sm editbtn"
-                                    data-id="{{ $item->id }}"
-                                    data-aquaponic_system_id="{{ $item->aquaponic_system_id }}"
-                                    data-crop_id="{{ $item->crop_id }}"
-                                    data-original_mortality="{{ $item->original_mortality }}"
-                                    data-description="{{ $item->description }}"
-                                    data-date="{{ $item->date }}"
-                                    data-status="{{ $item->status }}"
-                                    @foreach($item->lots as $lot)
-                                    data-lot_{{ $lot->id }}="{{ $lot->pivot->quantity }}"
-                                    data-lot_name_{{ $lot->id }}="{{ $lot->name }}"
-                                    @endforeach
-                                    data-toggle="modal"
-                                    data-target="#editar">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button type="button" class="btn btn-danger btn-sm btnEliminar" data-id="{{ $item->id }}">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
+                                <span class="badge bg-success">{{ $item->status }}</span>
                             </td>
                         </tr>
                         @endforeach
@@ -78,157 +57,100 @@
                 </table>
             </div>
         </div>
+    </div>
 
-        <!-- Modal Editar -->
-        <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form id="formEditar" action="" method="POST">
-                        @csrf
-                        @method('put')
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editarLabel">Editar Resiembra</h5>
-                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <input type="hidden" name="id" id="edit-id">
-                            <div class="mb-3">
-                                <label for="edit-aquaponic_system_id" class="form-label">Sistema Acuapónico:</label>
-                                <select name="aquaponic_system_id" id="edit-aquaponic_system_id" class="form-control" required>
-                                    <option value="" disabled>Seleccione un sistema acuapónico</option>
-                                    @foreach ($acuaponico as $system)
-                                    <option value="{{ $system->id }}">{{ $system->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit-crop_id" class="form-label">Cultivo:</label>
-                                <select name="crop_id" id="edit-crop_id" class="form-control" required>
-                                    <option value="" disabled selected>Seleccione un cultivo</option>
-                                </select>
-                                <div class="invalid-feedback" id="edit-crop_id-error"></div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="edit-original_mortality" class="form-label">Mortalidad Original:</label>
-                                <input type="number" class="form-control" id="edit-original_mortality" name="original_mortality" readonly>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Lotes:</label>
-                                <div id="edit-lots-container">
-                                    <!-- Aquí se llenan por JS -->
+    <!-- Modal Agregar -->
+    <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <form action="{{ route('acuaponico.pasante.pasante.storeresowing') }}" method="POST">
+                @csrf
+                <div class="modal-content border-0 rounded-lg shadow-lg">
+                    <div class="modal-header bg-gradient-primary text-white rounded-top p-4">
+                        <h5 class="modal-title font-weight-bold" id="agregarLabel">Agregar Nueva Resiembra</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Cerrar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body p-5 bg-white rounded-bottom">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="form-group mb-4">
+                                    <label for="date" class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-calendar-alt mr-2"></i> Fecha
+                                    </label>
+                                    <input type="date" class="form-control form-control-lg custom-input" id="date" name="date" readonly>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="aquaponic_system_id" class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-water mr-2"></i> Sistema Acuapónico
+                                    </label>
+                                    <select name="aquaponic_system_id" id="aquaponic_system_id" class="form-control form-control-lg custom-select" required>
+                                        <option value="" disabled selected>Seleccione un sistema acuapónico</option>
+                                        @foreach ($acuaponico as $system)
+                                        <option value="{{ $system->id }}">{{ $system->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="crop_id" class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-leaf mr-2"></i> Cultivo de Plantas
+                                    </label>
+                                    <select name="crop_id" id="crop_id" class="form-control form-control-lg custom-select" required>
+                                        <option value="" disabled selected>Seleccione un cultivo de plantas</option>
+                                    </select>
+                                    <div class="invalid-feedback" id="crop_id-error"></div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="mortalidad_total" class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-skull-crossbones mr-2"></i> Mortalidad Total
+                                    </label>
+                                    <input type="number" id="mortalidad_total" name="original_mortality" class="form-control form-control-lg custom-input" readonly>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="edit-quantity" class="form-label">Cantidad Total:</label>
-                                <input type="number" class="form-control" id="edit-quantity" name="quantity" readonly>
+                            <div class="col-md-6">
+                                <div class="form-group mb-4">
+                                    <label class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-layer-group mr-2"></i> Lotes
+                                    </label>
+                                    <div id="lots-container">
+                                        <!-- Aquí se agregan inputs por AJAX -->
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="quantity" class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-sort-numeric-up mr-2"></i> Cantidad Total
+                                    </label>
+                                    <input type="number" class="form-control form-control-lg custom-input" id="quantity" name="quantity" readonly>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="description" class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-align-left mr-2"></i> Descripción
+                                    </label>
+                                    <textarea class="form-control form-control-lg custom-textarea" id="description" name="description" rows="3"></textarea>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="status" class="form-label text-dark font-weight-bold custom-form-label">
+                                        <i class="fas fa-toggle-on mr-2"></i> Estado
+                                    </label>
+                                    <select name="status" class="form-control form-control-lg custom-select" required>
+                                        <option value="Registrada">Resiembra</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="edit-description" class="form-label">Descripción:</label>
-                                <textarea class="form-control" id="edit-description" name="description" rows="3"></textarea>
-                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary" id="btnGuardarCambios">Guardar Cambios</button>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="modal-footer bg-light p-4 rounded-bottom">
+                        <button type="button" class="btn btn-secondary btn-lg rounded-pill px-4" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill px-4">Guardar</button>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Modal Eliminar -->
-        <div class="modal fade" id="eliminar" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form id="formEliminar" method="POST" action="">
-                        @csrf
-                        @method('delete')
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="eliminarLabel">Eliminar Resiembra</h5>
-                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>¿Estás seguro de que deseas eliminar esta resiembra?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-danger">Eliminar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 
-<!-- Modal Agregar -->
-<div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form action="{{ route('acuaponico.pasante.pasante.storeresowing') }}" method="POST">
-            @csrf
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="agregarLabel">Agregar Nueva Resiembra</h5>
-                    <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="date" class="form-label">Fecha:</label>
-                        <input type="date" class="form-control" id="date" name="date" readonly>
-                    </div>
-                    <!-- Sistema Acuapónico -->
-                    <div class="mb-3">
-                        <label for="aquaponic_system_id" class="form-label">Sistema Acuapónico:</label>
-                        <select name="aquaponic_system_id" id="aquaponic_system_id" class="form-control" required>
-                            <option value="" disabled selected>Seleccione un sistema acuapónico</option>
-                            @foreach ($acuaponico as $system)
-                            <option value="{{ $system->id }}">{{ $system->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <!-- Cultivo de plantas -->
-                    <div class="mb-3">
-                        <label for="crop_id" class="form-label">Cultivo de Plantas:</label>
-                        <select name="crop_id" id="crop_id" class="form-control" required>
-                            <option value="" disabled selected>Seleccione un cultivo de plantas</option>
-                        </select>
-                        <div class="invalid-feedback" id="crop_id-error"></div>
-                    </div>
-                    <!-- Mortalidad total -->
-                    <div class="mb-3">
-                        <label for="mortalidad_total" class="form-label">Mortalidad Total:</label>
-                        <input type="number" id="mortalidad_total" name="original_mortality" class="form-control" readonly>
-                    </div>
-                    <!-- Lotes disponibles -->
-                    <div class="mb-3">
-                        <label class="form-label">Lotes:</label>
-                        <div id="lots-container">
-                            <!-- Aquí se agregan inputs por AJAX -->
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="quantity" class="form-label">Cantidad Total:</label>
-                        <input type="number" class="form-control" id="quantity" name="quantity" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Descripción:</label>
-                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="status" class="form-label">Estado:</label>
-                        <select name="status" class="form-control" required>
-                            <option value="Registrada">Resiembra</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+<link rel="stylesheet" href="{{ asset('css/custom-styles.css') }}">
+
 @section('scripts')
 <script>
     $(document).ready(function() {

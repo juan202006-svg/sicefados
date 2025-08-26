@@ -6,58 +6,65 @@
 
 @section('content2')
 <div class="container-fluid px-4" style="width: 80%; margin-top: 5%;">
+    <!-- Header mejorado con gradiente y sombra -->
     <div class="container mt-5">
-        <div class="card shadow">
-            <!-- Header con animación dentro de la tarjeta -->
-            <div class="card-body">
+        <div class="card shadow-lg border-0" style="background: linear-gradient(135deg, #71ccef 0%, #71ccef 100%);">
+            <div class="card-body py-4">
                 <div class="d-flex justify-content-between align-items-center mb-4 animate__animated animate__fadeInDown">
-                    <h1 class="h3 mb-0 text-gray-800 fw-bold" style="font-size: 300%; margin-left: 22%; margin-top: 3%;">
-                        Gestión de Categorias
+                    <h1 class="h2 mb-0 text-white fw-bold text-center w-100" style="font-size: 2.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                        <i class="fas fa-tags me-3"></i>Gestión de Categorías
                     </h1>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Tarjeta principal con animación -->
-    <div class="card shadow border-0 animate__animated animate__fadeInUp" style="margin-top: 10%;">
-        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 text-primary fw-semibold" style="margin-left: 3%;">
-                <i class="fas fa-list mr-2"></i>Lista de Categorias
+    <!-- Tarjeta principal con diseño moderno -->
+    <div class="card shadow-lg border-0 mt-5 animate__animated animate__fadeInUp" style="border-radius: 15px; overflow: hidden;">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background: linear-gradient(to right, #f8f9fc, #e3e6f0); border-bottom: 1px solid #e3e6f0;">
+            <h5 class="mb-0 text-primary fw-semibold">
+                <i class="fas fa-list me-2"></i>Lista de Categorías
             </h5>
-            <div class="spinner-grow text-primary spinner-grow-sm" role="status" id="tableSpinner">
-                <span class="sr-only">Cargando...</span>
+            <div class="spinner-border text-primary" role="status" id="tableSpinner" style="width: 1.5rem; height: 1.5rem;">
+                <span class="visually-hidden">Cargando...</span>
             </div>
         </div>
 
-        <div class="card-body p-0" style="margin-top: 2%; width: 90%; margin-left: 5%; margin-bottom: 5%;">
-            <button type="button" class="btn btn-success shadow-sm rounded-pill px-4 py-2 btn-hover-scale" data-toggle="modal" data-target="#agregar"
-            style="margin-left: 78%;">
-                <i class="fas fa-plus-circle mr-2"></i> Nueva Categoria
-            </button>
-            <div class="table-responsive" style="margin-top: 3%;">
-                <table id="categoriaTable" class="table table-hover align-middle mb-0" style="border: 1px solid #dee2e6;">
-                    <thead class="thead-light" style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-info-circle text-primary me-2"></i>
+                    <small class="text-muted">Total de categorías: {{ count($categorias) }}</small>
+                </div>
+                <button type="button" class="btn btn-primary rounded-pill px-4 py-2 fw-medium shadow-sm" data-toggle="modal" data-target="#agregar"
+                    style="background: linear-gradient(135deg, #71ccef 0%, #71ccef 100%); border: none; transition: all 0.3s ease;">
+                    <i class="fas fa-plus-circle me-2"></i> Nueva Categoría
+                </button>
+            </div>
+            
+            <div class="table-responsive rounded-3 shadow-sm">
+                <table id="categoriaTable" class="table table-hover align-middle mb-0" style="border: 1px solid #e3e6f0;">
+                    <thead class="thead-dark" style="background: linear-gradient(to right, #71ccef, #71ccef); color: white;">
                         <tr>
-                            <th class="text-center" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">#</th>
-                            <th style="border-right: 1px solid #dee2e6; padding: 12px 8px;">Nombre</th>
-                            <th class="text-center" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">Fecha</th>
-                            <th class="text-center" style="padding: 12px 8px;">Acciones</th>
+                            <th class="text-center py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">#</th>
+                            <th class="py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">Nombre</th>
+                            <th class="text-center py-3" style="border-right: 1px solid rgba(255,255,255,0.1);">Fecha</th>
+                            <th class="text-center py-3">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php $n = 1; @endphp
                         @foreach ($categorias as $item)
-                        <tr class="animate__animated animate__fadeInRight" style="animation-delay: {{ $n * 0.05 }}s; border-bottom: 1px solid #dee2e6;">
-                            <td class="text-center fw-bold" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">{{ $n++ }}</td>
-                            <td class="fw-medium" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">{{ $item->name }}</td>
-                            <td class="text-center fw-bold" style="border-right: 1px solid #dee2e6; padding: 12px 8px;">
-                                <span class="badge bg-info rounded-pill px-3 py-2">{{ $item->date }}</span>
+                        <tr class="animate__animated animate__fadeIn" style="animation-delay: {{ $n * 0.03 }}s; border-bottom: 1px solid #e3e6f0; transition: all 0.3s ease;">
+                            <td class="text-center fw-bold py-3" style="border-right: 1px solid #e3e6f0;">{{ $n++ }}</td>
+                            <td class="fw-medium py-3" style="border-right: 1px solid #e3e6f0;">{{ $item->name }}</td>
+                            <td class="text-center fw-bold py-3" style="border-right: 1px solid #e3e6f0;">
+                                <span class="badge bg-info rounded-pill px-3 py-2 shadow-sm">{{ $item->date }}</span>
                             </td>
-                            <td class="text-center" style="padding: 12px 8px;">
+                            <td class="text-center py-3">
                                 <div class="d-flex justify-content-center action-buttons">
-                                    <!-- Botón de Editar Mejorado - SOLO ICONO AMARILLO -->
-                                    <button type="button" class="btn btn-action btn-edit editbtn"
+                                    <!-- Botón de Editar -->
+                                    <button type="button" class="btn btn-action btn-edit editbtn mx-1"
                                         data-id="{{ $item->id }}"
                                         data-date="{{ $item->date }}"
                                         data-name="{{ $item->name }}"
@@ -69,8 +76,8 @@
                                         <span class="btn-tooltip">Editar</span>
                                     </button>
                                     
-                                    <!-- Botón de Eliminar Mejorado -->
-                                    <button type="button" class="btn btn-action btn-delete btnEliminar" data-id="{{ $item->id }}">
+                                    <!-- Botón de Eliminar -->
+                                    <button type="button" class="btn btn-action btn-delete btnEliminar mx-1" data-id="{{ $item->id }}">
                                         <div class="btn-icon">
                                             <i class="fas fa-trash"></i>
                                         </div>
@@ -87,18 +94,16 @@
     </div>
 </div>
 
-<!-- Modal Editar - Versión Compacta -->
+<!-- Modal Editar -->
 <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg" style="overflow: hidden;">
             <div class="modal-header bg-gradient-primary text-white py-3">
-                <h5 class="modal-title font-weight-bold mb-0" id="editarLabel">
-                    <i class="fas fa-edit mr-2"></i>
+                <h5 class="modal-title fw-bold mb-0" id="editarLabel">
+                    <i class="fas fa-edit me-2"></i>
                     Editar Categoría
                 </h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
             </div>
             
             <form id="formEditar" action="{{ route('acuaponico.pasante.pasante.updateCategory', 0) }}" method="POST">
@@ -109,26 +114,26 @@
                     <input type="hidden" name="id" id="edit-id">
                     
                     <div class="form-group mb-3">
-                        <label for="edit-date" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-calendar-alt mr-1"></i>Fecha:
+                        <label for="edit-date" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-calendar-alt me-1"></i>Fecha:
                         </label>
                         <input type="date" class="form-control form-control-sm rounded" id="edit-date" name="date" readonly>
                     </div>
                     
                     <div class="form-group mb-3">
-                        <label for="edit-name" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-tag mr-1"></i>Nombre:
+                        <label for="edit-name" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-tag me-1"></i>Nombre:
                         </label>
                         <input type="text" class="form-control form-control-sm rounded" id="edit-name" name="name">
                     </div>
                 </div>
                 
-                <div class="modal-footer bg-light py-2">
-                    <button type="button" class="btn btn-sm btn-secondary rounded px-3 py-1" data-dismiss="modal">
-                        <i class="fas fa-times mr-1"></i>Cancelar
+                <div class="modal-footer bg-light py-3">
+                    <button type="button" class="btn btn-sm btn-secondary rounded px-3 py-2" data-dismiss="modal">
+                        <i class="fas fa-times me-1"></i>Cancelar
                     </button>
-                    <button type="submit" class="btn btn-sm btn-primary rounded px-3 py-1 shadow">
-                        <i class="fas fa-save mr-1"></i>Guardar Cambios
+                    <button type="submit" class="btn btn-sm btn-primary rounded px-3 py-2 shadow">
+                        <i class="fas fa-save me-1"></i>Guardar Cambios
                     </button>
                 </div>
             </form>
@@ -136,18 +141,16 @@
     </div>
 </div>
 
-<!-- Modal Agregar - Versión Compacta -->
+<!-- Modal Agregar -->
 <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="agregarLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg" style="overflow: hidden;">
             <div class="modal-header bg-gradient-primary text-white py-3">
-                <h5 class="modal-title font-weight-bold mb-0" id="agregarLabel">
-                    <i class="fas fa-plus-circle mr-2"></i>
+                <h5 class="modal-title fw-bold mb-0" id="agregarLabel">
+                    <i class="fas fa-plus-circle me-2"></i>
                     Nueva Categoría
                 </h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
             </div>
             
             <form action="{{ route('acuaponico.pasante.pasante.storeCategory') }}" method="POST" id="formAgregar">
@@ -155,26 +158,26 @@
                 
                 <div class="modal-body p-4">
                     <div class="form-group mb-3">
-                        <label for="date" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-calendar-alt mr-1"></i>Fecha:
+                        <label for="date" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-calendar-alt me-1"></i>Fecha:
                         </label>
                         <input type="date" name="date" class="form-control form-control-sm rounded" id="date" required readonly>
                     </div>
                     
                     <div class="form-group mb-3">
-                        <label for="name" class="form-label small font-weight-bold text-primary mb-1">
-                            <i class="fas fa-tag mr-1"></i>Nombre de la Categoría:
+                        <label for="name" class="form-label small fw-bold text-primary mb-1">
+                            <i class="fas fa-tag me-1"></i>Nombre de la Categoría:
                         </label>
                         <input type="text" name="name" class="form-control form-control-sm rounded" required>
                     </div>
                 </div>
                 
-                <div class="modal-footer bg-light py-2">
-                    <button type="button" class="btn btn-sm btn-secondary rounded px-3 py-1" data-dismiss="modal">
-                        <i class="fas fa-times mr-1"></i>Cancelar
+                <div class="modal-footer bg-light py-3">
+                    <button type="button" class="btn btn-sm btn-secondary rounded px-3 py-2" data-dismiss="modal">
+                        <i class="fas fa-times me-1"></i>Cancelar
                     </button>
-                    <button type="submit" class="btn btn-sm btn-primary rounded px-3 py-1 shadow">
-                        <i class="fas fa-save mr-1"></i>Guardar
+                    <button type="submit" class="btn btn-sm btn-primary rounded px-3 py-2 shadow">
+                        <i class="fas fa-save me-1"></i>Guardar
                     </button>
                 </div>
             </form>
@@ -183,7 +186,7 @@
 </div>
 
 <!-- Footer Sencillo -->
-<footer class="footer mt-5 py-3 bg-light border-top">
+<footer class="footer mt-5 py-4 bg-light border-top">
     <div class="container-fluid">
         <div class="row align-items-center">
             <div class="col-12 text-center">
@@ -202,7 +205,53 @@
     border-top: 1px solid #e9ecef !important;
 }
 
-/* Estilos adicionales para animaciones y botones mejorados */
+/* Estilos mejorados para un aspecto más profesional */
+.card {
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+}
+
+.table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(78, 115, 223, 0.05);
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+}
+
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #71ccef 0%, #71ccef 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #71ccef 0%, #71ccef 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(78, 115, 223, 0.3);
+}
+
+.badge {
+    font-weight: 500;
+}
+
+/* Animaciones personalizadas */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -232,12 +281,6 @@
     100% { transform: scale(1); }
 }
 
-@keyframes borderFlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
 .animate__animated {
     animation-duration: 0.5s;
     animation-fill-mode: both;
@@ -263,8 +306,8 @@
 /* Botones de acción mejorados */
 .btn-action {
     position: relative;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -366,7 +409,7 @@
 }
 
 /* Spinner personalizado */
-.spinner-grow {
+.spinner-border {
     animation-duration: 0.8s;
 }
 
@@ -401,8 +444,8 @@
 
 #categoriaTable th,
 #categoriaTable td {
-    border-right: 1px solid #dee2e6;
-    border-bottom: 1px solid #dee2e6;
+    border-right: 1px solid #e3e6f0;
+    border-bottom: 1px solid #e3e6f0;
 }
 
 #categoriaTable th:last-child,
@@ -415,28 +458,20 @@
 }
 
 #categoriaTable thead th {
-    background-color: #f8f9fa;
-    border-top: 1px solid #dee2e6;
-    border-bottom: 2px solid #dee2e6;
+    background: linear-gradient(to right, #71ccef, #71ccef);
+    border-top: 1px solid #e3e6f0;
+    border-bottom: 2px solid #e3e6f0;
     font-weight: 600;
-    color: #495057;
+    color: white;
 }
 
 /* ESTILOS ESPECÍFICOS PARA EL MODAL DE EDICIÓN MEJORADO */
 .bg-gradient-primary {
-    background: linear-gradient(87deg, #4e73df 0, #224abe 100%) !important;
-}
-
-.border-top-animation {
-    height: 4px;
-    background: linear-gradient(90deg, #4e73df, #224abe, #4e73df);
-    background-size: 200% 100%;
-    animation: borderFlow 3s ease infinite;
-    width: 100%;
+    background: linear-gradient(87deg, #71ccef 0, #71ccef 100%) !important;
 }
 
 .btn-modal-save {
-    background: linear-gradient(135deg, #4e73df, #224abe);
+    background: linear-gradient(135deg, #71ccef, #71ccef);
     border: none;
     transition: all 0.3s ease;
     position: relative;
@@ -460,15 +495,6 @@
     background-color: #858796;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.custom-file-label {
-    transition: all 0.3s ease;
-}
-
-.custom-file-input:focus ~ .custom-file-label {
-    border-color: #4e73df;
-    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
 }
 
 /* Animación para el modal completo */
@@ -497,10 +523,51 @@
 
 /* Estilos para inputs más pequeños */
 .form-control-sm {
-    padding: 0.25rem 0.5rem;
+    padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
     line-height: 1.5;
-    border-radius: 0.2rem;
+    border-radius: 6px;
+    border: 1px solid #d1d3e2;
+}
+
+.form-control-sm:focus {
+    border-color: #4e73df;
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+}
+
+/* Mejoras visuales para los modales */
+.modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-footer {
+    border-top: 1px solid #e3e6f0;
+}
+
+/* Responsividad mejorada */
+@media (max-width: 768px) {
+    .container-fluid {
+        width: 95% !important;
+        margin-top: 2% !important;
+    }
+    
+    .card-header h1 {
+        font-size: 1.8rem !important;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .table-responsive {
+        font-size: 0.85rem;
+    }
 }
 </style>
 
@@ -670,14 +737,14 @@
                 document.head.insertAdjacentHTML('beforeend', dynamicStyle);
                 
                 Swal.fire({
-                    title: '<i class="fas fa-exclamation-triangle mr-2"></i>¿Eliminar Categoría?',
+                    title: '<i class="fas fa-exclamation-triangle me-2"></i>¿Eliminar Categoría?',
                     html: '<div style="text-align:center;">Esta acción <span style="color:#e74a3b; font-weight:bold;">no se puede deshacer</span> y la categoría será eliminada permanentemente.</div>',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: 'transparent',
                     cancelButtonColor: 'transparent',
-                    confirmButtonText: '<i class="fas fa-trash text-white mr-2"></i>Eliminar',
-                    cancelButtonText: '<i class="fas fa-times mr-2"></i>Cancelar',
+                    confirmButtonText: '<i class="fas fa-trash text-white me-2"></i>Eliminar',
+                    cancelButtonText: '<i class="fas fa-times me-2"></i>Cancelar',
                     reverseButtons: true,
                     customClass: {
                         popup: 'custom-delete-style',
