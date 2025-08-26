@@ -286,7 +286,7 @@
                     <a class="dropdown-item {{ request()->routeIs('acuaponico.admin.admin.registroseguimiento') ? 'active' : '' }}"
                        href="{{ route('acuaponico.admin.admin.registroseguimiento') }}"><i class="fas fa-undo-alt mr-2"></i> Seguimiento resiembra</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#"><i class="fas fa-harvest mr-2"></i> Cosecha</a>
+                    <a class="dropdown-item" href="{{ route('acuaponico.admin.admin.registrocosecha') }}"><i class="fas fa-harvest mr-2"></i> Cosecha</a>
                 </div>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
@@ -383,12 +383,6 @@
                                    class="nav-link {{ request()->routeIs('acuaponico.admin.admin.registrocultivo') ? 'active' : '' }}">
                                     <i class="{{ request()->routeIs('acuaponico.admin.admin.registrocultivo') ? 'fas' : 'far' }} fa-circle nav-icon"></i>
                                     <p>Registros de cultivos</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Cosecha</p>
                                 </a>
                             </li>
                         </ul>
